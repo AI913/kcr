@@ -1,0 +1,55 @@
+# This file is a template, and might need editing before it works on your project.
+# Lifted from: https://about.gitlab.com/2016/03/10/setting-up-gitlab-ci-for-ios-projects/
+# This file assumes an own GitLab CI runner, setup on a macOS system.
+stages:
+  - build
+#  - test
+#  - archive
+#  - deploy
+
+before_script:
+#- cd JobOrder
+#- export LANG=en_US.UTF-8
+#- bundle install --path vendor/bundle
+#- bundle exec pod install
+
+build_project:
+  stage: build
+  script:
+    echo "start CI"
+  only:
+    - branches
+  except:
+    - master
+    - staging
+#    - xcodebuild clean -workspace JobOrder.xcworkspace -scheme JobOrder | xcpretty
+#  tags:
+#     - mac-ci-runner
+#    - ios_13-4
+#    - xcode_11-4
+#    - macos_10-15-2
+
+#test_project:
+#  stage: test
+#  script:
+#    - xcodebuild test -workspace JobOrder.xcworkspace -scheme JobOrder -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.4' | xcpretty -s
+#  tags:
+#     - mac-ci-runner
+#    - ios_13-4
+#    - xcode_11-4
+#    - macos_10-15-2
+
+#archive_project:
+#  stage: archive
+#  script:
+#    - xcodebuild clean archive -archivePath build/JobOrder -scheme JobOrder
+#    - xcodebuild -exportArchive -exportFormat ipa -archivePath "build/JobOrder.xcarchive" -exportPath "build/JobOrder.ipa" -exportProvisioningProfile "ProvisioningProfileName"
+#  only:
+#    - master
+#  artifacts:
+#    paths:
+#      - build/JobOrder.ipa
+#  tags:
+#    - ios_13-4
+#    - xcode_11-4
+#    - macos_10-15-2

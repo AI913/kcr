@@ -1,0 +1,27 @@
+# Template information section
+name: clean_architecture
+summary: This template is Clean Architecture template.
+author: Yu Suzuki
+version: 1.0.0
+license: MIT
+
+# The declarations for code files
+code_files:
+- {name: Code/Presentation/ViewController/ViewController.swift, path: Code/Presentation/ViewController.swift.liquid}
+- {name: Code/Presentation/Presenter/Presenter.swift, path: Code/Presentation/Presenter.swift.liquid}
+- {name: Code/Domain/UseCase/UseCase.swift, path: Code/Domain/UseCase.swift.liquid}
+- {name: Code/API/Repository/Repository.swift, path: Code/API/Repository.swift.liquid}
+- {name: Code/API/DataStore/DataStore.swift, path: Code/API/DataStore.swift.liquid}
+- {name: Code/Data/Repository/Repository.swift, path: Code/Data/Repository.swift.liquid}
+- {name: Code/Data/DataStore/DataStore.swift, path: Code/Data/DataStore.swift.liquid}
+
+# The declarations for test files
+test_files:
+- {name: Tests/Presentation/ViewController/ViewControllerTests.swift, path: Tests/Presentation/ViewControllerTests.swift.liquid}
+- {name: Tests/Presentation/Presenter/PresenterTests.swift, path: Tests/Presentation/PresenterTests.swift.liquid}
+- {name: Tests/Domain/UseCase/UseCaseTests.swift, path: Tests/Domain/UseCaseTests.swift.liquid}
+- {name: Tests/API/DataStore/DataStoreTests.swift, path: Tests/API/DataStoreTests.swift.liquid}
+- {name: Tests/Data/DataStore/DataStoreTests.swift, path: Tests/Data/DataStoreTests.swift.liquid}
+
+# Template dependencies
+dependencies:

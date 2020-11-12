@@ -1,0 +1,63 @@
+//
+//  {{ prefix }}{{ module_info.name }}{{ module_info.file_name }}
+//  {{ module_info.project_name }}
+//
+//  Created by {{ developer.name }} on {{ date }}.
+//  Copyright © {{ year }} {{ developer.company }}. All rights reserved.
+//
+
+import UIKit
+
+/// {{ module_info.name }}ViewControllerProtocol
+/// @mockable
+protocol {{ module_info.name }}ViewControllerProtocol: class {
+    /// エラーアラート表示
+    /// - Parameter error: エラー
+    func showErrorAlert(_ error: Error)
+}
+
+class {{ module_info.name }}ViewController: UIViewController {
+
+    // MARK: - IBOutlet
+    @IBOutlet weak var sampleButton: UIButton!
+
+    // MARK: - Variable
+    var presenter: {{ module_info.name }}PresenterProtocol!
+
+    // MARK: - Initializer
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
+    // MARK: - Override function (view controller lifecycle)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+}
+
+// MARK: - View Controller Event
+extension {{ module_info.name }}ViewController {
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+}
+
+// MARK: - Action
+extension {{ module_info.name }}ViewController {
+
+    @IBAction private func touchUpInsideSampleButton(_ sender: UIButton) {
+        presenter?.tapSampleButton()
+    }
+}
+
+// MARK: - Interface Function
+extension {{ module_info.name }}ViewController: {{ module_info.name }}ViewControllerProtocol {
+
+    func showErrorAlert(_ error: Error) {
+        presentAlert(error)
+    }
+}
+
+// MARK: - Private Function
+extension {{ module_info.name }}ViewController {}

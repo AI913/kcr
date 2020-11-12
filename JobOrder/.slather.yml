@@ -1,0 +1,14 @@
+coverage_service: cobertura_xml
+xcodeproj: JobOrder.xcodeproj
+workspace: JobOrder.xcworkspace
+scheme: JobOrder
+source_directory: JobOrder
+output_directory: xml_report
+ignore:
+  - Pods/*
+  - Carthage/*
+  - "**/AppDelegate.swift"
+  - "**/SceneDelegate.swift"
+  - "**/Generated/*"
+  - "JobOrder.*Tests"
+  - "**/MockResults.swift"

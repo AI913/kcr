@@ -1,0 +1,48 @@
+//
+//  {{ prefix }}{{ module_info.name }}{{ module_info.file_name }}
+//  {{ module_info.project_name }}
+//
+//  Created by {{ developer.name }} on {{ date }}.
+//  Copyright © {{ year }} {{ developer.company }}. All rights reserved.
+//
+
+import XCTest
+import Combine
+@testable import JobOrder_Domain
+@testable import JobOrder_API
+@testable import JobOrder_Data
+
+class {{ module_info.name }}UseCaseTests: XCTestCase {
+
+    private let sampleApi = JobOrder_API.SampleApiRepositoryMock()
+    private let sampleData = JobOrder_Data.SampleDataRepositoryMock()
+    private lazy var useCase = {{ module_info.name }}UseCase(sampleApiRepository: sampleApi,
+                                                             sampleDataRepository: sampleData)
+    private var cancellables: Set<AnyCancellable> = []
+
+    override func setUpWithError() throws {}
+    override func tearDownWithError() throws {}
+
+    func test_sample() {
+
+        XCTContext.runActivity(named: "準正常系") { _ in
+
+            XCTContext.runActivity(named: "未設定の場合") { _ in
+                XCTAssertFalse(useCase.sample, "Falseが設定されていること")
+            }
+        }
+
+        XCTContext.runActivity(named: "正常系") { _ in
+
+            XCTContext.runActivity(named: "Trueが設定済みの場合") { _ in
+                sampleApi.sample = true
+                XCTAssertTrue(useCase.sample, "Trueが設定されていること")
+            }
+
+            XCTContext.runActivity(named: "Falseが設定済みの場合") { _ in
+                sampleApi.sample = false
+                XCTAssertFalse(useCase.sample, "Falseが設定されていること")
+            }
+        }
+    }
+}

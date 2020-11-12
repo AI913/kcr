@@ -1,0 +1,10 @@
+scheme("JobOrder")
+devices(["iPhone 11"])
+result_bundle(true)
+clean(true)
+
+for_lane :deploy do
+end
+
+for_lane :stage do
+end

@@ -1,0 +1,123 @@
+---
+format_version: '8'
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+project_type: ios
+trigger_map:
+- push_branch: "*-d-*"
+  workflow: cache-branch
+- pull_request_source_branch: staging
+  pull_request_target_branch: "*-d-*"
+  workflow: stage
+- pull_request_source_branch: "*-d-*"
+  pull_request_target_branch: staging
+  workflow: stage
+- pull_request_source_branch: staging
+  pull_request_target_branch: master
+  workflow: deploy
+
+workflows:
+  deploy:
+    steps:
+    - fastlane@2:
+        inputs:
+        - lane: deploy
+    before_run:
+    - _before
+    after_run:
+    - _upload-artifacts
+    - _after
+
+  stage:
+    steps:
+    - fastlane@2:
+        inputs:
+        - lane: stage
+    before_run:
+    - _before
+    after_run:
+    - _upload-artifacts
+    - _after
+
+  cache-branch:
+    steps:
+    - fastlane@2:
+        inputs:
+        - lane: cache
+    before_run:
+    - _before
+    after_run:
+    - _after
+
+  _before:
+    steps:
+    - activate-ssh-key@4:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4: {}
+    - cache-pull@2: {}
+    - certificate-and-profile-installer@1: {}
+    - script@1:
+        title: Change Bitrise source dir step
+        inputs:
+        - content: envman add --key BITRISE_SOURCE_DIR --value "$BITRISE_SOURCE_DIR/$BITRISE_SCHEME"
+
+  _after:
+    steps:
+    - cache-push@2:
+        inputs:
+        - cache_paths: |-
+            $BITRISE_CACHE_DIR
+            $MINT_PATH -> Mintfile
+            $BUNDLER_PATH -> Gemfile.lock
+            $POD_PATH -> Podfile.lock
+            $CART_PATH -> Cartfile.resolved
+        is_always_run: true
+    - microsoft-teams-integration@1:
+        inputs:
+        - webhook_url: "$MSTEAMS_WEBHOOK_URL"
+
+  _upload-artifacts:
+    steps:
+    - xcparse@0: {}
+    - script@1:
+        title: Upload xcresults to artifacts
+        inputs:
+        - content: |-
+            zip -r xcresult.zip $FASTLANE_OUTPUT_PATH/JobOrder.xcresult
+            cp xcresult.zip $BITRISE_DEPLOY_DIR
+    - deploy-to-bitrise-io@1: {}
+
+app:
+  envs:
+  - opts:
+      is_expand: false
+    BITRISE_PROJECT_PATH: JobOrder.xcworkspace
+  - opts:
+      is_expand: false
+    BITRISE_SCHEME: JobOrder
+  - opts:
+      is_expand: false
+    BITRISE_EXPORT_METHOD: ad-hoc
+  - opts:
+      is_expand: false
+    MINT_PATH: mint/lib
+  - opts:
+      is_expand: false
+    MINT_LINK_PATH: mint/bin
+  - opts:
+      is_expand: false
+    BUNDLER_PATH: vendor/bundle
+  - opts:
+      is_expand: false
+    POD_PATH: Pods
+  - opts:
+      is_expand: false
+    CART_PATH: Carthage
+  - opts:
+      is_expand: false
+    FASTLANE_OUTPUT_PATH: fastlane/test_output
+  - opts:
+      is_expand: false
+    FASTLANE_CERTIFICATE_PATH: fastlane/certificate
+  - opts:
+      is_expand: false
+    PLIST_PATH: JobOrder/Resources/Info.plist

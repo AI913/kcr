@@ -1,0 +1,78 @@
+excluded:
+  - Carthage
+  - Pods
+  - builds
+  - vendor
+  - JobOrder.Presentation/Resources/Generated
+  - JobOrder.*/MockResults.swift
+
+opt_in_rules:
+  - attributes
+  - closure_end_indentation
+  - closure_spacing
+  - empty_count
+  - explicit_init
+  - fatal_error_message
+  - first_where
+  - nimble_operator
+  - number_separator
+  - object_literal
+  - operator_usage_whitespace
+  - overridden_super_call
+  - prohibited_super_call
+  - redundant_nil_coalescing
+  - unused_import
+  
+disabled_rules:
+  - closure_end_indentation
+  - force_cast
+  - force_try
+  - identifier_name
+  - leading_whitespace
+  - multiple_closures_with_trailing_closure
+  - overridden_super_call
+  - private_outlet
+  - type_name
+  - unused_closure_parameter
+  - unused_optional_binding
+  - unused_setter_value
+  - todo
+  - nesting
+
+# Custom rules
+
+file_length:
+ - 650
+ - 750
+
+#force_cast: warning
+
+#force_try:
+#  severity: warning
+
+identifier_name:
+  min_length: 1
+
+large_tuple: 4
+
+line_length:
+ - 350
+ - 450
+
+#nesting:
+#  type_level: 3
+
+number_separator:
+  minimum_length: 5
+
+type_body_length:
+ - 300
+ - 400
+
+function_body_length:
+ - 70
+ - 100
+
+function_parameter_count:
+  - 7
+  - 10

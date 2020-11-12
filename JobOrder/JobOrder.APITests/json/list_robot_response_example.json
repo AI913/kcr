@@ -1,0 +1,94 @@
+{
+  "data": [
+    {
+      "robotId": "0149308a-af44-4d03-9864-c5ab5561cd91",
+      "awsKey": {
+        "thingArn": "arn:aws:iot:ap-northeast-1:701006255006:thing/mac-book-pro",
+        "thingName": "mac-book-pro"
+      },
+      "displayName": "Tatsumi's MacBook Pro",
+      "createdBy": "user@kyocera.jp",
+      "createTime": 1592477267000,
+      "dataVersion": 1,
+      "displayMaker": "Apple",
+      "displayModel": "MacBookPro15,4",
+      "displayModelClass": "MacBook Pro 2019",
+      "displaySerial": "FVFZM0M8L415",
+      "locale": "ja_JP",
+      "overview": "",
+      "remarks": "",
+      "simulator": false,
+      "type": "PC",
+      "updatedBy": "user@kyocera.jp",
+      "updateTime": 1592477267000
+    },
+    {
+      "robotId": "ac305346-fd81-4cbb-8738-90b025570292",
+      "awsKey": {
+        "thingArn": "arn:aws:iot:ap-northeast-1:701006255006:thing/raspberrypi_3",
+        "thingName": "raspberrypi_3"
+      },
+      "createdBy": "user@kyocera.jp",
+      "createTime": 1592477387000,
+      "dataVersion": 1,
+      "displayMaker": "RS Components Ltd.",
+      "displayModel": "3BPLUS-R",
+      "displayModelClass": "Raspberry Pi3 ModelB+",
+      "displayName": "Minami's Raspberry Pi",
+      "displaySerial": "B8AE9C426FC1",
+      "locale": "ja_JP",
+      "overview": "",
+      "remarks": "",
+      "simulator": false,
+      "type": "Raspberry Pi",
+      "updatedBy": "user@kyocera.jp",
+      "updateTime": 1592477387000
+    },
+    {
+      "robotId": "0c2ede75-65b9-4bce-99d5-a82c2a685655",
+      "awsKey": {
+        "thingArn": "arn:aws:iot:ap-northeast-1:701006255006:thing/simulator",
+        "thingName": "simulator"
+      },
+      "displayName": "Kanasaki 1",
+      "createdBy": "user@kyocera.jp",
+      "createTime": 1592477367000,
+      "dataVersion": 1,
+      "displayMaker": "Sample Maker Inc.",
+      "displayModel": "41DA",
+      "displayModelClass": "SR-202004",
+      "displaySerial": "B8AE9C426FC1",
+      "locale": "ja_JP",
+      "overview": "The overview of Sample Robot 3.",
+      "remarks": "This remarks of Sample Robot 3.",
+      "simulator": true,
+      "type": "Arm",
+      "updatedBy": "user@kyocera.jp",
+      "updateTime": 1592477367000
+    },
+    {
+      "awsKey": {
+        "thingArn": "arn:aws:iot:ap-northeast-1:701006255006:thing/TunnelTestDevice",
+        "thingName": "TunnelTestDevice"
+      },
+      "createdBy": "user@kyocera.jp",
+      "createTime": 1592477447000,
+      "dataVersion": 1,
+      "displayMaker": "Amazon Web Services",
+      "displayModel": "EC2 t2.xlarge",
+      "displayModelClass": "EC2",
+      "displayName": "Tunnel Test Device(EC2)",
+      "displaySerial": "i-01e92ee4c810d9fc1",
+      "locale": "ja_JP",
+      "overview": "",
+      "remarks": "",
+      "robotId": "c854fbc2-38af-4f1d-a155-72df574ed2a7",
+      "simulator": false,
+      "type": "Computer",
+      "updatedBy": "user@kyocera.jp",
+      "updateTime": 1592477447000
+    }
+  ],
+  "count": 4,
+  "time": 1592477407000
+}

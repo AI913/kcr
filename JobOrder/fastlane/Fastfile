@@ -1,0 +1,181 @@
+# vim: synyax=ruby
+
+default_platform :ios
+
+platform :ios do
+
+  before_all do |lane|
+    setup_library(useWorkaround: true)
+  end
+
+  after_all do |lane|
+  end
+
+  error do |lane, exception|
+  end
+
+  desc "Marge to Master branch (Deploy to AppStore Connect)"
+  lane :deploy do
+
+    import_certificates
+    get_provisioning_profile
+
+    license_plist
+    run_tests
+    # slather
+
+    codecov
+    # danger
+
+    increment_build_number
+    clean_build_artifacts
+    commit_version_bump(
+      message: 'Auto build number update by fastlane.',
+      xcodeproj: 'JobOrder.xcodeproj',
+    )
+    #push_to_git_remote(
+    #  remote: "origin",
+    #  local_branch: "HEAD",
+    #  remote_branch: "staging",
+    #  force: true,
+    #  tags: false
+    #)
+
+    # build_app
+    # upload_to_testflight
+    # jazzy_wrapper
+  end
+
+  desc "Marge to Staging branch"
+  lane :stage do
+
+    import_certificates
+    get_provisioning_profile(adhoc: true)
+
+    license_plist
+    run_tests
+    # slather
+
+    codecov
+    # danger
+
+    # build_app
+  end
+
+  desc "Push to Developemnt branch"
+  lane :cache do
+  end
+
+  desc "Import certificates"
+  private_lane :import_certificates do
+    # キーチェーンを作成する
+    create_keychain(
+      name: ENV['KEYCHAIN_NAME'],
+      password: ENV['KEYCHAIN_PASSWORD'],
+      default_keychain: true,
+      unlock: true,
+      timeout: 3600,
+      lock_when_sleeps: true
+    )
+    # 証明書をimport 。リポジトリのパスを指定
+    import_certificate(
+      keychain_name: ENV['KEYCHAIN_NAME'],
+      keychain_password: ENV['KEYCHAIN_PASSWORD'],
+      certificate_path: ENV['FASTLANE_CERTIFICATE_PATH'] + "/AppleWWDRCA.cer"
+    )
+
+    import_certificate(
+      keychain_name: ENV['KEYCHAIN_NAME'],
+      keychain_password: ENV['KEYCHAIN_PASSWORD'],
+      certificate_path: ENV['FASTLANE_CERTIFICATE_PATH'] + "/dist.p12",
+      certificate_password: ENV['CERT_PASSWORD']
+    )
+  end
+
+  desc "Auto upate build number"
+  private_lane :increment_bundle_version do
+    update_plist(
+      plist_path: ENV['PLIST_PATH'],
+      block: proc do |plist|
+        plist["CFBundleVersion"] = (plist["CFBundleVersion"].to_i + 1).to_s
+      end
+    )
+  end
+
+  desc "Setup libraries"
+  private_lane :setup_library do |options|
+    sh("cd .. && make prepare-ci")
+    if options[:useWorkaround]
+      carthage_wrapper(
+        platform: "iOS",
+        cache_builds: true,
+      )
+    else
+      carthage(
+        platform: "iOS",
+        cache_builds: true,
+      )
+    end
+    cocoapods
+  end
+
+  desc "Generate acknowledgement in LicensePlist"
+  private_lane :license_plist do
+    sh("cd .. && make generate-licenses")
+  end
+  
+  desc "Send test result to codecov"
+  private_lane :codecov do
+    codecov_token = ENV["CODECOV_TOKEN"]
+    codecov_reporter(
+      token: codecov_token
+    )
+  end
+
+  desc "Run jazzy in a wrapper"
+  private_lane :jazzy_wrapper do
+    # jazzy
+    sh("cd .. && ./jazzy.sh")
+  end
+
+  # https://github.com/Carthage/Carthage/issues/3019#issuecomment-699161281
+  desc "Run carthage in a wrapper that works with Xcode 12"
+  private_lane :carthage_wrapper do |options|
+    require 'tempfile'
+    tmp = Tempfile.new('xcconfig')
+    oldXcconfig = ENV['XCODE_XCCONFIG_FILE']
+    ENV['XCODE_XCCONFIG_FILE'] = tmp.path
+    begin
+      tmp.write("EXCLUDED_ARCHS__EFFECTIVE_PLATFORM_SUFFIX_simulator__NATIVE_ARCH_64_BIT_x86_64__XCODE_1200 = arm64 arm64e armv7 armv7s armv6 armv8\n")
+      tmp.write("EXCLUDED_ARCHS = $(inherited) $(EXCLUDED_ARCHS__EFFECTIVE_PLATFORM_SUFFIX_$(EFFECTIVE_PLATFORM_SUFFIX)__NATIVE_ARCH_64_BIT_$(NATIVE_ARCH_64_BIT)__XCODE_$(XCODE_VERSION_MAJOR))\n")
+      tmp.flush
+
+      carthage(options)
+    ensure
+      # Always delete the temp file
+      tmp.close
+      tmp.unlink
+      ENV['XCODE_XCCONFIG_FILE'] = oldXcconfig
+    end
+  end
+
+  desc "Send result to MS Teams"
+  private_lane :ms_teams do
+    teams_url = ENV["MSTEAMS_WEBHOOK_URL"]
+    teams(
+      title: "Fastlane says hello",
+      message: "App successfully released",
+      facts:[
+        {
+          "name"=>"Platform",
+          "value"=>"iOS"
+        },
+        {
+          "name"=>"Lane",
+          "value"=>"lane"
+        }
+      ],
+      teams_url: teams_url
+    )
+  end
+end

@@ -1,0 +1,45 @@
+{
+    "data": [
+        {
+            "actionLibraryId": "30cf3116-c823-4093-a62d-4fe07c81ffff",
+            "displayName": "LED Flicker (RED)",
+            "requirements": null,
+            "imagePath": "30cf3116-c823-4093-a62d-4fe07c81ffff/raspberry-pi.jpg",
+            "overview": "A library for flickering Raspberry Pi LEDs.",
+            "remarks": "LED module is required to use.",
+            "dataVersion": 1,
+            "createTime": 1592477377000,
+            "createdBy": "user@kyocera.jp",
+            "updateTime": 1592477377000,
+            "updatedBy": "user@kyocera.jp"
+        },
+        {
+            "actionLibraryId": "9da41ec9-d611-42f9-87e7-f929f58917df",
+            "displayName": "LED Flicker (GREEN)",
+            "requirements": null,
+            "imagePath": "9da41ec9-d611-42f9-87e7-f929f58917df/raspberry-pi.jpg",
+            "overview": "A library for flickering Raspberry Pi LEDs.",
+            "remarks": "LED module is required to use.",
+            "dataVersion": 1,
+            "createTime": 1592477397000,
+            "createdBy": "user@kyocera.jp",
+            "updateTime": 1592477397000,
+            "updatedBy": "user@kyocera.jp"
+        },
+        {
+            "actionLibraryId": "12cfcc68-634f-41c1-b5fb-e094cafdd512",
+            "displayName": "LED Flicker (YELLOW)",
+            "requirements": null,
+            "imagePath": "12cfcc68-634f-41c1-b5fb-e094cafdd512/raspberry-pi.jpg",
+            "overview": "A library for flickering Raspberry Pi LEDs.",
+            "remarks": "LED module is required to use.",
+            "dataVersion": 1,
+            "createTime": 1592477267000,
+            "createdBy": "user@kyocera.jp",
+            "updateTime": 1592477267000,
+            "updatedBy": "user@kyocera.jp"
+        }
+    ],
+    "count": 3,
+    "time": 1592477407000
+}

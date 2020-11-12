@@ -1,0 +1,70 @@
+/* 
+  Localizable.strings
+  JobOrder
+
+  Created by Yu Suzuki on 2020/05/18.
+  Copyright © 2020 Kento Tatsumi. All rights reserved.
+*/
+
+"keyword" = "キーワード";
+"cancel"  = "キャンセル";
+"calibrate_to_robot" = "キャリブレーションを依頼";
+"select_a_robot_from_the_list" = "リストからロボットを選択してください。";
+"select_a_job_from_the_list" = "リストからジョブを選択してください。";
+"connection_status" = "接続状態";
+"restore_identifier" = "リストアID";
+"biometrics_authentication" = "生体認証";
+"sign_out" = "サインアウト";
+"sync_cloud" = "データ更新";
+"robot_video" = "WebRTCテスト";
+"about_this_app" = "このアプリについて";
+"account" = "アカウント";
+"cloud" = "クラウド";
+"information" = "アプリ情報";
+"acknowledgment" = "Acknowledgment";
+"open_source" = "オープンソース";
+"Error Count" = "エラー回数";
+"Error Rate" = "エラーレート";
+
+// Job Entry
+"job_entry_general_information_form.title" = "基本情報";
+"job_entry_general_information_form.subtitle" = "基本情報を入力";
+"job_entry_general_information_form.job_name" = "ジョブ名 *";
+"job_entry_general_information_form.remarks" = "備考";
+"job_entry_general_information_form.bottom_button" = "次へ";
+"job_entry_comfirm.title" = "確認";
+"job_entry_comfirm.job_name" = "ジョブ名";
+"job_entry_comfirm.action_library" = "アクションライブラリ";
+"job_entry_comfirm.workbench_library" = "ワークベンチライブラリ";
+"job_entry_comfirm.work_library" = "ワークライブラリ";
+"job_entry_comfirm.bottom_button" = "作成";
+
+// Action Entry
+"action_entry_action_library_selection.title" = "アクションを選択";
+"action_entry_action_library_selection.subtitle" = "使用するアクションライブラリを選択してください";
+"action_entry_action_library_selection.bottom_button" = "次へ";
+"work_bench_entry.subtitle1" = "ワークベンチライブラリを選択します";
+"work_bench_entry.subtitle2" = "移動元のワークベンチを選択します";
+"work_bench_entry.library" = "ライブラリ";
+"work_bench_entry.not_selected" = "未選択";
+"work_bench_entry.bottom_button" = "次へ";
+"work_bench_library_selection.subtitle" = "使用するワークベンチライブラリを選択してください";
+"work_bench_library_selection.bottom_button" = "完了";
+"work_object_library_test.left_button" = "戻る";
+"work_object_library_selection.subtitle" = "ワークを認識するためのライブラリを選択してください";
+"work_object_library_selection.test" = "テスト開始";
+"work_object_library_selection.bottom_button" = "次へ";
+"work_object_library_test.title" = "ワークの認識テスト結果";
+"work_object_library_test.left_button" = "閉じる";
+"work_object_library_test.bottom_button" = "再撮影";
+"work_object_selection.subtitle" = "移動するワークを選択してください";
+"work_object_selection.bottom_button" = "完了";
+"work_bench_selection.subtitle" = "移動先のワークベンチを選択してください";
+
+"action_entry_view_data.work_library.name.industrial_parts" = "Industrial Parts";
+"action_entry_view_data.work_library.name.stationery" = "Stationery";
+"action_entry_view_data.work_library.name.spring" = "Spring";
+
+"action_entry_view_data.work_library.name.industrial_parts" = "工業部品";
+"action_entry_view_data.work_library.name.stationery" = "文房具";
+"action_entry_view_data.work_library.name.spring" = "バネ";

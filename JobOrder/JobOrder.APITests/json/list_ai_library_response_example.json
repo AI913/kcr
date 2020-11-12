@@ -1,0 +1,62 @@
+{
+    "data": [
+        {
+            "aiLibraryId": "19ae9914-acb5-4e6e-ab11-52a20d8952f2",
+            "displayName": "Gear",
+            "type": "recognition-workbench",
+            "requirements": null,
+            "imagePath": "19ae9914-acb5-4e6e-ab11-52a20d8952f2/industrial.png",
+            "overview": "This library is a recognition of 'Gear' used to detect a workobject.",
+            "remarks": "The remarks of Gear Recognize Library.",
+            "dataVersion": 1,
+            "createTime": 1592477167000,
+            "createdBy": "user@kyocera.jp",
+            "updateTime": 1592477167000,
+            "updatedBy": "user@kyocera.jp"
+        },
+        {
+            "aiLibraryId": "657baca4-8273-45cf-8d8f-223847b38f2f",
+            "displayName": "Boxes",
+            "type": "recognition-workbench",
+            "requirements": null,
+            "imagePath": "657baca4-8273-45cf-8d8f-223847b38f2f/box.png",
+            "overview": "This library is a recognition of 'Box' used to select a workbench.",
+            "remarks": "The remarks of Box Recognize Library.",
+            "dataVersion": 1,
+            "createTime": 1592477327000,
+            "createdBy": "user@kyocera.jp",
+            "updateTime": 1592477327000,
+            "updatedBy": "user@kyocera.jp"
+        },
+        {
+            "aiLibraryId": "e6ec20fd-b4f2-467c-896c-b568a5b3949f",
+            "displayName": "Wooden Boxes",
+            "type": "recognition-workbench",
+            "requirements": null,
+            "imagePath": "e6ec20fd-b4f2-467c-896c-b568a5b3949f/box.png",
+            "overview": "This library is a recognition of 'Wooden Box' used to select a workbench.",
+            "remarks": "The remarks of Wooden Box Recognize Library.",
+            "dataVersion": 1,
+            "createTime": 1592477357000,
+            "createdBy": "user@kyocera.jp",
+            "updateTime": 1592477357000,
+            "updatedBy": "user@kyocera.jp"
+        },
+        {
+            "aiLibraryId": "f21336f1-1138-4038-8a60-abdd1d6a9e16",
+            "displayName": "Industrial Materials",
+            "type": "recognition-workbench",
+            "requirements": null,
+            "imagePath": "f21336f1-1138-4038-8a60-abdd1d6a9e16/industrial.png",
+            "overview": "This library is a recognition of 'Industrial Material' used to detect a  workobject.",
+            "remarks": "The remarks of Industrial Materials Recognize Library.",
+            "dataVersion": 1,
+            "createTime": 1592477368000,
+            "createdBy": "user@kyocera.jp",
+            "updateTime": 1592477368000,
+            "updatedBy": "user@kyocera.jp"
+        }
+    ],
+    "count": 4,
+    "time": 1592477407000
+}

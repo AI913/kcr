@@ -1,0 +1,21 @@
+//
+//  {{ prefix }}{{ module_info.name }}{{ module_info.file_name }}
+//  {{ module_info.project_name }}
+//
+//  Created by {{ developer.name }} on {{ date }}.
+//  Copyright © {{ year }} {{ developer.company }}. All rights reserved.
+//
+
+import XCTest
+import Combine
+@testable import JobOrder_API
+
+class {{ module_info.name }}DataStoreTests: XCTestCase {
+
+    private let mock = SampleProtocolMock()
+    private lazy var dataStore = {{ module_info.name }}DataStore(api: mock)
+    private var cancellables: Set<AnyCancellable> = []
+
+    override func setUpWithError() throws {}
+    override func tearDownWithError() throws {}
+}

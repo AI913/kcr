@@ -1,0 +1,35 @@
+### Headers settings
+company: Kento Tatsumi
+
+### Xcode project settings
+project_name: JobOrder
+prefix: 
+xcodeproj_path: JobOrder.xcodeproj
+
+### Code generation settings section
+# The main project target name
+project_target: JobOrder
+
+# The file path for new modules
+project_file_path: ./
+
+# The Xcode group path to new modules
+project_group_path: ./
+
+### Tests generation settings section
+# The tests target name
+test_target: JobOrderTests
+
+# The file path for new tests
+test_file_path: ./
+
+# The Xcode group path to new tests
+test_group_path: ./
+
+### Dependencies settings section
+podfile_path: Podfile
+cartfile_path: Carthfile
+
+### Templates
+templates:
+- {name: clean_architecture, local: generamba-catalog/clean_architecture}

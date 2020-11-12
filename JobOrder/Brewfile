@@ -1,0 +1,5 @@
+# Homebrewのバグでcaskができない
+# tap 'peripheryapp/periphery'
+brew 'mint'
+brew 'rbenv'
+# cask 'periphery'

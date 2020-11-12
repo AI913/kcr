@@ -1,0 +1,45 @@
+//
+//  {{ prefix }}{{ module_info.name }}{{ module_info.file_name }}
+//  {{ module_info.project_name }}
+//
+//  Created by {{ developer.name }} on {{ date }}.
+//  Copyright © {{ year }} {{ developer.company }}. All rights reserved.
+//
+
+import XCTest
+@testable import JobOrder_Presentation
+
+class {{ module_info.name }}VieControllerTests: XCTestCase {
+
+    private let mock = {{ module_info.name }}PresenterProtocolMock()
+    private let vc = StoryboardScene.Sample.{{ module_info.name }}.instantiate()
+
+    override func setUpWithError() throws {
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        window.rootViewController = vc
+        window.makeKeyAndVisible()
+        vc.presenter = mock
+    }
+
+    override func tearDownWithError() throws {}
+
+    func test_outlets() {
+        XCTAssertNotNil(vc.sample)
+    }
+
+    func test_actions() {
+        XCTAssertNoThrow(vc.sampleButton.sendActions(for: .touchUpInside))
+    }
+    
+    func test_tapSampleButton() {
+        vc.sampleButton.sendActions(for: .touchUpInside)
+        XCTAssertEqual(mock.tapSampleButtonCallCount, 1)
+    }
+
+    func test_showAlert() {
+        XCTContext.runActivity(named: "アラートを表示") { _ in
+            vc.showErrorAlert(NSError(domain: "Error", code: -1, userInfo: nil))
+            XCTAssertTrue(vc.presentedViewController is UIAlertController)
+        }
+    }
+}

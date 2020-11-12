@@ -1,0 +1,23 @@
+xcassets:
+  inputs:
+    - JobOrder.Presentation/Resources/Image.xcassets
+    - JobOrder.Presentation/Resources/Colors.xcassets
+  outputs:
+    - templateName: swift5
+      output: JobOrder.Presentation/Resources/Generated/Asset.swift
+
+strings:
+  inputs:
+    - JobOrder.Presentation/Resources/Base.lproj/Localizable.strings
+  outputs:
+    - templateName: structured-swift5
+      output: JobOrder.Presentation/Resources/Generated/Localized.swift
+
+ib:
+  inputs:
+    - JobOrder.Presentation/Scenes/Storyboards/Base.lproj
+  outputs:
+    - templateName: scenes-swift5
+      output: JobOrder.Presentation/Resources/Generated/Storyboards.swift
+    - templateName: segues-swift5
+      output: JobOrder.Presentation/Resources/Generated/Segues.swift

@@ -1,0 +1,18 @@
+scheme("JobOrder")
+output_directory("./build")
+configuration("Release")
+clean(true)
+
+for_lane :deploy do
+  export_method 'app-store'
+end
+
+for_lane :stage do
+  export_method 'ad-hoc'
+  export_options(
+      provisioningProfiles: {
+        ENV["app_identifier"] => "Job Order for AdHoc",
+      }
+  )
+  xcargs "-UseModernBuildSystem=YES -allowProvisioningUpdates"
+end

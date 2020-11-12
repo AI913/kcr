@@ -1,0 +1,46 @@
+//
+//  {{ prefix }}{{ module_info.name }}{{ module_info.file_name }}
+//  {{ module_info.project_name }}
+//
+//  Created by {{ developer.name }} on {{ date }}.
+//  Copyright © {{ year }} {{ developer.company }}. All rights reserved.
+//
+
+import Foundation
+import Combine
+import JobOrder_API
+import JobOrder_Data
+import JobOrder_Utility
+
+// MARK: - Interface
+/// {{ module_info.name }}UseCaseProtocol
+/// @mockable
+public protocol {{ module_info.name }}UseCaseProtocol {
+    /// Sample
+    var sample: String? { get }
+}
+
+// MARK: - Implementation
+/// {{ module_info.name }}UseCase
+public class {{ module_info.name }}UseCase: {{ module_info.name }}UseCaseProtocol {
+
+    /// A type-erasing cancellable objects that executes a provided closure when canceled.
+    private var cancellables: Set<AnyCancellable> = []
+    /// SampleApiレポジトリ
+    private let sampleApi: JobOrder_API.SampleApiRepository
+    /// SampleDataレポジトリ
+    private let sampleData: JobOrder_API.SampleDataRepository
+    
+    /// イニシャライザ
+    /// - Parameters:
+    ///   - sampleApiRepository: SampleApiレポジトリ
+    ///   - sampleDataRepository: SampleDataレポジトリ
+    public required init(sampleApiRepository: JobOrder_API.SampleApiRepository,
+                         sampleDataRepository: JobOrder_Data.SampleDataRepository) {
+        self.sampleApi = sampleApiRepository
+        self.sampleData = sampleDataRepository
+    }
+}
+
+// MARK: - Private Function
+extension {{ module_info.name }}UseCase {}

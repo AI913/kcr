@@ -1,0 +1,41 @@
+# .jazzy.yaml
+
+# 出力先フォルダをクリーンするか否か
+clean: true
+
+# 作成者の名前
+author: "Kyocera"
+
+# 作成者のURL
+author_url: "https://www.kyocera.co.jp"
+
+# ドキュメント化するスコープ
+min_acl: internal
+
+# xcodebuildの引数
+xcodebuild_arguments:
+  - -workspace
+  - JobOrder.xcworkspace
+  - -scheme
+  - JobOrder
+
+# 出力先フォルダの指定
+#output: docs
+
+# READMEのパス
+readme: ../README.md
+
+# ドキュメント化する対象モジュールの名称
+#module: JobOrder
+
+# ドキュメントコメントのないファイルはスキップする
+skip_undocumented: true
+
+# ドキュメントにつけるバージョン番号
+module_version: 1.0
+
+# コピーライト
+copyright: "© 2020 Kyocera corporation. All rights reserved."
+
+# ドキュメントのテーマ(apple/fullWidth/jonyの3つから選択可能)
+theme: apple

@@ -1,0 +1,97 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '13.1'
+# Comment the next line if you don't want to use dynamic frameworks
+use_frameworks!
+#use_modular_headers!
+
+abstract_target 'All' do
+
+  # Pods for All
+  
+  target 'JobOrder' do
+  end
+
+  def presentation
+    pod 'GoogleWebRTC', '~> 1.1'
+  end
+
+  def domain
+    pod 'GoogleWebRTC', '~> 1.1'
+  end
+
+  def api
+    pod 'AWSCore', '~> 2.17'
+    pod 'AWSMobileClient', '~> 2.17'
+    pod 'AWSCognito', '~> 2.17'
+    pod 'AWSCognitoIdentityProvider', '~> 2.17'
+    pod 'AWSIoT', '~> 2.17'
+    pod 'AWSS3', '~> 2.17'
+    webrtc
+  end
+
+  def data
+  end
+
+  def webrtc
+    pod 'AWSCognitoIdentityProvider', '~> 2.17'
+    pod 'AWSMobileClient', '~> 2.17'
+    pod 'CommonCryptoModule'
+    pod 'AWSKinesisVideo', '~> 2.17'
+    pod 'AWSKinesisVideoSignaling', '~> 2.17'
+    pod 'GoogleWebRTC', '~> 1.1'
+    pod 'Starscream', '~> 3.0'
+  end
+
+  target 'JobOrderUITests' do
+    inherit! :search_paths
+    presentation
+    domain
+    api
+    data
+  end
+  
+  target 'JobOrder.PresentationTests' do
+    inherit! :search_paths
+    presentation
+  end
+
+  target 'JobOrder.DomainTests' do
+    inherit! :search_paths
+    domain
+  end
+
+#  target 'JobOrder.DataTests' do
+#    inherit! :search_paths
+#    data
+#  end
+
+  target 'JobOrder.APITests' do
+    inherit! :search_paths
+    api
+    pod 'Mockingjay', '3.0.0-alpha.1'
+  end
+
+#  target 'JobOrder.UtilityTests' do
+#    inherit! :search_paths
+#  end
+
+  target 'JobOrder.Presentation' do
+    presentation
+  end
+
+  target 'JobOrder.Domain' do
+    domain
+  end
+
+  target 'JobOrder.API' do
+    api
+  end
+
+#  target 'JobOrder.Data' do
+#    data
+#  end
+
+#  target 'JobOrder.Utility' do
+#  end
+
+end

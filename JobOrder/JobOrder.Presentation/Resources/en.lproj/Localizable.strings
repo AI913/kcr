@@ -1,0 +1,66 @@
+/* 
+  Localizable.strings
+  JobOrder
+
+  Created by Yu Suzuki on 2020/05/18.
+  Copyright © 2020 Kento Tatsumi. All rights reserved.
+*/
+
+"keyword" = "Keyword";
+"cancel"  = "Cancel";
+"calibrate_to_robot" = "Calibrate to robot";
+"select_a_robot_from_the_list" = "Select a robot from the list.";
+"select_a_job_from_the_list" = "Select a job from the list.";
+"connection_status" = "Connection status";
+"restore_identifier" = "Restore identifier";
+"biometrics_authentication" = "Biometrics authentication";
+"sign_out" = "Sign out";
+"sync_cloud" = "Sync cloud / edge data";
+"robot_video" = "WebRTC Test";
+"about_this_app" = "About this app";
+"account" = "Account";
+"cloud" = "Cloud";
+"information" = "Information";
+"acknowledgment" = "Acknowledgment";
+"open_source" = "Open Source";
+"Error Count" = "Error Count";
+"Error Rate" = "Error Rate";
+
+// Job Entry
+"job_entry_general_information_form.title" = "Basic Info";
+"job_entry_general_information_form.subtitle" = "Enter basic information";
+"job_entry_general_information_form.job_name" = "Job name *";
+"job_entry_general_information_form.remarks" = "Remarks";
+"job_entry_general_information_form.bottom_button" = "Next";
+"job_entry_comfirm.title" = "Confirm";
+"job_entry_comfirm.job_name" = "Job Name";
+"job_entry_comfirm.action_library" = "Action Library";
+"job_entry_comfirm.workbench_library" = "Workbench Library";
+"job_entry_comfirm.work_library" = "Work Library";
+"job_entry_comfirm.bottom_button" = "Create";
+
+// Action Entry
+"action_entry_action_library_selection.title" = "Action Selection";
+"action_entry_action_library_selection.subtitle" = "Please select the action library to use";
+"action_entry_action_library_selection.bottom_button" = "Next";
+"work_bench_entry.subtitle1" = "Select a workbench library";
+"work_bench_entry.subtitle2" = "Select the source workbench";
+"work_bench_entry.library" = "Library";
+"work_bench_entry.not_selected" = "Unselected";
+"work_bench_entry.bottom_button" = "Next";
+"work_bench_library_selection.subtitle" = "Please select the workbench library to use";
+"work_bench_library_selection.bottom_button" = "Done";
+"work_object_library_test.left_button" = "Back";
+"work_object_library_selection.subtitle" = "Please select a library to recognize the workpiece";
+"work_object_library_selection.test" = "Start test";
+"work_object_library_selection.bottom_button" = "Next";
+"work_object_library_test.title" = "Workpiece recognition test results";
+"work_object_library_test.left_button" = "Close";
+"work_object_library_test.bottom_button" = "Recapture";
+"work_object_selection.subtitle" = "Please select the workpiece to be moved";
+"work_object_selection.bottom_button" = "Done";
+"work_bench_selection.subtitle" = "Please select the destination workbench";
+
+"action_entry_view_data.work_library.name.industrial_parts" = "Industrial component";
+"action_entry_view_data.work_library.name.stationery" = "Stationery";
+"action_entry_view_data.work_library.name.spring" = "Spring";

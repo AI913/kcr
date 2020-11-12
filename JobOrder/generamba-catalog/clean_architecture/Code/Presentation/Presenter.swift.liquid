@@ -1,0 +1,56 @@
+//
+//  {{ prefix }}{{ module_info.name }}{{ module_info.file_name }}
+//  {{ module_info.project_name }}
+//
+//  Created by {{ developer.name }} on {{ date }}.
+//  Copyright © {{ year }} {{ developer.company }}. All rights reserved.
+//
+
+import Foundation
+import JobOrder_Domain
+
+// MARK: - Interface
+/// {{ module_info.name }}PresenterProtocol
+/// @mockable
+protocol {{ module_info.name }}PresenterProtocol {
+    /// Sample
+    var sample: String? { get }
+    /// Sampleボタンをタップ
+    func tapSampleButton()
+}
+// MARK: - Implementation
+/// {{ module_info.name }}Presenter
+class {{ module_info.name }}Presenter {
+
+    /// SampleUseCaseProtocol
+    private let useCase: JobOrder_Domain.SampleUseCaseProtocol
+    /// {{ module_info.name }}ViewControllerProtocol
+    private let vc: {{ module_info.name }}ViewControllerProtocol
+    
+    /// イニシャライザ
+    /// - Parameters:
+    ///   - useCase: SampleUseCaseProtocol
+    ///   - vc: {{ module_info.name }}ViewControllerProtocol
+    required init(useCase: JobOrder_Domain.SampleUseCaseProtocol,
+                  vc: {{ module_info.name }}ViewControllerProtocol) {
+        self.useCase = useCase
+        self.vc = vc
+    }
+}
+
+// MARK: - Protocol Function
+extension {{ module_info.name }}Presenter: {{ module_info.name }}PresenterProtocol {
+
+    /// Sample
+    var sample: String? {
+        useCase.sample
+    }
+
+    /// Sampleボタンをタップ
+    func tapSampleButton() {
+    }
+}
+
+
+// MARK: - Private Function
+extension {{ module_info.name }}Presenter {}

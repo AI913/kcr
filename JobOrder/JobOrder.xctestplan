@@ -1,0 +1,111 @@
+{
+  "configurations" : [
+    {
+      "id" : "E6EC0256-9ECA-4A20-A1EA-8AD26AE6ABD8",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:JobOrder.xcodeproj",
+          "identifier" : "D77CF21D240EA4DD007A61EE",
+          "name" : "JobOrder"
+        },
+        {
+          "containerPath" : "container:JobOrder.xcodeproj",
+          "identifier" : "D78EC1D62411CAA6003E5ECD",
+          "name" : "JobOrder.Presentation"
+        },
+        {
+          "containerPath" : "container:JobOrder.xcodeproj",
+          "identifier" : "D77CF29A240EA59F007A61EE",
+          "name" : "JobOrder.Domain"
+        },
+        {
+          "containerPath" : "container:JobOrder.xcodeproj",
+          "identifier" : "D77CF2DE240EA675007A61EE",
+          "name" : "JobOrder.Data"
+        },
+        {
+          "containerPath" : "container:JobOrder.xcodeproj",
+          "identifier" : "D77CF300240EA6D6007A61EE",
+          "name" : "JobOrder.API"
+        },
+        {
+          "containerPath" : "container:JobOrder.xcodeproj",
+          "identifier" : "D78EC12224111A80003E5ECD",
+          "name" : "JobOrder.Utility"
+        }
+      ]
+    },
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:JobOrder.xcodeproj",
+      "identifier" : "D77CF21D240EA4DD007A61EE",
+      "name" : "JobOrder"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:JobOrder.xcodeproj",
+        "identifier" : "D78EC1DE2411CAA6003E5ECD",
+        "name" : "JobOrder.PresentationTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "skippedTests" : [
+        "JobOrderUITests",
+        "JobOrderUITests\/testExample()",
+        "PasswordAuthenticationUITests"
+      ],
+      "target" : {
+        "containerPath" : "container:JobOrder.xcodeproj",
+        "identifier" : "D77CF23E240EA4DF007A61EE",
+        "name" : "JobOrderUITests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "skippedTests" : [
+        "TestCaseBase"
+      ],
+      "target" : {
+        "containerPath" : "container:JobOrder.xcodeproj",
+        "identifier" : "D77CF2E6240EA675007A61EE",
+        "name" : "JobOrder.DataTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:JobOrder.xcodeproj",
+        "identifier" : "D77CF308240EA6D6007A61EE",
+        "name" : "JobOrder.APITests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:JobOrder.xcodeproj",
+        "identifier" : "D77CF2A2240EA59F007A61EE",
+        "name" : "JobOrder.DomainTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:JobOrder.xcodeproj",
+        "identifier" : "D78EC12A24111A81003E5ECD",
+        "name" : "JobOrder.UtilityTests"
+      }
+    }
+  ],
+  "version" : 1
+}

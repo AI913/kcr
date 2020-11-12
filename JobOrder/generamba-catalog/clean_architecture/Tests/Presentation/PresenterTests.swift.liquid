@@ -1,0 +1,47 @@
+//
+//  {{ prefix }}{{ module_info.name }}{{ module_info.file_name }}
+//  {{ module_info.project_name }}
+//
+//  Created by {{ developer.name }} on {{ date }}.
+//  Copyright © {{ year }} {{ developer.company }}. All rights reserved.
+//
+
+import XCTest
+@testable import JobOrder_Presentation
+@testable import JobOrder_Domain
+
+class {{ module_info.name }}PresenterTests: XCTestCase {
+
+    private let vc = {{ module_info.name }}ViewControllerProtocolMock()
+    private let useCase = JobOrder_Domain.SampleUseCaseProtocolMock()
+    private lazy var presenter = {{ module_info.name }}Presenter(useCase: useCase,
+                                                                 vc: vc)
+    override func setUpWithError() throws {}
+    override func tearDownWithError() throws {}
+
+    func test_sample() {
+
+        XCTContext.runActivity(named: "準正常系") { _ in
+
+            XCTContext.runActivity(named: "未設定の場合") { _ in
+                XCTAssertFalse(presenter.sample, "Falseが設定されていること")
+            }
+        }
+
+        XCTContext.runActivity(named: "正常系") { _ in
+
+            XCTContext.runActivity(named: "Trueが設定済みの場合") { _ in
+                useCase.sample = true
+                XCTAssertTrue(presenter.sample, "Trueが設定されていること")
+            }
+
+            XCTContext.runActivity(named: "Falseが設定済みの場合") { _ in
+                useCase.sample = false
+                XCTAssertFalse(presenter.sample, "Falseが設定されていること")
+            }
+        }
+    }
+
+    func test_tapSampleButton() {
+    }
+}
