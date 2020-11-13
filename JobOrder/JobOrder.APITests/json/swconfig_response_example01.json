@@ -1,0 +1,40 @@
+{
+    "data": {
+        "createdBy": "user@kyocera.jp",
+        "createTime": 1592477367000,
+        "dataVersion": 1,
+        "operatingSystem": {
+            "distribution": "Ubuntu",
+            "distributionVersion": "18.04",
+            "system": "Linux",
+            "systemVersion": "4.18"
+        },
+        "robotId": "6592c2a4-3688-49c5-ac1e-4763c81680e4",
+        "softwares": [
+            {
+                "displayName": "Common Module",
+                "displayVersion": "1.0",
+                "softwareId": "37f4e047-faf5-4e06-ad33-9d902a604d10",
+                "swArtifactId": "7a710501-085d-4d13-9813-93a7656df2b2",
+                "versionId": "cb4bcac6-92e1-4a5a-8977-c286088de056"
+            },
+            {
+                "displayName": "Network Service Module",
+                "displayVersion": "1.0",
+                "softwareId": "9d990b60-2f6d-409d-b3a0-bd8fd57e27b2",
+                "swArtifactId": "5c670cf9-0f09-4b2e-843e-2be7aa6b8be0",
+                "versionId": "5dfbca2c-b2d5-434b-83fe-abcf7106a11e"
+            },
+            {
+                "displayName": "Action Service Module",
+                "displayVersion": "1.0",
+                "softwareId": "785c179e-b994-44cc-ae85-bd44f33d7f4d",
+                "swArtifactId": "6e2a6e07-cb46-4753-828a-8969662d7235",
+                "versionId": "424ddc7f-c40f-406e-a221-3059475047cf"
+            }
+        ],
+        "updatedBy": "user@kyocera.jp",
+        "updateTime": 1592477367000
+    },
+    "time": 1592693902000
+}
