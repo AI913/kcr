@@ -28,6 +28,7 @@ extension UICollectionViewCellWithAutoSizing where Self: UICollectionViewCell {
         // 幅は必ず指定のwidthに合わせ、高さはLayout Constraintに則った値とするサイズを求める
         let width = flowLayout.preferredItemWidth(forNumberOfColumns: nColumns)
         self.bounds.size = CGSize(width: width, height: 100)
+        self.widthAnchor.constraint(equalToConstant: width).isActive = true
         self.layoutIfNeeded()
 
         return self.systemLayoutSizeFitting(

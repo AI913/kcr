@@ -8,17 +8,26 @@
 
 import XCTest
 
-protocol PageObject: PageObjectAssertion {
+protocol PageObject: PageObjectAssertion, PageObjectWaitable {
     var app: XCUIApplication { get }
     var view: XCUIElement { get }
 
     init(application: XCUIApplication)
 }
 
+protocol PageObjectWaitable {
+    func waitForExistence(timeout: TimeInterval) -> Bool
+}
+
+extension PageObjectWaitable where Self: PageObject {
+    func waitForExistence(timeout: TimeInterval = 3) -> Bool {
+        return view.waitForExistence(timeout: timeout)
+    }
+}
+
 extension PageObject {
-    func waitExists<T>(_ context: XCTestCase, _ klass: T.Type, timeout: TimeInterval = 3) -> T {
-        //sleep(timeout)
-        context.wait(for: [XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == true"), object: view)], timeout: timeout)
+    func waitExists<T>(_ klass: T.Type, timeout: TimeInterval = 3) -> T {
+        XCTAssert(waitForExistence(timeout: timeout))
         return self as! T
     }
 }

@@ -1,18 +1,15 @@
 scheme("JobOrder")
-output_directory("./build")
-configuration("Release")
+output_directory(ENV["FASTLANE_BUILD_OUTPUT_PATH"])
+output_name("JobOrder.ipa")
+archive_path(ENV["FASTLANE_BUILD_OUTPUT_PATH"] + "/JobOrder.xcarchive")
 clean(true)
 
 for_lane :deploy do
   export_method 'app-store'
+  configuration 'Release'
 end
 
 for_lane :stage do
   export_method 'ad-hoc'
-  export_options(
-      provisioningProfiles: {
-        ENV["app_identifier"] => "Job Order for AdHoc",
-      }
-  )
-  xcargs "-UseModernBuildSystem=YES -allowProvisioningUpdates"
+  configuration 'AdHoc'
 end

@@ -60,8 +60,6 @@ class SettingsPageObject: PageObject {
         var result: PageObject?
         switch index {
         case Indexs.SignOut:
-            //ログアウトは非同期処理が走っている様なので数秒待たないとページ遷移しない
-            sleep(2)
             result = PasswordAuthenticationPageObject(application: app)
         case Indexs.WebRTC:
             result = WebPageObject(application: app)

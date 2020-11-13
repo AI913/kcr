@@ -61,4 +61,24 @@ public class RobotAPIDataStore: RobotAPIRepository {
         Logger.info(target: self)
         return api.get(resUrl: url, token: token, dataId: "\(id)/commands")
     }
+
+    /// Robot SW構成情報を取得する
+    /// - Parameters:
+    ///   - token: トークン情報
+    ///   - id: Robot ID
+    /// - Returns: Robot SW構成情報
+    public func getRobotSwconf(_ token: String, id: String) -> AnyPublisher<APIResult<RobotAPIEntity.Swconf>, Error> {
+        Logger.info(target: self)
+        return api.get(resUrl: url, token: token, dataId: "\(id)/swconf")
+    }
+
+    /// Robot アセット情報を取得する
+    /// - Parameters:
+    ///   - token: トークン情報
+    ///   - id: Robot ID
+    /// - Returns: Robot アセット情報
+    public func getRobotAssets(_ token: String, id: String) -> AnyPublisher<APIResult<[RobotAPIEntity.Asset]>, Error> {
+        Logger.info(target: self)
+        return api.get(resUrl: url, token: token, dataId: "\(id)/assets")
+    }
 }

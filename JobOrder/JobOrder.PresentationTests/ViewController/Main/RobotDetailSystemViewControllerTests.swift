@@ -24,10 +24,8 @@ class RobotDetailSystemViewControllerTests: XCTestCase {
     override func tearDownWithError() throws {}
 
     func test_outlets() {
-        XCTAssertNotNil(vc.operatingSystemLabel, "operatingSystemLabelがOutletに接続されていない")
-        XCTAssertNotNil(vc.middlewareLabel, "middlewareLabelがOutletに接続されていない")
-        XCTAssertNotNil(vc.systemVersionLabel, "systemVersionLabelがOutletに接続されていない")
-        XCTAssertNotNil(vc.storageBarChartView, "storageBarChartViewがOutletに接続されていない")
+        XCTAssertNotNil(vc.softwareConfigurationTableView, "softwareConfigurationTableViewがOutletに接続されていない")
+        XCTAssertNotNil(vc.hardwareConfigurationTableView, "hardwareConfigurationTableViewがOutletに接続されていない")
     }
 
     func test_actions() throws {}
@@ -38,9 +36,15 @@ class RobotDetailSystemViewControllerTests: XCTestCase {
         XCTAssertEqual(vc.viewData.id, param, "正常に値が設定されていない")
     }
 
+    func test_viewWillAppear() {
+        vc.viewWillAppear(true)
+        XCTAssertEqual(mock.viewWillAppearCallCount, 1, "Presenterのメソッドが呼ばれない")
+    }
+
     func test_set() {
         let param: CGFloat = 1.0
         vc.set(height: param)
         XCTAssertEqual(vc.initialHeight, param, "正常に呼ばれること")
     }
+
 }

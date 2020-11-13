@@ -29,6 +29,8 @@ class APIRequestTests: XCTestCase {
     private let taskJson = "api_openapi-spec_v1_examples_command_response_succeeded_example01"
     private let robotJson = "robot_response_example01"
     private let tasksJson = "task_response_example01"
+    private let swconfJson = "swconfig_response_example01"
+    private let assetJson = "list_hw_config_asset_response_example"
 
     override func setUpWithError() throws {}
     override func tearDownWithError() throws {}
@@ -162,6 +164,44 @@ class APIRequestTests: XCTestCase {
             request(
                 APIResult<TaskAPIEntity.Tasks>.self,
                 result: api.get(resUrl: task.url, token: nil, dataId: param),
+                onSuccess: { data in
+                    XCTAssertNotNil(data, "値が取得できていない: \(data)")
+                },
+                onError: { error in
+                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+                })
+        }
+
+        XCTContext.runActivity(named: "SW構成情報を取得する場合") { _ in
+            guard let data = try? getJSONData(swconfJson) else {
+                XCTFail("jsonデータが存在しない")
+                return
+            }
+
+            stub(uri(robot.url.absoluteString + "/\(param)/swconf"), jsonData(data))
+
+            request(
+                APIResult<RobotAPIEntity.Swconf>.self,
+                result: api.get(resUrl: robot.url, token: nil, dataId: param + "/swconf"),
+                onSuccess: { data in
+                    XCTAssertNotNil(data, "値が取得できていない: \(data)")
+                },
+                onError: { error in
+                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+                })
+        }
+
+        XCTContext.runActivity(named: "アセット情報を取得する場合") { _ in
+            guard let data = try? getJSONData(assetJson) else {
+                XCTFail("jsonデータが存在しない")
+                return
+            }
+
+            stub(uri(robot.url.absoluteString + "/\(param)/assets"), jsonData(data))
+
+            request(
+                APIResult<[RobotAPIEntity.Asset]>.self,
+                result: api.get(resUrl: robot.url, token: nil, dataId: param + "/assets"),
                 onSuccess: { data in
                     XCTAssertNotNil(data, "値が取得できていない: \(data)")
                 },

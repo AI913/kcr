@@ -41,7 +41,6 @@ public protocol DataManageUseCaseProtocol {
     /// RobotCommandの情報を取得する
     /// - Parameter id: Robot ID
     func commandFromRobot(id: String) -> AnyPublisher<[DataManageModel.Output.Command], Error>
-
     /// Task情報の詳細を取得する
     /// - Parameters:
     ///   - taskId: Task ID
@@ -51,6 +50,9 @@ public protocol DataManageUseCaseProtocol {
     /// Task情報を取得する
     /// - Parameter taskId: TaskID
     func task(taskId: String) -> AnyPublisher<DataManageModel.Output.Task, Error>
+    /// RobotSystemの情報を取得する
+    /// - Parameter id: Robot ID
+    func robotSystem(id: String) -> AnyPublisher<DataManageModel.Output.System, Error>
 
     //var _processing: Published<Bool> { get set }
     var processing: Bool { get }
@@ -337,7 +339,6 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                         promise(.failure(error))
                     }
                 }, receiveValue: { response in
-
                     if let output = response.data?.compactMap({ DataManageModel.Output.Command($0) }) {
                         promise(.success(output))
                     } else {
@@ -411,6 +412,48 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                         promise(.success(.init(output)))
                     } else {
                         let userInfo = ["__type": "task", "message": "API Resuponse is null"]
+                        promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                    }
+                }).store(in: &self.cancellables)
+        }.eraseToAnyPublisher()
+    }
+    /// RobotSystemの情報を取得する
+    /// - Parameter id: Robot ID
+    /// - Returns: System
+    public func robotSystem(id: String) -> AnyPublisher<DataManageModel.Output.System, Error> {
+        Logger.info(target: self)
+
+        typealias SystemAPIResults = (APIResult<JobOrder_API.RobotAPIEntity.Swconf>,
+                                      APIResult<[JobOrder_API.RobotAPIEntity.Asset]>)
+
+        self.processing = true
+        return Future<DataManageModel.Output.System, Error> { promise in
+            self.auth.getTokens()
+                .flatMap { value -> AnyPublisher<SystemAPIResults, Error> in
+                    guard let token = value.idToken else {
+                        return Future<SystemAPIResults, Error> { promise in
+                            let userInfo = ["__type": "getTokens", "message": "idToken is null."]
+                            promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                        }.eraseToAnyPublisher()
+                    }
+                    return self.robotAPI.getRobotSwconf(token, id: id)
+                        .zip(self.robotAPI.getRobotAssets(token, id: id))
+                        .map { value in
+                            return (value.0, value.1)
+                        }.eraseToAnyPublisher()
+                }.sink(receiveCompletion: { completion in
+                    self.processing = false
+                    switch completion {
+                    case .finished: break
+                    case .failure(let error):
+                        Logger.error(target: self, error.localizedDescription)
+                        promise(.failure(error))
+                    }
+                }, receiveValue: { response in
+                    if let robotSwconf = response.0.data, let robotAssets = response.1.data {
+                        promise(.success(.init(robotSwconf: robotSwconf, robotAssets: robotAssets)))
+                    } else {
+                        let userInfo = ["__type": "RobotCommand", "message": "API Resuponse is null"]
                         promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
                     }
                 }).store(in: &self.cancellables)

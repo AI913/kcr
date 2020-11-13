@@ -20,13 +20,14 @@ class AuthenticationUITests: XCTestCase {
     func testSetSpace() throws {
         let app = XCUIApplication()
 
-        sleep(1)
+        AuthenticationUITests.waitConnectionSettingsPage()
         XCTContext.runActivity(named: "Space名を設定する") { _ in
             let name = "test"
             let authPage = PasswordAuthenticationPageObject(application: app)
             let page = (authPage.existsPage ? authPage.tapSettings() : ConnectionSettingsPageObject(application: app))
                 .enterSpace(name)
                 .tapSaveButton()
+                .waitExists(PasswordAuthenticationPageObject.self)
             XCTAssertTrue(page.existsPage)
         }
     }
@@ -39,13 +40,13 @@ class AuthenticationUITests: XCTestCase {
             let identifier = "200300137"
             XCTContext.runActivity(named: "サインイン失敗した時はアラートを表示する") { _ in
                 let password = "Kyocera7!"
-                _ = PasswordAuthenticationPageObject(application: app)
+                let page = PasswordAuthenticationPageObject(application: app)
+                _ = page
                     .enterIdentifier(identifier)
                     .enterPassword(password)
                     .tapSignInButton()
 
-                sleep(3)
-                XCTAssertTrue(PasswordAuthenticationPageObject(application: app).existsPage)
+                XCTAssert(page.invalidAlert.waitForExistence(timeout: 3))
             }
             XCTContext.runActivity(named: "サインイン成功した時はMain画面へ遷移する") { _ in
                 let password = "Kyocera8!"
@@ -53,8 +54,8 @@ class AuthenticationUITests: XCTestCase {
                     .enterIdentifier(identifier)
                     .enterPassword(password)
                     .tapSignInButton()
+                    .waitExists(MainPageObject.self, timeout: 10)
 
-                sleep(3)
                 XCTAssertTrue(page.isExists)
             }
         }
@@ -67,8 +68,8 @@ class AuthenticationUITests: XCTestCase {
         XCTContext.runActivity(named: "パスワードを再設定する") { _ in
             let page = PasswordAuthenticationPageObject(application: app)
                 .tapForgotYourPasswordButton()
+                .waitExists(MailVerificationEntryPageObject.self)
 
-            sleep(1)
             XCTAssertTrue(page.existsPage)
         }
     }
@@ -76,7 +77,7 @@ class AuthenticationUITests: XCTestCase {
     private func checkSpaceName() {
         let app = XCUIApplication()
 
-        sleep(1)
+        AuthenticationUITests.waitConnectionSettingsPage()
         XCTContext.runActivity(named: "Space名が未設定の場合は設定する") { _ in
             let name = "test"
             let page = ConnectionSettingsPageObject(application: app)
@@ -84,14 +85,18 @@ class AuthenticationUITests: XCTestCase {
                 XCTAssertTrue(
                     page.enterSpace(name)
                         .tapSaveButton()
-                        .existsPage)
+                        .waitForExistence())
             }
         }
     }
 
+    private static func waitConnectionSettingsPage(timeout: TimeInterval = 1) {
+        sleep(UInt32(timeout))
+    }
+
     public static func Login() {
         let app = XCUIApplication()
-        sleep(1)
+        waitConnectionSettingsPage()
         XCTContext.runActivity(named: "Space名が未設定の場合は設定する") { _ in
             let name = "test"
             let page = ConnectionSettingsPageObject(application: app)
@@ -99,7 +104,7 @@ class AuthenticationUITests: XCTestCase {
                 XCTAssertTrue(
                     page.enterSpace(name)
                         .tapSaveButton()
-                        .existsPage)
+                        .waitForExistence())
             }
         }
         XCTContext.runActivity(named: "サインインする") { _ in
@@ -110,7 +115,7 @@ class AuthenticationUITests: XCTestCase {
                     .enterIdentifier(identifier)
                     .enterPassword(password)
                     .tapSignInButton()
-                sleep(3)
+                    .waitExists(MainPageObject.self)
             }
         }
     }

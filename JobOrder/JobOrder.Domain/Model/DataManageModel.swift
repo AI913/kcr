@@ -12,8 +12,10 @@ import JobOrder_API
 
 /// DataManageモデル
 public struct DataManageModel {
+
     /// Presentationへ出力するためのデータ形式
     public struct Output {
+
         /// API同期データ
         public struct SyncData {
             /// Jobデータ
@@ -469,6 +471,81 @@ public struct DataManageModel {
             public init(_ task: TaskAPIEntity.Tasks) {
                 self.jobId = task.jobId
                 self.exit = Exit(task.exit)
+            }
+        }
+
+        /// Robot Systemデータ
+        public struct System {
+            public let softwareConfiguration: SoftwareConfiguration
+            public let hardwareConfigurations: [HardwareConfiguration]
+
+            public init(softwareConfiguration: SoftwareConfiguration, hardwareConfigurations: [HardwareConfiguration]) {
+                self.softwareConfiguration = softwareConfiguration
+                self.hardwareConfigurations = hardwareConfigurations
+            }
+
+            init(robotSwconf: JobOrder_API.RobotAPIEntity.Swconf, robotAssets: [JobOrder_API.RobotAPIEntity.Asset]) {
+                /// ソフトウェア情報
+                let distribution = "\(robotSwconf.operatingSystem?.distribution ?? "") \(robotSwconf.operatingSystem?.distributionVersion ?? "")"
+                let system = "\(robotSwconf.operatingSystem?.system ?? "") \(robotSwconf.operatingSystem?.systemVersion ?? "")"
+                var installs = [SoftwareConfiguration.Installed]()
+                if let softwares = robotSwconf.softwares {
+                    for software in softwares {
+                        let installed = SoftwareConfiguration.Installed(name: software.displayName ?? "", version: software.displayVersion ?? "")
+                        installs.append(installed)
+                    }
+                }
+                let softwareConfiguration = SoftwareConfiguration(system: system, distribution: distribution, installs: installs)
+
+                /// ハードウェア情報
+                var hardwareConfigurations = [HardwareConfiguration]()
+                for asset in robotAssets {
+                    let hardwareConfiguration = HardwareConfiguration(type: asset.type, model: asset.displayModel ?? "", maker: asset.displayMaker ?? "", serialNo: asset.displaySerial ?? "")
+                    hardwareConfigurations.append(hardwareConfiguration)
+                }
+
+                self.init(softwareConfiguration: softwareConfiguration, hardwareConfigurations: hardwareConfigurations)
+            }
+
+            public static func == (lhs: System, rhs: System) -> Bool {
+                return lhs.softwareConfiguration == rhs.softwareConfiguration &&
+                    lhs.hardwareConfigurations.elementsEqual(rhs.hardwareConfigurations, by: { $0 == $1 })
+            }
+
+            public struct SoftwareConfiguration {
+                public let system: String
+                public let distribution: String
+                public let installs: [Installed]
+
+                public static func == (lhs: SoftwareConfiguration, rhs: SoftwareConfiguration) -> Bool {
+                    return lhs.system == rhs.system &&
+                        lhs.distribution == rhs.distribution &&
+                        lhs.installs.elementsEqual(rhs.installs, by: { $0 == $1 })
+                }
+
+                public struct Installed {
+                    public let name: String
+                    public let version: String
+
+                    public static func == (lhs: Installed, rhs: Installed) -> Bool {
+                        return lhs.name == rhs.name &&
+                            lhs.version == rhs.version
+                    }
+                }
+            }
+
+            public struct HardwareConfiguration {
+                public let type: String
+                public let model: String
+                public let maker: String
+                public let serialNo: String
+
+                public static func == (lhs: HardwareConfiguration, rhs: HardwareConfiguration) -> Bool {
+                    return lhs.type == rhs.type &&
+                        lhs.model == rhs.model &&
+                        lhs.maker == rhs.maker &&
+                        lhs.serialNo == rhs.serialNo
+                }
             }
         }
 

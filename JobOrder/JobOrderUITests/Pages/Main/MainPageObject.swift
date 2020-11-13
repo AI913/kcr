@@ -70,3 +70,10 @@ extension MainPageObject {
         return view.exists
     }
 }
+
+// MARK: - Waitable
+extension MainPageObject {
+    func waitForExistence(timeout: TimeInterval = 3) -> Bool {
+        return isExists
+    }
+}

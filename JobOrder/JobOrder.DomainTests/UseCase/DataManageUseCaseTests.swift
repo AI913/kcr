@@ -1106,6 +1106,325 @@ class DataManageUseCaseTests: XCTestCase {
         wait(for: [tokenHandlerExpectation, getImageHandlerExpectation, completionExpectation], timeout: ms1000)
     }
 
+    func test_robotSystem() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let getRobotSwconfHandlerExpectation = expectation(description: "Get swconf handler")
+        let getRobotAssetsHandlerExpectation = expectation(description: "Get assets handler")
+        let completionExpectation = expectation(description: "completion")
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        robotAPI.getRobotSwconfHandler = { token, id in
+            return Future<APIResult<JobOrder_API.RobotAPIEntity.Swconf>, Error> { promise in
+                getRobotSwconfHandlerExpectation.fulfill()
+                let entity = APIResult<RobotAPIEntity.Swconf>(time: 1, data: DomainTestsStub().swconf, count: nil)
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        robotAPI.getRobotAssetsHandler = { token, id in
+            return Future<APIResult<[JobOrder_API.RobotAPIEntity.Asset]>, Error> { promise in
+                getRobotAssetsHandlerExpectation.fulfill()
+                let entity = APIResult<[RobotAPIEntity.Asset]>(time: 1, data: DomainTestsStub().assets, count: 1)
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.robotSystem(id: param)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished: break
+                case .failure(let error):
+                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+                }
+                completionExpectation.fulfill()
+            }, receiveValue: { response in
+                XCTAssertNotNil(response, "値が取得できていない")
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, getRobotSwconfHandlerExpectation, getRobotAssetsHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_robotSystemNotReceiveBoth() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let getRobotSwconfHandlerExpectation = expectation(description: "Get swconf handler")
+        let getRobotAssetsHandlerExpectation = expectation(description: "Get assets handler")
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        robotAPI.getRobotSwconfHandler = { token, id in
+            return Future<APIResult<JobOrder_API.RobotAPIEntity.Swconf>, Error> { promise in
+                getRobotSwconfHandlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        robotAPI.getRobotAssetsHandler = { token, id in
+            return Future<APIResult<[JobOrder_API.RobotAPIEntity.Asset]>, Error> { promise in
+                getRobotAssetsHandlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.robotSystem(id: param)
+            .sink(receiveCompletion: { _ in
+                XCTFail("値を取得できてはいけない")
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, getRobotSwconfHandlerExpectation, getRobotAssetsHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_robotSystemNotReceiveSwconf() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let getRobotSwconfHandlerExpectation = expectation(description: "Get swconf handler")
+        let getRobotAssetsHandlerExpectation = expectation(description: "Get assets handler")
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        robotAPI.getRobotSwconfHandler = { token, id in
+            return Future<APIResult<JobOrder_API.RobotAPIEntity.Swconf>, Error> { promise in
+                getRobotSwconfHandlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        robotAPI.getRobotAssetsHandler = { token, id in
+            return Future<APIResult<[JobOrder_API.RobotAPIEntity.Asset]>, Error> { promise in
+                getRobotAssetsHandlerExpectation.fulfill()
+                let entity = APIResult<[RobotAPIEntity.Asset]>(time: 1, data: DomainTestsStub().assets, count: 1)
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.robotSystem(id: param)
+            .sink(receiveCompletion: { _ in
+                XCTFail("値を取得できてはいけない")
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, getRobotSwconfHandlerExpectation, getRobotAssetsHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_robotSystemNotReceiveAssets() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let getRobotSwconfHandlerExpectation = expectation(description: "Get swconf handler")
+        let getRobotAssetsHandlerExpectation = expectation(description: "Get assets handler")
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        robotAPI.getRobotSwconfHandler = { token, id in
+            return Future<APIResult<JobOrder_API.RobotAPIEntity.Swconf>, Error> { promise in
+                getRobotSwconfHandlerExpectation.fulfill()
+                let entity = APIResult<RobotAPIEntity.Swconf>(time: 1, data: DomainTestsStub().swconf, count: nil)
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        robotAPI.getRobotAssetsHandler = { token, id in
+            return Future<APIResult<[JobOrder_API.RobotAPIEntity.Asset]>, Error> { promise in
+                getRobotAssetsHandlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.robotSystem(id: param)
+            .sink(receiveCompletion: { _ in
+                XCTFail("値を取得できてはいけない")
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, getRobotSwconfHandlerExpectation, getRobotAssetsHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_robotSystemErrorBoth() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let getRobotSwconfHandlerExpectation = expectation(description: "Get swconf handler")
+        let getRobotAssetsHandlerExpectation = expectation(description: "Get assets handler")
+        let completionExpectation = expectation(description: "completion")
+        let error = NSError(domain: "Error", code: -1, userInfo: nil)
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        robotAPI.getRobotSwconfHandler = { token, id in
+            return Future<APIResult<JobOrder_API.RobotAPIEntity.Swconf>, Error> { promise in
+                getRobotSwconfHandlerExpectation.fulfill()
+                promise(.failure(error))
+            }.eraseToAnyPublisher()
+        }
+
+        robotAPI.getRobotAssetsHandler = { token, id in
+            return Future<APIResult<[JobOrder_API.RobotAPIEntity.Asset]>, Error> { promise in
+                getRobotAssetsHandlerExpectation.fulfill()
+                promise(.failure(error))
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.robotSystem(id: param)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    XCTFail("値を取得できてはいけない")
+                case .failure(let e):
+                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                }
+                completionExpectation.fulfill()
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, getRobotSwconfHandlerExpectation, getRobotAssetsHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_robotSystemErrorSwconf() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let getRobotSwconfHandlerExpectation = expectation(description: "Get swconf handler")
+        let getRobotAssetsHandlerExpectation = expectation(description: "Get assets handler")
+        let completionExpectation = expectation(description: "completion")
+        let error = NSError(domain: "Error", code: -1, userInfo: nil)
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        robotAPI.getRobotSwconfHandler = { token, id in
+            return Future<APIResult<JobOrder_API.RobotAPIEntity.Swconf>, Error> { promise in
+                getRobotSwconfHandlerExpectation.fulfill()
+                promise(.failure(error))
+            }.eraseToAnyPublisher()
+        }
+
+        robotAPI.getRobotAssetsHandler = { token, id in
+            return Future<APIResult<[JobOrder_API.RobotAPIEntity.Asset]>, Error> { promise in
+                getRobotAssetsHandlerExpectation.fulfill()
+                let entity = APIResult<[RobotAPIEntity.Asset]>(time: 1, data: DomainTestsStub().assets, count: 1)
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.robotSystem(id: param)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    XCTFail("値を取得できてはいけない")
+                case .failure(let e):
+                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                }
+                completionExpectation.fulfill()
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, getRobotSwconfHandlerExpectation, getRobotAssetsHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_robotSystemErrorAssets() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let getRobotSwconfHandlerExpectation = expectation(description: "Get swconf handler")
+        let getRobotAssetsHandlerExpectation = expectation(description: "Get assets handler")
+        let completionExpectation = expectation(description: "completion")
+        let error = NSError(domain: "Error", code: -1, userInfo: nil)
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        robotAPI.getRobotSwconfHandler = { token, id in
+            return Future<APIResult<JobOrder_API.RobotAPIEntity.Swconf>, Error> { promise in
+                getRobotSwconfHandlerExpectation.fulfill()
+                let entity = APIResult<RobotAPIEntity.Swconf>(time: 1, data: DomainTestsStub().swconf, count: nil)
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        robotAPI.getRobotAssetsHandler = { token, id in
+            return Future<APIResult<[JobOrder_API.RobotAPIEntity.Asset]>, Error> { promise in
+                getRobotAssetsHandlerExpectation.fulfill()
+                promise(.failure(error))
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.robotSystem(id: param)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    XCTFail("値を取得できてはいけない")
+                case .failure(let e):
+                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                }
+                completionExpectation.fulfill()
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, getRobotSwconfHandlerExpectation, getRobotAssetsHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
     func test_saveData() {
         let jobsResult = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1)
         let robotsResult = APIResult<[RobotAPIEntity.Data]>(time: 1, data: DomainTestsStub().robots, count: 1)

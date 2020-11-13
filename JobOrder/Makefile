@@ -52,6 +52,7 @@ update: # Update dependencies and prepared development configuration
 .PHONY: prepare-ci
 prepare-ci: # Install dependencies and prepared development configuration in CI service
 	$(MAKE) install-brew
+	$(MAKE) install-templates
 	$(MAKE) install-mint
 
 .PHONY: install-homebrew
@@ -66,6 +67,10 @@ install-brew: # Install Homebrew dependencies
 install-rbenv: # Install a specific version of Ruby
 	rbenv install $(RUBY_VERSION)
 	rbenv global $(RUBY_VERSION)
+
+.PHONY: update-gem
+update-gem: # Update Gem
+	sudo gem update --system
 
 .PHONY: install-bundler-gem
 install-bundler-gem: # Install Bundler

@@ -14,13 +14,12 @@ platform :ios do
   error do |lane, exception|
   end
 
-  desc "Marge to Master branch (Deploy to AppStore Connect)"
+  desc "Marge to master branch (Deploy to AppStore Connect)"
   lane :deploy do
 
     import_certificates
     get_provisioning_profile
 
-    license_plist
     run_tests
     # slather
 
@@ -30,6 +29,7 @@ platform :ios do
     increment_build_number
     clean_build_artifacts
     commit_version_bump(
+      force: true,
       message: 'Auto build number update by fastlane.',
       xcodeproj: 'JobOrder.xcodeproj',
     )
@@ -41,28 +41,29 @@ platform :ios do
     #  tags: false
     #)
 
-    # build_app
+    license_plist
+    build_app
     # upload_to_testflight
     # jazzy_wrapper
   end
 
-  desc "Marge to Staging branch"
+  desc "Marge to staging branch (Deploy to AdHoc)"
   lane :stage do
 
     import_certificates
     get_provisioning_profile(adhoc: true)
 
-    license_plist
     run_tests
     # slather
 
     codecov
     # danger
 
-    # build_app
+    license_plist
+    build_app
   end
 
-  desc "Push to Developemnt branch"
+  desc "Push to development branch"
   lane :cache do
   end
 
@@ -135,7 +136,7 @@ platform :ios do
   desc "Run jazzy in a wrapper"
   private_lane :jazzy_wrapper do
     # jazzy
-    sh("cd .. && ./jazzy.sh")
+    sh("cd .. && make generate-documents")
   end
 
   # https://github.com/Carthage/Carthage/issues/3019#issuecomment-699161281

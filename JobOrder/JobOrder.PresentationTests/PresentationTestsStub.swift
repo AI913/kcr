@@ -296,4 +296,23 @@ struct PresentationTestsStub {
             jobId: jobId,
             exit: JobOrder_Domain.DataManageModel.Output.Task.Exit(JobOrder_Domain.DataManageModel.Output.Task.Exit.Option(5)))
     }
+
+    var system: DataManageModel.Output.System {
+        let installs = [DataManageModel.Output.System.SoftwareConfiguration.Installed(name: "Common Module",
+                                                                                      version: "1.0"),
+                        DataManageModel.Output.System.SoftwareConfiguration.Installed(name: "Network Service Module",
+                                                                                      version: "1.0"),
+                        DataManageModel.Output.System.SoftwareConfiguration.Installed(name: "Action Service Module",
+                                                                                      version: "1.0")]
+        let sw = DataManageModel.Output.System.SoftwareConfiguration(system: "Linux 4.18", distribution: "Ubuntu 18.04", installs: installs)
+        let hw = [DataManageModel.Output.System.HardwareConfiguration(type: "hand",
+                                                                      model: "82635AWGDVKPRQ",
+                                                                      maker: "Kyocera Corporation",
+                                                                      serialNo: "f97f805dd3f3"),
+                  DataManageModel.Output.System.HardwareConfiguration(type: "camera",
+                                                                      model: "82635AWGDVKPRQ",
+                                                                      maker: "Intel Corporation",
+                                                                      serialNo: "f97f805dd3f3")]
+        return DataManageModel.Output.System(softwareConfiguration: sw, hardwareConfigurations: hw)
+    }
 }

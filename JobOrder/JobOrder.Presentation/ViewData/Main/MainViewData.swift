@@ -17,6 +17,20 @@ struct MainViewData {
     struct Robot {
         /// Robot ID
         var id: String?
+
+        /// Robot System画面
+        let detailSystem: DetailSystem = DetailSystem()
+
+        struct DetailSystem {
+            // 表示アイテムのタイトル
+            let softwareSystemTitle: String = "System"
+            let softwareDistributionTitle: String = "Distribution"
+            let softwareInstalledsoftwareTitle: String = "Installed software"
+            let hardwareMakerTitle: String = "Maker"
+            let hardwareSerialNoTitle: String = "Serial No"
+            let accessoryOpened = "-"
+            let accessoryClosed = "+"
+        }
     }
 
     /// 選択したJob情報

@@ -308,6 +308,156 @@ class RobotAPIDataStoreTests: XCTestCase {
                 XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
             })
     }
+
+    func test_getSwconf() {
+        let handlerExpectation = expectation(description: "handler")
+        let completionExpectation = expectation(description: "completion")
+
+        mock.getResUrlHandler = { url, token, dataId in
+            return Future<APIResult<RobotAPIEntity.Swconf>, Error> { promise in
+                handlerExpectation.fulfill()
+                promise(.success(APITestsStub().swconfResult))
+            }.eraseToAnyPublisher()
+        }
+        getSwconf(
+            [handlerExpectation, completionExpectation],
+            onSuccess: { data in
+                XCTAssert(data == APITestsStub().swconfResult, "正しい値が取得できていない: \(data)")
+
+                guard let resultData = APITestsStub().swconfResult.data else {
+                    XCTFail("読み込みエラー")
+                    return
+                }
+
+                guard let actualData = data.data else {
+                    XCTFail("読み込みエラー")
+                    return
+                }
+                XCTAssert(resultData == actualData, "正しい値が取得できていない: \(resultData)")
+            },
+            onError: { error in
+                XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+            })
+    }
+
+    func test_getSwconfError() {
+        let handlerExpectation = expectation(description: "handler")
+        let completionExpectation = expectation(description: "completion")
+
+        mock.getResUrlHandler = { url, token, dataId in
+            return Future<APIResult<RobotAPIEntity.Swconf>, Error> { promise in
+                handlerExpectation.fulfill()
+                let error = NSError(domain: "Error", code: -1, userInfo: nil)
+                promise(.failure(error))
+            }.eraseToAnyPublisher()
+        }
+
+        getSwconf(
+            [handlerExpectation, completionExpectation],
+            onSuccess: { data in
+                XCTFail("値を取得できてはいけない: \(data)")
+            },
+            onError: { error in
+                let error = error as NSError
+                XCTAssertEqual(error.code, -1, "正しい値が取得できていない: \(error.code)")
+                XCTAssertEqual(error.localizedDescription, "The operation couldn’t be completed. (Error error -1.)", "正しい値が取得できていない: \(error.localizedDescription)")
+            })
+    }
+
+    func test_getSwconfNotReceived() {
+        let handlerExpectation = expectation(description: "handler")
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
+
+        mock.getResUrlHandler = { url, token, dataId in
+            return Future<APIResult<RobotAPIEntity.Swconf>, Error> { promise in
+                handlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        getSwconf(
+            [handlerExpectation, completionExpectation],
+            onSuccess: { data in
+                XCTFail("値を取得できてはいけない: \(data)")
+            },
+            onError: { error in
+                XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+            })
+    }
+
+    func test_getAssets() {
+        let handlerExpectation = expectation(description: "handler")
+        let completionExpectation = expectation(description: "completion")
+
+        mock.getResUrlHandler = { url, token, dataId in
+            return Future<APIResult<[RobotAPIEntity.Asset]>, Error> { promise in
+                handlerExpectation.fulfill()
+                promise(.success(APITestsStub().assetsResult))
+            }.eraseToAnyPublisher()
+        }
+        getAssets(
+            [handlerExpectation, completionExpectation],
+            onSuccess: { data in
+                XCTAssert(data == APITestsStub().assetsResult, "正しい値が取得できていない: \(data)")
+
+                guard let resultData = APITestsStub().assetsResult.data else {
+                    XCTFail("読み込みエラー")
+                    return
+                }
+
+                data.data?.enumerated().forEach {
+                    XCTAssert(resultData[$0.offset] == $0.element, "正しい値が取得できていない: \($0.offset)")
+                }
+            },
+            onError: { error in
+                XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+            })
+    }
+
+    func test_getAssetsError() {
+        let handlerExpectation = expectation(description: "handler")
+        let completionExpectation = expectation(description: "completion")
+
+        mock.getResUrlHandler = { url, token, dataId in
+            return Future<APIResult<[RobotAPIEntity.Asset]>, Error> { promise in
+                handlerExpectation.fulfill()
+                let error = NSError(domain: "Error", code: -1, userInfo: nil)
+                promise(.failure(error))
+            }.eraseToAnyPublisher()
+        }
+
+        getAssets(
+            [handlerExpectation, completionExpectation],
+            onSuccess: { data in
+                XCTFail("値を取得できてはいけない: \(data)")
+            },
+            onError: { error in
+                let error = error as NSError
+                XCTAssertEqual(error.code, -1, "正しい値が取得できていない: \(error.code)")
+                XCTAssertEqual(error.localizedDescription, "The operation couldn’t be completed. (Error error -1.)", "正しい値が取得できていない: \(error.localizedDescription)")
+            })
+    }
+
+    func test_getAssetsNotReceived() {
+        let handlerExpectation = expectation(description: "handler")
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
+
+        mock.getResUrlHandler = { url, token, dataId in
+            return Future<APIResult<[RobotAPIEntity.Asset]>, Error> { promise in
+                handlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        getAssets(
+            [handlerExpectation, completionExpectation],
+            onSuccess: { data in
+                XCTFail("値を取得できてはいけない: \(data)")
+            },
+            onError: { error in
+                XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+            })
+    }
 }
 
 extension RobotAPIDataStoreTests {
@@ -368,6 +518,42 @@ extension RobotAPIDataStoreTests {
     private func getCommand(_ exps: [XCTestExpectation], onSuccess: @escaping (APIResult<[CommandAPIEntity.Data]>) -> Void, onError: @escaping (Error) -> Void) {
         let param = "test"
         dataStore.getCommandFromRobot(param, id: param)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished: break
+                case .failure(let error):
+                    onError(error)
+                }
+                exps.last?.fulfill()
+            }, receiveValue: { response in
+                onSuccess(response)
+            }).store(in: &cancellables)
+
+        wait(for: exps, timeout: ms1000)
+    }
+
+    private func getSwconf(_ exps: [XCTestExpectation], onSuccess: @escaping (APIResult<RobotAPIEntity.Swconf>) -> Void, onError: @escaping (Error) -> Void) {
+        let param = "test"
+
+        dataStore.getRobotSwconf(param, id: param)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished: break
+                case .failure(let error):
+                    onError(error)
+                }
+                exps.last?.fulfill()
+            }, receiveValue: { response in
+                onSuccess(response)
+            }).store(in: &cancellables)
+
+        wait(for: exps, timeout: ms1000)
+    }
+
+    private func getAssets(_ exps: [XCTestExpectation], onSuccess: @escaping (APIResult<[RobotAPIEntity.Asset]>) -> Void, onError: @escaping (Error) -> Void) {
+        let param = "test"
+
+        dataStore.getRobotAssets(param, id: param)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished: break

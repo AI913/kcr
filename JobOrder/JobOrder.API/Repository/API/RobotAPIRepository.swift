@@ -30,4 +30,14 @@ public protocol RobotAPIRepository {
     ///   - token: トークン情報
     ///   - id: Robot ID
     func getCommandFromRobot(_ token: String, id: String) -> AnyPublisher<APIResult<[CommandAPIEntity.Data]>, Error>
+    /// Robot SW設定を取得する
+    /// - Parameters:
+    ///   - token: トークン情報
+    ///   - id: Robot ID
+    func getRobotSwconf(_ token: String, id: String) -> AnyPublisher<APIResult<RobotAPIEntity.Swconf>, Error>
+    /// Robot アセットを取得する
+    /// - Parameters:
+    ///   - token: トークン情報
+    ///   - id: Robot ID
+    func getRobotAssets(_ token: String, id: String) -> AnyPublisher<APIResult<[RobotAPIEntity.Asset]>, Error>
 }

@@ -23,7 +23,7 @@ class OrderEntryUITests: XCTestCase {
         XCTContext.runActivity(named: "Job選択画面でキャンセルする") { _ in
             let robotDetailPage = jobSelectionPage
                 .tapCancelButtonToRobotDetail()
-                .waitExists(self, RobotDetailPageObject.self)
+                .waitExists(RobotDetailPageObject.self)
             XCTAssertFalse(jobSelectionPage.existsPage, "Job選択画面が閉じられていなかった")
             XCTAssertTrue(robotDetailPage.existsPage, "Robot画面に戻っていなかった")
         }
@@ -35,13 +35,13 @@ class OrderEntryUITests: XCTestCase {
         XCTContext.runActivity(named: "Robot選択画面でJob選択画面に戻る") { _ in
             let jobSelectionPage = robotSelectionPage
                 .tapSelectJobButton()
-                .waitExists(self, JobSelectionPageObject.self)
+                .waitExists(JobSelectionPageObject.self)
             XCTAssertTrue(jobSelectionPage.existsPage, "Job選択画面に戻っていなかった")
 
             XCTContext.runActivity(named: "Job選択画面でキャンセルする") { _ in
                 let jobDetailPage = jobSelectionPage
                     .tapCancelButtonToJobDetail()
-                    .waitExists(self, JobDetailPageObject.self)
+                    .waitExists(JobDetailPageObject.self)
                 XCTAssertFalse(jobSelectionPage.existsPage, "Job選択画面が閉じられていなかった")
                 XCTAssertTrue(jobDetailPage.existsPage, "Job画面に戻っていなかった")
             }
@@ -57,13 +57,13 @@ class OrderEntryUITests: XCTestCase {
             let robotSelectionPage = jobSelectionPage
                 .tapJobCell(at: jobIndex)
                 .tapContinueButton()
-                .waitExists(self, RobotSelectionPageObject.self)
+                .waitExists(RobotSelectionPageObject.self)
             XCTAssertTrue(robotSelectionPage.existsPage, "Robot選択画面に遷移しなかった")
 
             XCTContext.runActivity(named: "Robot選択画面で何も変更せずそのまま次へ") { _ in
                 let configurationPage = robotSelectionPage
                     .tapContinueButton()
-                    .waitExists(self, OrderConfigurationPageObject.self)
+                    .waitExists(OrderConfigurationPageObject.self)
                 XCTAssertTrue(configurationPage.existsPage, "Order設定画面に遷移しなかった")
 
                 XCTContext.runActivity(named: "Order設定画面で項目を入力して次へ") { _ in
@@ -76,7 +76,7 @@ class OrderEntryUITests: XCTestCase {
                         .enterRemark(remark)
                         .dismissKeyboardIfPresented()
                         .tapContinueButton()
-                        .waitExists(self, OrderConfirmPageObject.self)
+                        .waitExists(OrderConfirmPageObject.self)
                     XCTAssertTrue(confirmPage.existsPage, "Order確認画面に遷移しなかった")
 
                     XCTContext.runActivity(named: "Order確認して次へ") { _ in
@@ -85,13 +85,13 @@ class OrderEntryUITests: XCTestCase {
 
                         let completePage = confirmPage
                             .tapSendButton()
-                            .waitExists(self, OrderCompletePageObject.self)
+                            .waitExists(OrderCompletePageObject.self)
                         XCTAssertTrue(completePage.existsPage, "Order完了画面に遷移しなかった")
 
                         XCTContext.runActivity(named: "Order完了") { _ in
                             let robotDetailPage = completePage
                                 .tapCloseButtonToRobotDetail()
-                                .waitExists(self, RobotDetailPageObject.self)
+                                .waitExists(RobotDetailPageObject.self)
                             XCTAssertFalse(completePage.existsPage, "Order完了画面が閉じられていなかった")
                             XCTAssertTrue(robotDetailPage.existsPage, "Robot画面に戻っていなかった")
                         }
@@ -110,7 +110,7 @@ class OrderEntryUITests: XCTestCase {
             let configurationPage = robotSelectionPage
                 .tapRobotCell(at: robotIndex)
                 .tapContinueButton()
-                .waitExists(self, OrderConfigurationPageObject.self)
+                .waitExists(OrderConfigurationPageObject.self)
             XCTAssertTrue(configurationPage.existsPage, "Order設定画面に遷移しなかった")
 
             XCTContext.runActivity(named: "Order設定画面で項目を入力して次へ") { _ in
@@ -123,7 +123,7 @@ class OrderEntryUITests: XCTestCase {
                     .enterRemark(remark)
                     .dismissKeyboardIfPresented()
                     .tapContinueButton()
-                    .waitExists(self, OrderConfirmPageObject.self)
+                    .waitExists(OrderConfirmPageObject.self)
                 XCTAssertTrue(confirmPage.existsPage, "Order確認画面に遷移しなかった")
 
                 XCTContext.runActivity(named: "Order確認して次へ") { _ in
@@ -132,13 +132,13 @@ class OrderEntryUITests: XCTestCase {
 
                     let completePage = confirmPage
                         .tapSendButton()
-                        .waitExists(self, OrderCompletePageObject.self)
+                        .waitExists(OrderCompletePageObject.self)
                     XCTAssertTrue(completePage.existsPage, "Order完了画面に遷移しなかった")
 
                     XCTContext.runActivity(named: "Order完了") { _ in
                         let jobDetailPage = completePage
                             .tapCloseButtonToJobDetail()
-                            .waitExists(self, JobDetailPageObject.self)
+                            .waitExists(JobDetailPageObject.self)
                         XCTAssertFalse(completePage.existsPage, "Order完了画面が閉じられていなかった")
                         XCTAssertTrue(jobDetailPage.existsPage, "Job画面に戻っていなかった")
                     }
@@ -155,41 +155,41 @@ class OrderEntryUITests: XCTestCase {
         let confirmPage = jobSelectionPageViaRobotDetail()
             .tapJobCell(at: jobIndex)
             .tapContinueButton()
-            .waitExists(self, RobotSelectionPageObject.self)
+            .waitExists(RobotSelectionPageObject.self)
             .tapContinueButton()
-            .waitExists(self, OrderConfigurationPageObject.self)
+            .waitExists(OrderConfigurationPageObject.self)
             .enterNumOfRun(numOfRun)
             .dismissKeyboardIfPresented()
             .enterRemark(remark)
             .dismissKeyboardIfPresented()
             .tapContinueButton()
-            .waitExists(self, OrderConfirmPageObject.self)
+            .waitExists(OrderConfirmPageObject.self)
 
         XCTContext.runActivity(named: "Order確認から前の画面に戻る") { _ in
             let backedConfigurationPage = confirmPage
                 .tapOrderConfigurationButton()
-                .waitExists(self, OrderConfigurationPageObject.self)
+                .waitExists(OrderConfigurationPageObject.self)
             XCTAssertFalse(confirmPage.existsPage, "Order確認画面が閉じられていなかった")
             XCTAssertTrue(backedConfigurationPage.existsPage, "Order設定画面に戻っていなかった")
 
             XCTContext.runActivity(named: "Order設定から前の画面に戻る") { _ in
                 let backedRobotSelectionPage = backedConfigurationPage
                     .tapSelectRobotButton()
-                    .waitExists(self, RobotSelectionPageObject.self)
+                    .waitExists(RobotSelectionPageObject.self)
                 XCTAssertFalse(backedConfigurationPage.existsPage, "Order設定画面が閉じられていなかった")
                 XCTAssertTrue(backedRobotSelectionPage.existsPage, "Robot選択画面に戻っていなかった")
 
                 XCTContext.runActivity(named: "Robot選択から前の画面に戻る") { _ in
                     let backedJobSelectionPage = backedRobotSelectionPage
                         .tapSelectJobButton()
-                        .waitExists(self, JobSelectionPageObject.self)
+                        .waitExists(JobSelectionPageObject.self)
                     XCTAssertFalse(backedRobotSelectionPage.existsPage, "Robot選択画面が閉じられていなかった")
                     XCTAssertTrue(backedJobSelectionPage.existsPage, "Job選択画面に戻っていなかった")
 
                     XCTContext.runActivity(named: "Job選択から前の画面に戻る") { _ in
                         let robotDetailPage = backedJobSelectionPage
                             .tapCancelButtonToRobotDetail()
-                            .waitExists(self, RobotDetailPageObject.self)
+                            .waitExists(RobotDetailPageObject.self)
                         XCTAssertFalse(backedJobSelectionPage.existsPage, "Job選択画面が閉じられていなかった")
                         XCTAssertTrue(robotDetailPage.existsPage, "Robot画面に戻っていなかった")
                     }
@@ -206,39 +206,39 @@ class OrderEntryUITests: XCTestCase {
         let confirmPage = robotSelectionPageViaJobDetail()
             .tapRobotCell(at: robotIndex)
             .tapContinueButton()
-            .waitExists(self, OrderConfigurationPageObject.self)
+            .waitExists(OrderConfigurationPageObject.self)
             .enterNumOfRun(numOfRun)
             .dismissKeyboardIfPresented()
             .enterRemark(remark)
             .dismissKeyboardIfPresented()
             .tapContinueButton()
-            .waitExists(self, OrderConfirmPageObject.self)
+            .waitExists(OrderConfirmPageObject.self)
 
         XCTContext.runActivity(named: "Order確認から前の画面に戻る") { _ in
             let backedConfigurationPage = confirmPage
                 .tapOrderConfigurationButton()
-                .waitExists(self, OrderConfigurationPageObject.self)
+                .waitExists(OrderConfigurationPageObject.self)
             XCTAssertFalse(confirmPage.existsPage, "Order確認画面が閉じられていなかった")
             XCTAssertTrue(backedConfigurationPage.existsPage, "Order設定画面に戻っていなかった")
 
             XCTContext.runActivity(named: "Order設定から前の画面に戻る") { _ in
                 let backedRobotSelectionPage = backedConfigurationPage
                     .tapSelectRobotButton()
-                    .waitExists(self, RobotSelectionPageObject.self)
+                    .waitExists(RobotSelectionPageObject.self)
                 XCTAssertFalse(backedConfigurationPage.existsPage, "Order設定画面が閉じられていなかった")
                 XCTAssertTrue(backedRobotSelectionPage.existsPage, "Robot選択画面に戻っていなかった")
 
                 XCTContext.runActivity(named: "Robot選択から前の画面に戻る") { _ in
                     let backedJobSelectionPage = backedRobotSelectionPage
                         .tapSelectJobButton()
-                        .waitExists(self, JobSelectionPageObject.self)
+                        .waitExists(JobSelectionPageObject.self)
                     XCTAssertFalse(backedRobotSelectionPage.existsPage, "Robot選択画面が閉じられていなかった")
                     XCTAssertTrue(backedJobSelectionPage.existsPage, "Job選択画面に戻っていなかった")
 
                     XCTContext.runActivity(named: "Job選択から前の画面に戻る") { _ in
                         let jobDetailPage = backedJobSelectionPage
                             .tapCancelButtonToJobDetail()
-                            .waitExists(self, JobDetailPageObject.self)
+                            .waitExists(JobDetailPageObject.self)
                         XCTAssertFalse(backedJobSelectionPage.existsPage, "Job選択画面が閉じられていなかった")
                         XCTAssertTrue(jobDetailPage.existsPage, "Job画面に戻っていなかった")
                     }
@@ -255,15 +255,14 @@ extension OrderEntryUITests {
         let app = XCUIApplication()
         // ログインする
         AuthenticationUITests.Login()
-        sleep(1)
 
         let jobSelectionPage = MainPageObject(application: app)
             .tapTabRobotButton()	// ロボットタブを選択する
-            .waitExists(self, RobotListPageObject.self)
+            .waitExists(RobotListPageObject.self)
             .tapCell(index: index)	// ロボット一覧から１つ詳細を選ぶ
-            .waitExists(self, RobotDetailPageObject.self)
+            .waitExists(RobotDetailPageObject.self)
             .tapOrderButton()		// Order jobボタンをタップする
-            .waitExists(self, JobSelectionPageObject.self)	// ジョブ選択画面を待つ
+            .waitExists(JobSelectionPageObject.self)	// ジョブ選択画面を待つ
 
         return jobSelectionPage
     }
@@ -272,15 +271,14 @@ extension OrderEntryUITests {
         let app = XCUIApplication()
         // ログインする
         AuthenticationUITests.Login()
-        sleep(1)
 
         let robotSelectionPage = MainPageObject(application: app)
             .tapTabJobButton()		// ジョブタブを選択する
-            .waitExists(self, JobListPageObject.self)
+            .waitExists(JobListPageObject.self)
             .tapCell(index: index)	// ジョブ一覧から１つ詳細を選ぶ
-            .waitExists(self, JobDetailPageObject.self)
+            .waitExists(JobDetailPageObject.self)
             .tapOrderButton()		// Order jobボタンをタップする
-            .waitExists(self, RobotSelectionPageObject.self)	// ロボット選択画面を待つ
+            .waitExists(RobotSelectionPageObject.self)	// ロボット選択画面を待つ
 
         return robotSelectionPage
     }
