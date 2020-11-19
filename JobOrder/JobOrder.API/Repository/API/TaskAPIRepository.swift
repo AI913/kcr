@@ -16,11 +16,11 @@ public protocol TaskAPIRepository {
     /// - Parameter token: トークン情報
     /// - Parameter taskId: TaskID
     /// - Parameter robotId: RobotID
-    func getCommandsFromTask(_ token: String, taskId: String, robotId: String) -> AnyPublisher<APIResult<TaskAPIEntity.Data>, Error>
+    func getCommand(_ token: String, taskId: String, robotId: String) -> AnyPublisher<APIResult<CommandEntity.Data>, Error>
 
     /// Taskの情報を取得する
     /// - Parameters:
     ///   - token: トークン情報
     ///   - taskId: RobotID
-    func getTasks(_ token: String, taskId: String) -> AnyPublisher<APIResult<TaskAPIEntity.Tasks>, Error>
+    func getTask(_ token: String, taskId: String) -> AnyPublisher<APIResult<TaskAPIEntity.Data>, Error>
 }

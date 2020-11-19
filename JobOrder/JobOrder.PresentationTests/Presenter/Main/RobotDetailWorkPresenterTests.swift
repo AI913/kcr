@@ -30,7 +30,7 @@ class RobotDetailWorkPresenterTests: XCTestCase {
 
     override func tearDownWithError() throws {}
 
-    func test_getTaskExecutions() {
+    func test_getCommands() {
         let param = "test"
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
@@ -43,14 +43,14 @@ class RobotDetailWorkPresenterTests: XCTestCase {
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
-        presenter.getTaskExecutions(id: presenter.data.id!)
+        presenter.getCommands(id: presenter.data.id!)
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
         stub.commands.enumerated().forEach {
             XCTAssert(presenter.commands?[$0.offset] == $0.element, "正しい値が取得できていない")
         }
     }
 
-    func test_getTaskExectionsError() {
+    func test_getCommandsError() {
         let param = "test"
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
@@ -64,12 +64,12 @@ class RobotDetailWorkPresenterTests: XCTestCase {
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
-        presenter.getTaskExecutions(id: presenter.data.id!)
+        presenter.getCommands(id: presenter.data.id!)
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
         XCTAssertNil(presenter.commands, "値が取得できてはいけない")
     }
 
-    func test_getTaskExecutionsNoId() {
+    func test_getCommandsNoId() {
         presenter.data.id = nil
         XCTAssertNil(presenter.commands, "値を取得できてはいけない")
     }

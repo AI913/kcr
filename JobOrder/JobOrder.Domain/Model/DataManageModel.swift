@@ -383,7 +383,7 @@ public struct DataManageModel {
 
             /// エンティティ -> モデル変換
             /// - Parameter RobotCommand: RobotCommandエンティティ
-            init(_ robotCommand: JobOrder_API.CommandAPIEntity.Data) {
+            init(_ robotCommand: JobOrder_API.CommandEntity.Data) {
                 self.taskId = robotCommand.taskId
                 self.robotId = robotCommand.robotId
                 self.started = robotCommand.started
@@ -443,12 +443,12 @@ public struct DataManageModel {
                 public init(_ option: Option) {
                     self.option = option
                 }
-                public init(_ exit: TaskAPIEntity.Tasks.Exit) {
+                public init(_ exit: TaskAPIEntity.Data.Exit) {
                     self.option = Option(exit.option)
                 }
 
                 public struct Option: Codable {
-                    public let numberOfRuns: Int
+                    public let numberOfRuns: Int?
 
                     public static func == (lhs: Option, rhs: Option) -> Bool {
                         return lhs.numberOfRuns == rhs.numberOfRuns
@@ -457,7 +457,7 @@ public struct DataManageModel {
                     public init(_ numberOfRuns: Int) {
                         self.numberOfRuns = numberOfRuns
                     }
-                    public init(_ option: TaskAPIEntity.Tasks.Exit.Option) {
+                    public init(_ option: TaskAPIEntity.Data.Exit.Option) {
                         self.numberOfRuns = option.numberOfRuns
                     }
                 }
@@ -468,7 +468,7 @@ public struct DataManageModel {
                 self.exit = exit
             }
 
-            public init(_ task: TaskAPIEntity.Tasks) {
+            public init(_ task: TaskAPIEntity.Data) {
                 self.jobId = task.jobId
                 self.exit = Exit(task.exit)
             }

@@ -124,7 +124,7 @@ class APIRequestTests: XCTestCase {
             stub(uri(robot.url.absoluteString + "/\(param)/commands"), jsonData(data))
 
             request(
-                APIResult<[CommandAPIEntity.Data]>.self,
+                APIResult<[CommandEntity.Data]>.self,
                 result: api.get(resUrl: robot.url, token: nil, dataId: param + "/commands"),
                 onSuccess: { data in
                     XCTAssertNotNil(data, "値が取得できていない: \(data)")
@@ -143,7 +143,7 @@ class APIRequestTests: XCTestCase {
             stub(uri(task.url.absoluteString + "/\(param)/commands/\(param)"), jsonData(data))
 
             request(
-                APIResult<TaskAPIEntity.Data>.self,
+                APIResult<CommandEntity.Data>.self,
                 result: api.get(resUrl: task.url, token: nil, dataId: param + "/commands/" + param),
                 onSuccess: { data in
                     XCTAssertNotNil(data, "値が取得できていない: \(data)")
@@ -162,7 +162,7 @@ class APIRequestTests: XCTestCase {
             stub(uri(task.url.absoluteString + "/\(param)"), jsonData(data))
 
             request(
-                APIResult<TaskAPIEntity.Tasks>.self,
+                APIResult<TaskAPIEntity.Data>.self,
                 result: api.get(resUrl: task.url, token: nil, dataId: param),
                 onSuccess: { data in
                     XCTAssertNotNil(data, "値が取得できていない: \(data)")

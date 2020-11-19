@@ -25,7 +25,7 @@ class TaskAPIDataStoreTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
 
         mock.getResUrlHandler = { url, token, dataId in
-            return Future<APIResult<TaskAPIEntity.Data>, Error> { promise in
+            return Future<APIResult<CommandEntity.Data>, Error> { promise in
                 handlerExpectation.fulfill()
                 promise(.success(APITestsStub().commandFromTaskResult))
             }.eraseToAnyPublisher()
@@ -46,7 +46,7 @@ class TaskAPIDataStoreTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
 
         mock.getResUrlHandler = { url, token, dataId in
-            return Future<APIResult<TaskAPIEntity.Data>, Error> { promise in
+            return Future<APIResult<CommandEntity.Data>, Error> { promise in
                 handlerExpectation.fulfill()
                 let error = NSError(domain: "Error", code: -1, userInfo: nil)
                 promise(.failure(error))
@@ -71,7 +71,7 @@ class TaskAPIDataStoreTests: XCTestCase {
         completionExpectation.isInverted = true
 
         mock.getResUrlHandler = { url, token, dataId in
-            return Future<APIResult<TaskAPIEntity.Data>, Error> { promise in
+            return Future<APIResult<CommandEntity.Data>, Error> { promise in
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
@@ -88,10 +88,10 @@ class TaskAPIDataStoreTests: XCTestCase {
 }
 
 extension TaskAPIDataStoreTests {
-    private func getCommandFromTask(_ exps: [XCTestExpectation], onSuccess: @escaping (APIResult<TaskAPIEntity.Data>) -> Void, onError: @escaping (Error) -> Void) {
+    private func getCommandFromTask(_ exps: [XCTestExpectation], onSuccess: @escaping (APIResult<CommandEntity.Data>) -> Void, onError: @escaping (Error) -> Void) {
         let param = "test"
 
-        dataStore.getCommandsFromTask(param, taskId: param, robotId: param)
+        dataStore.getCommand(param, taskId: param, robotId: param)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished: break

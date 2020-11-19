@@ -9,14 +9,10 @@
 import Foundation
 public struct TaskAPIEntity: Codable {
     public struct Data: Codable {
-        public let command: CommandAPIEntity.Data
-    }
-
-    public struct Tasks: Codable {
         public let jobId: String
         public let exit: Exit
 
-        public static func == (lhs: Tasks, rhs: Tasks) -> Bool {
+        public static func == (lhs: Data, rhs: Data) -> Bool {
             return lhs.jobId == rhs.jobId &&
                 lhs.exit == rhs.exit
         }
@@ -29,7 +25,7 @@ public struct TaskAPIEntity: Codable {
             }
 
             public struct Option: Codable {
-                public let numberOfRuns: Int
+                public let numberOfRuns: Int?
 
                 public static func == (lhs: Option, rhs: Option) -> Bool {
                     return lhs.numberOfRuns == rhs.numberOfRuns

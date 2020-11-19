@@ -7,7 +7,7 @@
 //
 
 import Foundation
-public struct CommandAPIEntity: Codable {
+public struct CommandEntity: Codable {
     public struct Data: Codable, Equatable {
         public let taskId: String
         public let robotId: String

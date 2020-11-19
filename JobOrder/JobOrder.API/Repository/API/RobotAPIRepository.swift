@@ -29,7 +29,7 @@ public protocol RobotAPIRepository {
     /// - Parameters:
     ///   - token: トークン情報
     ///   - id: Robot ID
-    func getCommandFromRobot(_ token: String, id: String) -> AnyPublisher<APIResult<[CommandAPIEntity.Data]>, Error>
+    func getCommands(_ token: String, id: String) -> AnyPublisher<APIResult<[CommandEntity.Data]>, Error>
     /// Robot SW設定を取得する
     /// - Parameters:
     ///   - token: トークン情報

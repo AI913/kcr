@@ -173,17 +173,17 @@ class RobotAPIDataStoreTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
 
         mock.getResUrlHandler = { url, token, dataId in
-            return Future<APIResult<[CommandAPIEntity.Data]>, Error> { promise in
+            return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
-                promise(.success(APITestsStub().commandsResult))
+                promise(.success(APITestsStub().commandsFromRobotResult))
             }.eraseToAnyPublisher()
         }
         getCommand(
             [handlerExpectation, completionExpectation],
             onSuccess: { data in
-                XCTAssert(data == APITestsStub().commandsResult, "正しい値が取得できていない: \(data)")
+                XCTAssert(data == APITestsStub().commandsFromRobotResult, "正しい値が取得できていない: \(data)")
 
-                guard let resultData = APITestsStub().commandsResult.data else {
+                guard let resultData = APITestsStub().commandsFromRobotResult.data else {
                     XCTFail("読み込みエラー")
                     return
                 }
@@ -203,7 +203,7 @@ class RobotAPIDataStoreTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
 
         mock.getResUrlHandler = { url, token, dataId in
-            return Future<APIResult<[CommandAPIEntity.Data]>, Error> { promise in
+            return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
                 let error = NSError(domain: "Error", code: -1, userInfo: nil)
                 promise(.failure(error))
@@ -228,7 +228,7 @@ class RobotAPIDataStoreTests: XCTestCase {
         completionExpectation.isInverted = true
 
         mock.getResUrlHandler = { url, token, dataId in
-            return Future<APIResult<[CommandAPIEntity.Data]>, Error> { promise in
+            return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
@@ -515,9 +515,9 @@ extension RobotAPIDataStoreTests {
         wait(for: exps, timeout: ms1000)
     }
 
-    private func getCommand(_ exps: [XCTestExpectation], onSuccess: @escaping (APIResult<[CommandAPIEntity.Data]>) -> Void, onError: @escaping (Error) -> Void) {
+    private func getCommand(_ exps: [XCTestExpectation], onSuccess: @escaping (APIResult<[CommandEntity.Data]>) -> Void, onError: @escaping (Error) -> Void) {
         let param = "test"
-        dataStore.getCommandFromRobot(param, id: param)
+        dataStore.getCommands(param, id: param)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished: break

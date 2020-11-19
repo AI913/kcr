@@ -57,7 +57,7 @@ public class RobotAPIDataStore: RobotAPIRepository {
     ///   - token: トークン情報
     ///   - id: Robot ID
     /// - Returns: Robot Command情報
-    public func getCommandFromRobot(_ token: String, id: String) -> AnyPublisher<APIResult<[CommandAPIEntity.Data]>, Error> {
+    public func getCommands(_ token: String, id: String) -> AnyPublisher<APIResult<[CommandEntity.Data]>, Error> {
         Logger.info(target: self)
         return api.get(resUrl: url, token: token, dataId: "\(id)/commands")
     }

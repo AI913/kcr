@@ -363,6 +363,7 @@
 		E52B86E1254AC09A0038ECA0 /* TaskAPIDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52B86E0254AC09A0038ECA0 /* TaskAPIDataStore.swift */; };
 		E52B86F0254AC0AC0038ECA0 /* api_openapi-spec_v1_examples_command_response_succeeded_example01.json in Resources */ = {isa = PBXBuildFile; fileRef = E52B86EF254AC0AC0038ECA0 /* api_openapi-spec_v1_examples_command_response_succeeded_example01.json */; };
 		E52B870C254AC5F10038ECA0 /* TaskAPIDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52B870B254AC5F10038ECA0 /* TaskAPIDataStoreTests.swift */; };
+		E55A438D255E7DAF0079739D /* TaskDetailRobotSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A438C255E7DAF0079739D /* TaskDetailRobotSelectionViewController.swift */; };
 		E5757FBA2554F02900A5544D /* task_response_example01.json in Resources */ = {isa = PBXBuildFile; fileRef = E5757FB92554F02900A5544D /* task_response_example01.json */; };
 		E586CB1525257240007AD3EC /* MainUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E586CB1425257240007AD3EC /* MainUITests.swift */; };
 		E586CB182525A4E3007AD3EC /* RobotListPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E586CB172525A4E3007AD3EC /* RobotListPageObject.swift */; };
@@ -370,7 +371,7 @@
 		E586CB1C2525D60E007AD3EC /* AboutPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E586CB1B2525D60E007AD3EC /* AboutPageObject.swift */; };
 		E5AB6564255BA7F1001D7414 /* TaskDetailViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB6563255BA7F1001D7414 /* TaskDetailViewControllerTests.swift */; };
 		E5AB664F255BF117001D7414 /* TaskDetailPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB664E255BF117001D7414 /* TaskDetailPresenterTests.swift */; };
-		E5C0A4A22554CEBA00C31567 /* CommandAPIEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C0A4A12554CEBA00C31567 /* CommandAPIEntity.swift */; };
+		E5C0A4A22554CEBA00C31567 /* CommandEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C0A4A12554CEBA00C31567 /* CommandEntity.swift */; };
 		E5C0A4B12554CFAD00C31567 /* TaskAPIEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C0A4B02554CFAD00C31567 /* TaskAPIEntity.swift */; };
 		E5C0CFF02542A5F400957D86 /* api_openapi-spec_v1_examples_list_command_response_example.json in Resources */ = {isa = PBXBuildFile; fileRef = E5C0CFEF2542A5F400957D86 /* api_openapi-spec_v1_examples_list_command_response_example.json */; };
 		E5C325C82547F6D000A7BDB1 /* robot_response_example01.json in Resources */ = {isa = PBXBuildFile; fileRef = E5C325C72547F6D000A7BDB1 /* robot_response_example01.json */; };
@@ -917,6 +918,7 @@
 		E52B86E0254AC09A0038ECA0 /* TaskAPIDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskAPIDataStore.swift; sourceTree = "<group>"; };
 		E52B86EF254AC0AC0038ECA0 /* api_openapi-spec_v1_examples_command_response_succeeded_example01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "api_openapi-spec_v1_examples_command_response_succeeded_example01.json"; sourceTree = "<group>"; };
 		E52B870B254AC5F10038ECA0 /* TaskAPIDataStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskAPIDataStoreTests.swift; sourceTree = "<group>"; };
+		E55A438C255E7DAF0079739D /* TaskDetailRobotSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailRobotSelectionViewController.swift; sourceTree = "<group>"; };
 		E5757FB92554F02900A5544D /* task_response_example01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = task_response_example01.json; sourceTree = "<group>"; };
 		E586CB1425257240007AD3EC /* MainUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainUITests.swift; sourceTree = "<group>"; };
 		E586CB172525A4E3007AD3EC /* RobotListPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobotListPageObject.swift; sourceTree = "<group>"; };
@@ -924,7 +926,7 @@
 		E586CB1B2525D60E007AD3EC /* AboutPageObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutPageObject.swift; sourceTree = "<group>"; };
 		E5AB6563255BA7F1001D7414 /* TaskDetailViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewControllerTests.swift; sourceTree = "<group>"; };
 		E5AB664E255BF117001D7414 /* TaskDetailPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailPresenterTests.swift; sourceTree = "<group>"; };
-		E5C0A4A12554CEBA00C31567 /* CommandAPIEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandAPIEntity.swift; sourceTree = "<group>"; };
+		E5C0A4A12554CEBA00C31567 /* CommandEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandEntity.swift; sourceTree = "<group>"; };
 		E5C0A4B02554CFAD00C31567 /* TaskAPIEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAPIEntity.swift; sourceTree = "<group>"; };
 		E5C0CFEF2542A5F400957D86 /* api_openapi-spec_v1_examples_list_command_response_example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "api_openapi-spec_v1_examples_list_command_response_example.json"; sourceTree = "<group>"; };
 		E5C325C72547F6D000A7BDB1 /* robot_response_example01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = robot_response_example01.json; sourceTree = "<group>"; };
@@ -1151,6 +1153,7 @@
 			children = (
 				E5CF313825566CF80054F782 /* CircularProgressViewController.swift */,
 				A32BCA7F2468E99F000287D2 /* TaskDetailViewController.swift */,
+				E55A438C255E7DAF0079739D /* TaskDetailRobotSelectionViewController.swift */,
 			);
 			path = TaskDetail;
 			sourceTree = "<group>";
@@ -1298,7 +1301,7 @@
 				D7A4CBE12429F59000C62295 /* APIResult.swift */,
 				A32BCB1F246FABF1000287D2 /* APITaskEntity.swift */,
 				A33DAD3D2499079B000135C3 /* APIThingShadow.swift */,
-				E5C0A4A12554CEBA00C31567 /* CommandAPIEntity.swift */,
+				E5C0A4A12554CEBA00C31567 /* CommandEntity.swift */,
 				D78EC21724151B0B003E5ECD /* RobotAPIEntity.swift */,
 				E5C0A4B02554CFAD00C31567 /* TaskAPIEntity.swift */,
 				D7A4CBDD2429E9F600C62295 /* JobAPIEntity.swift */,
@@ -3465,7 +3468,7 @@
 				A38C4CC924B468E900CC6A80 /* VideoStreamingEntity.swift in Sources */,
 				A38C4CC624B4687900CC6A80 /* WebRTCMessage.swift in Sources */,
 				D78EC0F32411124B003E5ECD /* AuthenticationEntity.swift in Sources */,
-				E5C0A4A22554CEBA00C31567 /* CommandAPIEntity.swift in Sources */,
+				E5C0A4A22554CEBA00C31567 /* CommandEntity.swift in Sources */,
 				A38C4CC424B4687900CC6A80 /* KVSSigner.swift in Sources */,
 				A32BD1B02431A631000E9AE8 /* AWSIoTDataStore.swift in Sources */,
 				D78EC21824151B0B003E5ECD /* RobotAPIEntity.swift in Sources */,
@@ -3557,6 +3560,7 @@
 				A3B26D45251D7E16008DFEC5 /* WorkObjectSelectionViewController.swift in Sources */,
 				A32D7AFE242210C000DCBE45 /* MailVerificationConfirmViewController.swift in Sources */,
 				A3AB8DD724BD50DE0017411A /* WebRTCClient.swift in Sources */,
+				E55A438D255E7DAF0079739D /* TaskDetailRobotSelectionViewController.swift in Sources */,
 				A3141F70252191C200992F45 /* ActionEntryActionLibraryCollectionViewCell.swift in Sources */,
 				A32BCAFE24693492000287D2 /* OrderEntryRobotSelectionViewController.swift in Sources */,
 				A32BCB28246FDF9A000287D2 /* MainViewData.swift in Sources */,

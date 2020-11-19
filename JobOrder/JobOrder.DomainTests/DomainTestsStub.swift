@@ -10,32 +10,6 @@
 @testable import JobOrder_API
 
 struct DomainTestsStub {
-
-    var tasks: [JobOrder_API.TaskAPIEntity.Data] {
-        return [task]
-    }
-
-    var task: JobOrder_API.TaskAPIEntity.Data {
-        let command = JobOrder_API.CommandAPIEntity.Data(taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
-                                                         robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
-                                                         started: 0,
-                                                         exited: 0,
-                                                         execDuration: 0,
-                                                         receivedStartReort: 0,
-                                                         receivedExitReort: 0,
-                                                         status: "queued",
-                                                         resultInfo: "",
-                                                         success: 0,
-                                                         fail: 0,
-                                                         error: 0,
-                                                         dataVersion: 1,
-                                                         createTime: 1_592_617_637_000,
-                                                         creator: "user@kyocera.jp",
-                                                         updateTime: 1_592_618_421_000,
-                                                         updator: "user@kyocera.jp")
-        return JobOrder_API.TaskAPIEntity.Data(command: command)
-    }
-
     var jobs: [JobOrder_API.JobAPIEntity.Data] {
         return [job]
     }
@@ -85,28 +59,31 @@ struct DomainTestsStub {
                                                 awsKey: RobotAPIEntity.Data.Key(thingName: "thingName", thingArn: "thingArn"))
     }
 
-    var commands: [JobOrder_API.CommandAPIEntity.Data] {
+    var commandsFromRobot: [JobOrder_API.CommandEntity.Data] {
         return [command]
     }
+    var commandFromTask: CommandEntity.Data {
+        return command
+    }
 
-    var command: JobOrder_API.CommandAPIEntity.Data {
-        return JobOrder_API.CommandAPIEntity.Data(taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
-                                                  robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
-                                                  started: 0,
-                                                  exited: 0,
-                                                  execDuration: 0,
-                                                  receivedStartReort: 0,
-                                                  receivedExitReort: 0,
-                                                  status: "queued",
-                                                  resultInfo: "",
-                                                  success: 0,
-                                                  fail: 0,
-                                                  error: 0,
-                                                  dataVersion: 1,
-                                                  createTime: 1_592_617_637_000,
-                                                  creator: "user@kyocera.jp",
-                                                  updateTime: 1_592_618_421_000,
-                                                  updator: "user@kyocera.jp")
+    var command: JobOrder_API.CommandEntity.Data {
+        return JobOrder_API.CommandEntity.Data(taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
+                                               robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
+                                               started: 0,
+                                               exited: 0,
+                                               execDuration: 0,
+                                               receivedStartReort: 0,
+                                               receivedExitReort: 0,
+                                               status: "queued",
+                                               resultInfo: "",
+                                               success: 0,
+                                               fail: 0,
+                                               error: 0,
+                                               dataVersion: 1,
+                                               createTime: 1_592_617_637_000,
+                                               creator: "user@kyocera.jp",
+                                               updateTime: 1_592_618_421_000,
+                                               updator: "user@kyocera.jp")
     }
 
     var swconf: JobOrder_API.RobotAPIEntity.Swconf {

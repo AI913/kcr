@@ -110,6 +110,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
     ///   - jobAPIRepository: JobAPIRepository
     ///   - actionLibraryAPIRepository: ActionLibraryAPIRepository
     ///   - aILibraryAPIRepository: AILibraryAPIRepository
+    ///   - taskAPIRepository: TaskAPIRepository
     ///   - userDefaultsRepository: UserDefaultsRepository
     ///   - robotDataRepository: RobotRepository
     ///   - jobDataRepository: JobRepository
@@ -121,24 +122,25 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                          jobAPIRepository: JobOrder_API.JobAPIRepository,
                          actionLibraryAPIRepository: JobOrder_API.ActionLibraryAPIRepository,
                          aILibraryAPIRepository: JobOrder_API.AILibraryAPIRepository,
+                         taskAPIRepository: JobOrder_API.TaskAPIRepository,
                          userDefaultsRepository: JobOrder_Data.UserDefaultsRepository,
                          robotDataRepository: JobOrder_Data.RobotRepository,
                          jobDataRepository: JobOrder_Data.JobRepository,
                          actionLibraryDataRepository: JobOrder_Data.ActionLibraryRepository,
-                         aiLibraryDataRepository: JobOrder_Data.AILibraryRepository,
-                         taskDataRepository: JobOrder_API.TaskAPIRepository) {
+                         aiLibraryDataRepository: JobOrder_Data.AILibraryRepository
+    ) {
         self.auth = authRepository
         self.mqtt = mqttRepository
         self.robotAPI = robotAPIRepository
         self.jobAPI = jobAPIRepository
         self.actionLibraryAPI = actionLibraryAPIRepository
         self.aILibraryAPI = aILibraryAPIRepository
+        self.taskAPI = taskAPIRepository
         self.ud = userDefaultsRepository
         self.robotData = robotDataRepository
         self.jobData = jobDataRepository
         self.actionLibraryData = actionLibraryDataRepository
         self.aiLibraryData = aiLibraryDataRepository
-        self.taskAPI = taskDataRepository
     }
 
     /// 保存してあるJobデータ
@@ -322,14 +324,14 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
         self.processing = true
         return Future<[DataManageModel.Output.Command], Error> { promise in
             self.auth.getTokens()
-                .flatMap { value -> AnyPublisher<APIResult<[JobOrder_API.CommandAPIEntity.Data]>, Error> in
+                .flatMap { value -> AnyPublisher<APIResult<[JobOrder_API.CommandEntity.Data]>, Error> in
                     guard let token = value.idToken else {
-                        return Future<APIResult<[JobOrder_API.CommandAPIEntity.Data]>, Error> { promise in
+                        return Future<APIResult<[JobOrder_API.CommandEntity.Data]>, Error> { promise in
                             let userInfo = ["__type": "getTokens", "message": "idToken is null."]
                             promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
                         }.eraseToAnyPublisher()
                     }
-                    return self.robotAPI.getCommandFromRobot(token, id: id).eraseToAnyPublisher()
+                    return self.robotAPI.getCommands(token, id: id).eraseToAnyPublisher()
                 }.sink(receiveCompletion: { completion in
                     self.processing = false
                     switch completion {
@@ -358,14 +360,14 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
         self.processing = true
         return Future<DataManageModel.Output.Command, Error> { promise in
             self.auth.getTokens()
-                .flatMap { value -> AnyPublisher<APIResult<JobOrder_API.TaskAPIEntity.Data>, Error> in
+                .flatMap { value -> AnyPublisher<APIResult<JobOrder_API.CommandEntity.Data>, Error> in
                     guard let token = value.idToken else {
-                        return Future<APIResult<JobOrder_API.TaskAPIEntity.Data>, Error> { promise in
+                        return Future<APIResult<JobOrder_API.CommandEntity.Data>, Error> { promise in
                             let userInfo = ["__type": "getTokens", "message": "idToken is null."]
                             promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
                         }.eraseToAnyPublisher()
                     }
-                    return self.taskAPI.getCommandsFromTask(token, taskId: taskId, robotId: robotId).eraseToAnyPublisher()
+                    return self.taskAPI.getCommand(token, taskId: taskId, robotId: robotId).eraseToAnyPublisher()
                 }.sink(receiveCompletion: { completion in
                     self.processing = false
                     switch completion {
@@ -376,7 +378,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     }
                 }, receiveValue: { response in
                     if let output = response.data {
-                        promise(.success(.init(output.command)))
+                        promise(.success(.init(output)))
                     } else {
                         let userInfo = ["__type": "commandFromTask", "message": "API Resuponse is null"]
                         promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
@@ -391,14 +393,14 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
         self.processing = true
         return Future<DataManageModel.Output.Task, Error> { promise in
             self.auth.getTokens()
-                .flatMap { value -> AnyPublisher<APIResult<JobOrder_API.TaskAPIEntity.Tasks>, Error> in
+                .flatMap { value -> AnyPublisher<APIResult<JobOrder_API.TaskAPIEntity.Data>, Error> in
                     guard let token = value.idToken else {
-                        return Future<APIResult<JobOrder_API.TaskAPIEntity.Tasks>, Error> { promise in
+                        return Future<APIResult<JobOrder_API.TaskAPIEntity.Data>, Error> { promise in
                             let userInfo = ["__type": "getTokens", "message": "idToken is null."]
                             promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
                         }.eraseToAnyPublisher()
                     }
-                    return self.taskAPI.getTasks(token, taskId: taskId).eraseToAnyPublisher()
+                    return self.taskAPI.getTask(token, taskId: taskId).eraseToAnyPublisher()
                 }.sink(receiveCompletion: { completion in
                     self.processing = false
                     switch completion {

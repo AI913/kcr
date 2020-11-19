@@ -33,12 +33,12 @@ class DataManageUseCaseTests: XCTestCase {
                                                  jobAPIRepository: jobAPI,
                                                  actionLibraryAPIRepository: actionLibraryAPI,
                                                  aILibraryAPIRepository: aiLibraryAPI,
+                                                 taskAPIRepository: taskAPI,
                                                  userDefaultsRepository: ud,
                                                  robotDataRepository: robot,
                                                  jobDataRepository: job,
                                                  actionLibraryDataRepository: actionLibrary,
-                                                 aiLibraryDataRepository: aiLibrary,
-                                                 taskDataRepository: taskAPI)
+                                                 aiLibraryDataRepository: aiLibrary)
     private var cancellables: Set<AnyCancellable> = []
 
     override func setUpWithError() throws {
@@ -782,11 +782,10 @@ class DataManageUseCaseTests: XCTestCase {
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
-
-        robotAPI.getCommandFromRobotHandler = { token, id in
-            return Future<APIResult<[JobOrder_API.CommandAPIEntity.Data]>, Error> { promise in
+        robotAPI.getCommandsHandler = { token, id in
+            return Future<APIResult<[JobOrder_API.CommandEntity.Data]>, Error> { promise in
                 getRobotCommandsHandlerExpectation.fulfill()
-                let entity = APIResult<[CommandAPIEntity.Data]>(time: 1, data: DomainTestsStub().commands, count: 1)
+                let entity = APIResult<[CommandEntity.Data]>(time: 1, data: DomainTestsStub().commandsFromRobot, count: 1)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -824,8 +823,8 @@ class DataManageUseCaseTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        robotAPI.getCommandFromRobotHandler = { token, id in
-            return Future<APIResult<[JobOrder_API.CommandAPIEntity.Data]>, Error> { promise in
+        robotAPI.getCommandsHandler = { token, id in
+            return Future<APIResult<[JobOrder_API.CommandEntity.Data]>, Error> { promise in
                 getRobotCommandsHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
@@ -857,8 +856,8 @@ class DataManageUseCaseTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        robotAPI.getCommandFromRobotHandler = { token, id in
-            return Future<APIResult<[JobOrder_API.CommandAPIEntity.Data]>, Error> { promise in
+        robotAPI.getCommandsHandler = { token, id in
+            return Future<APIResult<[JobOrder_API.CommandEntity.Data]>, Error> { promise in
                 getRobotCommandsHandlerExpectation.fulfill()
                 promise(.failure(error))
             }.eraseToAnyPublisher()
@@ -897,10 +896,10 @@ class DataManageUseCaseTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        taskAPI.getCommandsFromTaskHandler = { token, taskId, robotId in
-            return Future<APIResult<TaskAPIEntity.Data>, Error> { promise in
+        taskAPI.getCommandHandler = { token, taskId, robotId in
+            return Future<APIResult<CommandEntity.Data>, Error> { promise in
                 getTaskCommandsHandlerExpectation.fulfill()
-                let entity = APIResult<TaskAPIEntity.Data>(time: 1, data: DomainTestsStub().task, count: 1)
+                let entity = APIResult<CommandEntity.Data>(time: 1, data: DomainTestsStub().commandFromTask, count: 1)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -938,8 +937,8 @@ class DataManageUseCaseTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        taskAPI.getCommandsFromTaskHandler = { token, taskId, robotId in
-            return Future<APIResult<JobOrder_API.TaskAPIEntity.Data>, Error> { promise in
+        taskAPI.getCommandHandler = { token, taskId, robotId in
+            return Future<APIResult<JobOrder_API.CommandEntity.Data>, Error> { promise in
                 getTaskCommandsHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
@@ -971,8 +970,8 @@ class DataManageUseCaseTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        taskAPI.getCommandsFromTaskHandler = { token, taskId, robotId in
-            return Future<APIResult<JobOrder_API.TaskAPIEntity.Data>, Error> { promise in
+        taskAPI.getCommandHandler = { token, taskId, robotId in
+            return Future<APIResult<JobOrder_API.CommandEntity.Data>, Error> { promise in
                 getTaskCommandsHandlerExpectation.fulfill()
                 promise(.failure(error))
             }.eraseToAnyPublisher()

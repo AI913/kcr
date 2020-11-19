@@ -18,14 +18,6 @@ struct APITestsStub {
         return APIResult(time: 1_592_477_407_000, data: robots, count: 3)
     }
 
-    var tasksResult: APIResult<[TaskAPIEntity.Data]> {
-        return APIResult(time: 1_592_477_407_000, data: commandFromTasks, count: 3)
-    }
-
-    var commandsResult: APIResult<[CommandAPIEntity.Data]> {
-        return APIResult(time: 1_592_477_407_000, data: commands, count: 2)
-    }
-
     var swconfResult: APIResult<RobotAPIEntity.Swconf> {
         return APIResult(time: 1_592_693_902_000, data: swconf, count: nil)
     }
@@ -50,16 +42,16 @@ struct APITestsStub {
         return APIResult(time: 1_592_477_407_000, data: robot1, count: 1)
     }
 
-    var commandResult: APIResult<CommandAPIEntity.Data> {
+    var commandResult: APIResult<CommandEntity.Data> {
         return APIResult(time: 1_592_477_407_000, data: command1, count: 1)
     }
 
-    var commandFromTaskResult: APIResult<TaskAPIEntity.Data> {
-        return APIResult(time: 1_592_477_407_000, data: c_task1, count: 1)
+    var commandsFromRobotResult: APIResult<[CommandEntity.Data]> {
+        return APIResult(time: 1_592_477_407_000, data: commands, count: 2)
     }
 
-    var taskResult: APIResult<TaskAPIEntity.Tasks> {
-        return APIResult(time: 1_592_477_407_000, data: task1, count: 1)
+    var commandFromTaskResult: APIResult<CommandEntity.Data> {
+        return APIResult(time: 1_592_477_407_000, data: command1, count: 1)
     }
 
     var actionLibraryResult: APIResult<ActionLibraryAPIEntity.Data> {
@@ -143,50 +135,50 @@ extension APITestsStub {
                                    awsKey: key)
     }
 
-    private var commands: [CommandAPIEntity.Data] {
+    private var commands: [CommandEntity.Data] {
         [command1, command2]
     }
 
-    private var command1: CommandAPIEntity.Data {
+    private var command1: CommandEntity.Data {
 
-        return CommandAPIEntity.Data(taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
-                                     robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
-                                     started: 0,
-                                     exited: 0,
-                                     execDuration: 0,
-                                     receivedStartReort: 0,
-                                     receivedExitReort: 0,
-                                     status: "queued",
-                                     resultInfo: "",
-                                     success: 0,
-                                     fail: 0,
-                                     error: 0,
-                                     dataVersion: 1,
-                                     createTime: 1_592_617_637_000,
-                                     creator: "user@kyocera.jp",
-                                     updateTime: 1_592_618_421_000,
-                                     updator: "user@kyocera.jp")
+        return CommandEntity.Data(taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
+                                  robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
+                                  started: 0,
+                                  exited: 0,
+                                  execDuration: 0,
+                                  receivedStartReort: 0,
+                                  receivedExitReort: 0,
+                                  status: "queued",
+                                  resultInfo: "",
+                                  success: 0,
+                                  fail: 0,
+                                  error: 0,
+                                  dataVersion: 1,
+                                  createTime: 1_592_617_637_000,
+                                  creator: "user@kyocera.jp",
+                                  updateTime: 1_592_618_421_000,
+                                  updator: "user@kyocera.jp")
     }
 
-    private var command2: CommandAPIEntity.Data {
+    private var command2: CommandEntity.Data {
 
-        return CommandAPIEntity.Data(taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
-                                     robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
-                                     started: 0,
-                                     exited: 0,
-                                     execDuration: 0,
-                                     receivedStartReort: 0,
-                                     receivedExitReort: 0,
-                                     status: "queued",
-                                     resultInfo: "",
-                                     success: 0,
-                                     fail: 0,
-                                     error: 0,
-                                     dataVersion: 1,
-                                     createTime: 1_592_617_637_000,
-                                     creator: "user@kyocera.jp",
-                                     updateTime: 1_592_618_421_000,
-                                     updator: "user@kyocera.jp")
+        return CommandEntity.Data(taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
+                                  robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
+                                  started: 0,
+                                  exited: 0,
+                                  execDuration: 0,
+                                  receivedStartReort: 0,
+                                  receivedExitReort: 0,
+                                  status: "queued",
+                                  resultInfo: "",
+                                  success: 0,
+                                  fail: 0,
+                                  error: 0,
+                                  dataVersion: 1,
+                                  createTime: 1_592_617_637_000,
+                                  creator: "user@kyocera.jp",
+                                  updateTime: 1_592_618_421_000,
+                                  updator: "user@kyocera.jp")
     }
 
     private var swconf: RobotAPIEntity.Swconf {
@@ -320,93 +312,23 @@ extension APITestsStub {
                                  updator: "user@kyocera.jp")
     }
 
-    private var commandFromTasks: [TaskAPIEntity.Data] {
-        [c_task1, c_task2, c_task3]
-    }
-
-    private var c_task1: TaskAPIEntity.Data {
-        let task = CommandAPIEntity.Data(
-            taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
-            robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
-            started: 1_592_620_113_000,
-            exited: 1_592_661_502_000,
-            execDuration: 41_389_000,
-            receivedStartReort: 1_592_652_512_000,
-            receivedExitReort: 1_592_693_902_000,
-            status: "succeeded",
-            resultInfo: "All success",
-            success: 73,
-            fail: 0,
-            error: 0,
-            dataVersion: 1,
-            createTime: 1_592_477_367_000,
-            creator: "user@kyocera.jp",
-            updateTime: 1_592_477_367_000,
-            updator: "user@kyocera.jp")
-        return TaskAPIEntity.Data(command: task)
-    }
-
-    private var c_task2: TaskAPIEntity.Data {
-        let task = CommandAPIEntity.Data(
-            taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
-            robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
-            started: 1_592_620_113_000,
-            exited: 1_592_661_502_000,
-            execDuration: 41_389_000,
-            receivedStartReort: 1_592_652_512_000,
-            receivedExitReort: 1_592_693_902_000,
-            status: "succeeded",
-            resultInfo: "All success",
-            success: 73,
-            fail: 0,
-            error: 0,
-            dataVersion: 1,
-            createTime: 1_592_477_367_000,
-            creator: "user@kyocera.jp",
-            updateTime: 1_592_477_367_000,
-            updator: "user@kyocera.jp")
-        return TaskAPIEntity.Data(command: task)
-    }
-
-    private var c_task3: TaskAPIEntity.Data {
-        let task = CommandAPIEntity.Data(
-            taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
-            robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
-            started: 1_592_620_113_000,
-            exited: 1_592_661_502_000,
-            execDuration: 41_389_000,
-            receivedStartReort: 1_592_652_512_000,
-            receivedExitReort: 1_592_693_902_000,
-            status: "succeeded",
-            resultInfo: "All success",
-            success: 73,
-            fail: 0,
-            error: 0,
-            dataVersion: 1,
-            createTime: 1_592_477_367_000,
-            creator: "user@kyocera.jp",
-            updateTime: 1_592_477_367_000,
-            updator: "user@kyocera.jp")
-        return TaskAPIEntity.Data(command: task)
-    }
-
-    private var tasks: [TaskAPIEntity.Tasks] {
+    private var tasks: [TaskAPIEntity.Data] {
         [task1, task2, task3]
     }
 
-    private var task1: TaskAPIEntity.Tasks {
-        return TaskAPIEntity.Tasks(jobId: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
-                                   exit: TaskAPIEntity.Tasks.Exit(option: TaskAPIEntity.Tasks.Exit.Option(numberOfRuns: 5)))
+    private var task1: TaskAPIEntity.Data {
+        return TaskAPIEntity.Data(jobId: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
+                                  exit: TaskAPIEntity.Data.Exit(option: TaskAPIEntity.Data.Exit.Option(numberOfRuns: 5)))
     }
 
-    private var task2: TaskAPIEntity.Tasks {
-        return TaskAPIEntity.Tasks(jobId: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
-                                   exit: TaskAPIEntity.Tasks.Exit(option: TaskAPIEntity.Tasks.Exit.Option(numberOfRuns: 5)))
+    private var task2: TaskAPIEntity.Data {
+        return TaskAPIEntity.Data(jobId: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
+                                  exit: TaskAPIEntity.Data.Exit(option: TaskAPIEntity.Data.Exit.Option(numberOfRuns: 5)))
     }
 
-    private var task3: TaskAPIEntity.Tasks {
-        return TaskAPIEntity.Tasks(jobId: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
-                                   exit: TaskAPIEntity.Tasks.Exit(option: TaskAPIEntity.Tasks.Exit.Option(numberOfRuns: 5)))
+    private var task3: TaskAPIEntity.Data {
+        return TaskAPIEntity.Data(jobId: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
+                                  exit: TaskAPIEntity.Data.Exit(option: TaskAPIEntity.Data.Exit.Option(numberOfRuns: 5)))
     }
 
     private var actionLibraries: [ActionLibraryAPIEntity.Data] {

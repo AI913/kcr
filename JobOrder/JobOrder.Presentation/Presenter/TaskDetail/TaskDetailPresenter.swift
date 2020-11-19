@@ -15,19 +15,51 @@ import JobOrder_Utility
 // MARK: - Interface
 /// @mockable
 public protocol TaskDetailPresenterProtocol {
+    /// 起動時
+    /// - Parameters:
+    ///   - taskId: TaskID
+    ///   - robotId: RobotID
     func viewWillAppear(taskId: String, robotId: String)
+    /// Job名取得
     func jobName() -> String?
+    /// Robot名取得
     func RobotName() -> String?
+    /// 更新時間取得
+    /// - Parameters:
+    ///   - textColor: テキストカラー
+    ///   - font: フォント
     func updatedAt(textColor: UIColor, font: UIFont) -> NSAttributedString?
+    /// 作成時間取得
+    /// - Parameters:
+    ///   - textColor: テキストカラー
+    ///   - font: フォント
     func createdAt(textColor: UIColor, font: UIFont) -> NSAttributedString?
+    /// 開始時間取得
+    /// - Parameters:
+    ///   - textColor: テキストカラー
+    ///   - font: フォント
     func startedAt(textColor: UIColor, font: UIFont) -> NSAttributedString?
+    /// 完了時間取得
+    /// - Parameters:
+    ///   - textColor: テキストカラー
+    ///   - font: フォント
     func exitedAt(textColor: UIColor, font: UIFont) -> NSAttributedString?
+    /// 経過時間取得
+    /// - Parameters:
+    ///   - textColor: テキストカラー
+    ///   - font: フォント
     func duration(textColor: UIColor, font: UIFont) -> NSAttributedString?
+    /// ステータス取得
     func status() -> String?
+    /// 成功数取得
     func success() -> Int?
+    /// 失敗数取得
     func failure() -> Int?
+    /// エラー数取得
     func error() -> Int?
+    /// N/A数取得
     func na() -> Int?
+    /// N/A数取得
     func remarks() -> String?
 
     func tapOrderEntryButton()
@@ -53,9 +85,13 @@ class TaskDetailPresenter {
 
 // MARK: - Protocol Function
 extension TaskDetailPresenter: TaskDetailPresenterProtocol {
+    /// 起動時
+    /// - Parameters:
+    ///   - taskId: TaskID
+    ///   - robotId: RobotID
     func viewWillAppear(taskId: String, robotId: String) {
         vc.changedProcessing(true)
-        getTaskExecutions(taskId: taskId, robotId: robotId)
+        getCommand(taskId: taskId, robotId: robotId)
         getTask(taskId: taskId)
         getRobot(robotId: robotId)
     }
@@ -80,8 +116,7 @@ extension TaskDetailPresenter: TaskDetailPresenterProtocol {
     ///   - font: フォント
     /// - Returns: 更新時間
     func updatedAt(textColor: UIColor, font: UIFont) -> NSAttributedString? {
-        let date = Date(timeIntervalSince1970: Double((command?.updateTime ?? 1000) / 1000))
-        return string(date: date, label: "", textColor: textColor, font: font)
+        return string(date: toEpocTime(command?.updateTime), label: "", textColor: textColor, font: font)
     }
 
     /// 作成時間取得
@@ -90,8 +125,7 @@ extension TaskDetailPresenter: TaskDetailPresenterProtocol {
     ///   - font: フォント
     /// - Returns: 作成時間
     func createdAt(textColor: UIColor, font: UIFont) -> NSAttributedString? {
-        let date = Date(timeIntervalSince1970: Double((command?.createTime ?? 1000) / 1000))
-        return string(date: date, label: "", textColor: textColor, font: font)
+        return string(date: toEpocTime(command?.createTime), label: "", textColor: textColor, font: font)
     }
     /// 開始時間取得
     /// - Parameters:
@@ -99,8 +133,7 @@ extension TaskDetailPresenter: TaskDetailPresenterProtocol {
     ///   - font: フォント
     /// - Returns: 開始時間
     func startedAt(textColor: UIColor, font: UIFont) -> NSAttributedString? {
-        let date = Date(timeIntervalSince1970: Double((command?.started ?? 1000) / 1000))
-        return string(date: date, label: "", textColor: textColor, font: font)
+        return string(date: toEpocTime(command?.started), label: "", textColor: textColor, font: font)
     }
     /// 完了時間取得
     /// - Parameters:
@@ -108,8 +141,7 @@ extension TaskDetailPresenter: TaskDetailPresenterProtocol {
     ///   - font: フォント
     /// - Returns: 完了時間
     func exitedAt(textColor: UIColor, font: UIFont) -> NSAttributedString? {
-        let date = Date(timeIntervalSince1970: Double((command?.exited ?? 1000) / 1000))
-        return string(date: date, label: "", textColor: textColor, font: font)
+        return string(date: toEpocTime(command?.exited), label: "", textColor: textColor, font: font)
     }
     /// 経過時間取得
     /// - Parameters:
@@ -120,6 +152,8 @@ extension TaskDetailPresenter: TaskDetailPresenterProtocol {
         return string(time: command?.execDuration, label: "", textColor: textColor, font: font)
     }
 
+    /// ステータス取得
+    /// - Returns: ステータス
     func status() -> String? {
         return command?.status
     }
@@ -180,7 +214,7 @@ extension TaskDetailPresenter {
             }.store(in: &cancellables)
     }
 
-    func getTaskExecutions(taskId: String, robotId: String) {
+    func getCommand(taskId: String, robotId: String) {
         dataUseCase.commandFromTask(taskId: taskId, robotId: robotId)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
@@ -222,13 +256,13 @@ extension TaskDetailPresenter {
             }, receiveValue: { response in
                 Logger.debug(target: self, "\(String(describing: response))")
                 self.robot = response
-                self.vc.changedProcessing(false)
+                self.vc.viewReload()
             }).store(in: &cancellables)
     }
 
     private func getRunHistories(id: String) {}
 
-    private func string(date: Date?, label: String, textColor: UIColor, font: UIFont) -> NSAttributedString? {
+    func string(date: Date?, label: String, textColor: UIColor, font: UIFont) -> NSAttributedString? {
         let mutableAttributedString = NSMutableAttributedString()
         mutableAttributedString.append(NSAttributedString(string: label, attributes: [
             .foregroundColor: textColor,
@@ -242,13 +276,18 @@ extension TaskDetailPresenter {
         return mutableAttributedString
     }
 
-    private func string(time: Int?, label: String, textColor: UIColor, font: UIFont) -> NSAttributedString? {
+    func string(time: Int?, label: String, textColor: UIColor, font: UIFont) -> NSAttributedString? {
+        let date = Date(timeIntervalSince1970: Double(time ?? 0))
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        formatter.dateFormat = "HH:mm:ss"
+
         let mutableAttributedString = NSMutableAttributedString()
         mutableAttributedString.append(NSAttributedString(string: label, attributes: [
             .foregroundColor: textColor,
             .font: font
         ]))
-        mutableAttributedString.append(NSAttributedString(string: String(time ?? 0), attributes: [
+        mutableAttributedString.append(NSAttributedString(string: formatter.string(from: date), attributes: [
             .foregroundColor: UIColor.label,
             .font: UIFont.systemFont(ofSize: 14.0)
         ]))
@@ -268,7 +307,7 @@ extension TaskDetailPresenter {
         return formatter.string(from: date)
     }
 
-    private func toEpocTime(_ data: Int?) -> Date {
+    func toEpocTime(_ data: Int?) -> Date {
         return Date(timeIntervalSince1970: Double((data ?? 1000) / 1000))
     }
 }

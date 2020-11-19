@@ -84,30 +84,7 @@ struct PresentationTestsStub {
     }
 
     var robot: JobOrder_Domain.DataManageModel.Output.Robot {
-        return _robot()
-    }
-
-    func _robot(id: String = "ac305346-fd81-4cbb-8738-90b025570292", name: String = "Minami\'s Raspberry Pi") -> JobOrder_Domain.DataManageModel.Output.Robot {
-        return JobOrder_Domain.DataManageModel.Output.Robot(
-            id: id,
-            name: name,
-            type: "Raspberry Pi",
-            locale: "ja_JP",
-            isSimulator: false,
-            maker: "RS Components Ltd.",
-            model: "3BPLUS-R",
-            modelClass: "Raspberry Pi3 ModelB+",
-            serial: "B8AE9C426FC1",
-            overview: "",
-            remarks: "",
-            version: 1,
-            createTime: 1_592_477_387_000,
-            creator: "user@kyocera.jp",
-            updateTime: 1_592_477_387_000,
-            updator: "user@kyocera.jp",
-            thingName: Optional("raspberrypi_3"),
-            thingArn: "arn:aws:iot:ap-northeast-1:701006255006:thing/raspberrypi_3",
-            state: "waiting")
+        return robot1()
     }
 
     var jobs: [JobOrder_Domain.DataManageModel.Output.Job] {

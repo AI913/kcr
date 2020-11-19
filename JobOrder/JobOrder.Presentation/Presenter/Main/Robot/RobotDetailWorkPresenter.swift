@@ -84,7 +84,7 @@ extension RobotDetailWorkPresenter: RobotDetailWorkPresenterProtocol {
     /// View表示開始
     func viewWillAppear() {
         guard let id = data.id else { return }
-        getTaskExecutions(id: id)
+        getCommands(id: id)
     }
 
     /// セクション数取得
@@ -158,7 +158,7 @@ extension RobotDetailWorkPresenter {
             }.store(in: &cancellables)
     }
 
-    func getTaskExecutions(id: String) {
+    func getCommands(id: String) {
         guard let id = data.id else { return }
         dataUseCase.commandFromRobot(id: id)
             .receive(on: DispatchQueue.main)

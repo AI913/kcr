@@ -29,7 +29,7 @@ public class TaskAPIDataStore: TaskAPIRepository {
     ///   - taskId: Task ID
     ///   - robotId: RobotID
     /// - Returns: Command情報
-    public func getCommandsFromTask(_ token: String, taskId: String, robotId: String) -> AnyPublisher<APIResult<TaskAPIEntity.Data>, Error> {
+    public func getCommand(_ token: String, taskId: String, robotId: String) -> AnyPublisher<APIResult<CommandEntity.Data>, Error> {
         Logger.info(target: self)
         return api.get(resUrl: url, token: token, dataId: "/\(taskId)/commands/\(robotId)")
     }
@@ -39,7 +39,7 @@ public class TaskAPIDataStore: TaskAPIRepository {
     ///   - token: トークン情報
     ///   - taskId: TaskID
     /// - Returns: Task情報
-    public func getTasks(_ token: String, taskId: String) -> AnyPublisher<APIResult<TaskAPIEntity.Tasks>, Error> {
+    public func getTask(_ token: String, taskId: String) -> AnyPublisher<APIResult<TaskAPIEntity.Data>, Error> {
         Logger.info(target: self)
         return api.get(resUrl: url, token: token, dataId: "/\(taskId)")
     }

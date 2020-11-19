@@ -75,12 +75,13 @@ struct Builder {
                                           jobAPIRepository: jobRepository,
                                           actionLibraryAPIRepository: actionLibraryRepository,
                                           aILibraryAPIRepository: aiLibraryRepository,
+                                          taskAPIRepository: taskRepository,
                                           userDefaultsRepository: JobOrder_Data.UserDefaultsDataStore(),
                                           robotDataRepository: robotDataRepository,
                                           jobDataRepository: jobDataRepository,
                                           actionLibraryDataRepository: actionLibraryDataRepository,
-                                          aiLibraryDataRepository: aiLibraryDataRepository,
-                                          taskDataRepository: taskRepository)
+                                          aiLibraryDataRepository: aiLibraryDataRepository
+        )
     }
     var videoStreamingUseCase: JobOrder_Domain.VideoStreamingUseCase {
         JobOrder_Domain.VideoStreamingUseCase(videoRepository: JobOrder_API.AWSKVSDataStore())
