@@ -11,14 +11,16 @@ import XCTest
 
 class JobDetailViewControllerTests: XCTestCase {
 
-    private let mock = JobDetailPresenterProtocolMock()
+    private let data = MainViewData.Job()
+    private lazy var mock = JobDetailPresenterProtocolMock(data: data)
     private let vc = StoryboardScene.Main.jobDetail.instantiate()
 
     override func setUpWithError() throws {
+        vc.presenter = mock
+
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = vc
         window.makeKeyAndVisible()
-        vc.presenter = mock
     }
 
     override func tearDownWithError() throws {}
@@ -26,8 +28,10 @@ class JobDetailViewControllerTests: XCTestCase {
     func test_outlets() {
         XCTAssertNotNil(vc.displayNameLabel, "displayNameLabelがOutletに接続されていない")
         XCTAssertNotNil(vc.overviewLabel, "overviewLabelがOutletに接続されていない")
-        XCTAssertNotNil(vc.remarksLabel, "remarksLabelがOutletに接続されていない")
         XCTAssertNotNil(vc.orderButton, "orderButtonがOutletに接続されていない")
+        XCTAssertNotNil(vc.segmentedControl, "segmentedControlがOutletに接続されていない")
+        XCTAssertNotNil(vc.containerView, "containerViewがOutletに接続されていない")
+        XCTAssertNotNil(vc.containerViewHeight, "containerViewHeightがOutletに接続されていない")
     }
 
     func test_actions() throws {
@@ -44,7 +48,6 @@ class JobDetailViewControllerTests: XCTestCase {
     func test_viewWillAppear() throws {
         let displayNameLabel = try XCTUnwrap(vc.displayNameLabel, "Unwrap失敗")
         let overviewLabel = try XCTUnwrap(vc.overviewLabel, "Unwrap失敗")
-        let remarksLabel = try XCTUnwrap(vc.remarksLabel, "Unwrap失敗")
         let param = "test"
 
         XCTContext.runActivity(named: "Job未選択の場合") { _ in
@@ -55,7 +58,6 @@ class JobDetailViewControllerTests: XCTestCase {
             vc.viewWillAppear(true)
             XCTAssertNotEqual(displayNameLabel.text, param, "テキストを設定してはいけない: \(displayNameLabel)")
             XCTAssertNotEqual(overviewLabel.text, param, "テキストを設定してはいけない: \(overviewLabel)")
-            XCTAssertNotEqual(remarksLabel.text, param, "テキストを設定してはいけない: \(remarksLabel)")
         }
 
         XCTContext.runActivity(named: "Job選択済みの場合") { _ in
@@ -66,7 +68,6 @@ class JobDetailViewControllerTests: XCTestCase {
             vc.viewWillAppear(true)
             XCTAssertEqual(displayNameLabel.text, param, "テキストが設定されていない: \(displayNameLabel)")
             XCTAssertEqual(overviewLabel.text, param, "テキストが設定されていない: \(overviewLabel)")
-            XCTAssertEqual(remarksLabel.text, param, "テキストが設定されていない: \(remarksLabel)")
         }
     }
 

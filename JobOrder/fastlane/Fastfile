@@ -43,8 +43,8 @@ platform :ios do
 
     license_plist
     build_app
-    # upload_to_testflight
-    # jazzy_wrapper
+    upload_to_testflight
+    jazzy_wrapper(deploy: true)
   end
 
   desc "Marge to staging branch (Deploy to AdHoc)"
@@ -61,6 +61,7 @@ platform :ios do
 
     license_plist
     build_app
+    jazzy_wrapper
   end
 
   desc "Push to development branch"
@@ -134,9 +135,12 @@ platform :ios do
   end
 
   desc "Run jazzy in a wrapper"
-  private_lane :jazzy_wrapper do
-    # jazzy
-    sh("cd .. && make generate-documents")
+  private_lane :jazzy_wrapper do |options|
+    if options[:deploy]
+      sh("cd .. && make generate-documents-release")
+    else
+      sh("cd .. && make generate-documents-adhoc")
+    end
   end
 
   # https://github.com/Carthage/Carthage/issues/3019#issuecomment-699161281

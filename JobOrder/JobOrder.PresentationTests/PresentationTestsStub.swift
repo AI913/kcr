@@ -143,6 +143,14 @@ struct PresentationTestsStub {
         return [command5(), command1(), command3(), command4(), command2()]
     }
 
+    var commands2: [JobOrder_Domain.DataManageModel.Output.Command] {
+        []
+    }
+
+    var commands3: [JobOrder_Domain.DataManageModel.Output.Command] {
+        [command1(taskId: "091bf5e2-d3e4-4426-a36b-8554d68f1167")]
+    }
+
     func command1(taskId: String = "54b50d1e-a4a6-435e-9a38-0eaa91aa2559", robotId: String = "78abfbd4-6613-42a6-a691-23c3748fa346") -> JobOrder_Domain.DataManageModel.Output.Command {
         return JobOrder_Domain.DataManageModel.Output.Command(taskId: taskId,
                                                               robotId: robotId,
@@ -156,6 +164,7 @@ struct PresentationTestsStub {
                                                               success: 0,
                                                               fail: 0,
                                                               error: 0,
+                                                              robot: DataManageModel.Output.Robot(id: "", name: "", type: "", locale: "", isSimulator: false, maker: "", model: "", modelClass: "", serial: "", overview: "", remarks: "", version: 0, createTime: 0, creator: "", updateTime: 0, updator: "", thingName: "", thingArn: "", state: "") ,
                                                               dataVersion: 1,
                                                               createTime: 1_592_617_637_000,
                                                               creator: "user@kyocera.jp",
@@ -175,6 +184,7 @@ struct PresentationTestsStub {
                                                               success: 21,
                                                               fail: 0,
                                                               error: 0,
+                                                              robot: DataManageModel.Output.Robot(id: "", name: "", type: "", locale: "", isSimulator: false, maker: "", model: "", modelClass: "", serial: "", overview: "", remarks: "", version: 0, createTime: 0, creator: "", updateTime: 0, updator: "", thingName: "", thingArn: "", state: "") ,
                                                               dataVersion: 1,
                                                               createTime: 1_592_617_637_000,
                                                               creator: "user@kyocera.jp",
@@ -194,6 +204,7 @@ struct PresentationTestsStub {
                                                               success: 32,
                                                               fail: 6,
                                                               error: 1,
+                                                              robot: DataManageModel.Output.Robot(id: "", name: "", type: "", locale: "", isSimulator: false, maker: "", model: "", modelClass: "", serial: "", overview: "", remarks: "", version: 0, createTime: 0, creator: "", updateTime: 0, updator: "", thingName: "", thingArn: "", state: "") ,
                                                               dataVersion: 1,
                                                               createTime: 1_592_617_637_000,
                                                               creator: "user@kyocera.jp",
@@ -213,6 +224,7 @@ struct PresentationTestsStub {
                                                               success: 73,
                                                               fail: 0,
                                                               error: 0,
+                                                              robot: DataManageModel.Output.Robot(id: "", name: "", type: "", locale: "", isSimulator: false, maker: "", model: "", modelClass: "", serial: "", overview: "", remarks: "", version: 0, createTime: 0, creator: "", updateTime: 0, updator: "", thingName: "", thingArn: "", state: "") ,
                                                               dataVersion: 1,
                                                               createTime: 1_592_617_637_000,
                                                               creator: "user@kyocera.jp",
@@ -232,6 +244,7 @@ struct PresentationTestsStub {
                                                               success: 70,
                                                               fail: 2,
                                                               error: 0,
+                                                              robot: DataManageModel.Output.Robot(id: "", name: "", type: "", locale: "", isSimulator: false, maker: "", model: "", modelClass: "", serial: "", overview: "", remarks: "", version: 0, createTime: 0, creator: "", updateTime: 0, updator: "", thingName: "", thingArn: "", state: "") ,
                                                               dataVersion: 1,
                                                               createTime: 1_591_988_886_000,
                                                               creator: "user@kyocera.jp",
@@ -257,6 +270,7 @@ struct PresentationTestsStub {
             success: 73,
             fail: 0,
             error: 0,
+            robot: DataManageModel.Output.Robot(id: "", name: "", type: "", locale: "", isSimulator: false, maker: "", model: "", modelClass: "", serial: "", overview: "", remarks: "", version: 0, createTime: 0, creator: "", updateTime: 0, updator: "", thingName: "", thingArn: "", state: "") ,
             dataVersion: 1,
             createTime: 1_592_617_637_000,
             creator: "user@kyocera.jp",
@@ -264,14 +278,37 @@ struct PresentationTestsStub {
             updator: "user@kyocera.jp")
     }
 
-    var task: JobOrder_Domain.DataManageModel.Output.Task {
-        return _task()
+    var tasks: [JobOrder_Domain.DataManageModel.Output.Task] {
+        [task()]
     }
 
-    func _task(jobId: String = "e64f75d2-78b4-47d2-9318-fd370d55c8d1") -> JobOrder_Domain.DataManageModel.Output.Task {
-        return JobOrder_Domain.DataManageModel.Output.Task(
-            jobId: jobId,
-            exit: JobOrder_Domain.DataManageModel.Output.Task.Exit(JobOrder_Domain.DataManageModel.Output.Task.Exit.Option(5)))
+    var tasks2: [JobOrder_Domain.DataManageModel.Output.Task] {
+        [task(robotIds: [])]
+    }
+
+    var tasks3: [JobOrder_Domain.DataManageModel.Output.Task] {
+        [task(robotIds: ["test1"])]
+    }
+
+    var tasks4: [JobOrder_Domain.DataManageModel.Output.Task] {
+        [task(robotIds: ["test1", "test2", "test3"])]
+    }
+
+    var task: JobOrder_Domain.DataManageModel.Output.Task {
+        task()
+    }
+
+    func task(robotIds: [String] = ["6592c2a4-3688-49c5-ac1e-4763c81680e4", "78abfbd4-6613-42a6-a691-23c3748fa346"]) -> JobOrder_Domain.DataManageModel.Output.Task {
+        return JobOrder_Domain.DataManageModel.Output.Task(id: "091bf5e2-d3e4-4426-a36b-8554d68f1167",
+                                                           jobId: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
+                                                           robotIds: robotIds,
+                                                           exit: JobOrder_Domain.DataManageModel.Output.Task.Exit(
+                                                            JobOrder_Domain.DataManageModel.Output.Task.Exit.Option(5)),
+                                                           createTime: 1_601_165_183_557,
+                                                           creator: "user@kyocera.jp",
+                                                           updateTime: 1_592_618_421_000,
+                                                           updator: "user@kyocera.jp")
+
     }
 
     var system: DataManageModel.Output.System {

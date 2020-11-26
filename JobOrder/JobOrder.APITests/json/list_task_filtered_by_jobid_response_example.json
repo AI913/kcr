@@ -1,0 +1,100 @@
+{
+    "data": [
+        {
+            "taskId": "091bf5e2-d3e4-4426-a36b-8554d68f1167",
+            "robotIds": [
+                "6592c2a4-3688-49c5-ac1e-4763c81680e4",
+                "78abfbd4-6613-42a6-a691-23c3748fa346"
+            ],
+            "createdBy": "e2e_test_account",
+            "createTime": 1601165183557,
+            "dataVersion": 1,
+            "start": {
+                "condition": "immediately"
+            },
+            "exit": {
+                "condition": "specifiedNumberOfTimes",
+                "option": {
+                    "numberOfRuns": 5
+                }
+            },
+            "jobId": "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
+            "job": {
+                "actions": [
+                    {
+                        "actionLibraryId": "58dc4b0f-8175-4cf2-b4d2-0ce9daa91d1a",
+                        "index": 1,
+                        "Parameter": {},
+                        "catch": null,
+                        "then": null
+                    }
+                ],
+                "createdBy": "user@kyocera.jp",
+                "createTime": 1592477367000,
+                "dataVersion": 1,
+                "displayName": "LED Flicker Job (RED)",
+                "entryPoint": 1,
+                "jobId": "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
+                "overview": "A job for flickering Raspberry Pi LEDs",
+                "remarks": "The remarks of Job 1",
+                "requirements": null,
+                "updatedBy": "user@kyocera.jp",
+                "updateTime": 1592477367000
+            },
+            "updatedBy": "e2e_test_account",
+            "updateTime": 1601165183557
+        },
+        {
+            "taskId": "f83e50ac-22f8-11eb-adc1-0242ac120002",
+            "robotIds": [
+                "9f31a3bd-3138-56b2-1a1e-2769356f80e4",
+                "c8abfad4-1219-4aa6-d691-13c3748ea322"
+            ],
+            "createdBy": "e2e_test_account",
+            "createTime": 1602765183557,
+            "dataVersion": 1,
+            "start": {
+                "condition": "immediately"
+            },
+            "exit": {
+                "condition": "specifiedNumberOfTimes",
+                "option": {
+                    "numberOfRuns": 30
+                }
+            },
+            "jobId": "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
+            "job": {
+                "actions": [
+                    {
+                        "actionLibraryId": "58dc4b0f-8175-4cf2-b4d2-0ce9daa91d1a",
+                        "index": 1,
+                        "Parameter": {},
+                        "catch": null,
+                        "then": null
+                    }
+                ],
+                "createdBy": "user@kyocera.jp",
+                "createTime": 1592477367000,
+                "dataVersion": 1,
+                "displayName": "LED Flicker Job (RED)",
+                "entryPoint": 1,
+                "jobId": "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
+                "overview": "A job for flickering Raspberry Pi LEDs",
+                "remarks": "The remarks of Job 1",
+                "requirements": null,
+                "updatedBy": "user@kyocera.jp",
+                "updateTime": 1592477367000
+            },
+            "updatedBy": "e2e_test_account",
+            "updateTime": 1602765183557
+        }
+    ],
+    "paging" : {
+        "page": 2,
+        "size": 4,
+        "totalPages": 2,
+        "totalCount": 6
+    },
+    "count": 2,
+    "time": 1602795182227
+}

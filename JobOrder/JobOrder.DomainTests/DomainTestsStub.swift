@@ -65,6 +65,9 @@ struct DomainTestsStub {
     var commandFromTask: CommandEntity.Data {
         return command
     }
+    var commandsFromTask: [CommandEntity.Data] {
+        return [command]
+    }
 
     var command: JobOrder_API.CommandEntity.Data {
         return JobOrder_API.CommandEntity.Data(taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
@@ -79,6 +82,7 @@ struct DomainTestsStub {
                                                success: 0,
                                                fail: 0,
                                                error: 0,
+                                               robot: CommandEntity.Data.Robot(robotInfo: RobotAPIEntity.Data(id: "", name: "", type: "", locale: "", isSimulator: false, maker: "", model: "", modelClass: "", serial: "", overview: "", remarks: "", version: 0, createTime: 0, creator: "", updateTime: 0, updator: "", awsKey: nil)),
                                                dataVersion: 1,
                                                createTime: 1_592_617_637_000,
                                                creator: "user@kyocera.jp",
@@ -135,6 +139,39 @@ struct DomainTestsStub {
                                                  updator: "user@kyocera.jp")
     }
 
+    var tasksFromJob: [JobOrder_API.TaskAPIEntity.Data] {
+        [task]
+    }
+
+    var task: JobOrder_API.TaskAPIEntity.Data {
+        return JobOrder_API.TaskAPIEntity.Data(id: "091bf5e2-d3e4-4426-a36b-8554d68f1167",
+                                               jobId: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
+                                               robotIds: ["6592c2a4-3688-49c5-ac1e-4763c81680e4", "78abfbd4-6613-42a6-a691-23c3748fa346"],
+                                               start: TaskAPIEntity.Data.Start(condition: "immediately"),
+                                               exit: TaskAPIEntity.Data.Exit(condition: "specifiedNumberOfTimes",
+                                                                             option: TaskAPIEntity.Data.Exit.Option(numberOfRuns: 5)),
+                                               job: JobAPIEntity.Data(id: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
+                                                                      name: "LED Flicker Job (RED)",
+                                                                      actions: [JobAPIEntity.Data.Action(index: 1,
+                                                                                                         id: "58dc4b0f-8175-4cf2-b4d2-0ce9daa91d1a",
+                                                                                                         parameter: nil,
+                                                                                                         _catch: nil,
+                                                                                                         then: nil)],
+                                                                      entryPoint: 1,
+                                                                      overview: "A job for flickering Raspberry Pi LEDs",
+                                                                      remarks: "The remarks of Job 1",
+                                                                      requirements: nil,
+                                                                      version: 1,
+                                                                      createTime: 1_592_477_367_000,
+                                                                      creator: "user@kyocera.jp",
+                                                                      updateTime: 1_592_477_367_000,
+                                                                      updator: "user@kyocera.jp"),
+                                               version: 1,
+                                               createTime: 1_601_165_183_557,
+                                               creator: "e2e_test_account",
+                                               updateTime: 1_601_165_183_557,
+                                               updator: "e2e_test_account")
+    }
     var actionLibraries: [JobOrder_API.ActionLibraryAPIEntity.Data] {
         return [actionLibrary]
     }

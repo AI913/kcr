@@ -46,13 +46,19 @@ public protocol DataManageUseCaseProtocol {
     ///   - taskId: Task ID
     ///   - robotId: Robot ID
     func commandFromTask(taskId: String, robotId: String) -> AnyPublisher<DataManageModel.Output.Command, Error>
-
+    /// Task情報の詳細を取得する
+    /// - Parameters:
+    ///   - taskId: Task ID
+    func commandsFromTask(taskId: String) -> AnyPublisher<[DataManageModel.Output.Command], Error>
     /// Task情報を取得する
     /// - Parameter taskId: TaskID
     func task(taskId: String) -> AnyPublisher<DataManageModel.Output.Task, Error>
     /// RobotSystemの情報を取得する
     /// - Parameter id: Robot ID
     func robotSystem(id: String) -> AnyPublisher<DataManageModel.Output.System, Error>
+    /// Task情報を取得する
+    /// - Parameter id: Job ID
+    func tasksFromJob(id: String) -> AnyPublisher<[DataManageModel.Output.Task], Error>
 
     //var _processing: Published<Bool> { get set }
     var processing: Bool { get }
@@ -387,6 +393,42 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
         }.eraseToAnyPublisher()
     }
 
+    /// Task情報の詳細を取得する
+    /// - Parameters:
+    ///   - taskId: Task ID
+    public func commandsFromTask(taskId: String) -> AnyPublisher<[DataManageModel.Output.Command], Error> {
+        Logger.info(target: self)
+
+        self.processing = true
+        return Future<[DataManageModel.Output.Command], Error> { promise in
+            self.auth.getTokens()
+                .flatMap { value -> AnyPublisher<APIResult<[JobOrder_API.CommandEntity.Data]>, Error> in
+                    guard let token = value.idToken else {
+                        return Future<APIResult<[JobOrder_API.CommandEntity.Data]>, Error> { promise in
+                            let userInfo = ["__type": "getTokens", "message": "idToken is null."]
+                            promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                        }.eraseToAnyPublisher()
+                    }
+                    return self.taskAPI.getCommands(token, taskId: taskId).eraseToAnyPublisher()
+                }.sink(receiveCompletion: { completion in
+                    self.processing = false
+                    switch completion {
+                    case .finished: break
+                    case .failure(let error):
+                        Logger.error(target: self, error.localizedDescription)
+                        promise(.failure(error))
+                    }
+                }, receiveValue: { response in
+                    if let output = response.data?.compactMap({ DataManageModel.Output.Command($0) }) {
+                        promise(.success(.init(output)))
+                    } else {
+                        let userInfo = ["__type": "commandsFromTask", "message": "API Response is null"]
+                        promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                    }
+                }).store(in: &self.cancellables)
+        }.eraseToAnyPublisher()
+    }
+
     public func task(taskId: String) -> AnyPublisher<DataManageModel.Output.Task, Error> {
         Logger.info(target: self)
 
@@ -461,6 +503,42 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
     }
+
+    /// Task情報を取得する
+    /// - Parameter id: Job ID
+    public func tasksFromJob(id: String) -> AnyPublisher<[DataManageModel.Output.Task], Error> {
+        Logger.info(target: self)
+
+        self.processing = true
+        return Future<[DataManageModel.Output.Task], Error> { promise in
+            self.auth.getTokens()
+                .flatMap { value -> AnyPublisher<APIResult<[JobOrder_API.TaskAPIEntity.Data]>, Error> in
+                    guard let token = value.idToken else {
+                        return Future<APIResult<[JobOrder_API.TaskAPIEntity.Data]>, Error> { promise in
+                            let userInfo = ["__type": "getTokens", "message": "idToken is null."]
+                            promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                        }.eraseToAnyPublisher()
+                    }
+                    return self.jobAPI.getTasks(token, id: id).eraseToAnyPublisher()
+                }.sink(receiveCompletion: { completion in
+                    self.processing = false
+                    switch completion {
+                    case .finished: break
+                    case .failure(let error):
+                        Logger.error(target: self, error.localizedDescription)
+                        promise(.failure(error))
+                    }
+                }, receiveValue: { response in
+                    if let output = response.data?.compactMap({ DataManageModel.Output.Task($0) }) {
+                        promise(.success(.init(output)))
+                    } else {
+                        let userInfo = ["__type": "task", "message": "API Resuponse is null"]
+                        promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                    }
+                }).store(in: &self.cancellables)
+        }.eraseToAnyPublisher()
+    }
+
 }
 
 // MARK: - Private function

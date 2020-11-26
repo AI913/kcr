@@ -21,11 +21,20 @@ public struct CommandEntity: Codable {
         public let success: Int
         public let fail: Int
         public let error: Int
+        public let robot: Robot?
         public let dataVersion: Int
         public let createTime: Int
         public let creator: String
         public let updateTime: Int
         public let updator: String
+
+        public struct Robot: Codable, Equatable {
+            public let robotInfo: RobotAPIEntity.Data
+
+            public static func == (lhs: Robot, rhs: Robot) -> Bool {
+                return lhs.robotInfo == rhs.robotInfo
+            }
+        }
 
         enum CodingKeys: String, CodingKey {
             case taskId, robotId
@@ -34,7 +43,7 @@ public struct CommandEntity: Codable {
             case execDuration
             case receivedStartReort = "receivedStartReortAt"
             case receivedExitReort = "receivedExitReortAt"
-            case status, resultInfo, success, fail, error, dataVersion, createTime
+            case status, resultInfo, success, fail, error, robot, dataVersion, createTime
             case creator = "createdBy"
             case updateTime
             case updator = "updatedBy"
@@ -53,6 +62,7 @@ public struct CommandEntity: Codable {
                 lhs.success == rhs.success &&
                 lhs.fail == rhs.fail &&
                 lhs.error == rhs.error &&
+                lhs.robot == rhs.robot &&
                 lhs.dataVersion == rhs.dataVersion &&
                 lhs.createTime == rhs.createTime &&
                 lhs.creator == rhs.creator &&

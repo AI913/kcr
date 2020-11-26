@@ -10,7 +10,6 @@ import Foundation
 
 /// RobotAPIのエンティティ
 public struct RobotAPIEntity: Codable {
-
     /// Robotデータ
     public struct Data: Codable {
         /// ID

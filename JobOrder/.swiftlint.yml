@@ -42,8 +42,8 @@ disabled_rules:
 # Custom rules
 
 file_length:
- - 650
- - 750
+ - 800
+ - 900
 
 #force_cast: warning
 
@@ -66,8 +66,8 @@ number_separator:
   minimum_length: 5
 
 type_body_length:
- - 400
  - 500
+ - 600
 
 function_body_length:
  - 70

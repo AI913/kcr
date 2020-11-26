@@ -277,6 +277,29 @@ public struct DataManageModel {
                 self.state = State.toEnum(robot.state)
             }
 
+            init(_ robot: JobOrder_API.RobotAPIEntity.Data) {
+                self.id = robot.id
+                self.name = robot.name
+                self.type = robot.type
+                self.locale = robot.locale
+                self.isSimulator = robot.isSimulator
+                self.maker = robot.maker
+                self.model = robot.model
+                self.modelClass = robot.modelClass
+                self.serial = robot.serial
+                self.overview = robot.overview
+                self.remarks = robot.remarks
+                self.version = robot.version
+                self.createTime = robot.createTime
+                self.creator = robot.creator
+                self.updateTime = robot.updateTime
+                self.updator = robot.updator
+                self.thingName = robot.awsKey?.thingName
+                self.thingArn = robot.awsKey?.thingArn
+                //TODO:RobotのAPIから返ってこない値がinitに必要？
+                self.state = State.toEnum("")
+            }
+
             /// 稼働状態
             public enum State: CaseIterable {
                 /// 不明
@@ -343,6 +366,7 @@ public struct DataManageModel {
             public let success: Int
             public let fail: Int
             public let error: Int
+            public let robot: Robot?
             public let dataVersion: Int
             public let createTime: Int
             public let creator: String
@@ -361,7 +385,7 @@ public struct DataManageModel {
             ///   - creator: 作成者
             ///   - updateTime: 更新日時
             ///   - updator: 更新者
-            public init(taskId: String, robotId: String, started: Int, exited: Int, execDuration: Int, receivedStartReort: Int, receivedExitReort: Int, status: String, resultInfo: String, success: Int, fail: Int, error: Int, dataVersion: Int, createTime: Int, creator: String, updateTime: Int, updator: String) {
+            public init(taskId: String, robotId: String, started: Int, exited: Int, execDuration: Int, receivedStartReort: Int, receivedExitReort: Int, status: String, resultInfo: String, success: Int, fail: Int, error: Int, robot: Robot?, dataVersion: Int, createTime: Int, creator: String, updateTime: Int, updator: String) {
                 self.taskId = taskId
                 self.robotId = robotId
                 self.started = started
@@ -374,6 +398,7 @@ public struct DataManageModel {
                 self.success = success
                 self.fail = fail
                 self.error = error
+                self.robot = robot
                 self.dataVersion = dataVersion
                 self.createTime = createTime
                 self.creator = creator
@@ -396,6 +421,11 @@ public struct DataManageModel {
                 self.success = robotCommand.success
                 self.fail = robotCommand.fail
                 self.error = robotCommand.error
+                if let robot = robotCommand.robot {
+                    self.robot = Robot(robot.robotInfo)
+                } else {
+                    self.robot = nil
+                }
                 self.dataVersion = robotCommand.dataVersion
                 self.createTime = robotCommand.createTime
                 self.creator = robotCommand.creator
@@ -426,12 +456,24 @@ public struct DataManageModel {
         }
 
         public struct Task: Equatable {
+            public let id: String
             public let jobId: String
+            public let robotIds: [String]
             public let exit: Exit
+            public let createTime: Int
+            public let creator: String
+            public let updateTime: Int
+            public let updator: String
 
             public static func == (lhs: Task, rhs: Task) -> Bool {
-                return lhs.jobId == rhs.jobId &&
-                    lhs.exit == rhs.exit
+                return lhs.id == rhs.id &&
+                    lhs.jobId == rhs.jobId &&
+                    lhs.robotIds == rhs.robotIds &&
+                    lhs.exit == rhs.exit &&
+                    lhs.createTime == rhs.createTime &&
+                    lhs.creator == rhs.creator &&
+                    lhs.updateTime == rhs.updateTime &&
+                    lhs.updator == rhs.updator
             }
 
             public struct Exit: Codable {
@@ -463,14 +505,26 @@ public struct DataManageModel {
                 }
             }
 
-            public init(jobId: String, exit: Exit) {
+            public init(id: String, jobId: String, robotIds: [String], exit: Exit, createTime: Int, creator: String, updateTime: Int, updator: String) {
+                self.id = id
                 self.jobId = jobId
+                self.robotIds = robotIds
                 self.exit = exit
+                self.createTime = createTime
+                self.creator = creator
+                self.updateTime = updateTime
+                self.updator = updator
             }
 
             public init(_ task: TaskAPIEntity.Data) {
+                self.id = task.id
                 self.jobId = task.jobId
+                self.robotIds = task.robotIds
                 self.exit = Exit(task.exit)
+                self.createTime = task.createTime
+                self.creator = task.creator
+                self.updateTime = task.updateTime
+                self.updator = task.updator
             }
         }
 

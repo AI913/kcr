@@ -992,6 +992,120 @@ class DataManageUseCaseTests: XCTestCase {
         wait(for: [tokenHandlerExpectation, getTaskCommandsHandlerExpectation, completionExpectation], timeout: ms1000)
     }
 
+    /// - MARK Tests For CommandsFromTask
+    func test_taskCommands() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let getTaskCommandsHandlerExpectation = expectation(description: "Get Task commands handler")
+        let completionExpectation = expectation(description: "completion")
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        taskAPI.getCommandsHandler = { token, taskId in
+            return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
+                getTaskCommandsHandlerExpectation.fulfill()
+                let entity = APIResult<[CommandEntity.Data]>(time: 1, data: DomainTestsStub().commandsFromTask, count: 2)
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.commandsFromTask(taskId: param)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished: break
+                case .failure(let error):
+                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+                }
+                completionExpectation.fulfill()
+            }, receiveValue: { response in
+                XCTAssertNotNil(response, "値が取得できていない")
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, getTaskCommandsHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_taskCommandsNotReceive() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let getTaskCommandsHandlerExpectation = expectation(description: "Get Task commands handler")
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        taskAPI.getCommandsHandler = { token, taskId in
+            return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
+                getTaskCommandsHandlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.commandsFromTask(taskId: param)
+            .sink(receiveCompletion: { _ in
+                XCTFail("値を取得できてはいけない")
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, getTaskCommandsHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_taskCommandsError() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let getTaskCommandsHandlerExpectation = expectation(description: "Get Task commands handler")
+        let completionExpectation = expectation(description: "completion")
+        let error = NSError(domain: "Error", code: -1, userInfo: nil)
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        taskAPI.getCommandsHandler = { token, taskId in
+            return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
+                getTaskCommandsHandlerExpectation.fulfill()
+                promise(.failure(error))
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.commandsFromTask(taskId: param)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    XCTFail("値を取得できてはいけない")
+                case .failure(let e):
+                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                }
+                completionExpectation.fulfill()
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, getTaskCommandsHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
     func test_robotImage() {
         let param = "test"
         let tokenHandlerExpectation = expectation(description: "Token handler")
@@ -1422,6 +1536,119 @@ class DataManageUseCaseTests: XCTestCase {
             }).store(in: &cancellables)
 
         wait(for: [tokenHandlerExpectation, getRobotSwconfHandlerExpectation, getRobotAssetsHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_tasksFromJob() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let getTasksFromJobHandlerExpectation = expectation(description: "Get Tasks from job handler")
+        let completionExpectation = expectation(description: "completion")
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        jobAPI.getTasksHandler = { token, id in
+            return Future<APIResult<[TaskAPIEntity.Data]>, Error> { promise in
+                getTasksFromJobHandlerExpectation.fulfill()
+                let entity = APIResult<[TaskAPIEntity.Data]>(time: 1, data: DomainTestsStub().tasksFromJob, count: 1)
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.tasksFromJob(id: param)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished: break
+                case .failure(let error):
+                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+                }
+                completionExpectation.fulfill()
+            }, receiveValue: { response in
+                XCTAssertNotNil(response, "値が取得できていない")
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, getTasksFromJobHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_tasksFromJobNotReceive() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let getTasksFromJobHandlerExpectation = expectation(description: "Get Tasks from job handler")
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        jobAPI.getTasksHandler = { token, id in
+            return Future<APIResult<[TaskAPIEntity.Data]>, Error> { promise in
+                getTasksFromJobHandlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.tasksFromJob(id: param)
+            .sink(receiveCompletion: { _ in
+                XCTFail("値を取得できてはいけない")
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, getTasksFromJobHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_tasksFromJobError() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let getTasksFromJobHandlerExpectation = expectation(description: "Get Tasks from job handler")
+        let completionExpectation = expectation(description: "completion")
+        let error = NSError(domain: "Error", code: -1, userInfo: nil)
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        jobAPI.getTasksHandler = { token, id in
+            return Future<APIResult<[TaskAPIEntity.Data]>, Error> { promise in
+                getTasksFromJobHandlerExpectation.fulfill()
+                promise(.failure(error))
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.tasksFromJob(id: param)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    XCTFail("値を取得できてはいけない")
+                case .failure(let e):
+                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                }
+                completionExpectation.fulfill()
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, getTasksFromJobHandlerExpectation, completionExpectation], timeout: ms1000)
     }
 
     func test_saveData() {

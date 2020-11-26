@@ -38,6 +38,10 @@ struct APITestsStub {
         return APIResult(time: 1_592_477_407_000, data: job1, count: 1)
     }
 
+    var tasksFromJobResult: APIResult<[TaskAPIEntity.Data]> {
+        return APIResult(time: 1_602_795_182_227, data: tasks, count: 2)
+    }
+
     var robotResult: APIResult<RobotAPIEntity.Data> {
         return APIResult(time: 1_592_477_407_000, data: robot1, count: 1)
     }
@@ -52,6 +56,10 @@ struct APITestsStub {
 
     var commandFromTaskResult: APIResult<CommandEntity.Data> {
         return APIResult(time: 1_592_477_407_000, data: command1, count: 1)
+    }
+
+    var commandsFromTaskResult: APIResult<[CommandEntity.Data]> {
+        return APIResult(time: 1_592_477_407_000, data: commands, count: 2)
     }
 
     var actionLibraryResult: APIResult<ActionLibraryAPIEntity.Data> {
@@ -153,6 +161,7 @@ extension APITestsStub {
                                   success: 0,
                                   fail: 0,
                                   error: 0,
+                                  robot: CommandEntity.Data.Robot(robotInfo: robot1),
                                   dataVersion: 1,
                                   createTime: 1_592_617_637_000,
                                   creator: "user@kyocera.jp",
@@ -174,6 +183,7 @@ extension APITestsStub {
                                   success: 0,
                                   fail: 0,
                                   error: 0,
+                                  robot: CommandEntity.Data.Robot(robotInfo: robot1),
                                   dataVersion: 1,
                                   createTime: 1_592_617_637_000,
                                   creator: "user@kyocera.jp",
@@ -313,22 +323,56 @@ extension APITestsStub {
     }
 
     private var tasks: [TaskAPIEntity.Data] {
-        [task1, task2, task3]
+        [task1, task2]
     }
 
     private var task1: TaskAPIEntity.Data {
-        return TaskAPIEntity.Data(jobId: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
-                                  exit: TaskAPIEntity.Data.Exit(option: TaskAPIEntity.Data.Exit.Option(numberOfRuns: 5)))
+        return TaskAPIEntity.Data(id: "091bf5e2-d3e4-4426-a36b-8554d68f1167",
+                                  jobId: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
+                                  robotIds: ["6592c2a4-3688-49c5-ac1e-4763c81680e4", "78abfbd4-6613-42a6-a691-23c3748fa346"],
+                                  start: TaskAPIEntity.Data.Start(condition: "immediately"),
+                                  exit: TaskAPIEntity.Data.Exit(
+                                    condition: "specifiedNumberOfTimes",
+                                    option: TaskAPIEntity.Data.Exit.Option(numberOfRuns: 5)),
+                                  job: job1,
+                                  version: 1,
+                                  createTime: 1_601_165_183_557,
+                                  creator: "e2e_test_account",
+                                  updateTime: 1_601_165_183_557,
+                                  updator: "e2e_test_account")
+
     }
 
     private var task2: TaskAPIEntity.Data {
-        return TaskAPIEntity.Data(jobId: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
-                                  exit: TaskAPIEntity.Data.Exit(option: TaskAPIEntity.Data.Exit.Option(numberOfRuns: 5)))
+        return TaskAPIEntity.Data(id: "f83e50ac-22f8-11eb-adc1-0242ac120002",
+                                  jobId: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
+                                  robotIds: ["9f31a3bd-3138-56b2-1a1e-2769356f80e4", "c8abfad4-1219-4aa6-d691-13c3748ea322"],
+                                  start: TaskAPIEntity.Data.Start(condition: "immediately"),
+                                  exit: TaskAPIEntity.Data.Exit(
+                                    condition: "specifiedNumberOfTimes",
+                                    option: TaskAPIEntity.Data.Exit.Option(numberOfRuns: 30)),
+                                  job: job2,
+                                  version: 1,
+                                  createTime: 1_602_765_183_557,
+                                  creator: "e2e_test_account",
+                                  updateTime: 1_602_765_183_557,
+                                  updator: "e2e_test_account")
     }
 
     private var task3: TaskAPIEntity.Data {
-        return TaskAPIEntity.Data(jobId: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
-                                  exit: TaskAPIEntity.Data.Exit(option: TaskAPIEntity.Data.Exit.Option(numberOfRuns: 5)))
+        return TaskAPIEntity.Data(id: "f83e50ac-22f8-11eb-adc1-0242ac120002",
+                                  jobId: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
+                                  robotIds: ["9f31a3bd-3138-56b2-1a1e-2769356f80e4", "c8abfad4-1219-4aa6-d691-13c3748ea322"],
+                                  start: TaskAPIEntity.Data.Start(condition: "immediately"),
+                                  exit: TaskAPIEntity.Data.Exit(
+                                    condition: "specifiedNumberOfTimes",
+                                    option: TaskAPIEntity.Data.Exit.Option(numberOfRuns: 5)),
+                                  job: job3,
+                                  version: 1,
+                                  createTime: 1_592_477_337_000,
+                                  creator: "user@kyocera.jp",
+                                  updateTime: 1_592_477_337_000,
+                                  updator: "user@kyocera.jp")
     }
 
     private var actionLibraries: [ActionLibraryAPIEntity.Data] {

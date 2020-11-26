@@ -35,6 +35,12 @@ internal enum StoryboardScene {
 
     internal static let jobDetail = SceneType<JobOrder_Presentation.JobDetailViewController>(storyboard: Main.self, identifier: "JobDetail")
 
+    internal static let jobDetailFlow = SceneType<JobOrder_Presentation.JobDetailFlowViewController>(storyboard: Main.self, identifier: "JobDetailFlow")
+
+    internal static let jobDetailRemarks = SceneType<JobOrder_Presentation.JobDetailRemarksViewController>(storyboard: Main.self, identifier: "JobDetailRemarks")
+
+    internal static let jobDetailWork = SceneType<JobOrder_Presentation.JobDetailWorkViewController>(storyboard: Main.self, identifier: "JobDetailWork")
+
     internal static let jobList = SceneType<JobOrder_Presentation.JobListViewController>(storyboard: Main.self, identifier: "JobList")
 
     internal static let mainTabBar = SceneType<JobOrder_Presentation.MainTabBarController>(storyboard: Main.self, identifier: "MainTabBar")
@@ -91,6 +97,8 @@ internal enum StoryboardScene {
     internal static let storyboardName = "TaskDetail"
 
     internal static let initialScene = InitialSceneType<UIKit.UINavigationController>(storyboard: TaskDetail.self)
+
+    internal static let robotSelect = SceneType<JobOrder_Presentation.TaskDetailRobotSelectionViewController>(storyboard: TaskDetail.self, identifier: "RobotSelect")
 
     internal static let taskDetail = SceneType<JobOrder_Presentation.TaskDetailViewController>(storyboard: TaskDetail.self, identifier: "TaskDetail")
   }

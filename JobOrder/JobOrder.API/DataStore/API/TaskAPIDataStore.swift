@@ -34,6 +34,16 @@ public class TaskAPIDataStore: TaskAPIRepository {
         return api.get(resUrl: url, token: token, dataId: "/\(taskId)/commands/\(robotId)")
     }
 
+    /// Taskのコマンドを取得する
+    /// - Parameters:
+    ///   - token: トークン情報
+    ///   - taskId: Task ID
+    /// - Returns: Command情報
+    public func getCommands(_ token: String, taskId: String) -> AnyPublisher<APIResult<[CommandEntity.Data]>, Error> {
+        Logger.info(target: self)
+        return api.get(resUrl: url, token: token, dataId: "/\(taskId)/commands")
+    }
+
     /// Taskの情報を取得する
     /// - Parameters:
     ///   - token: トークン情報

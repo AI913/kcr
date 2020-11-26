@@ -17,6 +17,11 @@ public protocol TaskAPIRepository {
     /// - Parameter taskId: TaskID
     /// - Parameter robotId: RobotID
     func getCommand(_ token: String, taskId: String, robotId: String) -> AnyPublisher<APIResult<CommandEntity.Data>, Error>
+    /// Taskのcommand情報を取得する
+    /// - Parameters:
+    ///   - token: トークン情報
+    ///   - taskId: TaskID
+    func getCommands(_ token: String, taskId: String) -> AnyPublisher<APIResult<[CommandEntity.Data]>, Error>
 
     /// Taskの情報を取得する
     /// - Parameters:

@@ -73,4 +73,13 @@ public class JobAPIDataStore: JobAPIRepository {
         Logger.info(target: self)
         return api.delete(resUrl: url, token: token, dataId: jobId)
     }
+
+    /// Taskを取得する
+    /// - Parameters:
+    ///   - token: トークン情報
+    ///   - id: Job ID
+    public func getTasks(_ token: String, id: String) -> AnyPublisher<APIResult<[TaskAPIEntity.Data]>, Error> {
+        Logger.info(target: self)
+        return api.get(resUrl: url, token: token, dataId: "\(id)/tasks")
+    }
 }

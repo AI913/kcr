@@ -288,8 +288,13 @@
 		A3F98D4A24EA79BF0016A181 /* OrderEntryConfirmPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F98D4924EA79BF0016A181 /* OrderEntryConfirmPresenterTests.swift */; };
 		A3F98D4E24EB52120016A181 /* MainTabBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F98D4D24EB52120016A181 /* MainTabBarControllerTests.swift */; };
 		ACD83D98D70B7AF79D151C77 /* Pods_JobOrder_APITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EAF9D06050FF3DBC72A641 /* Pods_JobOrder_APITests.framework */; };
+		B712D63C255E7BBB00D5F01E /* list_task_filtered_by_jobid_response_example.json in Resources */ = {isa = PBXBuildFile; fileRef = B712D63B255E7BBB00D5F01E /* list_task_filtered_by_jobid_response_example.json */; };
 		B75AF586255248500081A50F /* list_hw_config_asset_response_example.json in Resources */ = {isa = PBXBuildFile; fileRef = B75AF584255248500081A50F /* list_hw_config_asset_response_example.json */; };
 		B75AF587255248500081A50F /* swconfig_response_example01.json in Resources */ = {isa = PBXBuildFile; fileRef = B75AF585255248500081A50F /* swconfig_response_example01.json */; };
+		B7614438256CC2E2008DA411 /* api_mock_examples_GET_tasks_taskid_commands_response.json in Resources */ = {isa = PBXBuildFile; fileRef = B7614437256CC2E2008DA411 /* api_mock_examples_GET_tasks_taskid_commands_response.json */; };
+		B76F39E92564B5AD000ECBDE /* JobDetailWorkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76F39E82564B5AD000ECBDE /* JobDetailWorkTableViewCell.swift */; };
+		B76F39F82564B5E8000ECBDE /* JobDetailWorkTaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76F39F72564B5E8000ECBDE /* JobDetailWorkTaskTableViewCell.swift */; };
+		B76F3A072564B5FC000ECBDE /* JobDetailWorkHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76F3A062564B5FC000ECBDE /* JobDetailWorkHistoryTableViewCell.swift */; };
 		B77B505E2558E79000CAA683 /* RobotDetailSystemDetailTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77B505D2558E79000CAA683 /* RobotDetailSystemDetailTableViewHeader.xib */; };
 		B7B234C4253E9CFA00DFB21C /* OrderEntryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B234C3253E9CFA00DFB21C /* OrderEntryUITests.swift */; };
 		B7D029982558DE76007D65C8 /* RobotDetailSystemDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D029972558DE76007D65C8 /* RobotDetailSystemDetailTableViewCell.swift */; };
@@ -297,6 +302,20 @@
 		B7E319642542A20D004E4875 /* OrderConfigurationPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E319632542A20D004E4875 /* OrderConfigurationPageObject.swift */; };
 		B7E319732542A45B004E4875 /* OrderConfirmPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E319722542A45B004E4875 /* OrderConfirmPageObject.swift */; };
 		B7E319822542B832004E4875 /* OrderCompletePageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E319812542B832004E4875 /* OrderCompletePageObject.swift */; };
+		B7FD409125625FF800643AAE /* JobDetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FD409025625FF800643AAE /* JobDetailPageViewController.swift */; };
+		B7FD40AD2562608B00643AAE /* JobDetailContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FD40AC2562608B00643AAE /* JobDetailContainerViewController.swift */; };
+		B7FD40C92562610000643AAE /* JobDetailWorkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FD40C82562610000643AAE /* JobDetailWorkViewController.swift */; };
+		B7FD40D82562619B00643AAE /* JobDetailFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FD40D72562619B00643AAE /* JobDetailFlowViewController.swift */; };
+		B7FD40F4256261D000643AAE /* JobDetailRemarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FD40F3256261D000643AAE /* JobDetailRemarksViewController.swift */; };
+		B7FD416525626A3700643AAE /* JobDetailWorkViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FD416425626A3700643AAE /* JobDetailWorkViewControllerTests.swift */; };
+		B7FD417425626A5F00643AAE /* JobDetailFlowViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FD417325626A5F00643AAE /* JobDetailFlowViewControllerTests.swift */; };
+		B7FD418325626A7500643AAE /* JobDetailRemarksViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FD418225626A7500643AAE /* JobDetailRemarksViewControllerTests.swift */; };
+		B7FD419F25626C7400643AAE /* JobDetailWorkPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FD419E25626C7400643AAE /* JobDetailWorkPresenter.swift */; };
+		B7FD41AE25626C8700643AAE /* JobDetailFlowPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FD41AD25626C8700643AAE /* JobDetailFlowPresenter.swift */; };
+		B7FD41BD25626C9500643AAE /* JobDetailRemarksPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FD41BC25626C9500643AAE /* JobDetailRemarksPresenter.swift */; };
+		B7FD41F02562796000643AAE /* JobDetailWorkPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FD41EF2562796000643AAE /* JobDetailWorkPresenterTests.swift */; };
+		B7FD41FF2562797200643AAE /* JobDetailFlowPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FD41FE2562797200643AAE /* JobDetailFlowPresenterTests.swift */; };
+		B7FD420E2562798700643AAE /* JobDetailRemarksPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FD420D2562798700643AAE /* JobDetailRemarksPresenterTests.swift */; };
 		CC5DE5E0735BF32159780D68 /* Pods_All_JobOrder_Presentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0898F4F8B5BDF3145C06A6DE /* Pods_All_JobOrder_Presentation.framework */; };
 		D7141CFC24372F9D00945E08 /* DataManageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7141CFB24372F9D00945E08 /* DataManageUseCase.swift */; };
 		D7141CFE2437317D00945E08 /* DataManageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7141CFD2437317D00945E08 /* DataManageModel.swift */; };
@@ -369,8 +388,12 @@
 		E586CB182525A4E3007AD3EC /* RobotListPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E586CB172525A4E3007AD3EC /* RobotListPageObject.swift */; };
 		E586CB1A2525D604007AD3EC /* WebPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E586CB192525D604007AD3EC /* WebPageObject.swift */; };
 		E586CB1C2525D60E007AD3EC /* AboutPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E586CB1B2525D60E007AD3EC /* AboutPageObject.swift */; };
+		E58A13702568DD390040D3B2 /* TaskDetailRobotSelectionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58A136F2568DD390040D3B2 /* TaskDetailRobotSelectionPresenter.swift */; };
+		E58A13802568DD9D0040D3B2 /* TaskDetailRobotSelectionViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58A137F2568DD9D0040D3B2 /* TaskDetailRobotSelectionViewData.swift */; };
+		E58A138F2568DDFC0040D3B2 /* TaskDetailRobotSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58A138E2568DDFC0040D3B2 /* TaskDetailRobotSelectionCollectionViewCell.swift */; };
 		E5AB6564255BA7F1001D7414 /* TaskDetailViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB6563255BA7F1001D7414 /* TaskDetailViewControllerTests.swift */; };
 		E5AB664F255BF117001D7414 /* TaskDetailPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB664E255BF117001D7414 /* TaskDetailPresenterTests.swift */; };
+		E5BA085F256E34E1000C9BE1 /* TaskDetailRobotSelectionCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BA085E256E34E1000C9BE1 /* TaskDetailRobotSelectionCircularProgress.swift */; };
 		E5C0A4A22554CEBA00C31567 /* CommandEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C0A4A12554CEBA00C31567 /* CommandEntity.swift */; };
 		E5C0A4B12554CFAD00C31567 /* TaskAPIEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C0A4B02554CFAD00C31567 /* TaskAPIEntity.swift */; };
 		E5C0CFF02542A5F400957D86 /* api_openapi-spec_v1_examples_list_command_response_example.json in Resources */ = {isa = PBXBuildFile; fileRef = E5C0CFEF2542A5F400957D86 /* api_openapi-spec_v1_examples_list_command_response_example.json */; };
@@ -829,8 +852,13 @@
 		A3F98D4D24EB52120016A181 /* MainTabBarControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarControllerTests.swift; sourceTree = "<group>"; };
 		AA0632E1FBB645D901E6F47B /* Pods-JobOrderUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JobOrderUITests.release.xcconfig"; path = "Target Support Files/Pods-JobOrderUITests/Pods-JobOrderUITests.release.xcconfig"; sourceTree = "<group>"; };
 		AD2E6768A83D3090B9B3D422 /* Pods_All_JobOrder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_All_JobOrder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B712D63B255E7BBB00D5F01E /* list_task_filtered_by_jobid_response_example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list_task_filtered_by_jobid_response_example.json; sourceTree = "<group>"; };
 		B75AF584255248500081A50F /* list_hw_config_asset_response_example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list_hw_config_asset_response_example.json; sourceTree = "<group>"; };
 		B75AF585255248500081A50F /* swconfig_response_example01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = swconfig_response_example01.json; sourceTree = "<group>"; };
+		B7614437256CC2E2008DA411 /* api_mock_examples_GET_tasks_taskid_commands_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_GET_tasks_taskid_commands_response.json; sourceTree = "<group>"; };
+		B76F39E82564B5AD000ECBDE /* JobDetailWorkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailWorkTableViewCell.swift; sourceTree = "<group>"; };
+		B76F39F72564B5E8000ECBDE /* JobDetailWorkTaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailWorkTaskTableViewCell.swift; sourceTree = "<group>"; };
+		B76F3A062564B5FC000ECBDE /* JobDetailWorkHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailWorkHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		B77B505D2558E79000CAA683 /* RobotDetailSystemDetailTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RobotDetailSystemDetailTableViewHeader.xib; sourceTree = "<group>"; };
 		B7B234C3253E9CFA00DFB21C /* OrderEntryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderEntryUITests.swift; sourceTree = "<group>"; };
 		B7D029972558DE76007D65C8 /* RobotDetailSystemDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobotDetailSystemDetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -838,6 +866,20 @@
 		B7E319632542A20D004E4875 /* OrderConfigurationPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderConfigurationPageObject.swift; sourceTree = "<group>"; };
 		B7E319722542A45B004E4875 /* OrderConfirmPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderConfirmPageObject.swift; sourceTree = "<group>"; };
 		B7E319812542B832004E4875 /* OrderCompletePageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCompletePageObject.swift; sourceTree = "<group>"; };
+		B7FD409025625FF800643AAE /* JobDetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailPageViewController.swift; sourceTree = "<group>"; };
+		B7FD40AC2562608B00643AAE /* JobDetailContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailContainerViewController.swift; sourceTree = "<group>"; };
+		B7FD40C82562610000643AAE /* JobDetailWorkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailWorkViewController.swift; sourceTree = "<group>"; };
+		B7FD40D72562619B00643AAE /* JobDetailFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailFlowViewController.swift; sourceTree = "<group>"; };
+		B7FD40F3256261D000643AAE /* JobDetailRemarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailRemarksViewController.swift; sourceTree = "<group>"; };
+		B7FD416425626A3700643AAE /* JobDetailWorkViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailWorkViewControllerTests.swift; sourceTree = "<group>"; };
+		B7FD417325626A5F00643AAE /* JobDetailFlowViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailFlowViewControllerTests.swift; sourceTree = "<group>"; };
+		B7FD418225626A7500643AAE /* JobDetailRemarksViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailRemarksViewControllerTests.swift; sourceTree = "<group>"; };
+		B7FD419E25626C7400643AAE /* JobDetailWorkPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailWorkPresenter.swift; sourceTree = "<group>"; };
+		B7FD41AD25626C8700643AAE /* JobDetailFlowPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailFlowPresenter.swift; sourceTree = "<group>"; };
+		B7FD41BC25626C9500643AAE /* JobDetailRemarksPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailRemarksPresenter.swift; sourceTree = "<group>"; };
+		B7FD41EF2562796000643AAE /* JobDetailWorkPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailWorkPresenterTests.swift; sourceTree = "<group>"; };
+		B7FD41FE2562797200643AAE /* JobDetailFlowPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailFlowPresenterTests.swift; sourceTree = "<group>"; };
+		B7FD420D2562798700643AAE /* JobDetailRemarksPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailRemarksPresenterTests.swift; sourceTree = "<group>"; };
 		C0FE491436EC2922EA563031 /* Pods-JobOrder.APITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JobOrder.APITests.release.xcconfig"; path = "Target Support Files/Pods-JobOrder.APITests/Pods-JobOrder.APITests.release.xcconfig"; sourceTree = "<group>"; };
 		C68CDB24ED73F2B20699AB09 /* Pods-JobOrder.DomainTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JobOrder.DomainTests.debug.xcconfig"; path = "Target Support Files/Pods-JobOrder.DomainTests/Pods-JobOrder.DomainTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D7141CFB24372F9D00945E08 /* DataManageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataManageUseCase.swift; path = JobOrder.Domain/Usecase/DataManageUseCase.swift; sourceTree = SOURCE_ROOT; };
@@ -924,8 +966,12 @@
 		E586CB172525A4E3007AD3EC /* RobotListPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobotListPageObject.swift; sourceTree = "<group>"; };
 		E586CB192525D604007AD3EC /* WebPageObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebPageObject.swift; sourceTree = "<group>"; };
 		E586CB1B2525D60E007AD3EC /* AboutPageObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutPageObject.swift; sourceTree = "<group>"; };
+		E58A136F2568DD390040D3B2 /* TaskDetailRobotSelectionPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailRobotSelectionPresenter.swift; sourceTree = "<group>"; };
+		E58A137F2568DD9D0040D3B2 /* TaskDetailRobotSelectionViewData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailRobotSelectionViewData.swift; sourceTree = "<group>"; };
+		E58A138E2568DDFC0040D3B2 /* TaskDetailRobotSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailRobotSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
 		E5AB6563255BA7F1001D7414 /* TaskDetailViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewControllerTests.swift; sourceTree = "<group>"; };
 		E5AB664E255BF117001D7414 /* TaskDetailPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailPresenterTests.swift; sourceTree = "<group>"; };
+		E5BA085E256E34E1000C9BE1 /* TaskDetailRobotSelectionCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailRobotSelectionCircularProgress.swift; sourceTree = "<group>"; };
 		E5C0A4A12554CEBA00C31567 /* CommandEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandEntity.swift; sourceTree = "<group>"; };
 		E5C0A4B02554CFAD00C31567 /* TaskAPIEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAPIEntity.swift; sourceTree = "<group>"; };
 		E5C0CFEF2542A5F400957D86 /* api_openapi-spec_v1_examples_list_command_response_example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "api_openapi-spec_v1_examples_list_command_response_example.json"; sourceTree = "<group>"; };
@@ -1151,9 +1197,11 @@
 		A32BCA7E2468E99F000287D2 /* TaskDetail */ = {
 			isa = PBXGroup;
 			children = (
+				E5BA085E256E34E1000C9BE1 /* TaskDetailRobotSelectionCircularProgress.swift */,
+				E58A138E2568DDFC0040D3B2 /* TaskDetailRobotSelectionCollectionViewCell.swift */,
+				E55A438C255E7DAF0079739D /* TaskDetailRobotSelectionViewController.swift */,
 				E5CF313825566CF80054F782 /* CircularProgressViewController.swift */,
 				A32BCA7F2468E99F000287D2 /* TaskDetailViewController.swift */,
-				E55A438C255E7DAF0079739D /* TaskDetailRobotSelectionViewController.swift */,
 			);
 			path = TaskDetail;
 			sourceTree = "<group>";
@@ -1200,6 +1248,9 @@
 			isa = PBXGroup;
 			children = (
 				A38C2AE4244FE4FA0089A70E /* JobListViewCell.swift */,
+				B76F39E82564B5AD000ECBDE /* JobDetailWorkTableViewCell.swift */,
+				B76F39F72564B5E8000ECBDE /* JobDetailWorkTaskTableViewCell.swift */,
+				B76F3A062564B5FC000ECBDE /* JobDetailWorkHistoryTableViewCell.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -1250,6 +1301,7 @@
 		A32BCB21246FB90E000287D2 /* ViewData */ = {
 			isa = PBXGroup;
 			children = (
+				E58A137E2568DD8F0040D3B2 /* TaskDetail */,
 				A32BCB26246FDF9A000287D2 /* Main */,
 				A32BCB23246FD902000287D2 /* Authentication */,
 				A32BCB22246FB90E000287D2 /* OrderEntry */,
@@ -1328,6 +1380,9 @@
 			children = (
 				A37EFD9624457EA800130EB6 /* JobListPresenter.swift */,
 				A37EFD9824457F2600130EB6 /* JobDetailPresenter.swift */,
+				B7FD419E25626C7400643AAE /* JobDetailWorkPresenter.swift */,
+				B7FD41AD25626C8700643AAE /* JobDetailFlowPresenter.swift */,
+				B7FD41BC25626C9500643AAE /* JobDetailRemarksPresenter.swift */,
 			);
 			path = Job;
 			sourceTree = "<group>";
@@ -1438,6 +1493,8 @@
 		A38B6EBC24CFEFB100A9914F /* json */ = {
 			isa = PBXGroup;
 			children = (
+				B7614437256CC2E2008DA411 /* api_mock_examples_GET_tasks_taskid_commands_response.json */,
+				B712D63B255E7BBB00D5F01E /* list_task_filtered_by_jobid_response_example.json */,
 				E5757FB92554F02900A5544D /* task_response_example01.json */,
 				E52B86EF254AC0AC0038ECA0 /* api_openapi-spec_v1_examples_command_response_succeeded_example01.json */,
 				B75AF584255248500081A50F /* list_hw_config_asset_response_example.json */,
@@ -1532,6 +1589,11 @@
 			children = (
 				A38C2AE3244FE4FA0089A70E /* JobListViewController.swift */,
 				A38C2AE2244FE4FA0089A70E /* JobDetailViewController.swift */,
+				B7FD409025625FF800643AAE /* JobDetailPageViewController.swift */,
+				B7FD40AC2562608B00643AAE /* JobDetailContainerViewController.swift */,
+				B7FD40C82562610000643AAE /* JobDetailWorkViewController.swift */,
+				B7FD40D72562619B00643AAE /* JobDetailFlowViewController.swift */,
+				B7FD40F3256261D000643AAE /* JobDetailRemarksViewController.swift */,
 				A32BCAC524693354000287D2 /* TableViewCell */,
 			);
 			path = Job;
@@ -1801,6 +1863,9 @@
 				A32E99CC24EBB50B005C4605 /* RobotVideoViewControllerTests.swift */,
 				A32E99D024EBBA20005C4605 /* JobListViewControllerTests.swift */,
 				A32E99D424EBBEA2005C4605 /* JobDetailViewControllerTests.swift */,
+				B7FD416425626A3700643AAE /* JobDetailWorkViewControllerTests.swift */,
+				B7FD417325626A5F00643AAE /* JobDetailFlowViewControllerTests.swift */,
+				B7FD418225626A7500643AAE /* JobDetailRemarksViewControllerTests.swift */,
 				A32E99D824EBC22B005C4605 /* SettingsViewControllerTests.swift */,
 				A32E99DA24EBC2F7005C4605 /* AboutAppViewControllerTests.swift */,
 			);
@@ -1820,6 +1885,9 @@
 				A32E99CE24EBB7AE005C4605 /* RobotVideoPresenterTests.swift */,
 				A32E99D224EBBB3C005C4605 /* JobListPresenterTests.swift */,
 				A32E99D624EBBFD3005C4605 /* JobDetailPresenterTests.swift */,
+				B7FD41EF2562796000643AAE /* JobDetailWorkPresenterTests.swift */,
+				B7FD41FE2562797200643AAE /* JobDetailFlowPresenterTests.swift */,
+				B7FD420D2562798700643AAE /* JobDetailRemarksPresenterTests.swift */,
 				A32E99DC24EBC356005C4605 /* SettingsPresenterTests.swift */,
 				A32E99DE24EC33CC005C4605 /* AboutAppPresenterTests.swift */,
 			);
@@ -2229,6 +2297,14 @@
 			path = JobEntry;
 			sourceTree = "<group>";
 		};
+		E58A137E2568DD8F0040D3B2 /* TaskDetail */ = {
+			isa = PBXGroup;
+			children = (
+				E58A137F2568DD9D0040D3B2 /* TaskDetailRobotSelectionViewData.swift */,
+			);
+			path = TaskDetail;
+			sourceTree = "<group>";
+		};
 		E5AB6562255BA7D3001D7414 /* TaskDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -2249,6 +2325,7 @@
 			isa = PBXGroup;
 			children = (
 				E5CF31802556820B0054F782 /* TaskDetailPresenter.swift */,
+				E58A136F2568DD390040D3B2 /* TaskDetailRobotSelectionPresenter.swift */,
 			);
 			path = TaskDetail;
 			sourceTree = "<group>";
@@ -2737,11 +2814,13 @@
 			files = (
 				A38FB12C25144ABF00A0632F /* list_action_library_response_example.json in Resources */,
 				E5757FBA2554F02900A5544D /* task_response_example01.json in Resources */,
+				B7614438256CC2E2008DA411 /* api_mock_examples_GET_tasks_taskid_commands_response.json in Resources */,
 				B75AF587255248500081A50F /* swconfig_response_example01.json in Resources */,
 				B75AF586255248500081A50F /* list_hw_config_asset_response_example.json in Resources */,
 				A38FB12B25144ABF00A0632F /* list_robot_response_example.json in Resources */,
 				E5C0CFF02542A5F400957D86 /* api_openapi-spec_v1_examples_list_command_response_example.json in Resources */,
 				E52B86F0254AC0AC0038ECA0 /* api_openapi-spec_v1_examples_command_response_succeeded_example01.json in Resources */,
+				B712D63C255E7BBB00D5F01E /* list_task_filtered_by_jobid_response_example.json in Resources */,
 				E5C325C82547F6D000A7BDB1 /* robot_response_example01.json in Resources */,
 				A38FB12A25144ABF00A0632F /* list_job_response_example.json in Resources */,
 				A38FB12925144ABF00A0632F /* list_ai_library_response_example.json in Resources */,
@@ -3544,6 +3623,8 @@
 				A33DAD432499BF5A000135C3 /* UIView.swift in Sources */,
 				A33DAD442499BF5A000135C3 /* UIViewController.swift in Sources */,
 				A35DFA2E24B80E4E00284271 /* RobotVideoPresenter.swift in Sources */,
+				B76F39F82564B5E8000ECBDE /* JobDetailWorkTaskTableViewCell.swift in Sources */,
+				B7FD40AD2562608B00643AAE /* JobDetailContainerViewController.swift in Sources */,
 				A3B26D41251C8FEE008DFEC5 /* JobEntryConfirmViewController.swift in Sources */,
 				A33DAD452499BF5A000135C3 /* UICollectionViewFlowLayout.swift in Sources */,
 				A3171F3F2420D60A00612501 /* AuthenticationBuilder.swift in Sources */,
@@ -3551,6 +3632,7 @@
 				A390549D248953260021DEBA /* Storyboards.swift in Sources */,
 				A38C2AF6244FE4FA0089A70E /* JobListViewCell.swift in Sources */,
 				A33622C524286F79003C75F0 /* ConnectionSettingsViewController.swift in Sources */,
+				E58A138F2568DDFC0040D3B2 /* TaskDetailRobotSelectionCollectionViewCell.swift in Sources */,
 				A3B26D3F251C8AB5008DFEC5 /* WorkBenchEntryViewController.swift in Sources */,
 				A305FA1324ADCB6500E99D3C /* DashboardPresenter.swift in Sources */,
 				A33622B224283934003C75F0 /* MailVerificationCompleteViewController.swift in Sources */,
@@ -3559,7 +3641,9 @@
 				A32BCB0A246937CF000287D2 /* OrderEntryConfigurationFormPresenter.swift in Sources */,
 				A3B26D45251D7E16008DFEC5 /* WorkObjectSelectionViewController.swift in Sources */,
 				A32D7AFE242210C000DCBE45 /* MailVerificationConfirmViewController.swift in Sources */,
+				E58A13702568DD390040D3B2 /* TaskDetailRobotSelectionPresenter.swift in Sources */,
 				A3AB8DD724BD50DE0017411A /* WebRTCClient.swift in Sources */,
+				B7FD40F4256261D000643AAE /* JobDetailRemarksViewController.swift in Sources */,
 				E55A438D255E7DAF0079739D /* TaskDetailRobotSelectionViewController.swift in Sources */,
 				A3141F70252191C200992F45 /* ActionEntryActionLibraryCollectionViewCell.swift in Sources */,
 				A32BCAFE24693492000287D2 /* OrderEntryRobotSelectionViewController.swift in Sources */,
@@ -3571,17 +3655,22 @@
 				A32BCAF324693492000287D2 /* OrderEntryCompleteViewController.swift in Sources */,
 				D78EC2002411CB59003E5ECD /* MainTabBarController.swift in Sources */,
 				A33622C724289487003C75F0 /* ConnectionSettingsPresenter.swift in Sources */,
+				E5BA085F256E34E1000C9BE1 /* TaskDetailRobotSelectionCircularProgress.swift in Sources */,
 				A33622B624283F99003C75F0 /* NewPasswordRequiredViewController.swift in Sources */,
 				A32D7AFC2421E04C00DCBE45 /* MailVerificationEntryPresenter.swift in Sources */,
+				E58A13802568DD9D0040D3B2 /* TaskDetailRobotSelectionViewData.swift in Sources */,
 				A38C2B01244FE4FA0089A70E /* AboutAppViewController.swift in Sources */,
+				B7FD419F25626C7400643AAE /* JobDetailWorkPresenter.swift in Sources */,
 				A32BCB0424693663000287D2 /* OrderEntryRobotSelectionPresenter.swift in Sources */,
 				A32C75D22472166C0025ACF0 /* SettingsViewData.swift in Sources */,
 				A38C2AF8244FE4FA0089A70E /* RobotListViewController.swift in Sources */,
 				A3B26D2B251C28D3008DFEC5 /* ActionEntryActionLibrarySelectionViewController.swift in Sources */,
 				A32BCB12246BD33C000287D2 /* OrderEntryViewData.swift in Sources */,
+				B7FD409125625FF800643AAE /* JobDetailPageViewController.swift in Sources */,
 				A37B1D5E244D80140082F61C /* RobotDetailRemarksPresenter.swift in Sources */,
 				A399681924468A570098791B /* MainSplitViewController.swift in Sources */,
 				A3AB8DED24C04AF90017411A /* MockResults.swift in Sources */,
+				B76F3A072564B5FC000ECBDE /* JobDetailWorkHistoryTableViewCell.swift in Sources */,
 				A37B1D54244D29910082F61C /* RobotDetailPresenter.swift in Sources */,
 				A32C75D7247219BB0025ACF0 /* AboutAppPresenter.swift in Sources */,
 				A32BCAF724693492000287D2 /* OrderEntryJobSelectionJobCollectionViewCell.swift in Sources */,
@@ -3599,6 +3688,7 @@
 				A38C2B07245018460089A70E /* RobotDetailWorkHistoryTableViewCell.swift in Sources */,
 				A38C2AFE244FE4FA0089A70E /* RobotDetailRemarksViewController.swift in Sources */,
 				A37B1D52244D1FFF0082F61C /* RobotListPresenter.swift in Sources */,
+				B7FD41BD25626C9500643AAE /* JobDetailRemarksPresenter.swift in Sources */,
 				A38C2B00244FE4FA0089A70E /* SettingsMenuTableViewCell.swift in Sources */,
 				A3141F6F252191C200992F45 /* WorkbenchLibraryCollectionViewCell.swift in Sources */,
 				A37B1D67244D87E00082F61C /* RobotDetailSystemPresenter.swift in Sources */,
@@ -3619,12 +3709,14 @@
 				A38C2AFB244FE4FA0089A70E /* RobotDetailWorkViewController.swift in Sources */,
 				A3148331242B49BF00AFADC1 /* MainBuilder.swift in Sources */,
 				A32BCAFC24693492000287D2 /* OrderEntryConfirmViewController.swift in Sources */,
+				B7FD40D82562619B00643AAE /* JobDetailFlowViewController.swift in Sources */,
 				A38C2AF9244FE4FA0089A70E /* RobotDetailSystemViewController.swift in Sources */,
 				A38C2B03244FE4FA0089A70E /* SettingsViewController.swift in Sources */,
 				A37EFD9724457EA800130EB6 /* JobListPresenter.swift in Sources */,
 				A3141F73252192A100992F45 /* WorkBenchSelectionTableViewCell.swift in Sources */,
 				D78EC1FE2411CB59003E5ECD /* PasswordAuthenticationViewController.swift in Sources */,
 				A305FA1024ADC8C400E99D3C /* DashboardViewController.swift in Sources */,
+				B76F39E92564B5AD000ECBDE /* JobDetailWorkTableViewCell.swift in Sources */,
 				A3171F362420C7E300612501 /* PasswordAuthenticationPresenter.swift in Sources */,
 				B7D029982558DE76007D65C8 /* RobotDetailSystemDetailTableViewCell.swift in Sources */,
 				A33622B82428424D003C75F0 /* NewPasswordRequiredPresenter.swift in Sources */,
@@ -3639,7 +3731,9 @@
 				E5CF31812556820B0054F782 /* TaskDetailPresenter.swift in Sources */,
 				A38C2B05245000D80089A70E /* RobotDetailWorkTaskTableViewCell.swift in Sources */,
 				A32BCB08246937CF000287D2 /* OrderEntryJobSelectionPresenter.swift in Sources */,
+				B7FD40C92562610000643AAE /* JobDetailWorkViewController.swift in Sources */,
 				A3B26D2E251C2BCC008DFEC5 /* ActionEntryStepView.swift in Sources */,
+				B7FD41AE25626C8700643AAE /* JobDetailFlowPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3651,6 +3745,7 @@
 				A32E99CB24EBB3D1005C4605 /* RobotDetailRemarksPresenterTests.swift in Sources */,
 				A3F98D4E24EB52120016A181 /* MainTabBarControllerTests.swift in Sources */,
 				A32E99DF24EC33CC005C4605 /* AboutAppPresenterTests.swift in Sources */,
+				B7FD416525626A3700643AAE /* JobDetailWorkViewControllerTests.swift in Sources */,
 				A32E99D524EBBEA2005C4605 /* JobDetailViewControllerTests.swift in Sources */,
 				A32E99D324EBBB3C005C4605 /* JobListPresenterTests.swift in Sources */,
 				A32E99B324EB5D8D005C4605 /* MainPresenterTests.swift in Sources */,
@@ -3663,6 +3758,7 @@
 				A3F98D3A24EA252A0016A181 /* OrderEntryJobSelectionViewControllerTests.swift in Sources */,
 				A3F98D3E24EA61CB0016A181 /* OrderEntryRobotSelectionViewControllerTests.swift in Sources */,
 				A32E99C724EBB2EC005C4605 /* RobotDetailSystemPresenterTests.swift in Sources */,
+				B7FD418325626A7500643AAE /* JobDetailRemarksViewControllerTests.swift in Sources */,
 				A3F98D2424DE883A0016A181 /* MailVerificationConfirmViewControllerTests.swift in Sources */,
 				A32E99C124EBAB96005C4605 /* RobotDetailWorkViewControllerTests.swift in Sources */,
 				A32E99B524EB68D7005C4605 /* DashboardViewControllerTests.swift in Sources */,
@@ -3674,6 +3770,7 @@
 				A3F98D2E24EA19610016A181 /* NewPasswordRequiredPresenterTests.swift in Sources */,
 				A32E99DB24EBC2F7005C4605 /* AboutAppViewControllerTests.swift in Sources */,
 				A32E99B924EB7BAC005C4605 /* RobotListViewControllerTests.swift in Sources */,
+				B7FD417425626A5F00643AAE /* JobDetailFlowViewControllerTests.swift in Sources */,
 				A32E99CD24EBB50B005C4605 /* RobotVideoViewControllerTests.swift in Sources */,
 				A32E99CF24EBB7AF005C4605 /* RobotVideoPresenterTests.swift in Sources */,
 				A3624A4624D402F300D8F3CE /* MailVerificationEntryPresenterTests.swift in Sources */,
@@ -3681,7 +3778,10 @@
 				A32E99D124EBBA20005C4605 /* JobListViewControllerTests.swift in Sources */,
 				A3F98D2C24EA0E210016A181 /* MailVerificationConfirmPresenterTests.swift in Sources */,
 				A3F98D4224EA6A320016A181 /* OrderEntryConfigurationFormViewControllerTests.swift in Sources */,
+				B7FD41F02562796000643AAE /* JobDetailWorkPresenterTests.swift in Sources */,
 				A3F98D2824DE91110016A181 /* NewPasswordRequiredViewControllerTests.swift in Sources */,
+				B7FD41FF2562797200643AAE /* JobDetailFlowPresenterTests.swift in Sources */,
+				B7FD420E2562798700643AAE /* JobDetailRemarksPresenterTests.swift in Sources */,
 				A3F98D4024EA633A0016A181 /* OrderEntryRobotSelectionPresenterTests.swift in Sources */,
 				A32E99D924EBC22B005C4605 /* SettingsViewControllerTests.swift in Sources */,
 				A32E99C924EBB384005C4605 /* RobotDetailRemarksViewControllerTests.swift in Sources */,
@@ -3953,7 +4053,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = Z4B6XLKDY5;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3981,7 +4081,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4022,7 +4122,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4054,7 +4154,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4091,7 +4191,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4123,7 +4223,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4454,7 +4554,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = Z4B6XLKDY5;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4485,7 +4585,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = Z4B6XLKDY5;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4618,7 +4718,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4652,7 +4752,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4726,7 +4826,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4763,7 +4863,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4848,7 +4948,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4882,7 +4982,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4956,7 +5056,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4989,7 +5089,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -5061,7 +5161,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -5101,7 +5201,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;

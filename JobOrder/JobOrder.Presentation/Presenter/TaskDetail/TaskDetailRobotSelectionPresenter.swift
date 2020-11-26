@@ -1,8 +1,8 @@
 //
-//  TaskDetailPresenter.swift
+//  TaskDetailRobotSelectionPresenter.swift
 //  JobOrder.Presentation
 //
-//  Created by Yu Suzuki on 2020/04/14.
+//  Created by frontarc on 2020/11/16.
 //  Copyright © 2020 Kento Tatsumi. All rights reserved.
 //
 
@@ -14,91 +14,86 @@ import JobOrder_Utility
 
 // MARK: - Interface
 /// @mockable
-public protocol TaskDetailPresenterProtocol {
-    /// 起動時
-    /// - Parameters:
-    ///   - taskId: TaskID
-    ///   - robotId: RobotID
-    func viewWillAppear(taskId: String, robotId: String)
-    /// Job名取得
+public protocol TaskDetailRobotSelectionPresenterProtocol {
+    /// TaskDetailRobotSlectionのViewData
+    //var data: TaskDetailRobotSelectionViewData.Command { get }
+    func viewWillAppear(taskId: String)
+    /// リストの行数
+    var numberOfItems: Int { get }
+    /// Job名の取得
     func jobName() -> String?
-    /// Robot名取得
-    func RobotName() -> String?
-    /// 更新時間取得
+    /// Robot名の取得
+    /// - Parameter index: 配列のIndex
+    func displayName(_ index: Int) -> String?
+    /// タイプの取得
+    /// - Parameter index: 配列のIndex
+    func type(_ index: Int) -> String?
+    /// 更新時間の取得
     /// - Parameters:
     ///   - textColor: テキストカラー
     ///   - font: フォント
     func updatedAt(textColor: UIColor, font: UIFont) -> NSAttributedString?
-    /// 作成時間取得
+    /// 作成時間の取得
     /// - Parameters:
     ///   - textColor: テキストカラー
     ///   - font: フォント
     func createdAt(textColor: UIColor, font: UIFont) -> NSAttributedString?
-    /// 開始時間取得
-    /// - Parameters:
-    ///   - textColor: テキストカラー
-    ///   - font: フォント
-    func startedAt(textColor: UIColor, font: UIFont) -> NSAttributedString?
-    /// 完了時間取得
-    /// - Parameters:
-    ///   - textColor: テキストカラー
-    ///   - font: フォント
-    func exitedAt(textColor: UIColor, font: UIFont) -> NSAttributedString?
-    /// 経過時間取得
-    /// - Parameters:
-    ///   - textColor: テキストカラー
-    ///   - font: フォント
-    func duration(textColor: UIColor, font: UIFont) -> NSAttributedString?
-    /// ステータス取得
-    func status() -> String?
+    /// 状態の取得
+    /// - Parameter index: 配列のIndex
+    func status(_ index: Int) -> String?
     /// 成功数取得
-    func success() -> Int?
+    func success(_ index: Int) -> Int?
     /// 失敗数取得
-    func failure() -> Int?
+    func failure(_ index: Int) -> Int?
     /// エラー数取得
-    func error() -> Int?
+    func error(_ index: Int) -> Int?
     /// N/A数取得
-    func na() -> Int?
-    /// N/A数取得
-    func remarks() -> String?
+    func na(_ index: Int) -> Int?
+    /// Robotの画像
+    /// - Parameter completion: クロージャ
+    /// - Parameter index: 配列のIndex
+    func image(index: Int, _ completion: @escaping (Data?) -> Void)
 
-    func tapOrderEntryButton()
-
-    //    /// セルを選択
-    //    /// - Parameter index: 配列のIndex
-    //    func selectCell(indexPath: IndexPath)
-
+    func isSelected(indexPath: IndexPath) -> Bool
+    func tapCancelButton()
 }
 
 // MARK: - Implementation
-class TaskDetailPresenter {
+class TaskDetailRobotSelectionPresenter {
     private let dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol
-    private let vc: TaskDetailViewControllerProtocol
+    private let vc: TaskDetailRobotSelectionViewControllerProtocol
+    /// TaskDetailRobotSelectionのViewData
+    //var data: TaskDetailRobotSelectionViewData.Command
     private var cancellables: Set<AnyCancellable> = []
-    var command: JobOrder_Domain.DataManageModel.Output.Command?
+    private var displayRobots: [JobOrder_Domain.DataManageModel.Output.Robot]?
+    var commands: [JobOrder_Domain.DataManageModel.Output.Command]?
     var task: JobOrder_Domain.DataManageModel.Output.Task?
     var robot: JobOrder_Domain.DataManageModel.Output.Robot?
 
     required init(dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol,
-                  vc: TaskDetailViewControllerProtocol) {
+                  vc: TaskDetailRobotSelectionViewControllerProtocol
+                  //,viewData: TaskDetailRobotSelectionViewData.Command
+    ) {
         self.dataUseCase = dataUseCase
         self.vc = vc
+        //self.data = viewData
         observeRobots()
     }
 }
 
 // MARK: - Protocol Function
-extension TaskDetailPresenter: TaskDetailPresenterProtocol {
-    /// 起動時
-    /// - Parameters:
-    ///   - taskId: TaskID
-    ///   - robotId: RobotID
-    func viewWillAppear(taskId: String, robotId: String) {
+extension TaskDetailRobotSelectionPresenter: TaskDetailRobotSelectionPresenterProtocol {
+    func viewWillAppear(taskId: String) {
         vc.changedProcessing(true)
-        getCommand(taskId: taskId, robotId: robotId)
+        getCommands(taskId: taskId)
         getTask(taskId: taskId)
-        getRobot(robotId: robotId)
     }
+
+    /// リストの行数
+    var numberOfItems: Int {
+        commands?.count ?? 0
+    }
+
     /// Job名取得
     /// - Returns: Job名
     func jobName() -> String? {
@@ -110,9 +105,38 @@ extension TaskDetailPresenter: TaskDetailPresenterProtocol {
 
     /// Robot名取得
     /// - Returns: Robot名
-    func RobotName() -> String? {
-        return robot?.name
+    func displayName(_ index: Int) -> String? {
+        return commands?[index].robot?.name
     }
+
+    /// Robotのタイプ取得
+    /// - Parameter index: 配列のIndex
+    /// - Returns: Robotのタイプ名
+    func type(_ index: Int) -> String? {
+        return commands?[index].robot?.overview
+    }
+
+    /// セルの選択可否
+    /// - Parameter indexPath: インデックスパス
+    /// - Returns: 選択中かどうか
+    func isSelected(indexPath: IndexPath) -> Bool {
+        guard let id = displayRobots?[indexPath.row].id else { return false }
+        return false
+        //return data.taskId?.contains(id) ?? false
+    }
+
+    //    /// セルの選択
+    //    /// - Parameter indexPath: インデックスパス
+    //    func selectItem(indexPath: IndexPath) {
+    //        guard let id = displayRobots?[indexPath.row].id else { return }
+    //        if let index = data.form.robotIds?.firstIndex(of: id) {
+    //            data.form.robotIds?.remove(at: index)
+    //        } else if data.form.robotIds == nil {
+    //            data.form.robotIds = [id]
+    //        } else {
+    //            data.form.robotIds?.append(id)
+    //        }
+    //    }
 
     /// 更新時間取得
     /// - Parameters:
@@ -120,7 +144,7 @@ extension TaskDetailPresenter: TaskDetailPresenterProtocol {
     ///   - font: フォント
     /// - Returns: 更新時間
     func updatedAt(textColor: UIColor, font: UIFont) -> NSAttributedString? {
-        return string(date: toEpocTime(command?.updateTime), label: "", textColor: textColor, font: font)
+        return string(date: toEpocTime(task?.updateTime), label: "", textColor: textColor, font: font)
     }
 
     /// 作成時間取得
@@ -129,60 +153,36 @@ extension TaskDetailPresenter: TaskDetailPresenterProtocol {
     ///   - font: フォント
     /// - Returns: 作成時間
     func createdAt(textColor: UIColor, font: UIFont) -> NSAttributedString? {
-        return string(date: toEpocTime(command?.createTime), label: "", textColor: textColor, font: font)
-    }
-    /// 開始時間取得
-    /// - Parameters:
-    ///   - textColor: テキストカラー
-    ///   - font: フォント
-    /// - Returns: 開始時間
-    func startedAt(textColor: UIColor, font: UIFont) -> NSAttributedString? {
-        return string(date: toEpocTime(command?.started), label: "", textColor: textColor, font: font)
-    }
-    /// 完了時間取得
-    /// - Parameters:
-    ///   - textColor: テキストカラー
-    ///   - font: フォント
-    /// - Returns: 完了時間
-    func exitedAt(textColor: UIColor, font: UIFont) -> NSAttributedString? {
-        return string(date: toEpocTime(command?.exited), label: "", textColor: textColor, font: font)
-    }
-    /// 経過時間取得
-    /// - Parameters:
-    ///   - textColor: テキストカラー
-    ///   - font: フォント
-    /// - Returns: 経過時間
-    func duration(textColor: UIColor, font: UIFont) -> NSAttributedString? {
-        return string(time: command?.execDuration, label: "", textColor: textColor, font: font)
+        return string(date: toEpocTime(task?.createTime), label: "", textColor: textColor, font: font)
     }
 
     /// ステータス取得
-    /// - Returns: ステータス
-    func status() -> String? {
-        return command?.status
+    /// - Parameter index: 配列のIndex
+    func status(_ index: Int) -> String? {
+        return commands?[index].status
     }
 
     /// 成功数取得
     /// - Returns: 成功数
-    func success() -> Int? {
-        return command?.success
+    func success(_ index: Int) -> Int? {
+        return commands?[index].success
     }
 
     /// 失敗数取得
     /// - Returns: 失敗数
-    func failure() -> Int? {
-        return command?.fail
+    func failure(_ index: Int) -> Int? {
+        return commands?[index].fail
     }
 
     /// エラー数取得
     /// - Returns: エラー数
-    func error() -> Int? {
-        return command?.error
+    func error(_ index: Int) -> Int? {
+        return commands?[index].error
     }
     /// N/A数取得
     /// - Returns: N/A数
-    func na() -> Int? {
-        let otherCount = (command?.success ?? 0) + (command?.fail ?? 0) + (command?.error ?? 0)
+    func na(_ index: Int) -> Int? {
+        let otherCount = (commands?[index].success ?? 0) + (commands?[index].fail ?? 0) + (commands?[index].error ?? 0)
         var naCount = (task?.exit.option.numberOfRuns ?? 0)
 
         if naCount != 0 {
@@ -194,29 +194,33 @@ extension TaskDetailPresenter: TaskDetailPresenterProtocol {
         }
         return naCount
     }
+    /// Robotの画像
+    /// - Parameter completion: クロージャ
+    func image(index: Int, _ completion: @escaping (Data?) -> Void) {
+        guard let id = commands?[index].robotId else { return }
 
-    /// 備考取得
-    /// - Parameter id: RobotID
-    /// - Returns: 備考
-    func remarks() -> String? {
-        return robot?.remarks
+        dataUseCase.robotImage(id: id)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                Logger.debug(target: self, "\(completion)")
+                switch completion {
+                case .finished: break
+                case .failure(let error):
+                    // TODO: エラーケース
+                    Logger.error(target: self, "\(error.localizedDescription)")
+                }
+            }, receiveValue: { response in
+                completion(response.data)
+            }).store(in: &cancellables)
     }
 
-    func tapOrderEntryButton() {
+    func tapCancelButton() {
         // vc.launchOrderEntry()
     }
-
-    //    /// セルを選択
-    //    /// - Parameter index: 配列のIndex
-    //    func selectCell(indexPath: IndexPath) {
-    //        let taskId = commands?[indexPath.section].taskId
-    //        let robotId = commands?[indexPath.section].robotId
-    //        vc.launchTaskDetail(jobId: taskId, robotId: robotId)
-    //    }
 }
 
 // MARK: - Private Function
-extension TaskDetailPresenter {
+extension TaskDetailRobotSelectionPresenter {
 
     private func observeRobots() {
         dataUseCase.observeRobotData()
@@ -226,8 +230,8 @@ extension TaskDetailPresenter {
             }.store(in: &cancellables)
     }
 
-    func getCommand(taskId: String, robotId: String) {
-        dataUseCase.commandFromTask(taskId: taskId, robotId: robotId)
+    func getCommands(taskId: String) {
+        dataUseCase.commandsFromTask(taskId: taskId)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {
@@ -237,7 +241,7 @@ extension TaskDetailPresenter {
                 }
             }, receiveValue: { response in
                 Logger.debug(target: self, "\(String(describing: response))")
-                self.command = response
+                self.commands = response
             }).store(in: &cancellables)
     }
 
@@ -253,6 +257,8 @@ extension TaskDetailPresenter {
             }, receiveValue: { response in
                 Logger.debug(target: self, "\(String(describing: response))")
                 self.task = response
+                self.vc.viewReload()
+                self.vc.reloadCollection()
             }).store(in: &cancellables)
     }
 
@@ -268,13 +274,13 @@ extension TaskDetailPresenter {
             }, receiveValue: { response in
                 Logger.debug(target: self, "\(String(describing: response))")
                 self.robot = response
-                self.vc.viewReload()
+                self.vc.changedProcessing(false)
             }).store(in: &cancellables)
     }
 
     private func getRunHistories(id: String) {}
 
-    func string(date: Date?, label: String, textColor: UIColor, font: UIFont) -> NSAttributedString? {
+    private func string(date: Date?, label: String, textColor: UIColor, font: UIFont) -> NSAttributedString? {
         let mutableAttributedString = NSMutableAttributedString()
         mutableAttributedString.append(NSAttributedString(string: label, attributes: [
             .foregroundColor: textColor,
@@ -288,18 +294,13 @@ extension TaskDetailPresenter {
         return mutableAttributedString
     }
 
-    func string(time: Int?, label: String, textColor: UIColor, font: UIFont) -> NSAttributedString? {
-        let date = Date(timeIntervalSince1970: Double(time ?? 0))
-        let formatter = DateFormatter()
-        formatter.timeZone = TimeZone(identifier: "UTC")
-        formatter.dateFormat = "HH:mm:ss"
-
+    private func string(time: Int?, label: String, textColor: UIColor, font: UIFont) -> NSAttributedString? {
         let mutableAttributedString = NSMutableAttributedString()
         mutableAttributedString.append(NSAttributedString(string: label, attributes: [
             .foregroundColor: textColor,
             .font: font
         ]))
-        mutableAttributedString.append(NSAttributedString(string: formatter.string(from: date), attributes: [
+        mutableAttributedString.append(NSAttributedString(string: String(time ?? 0), attributes: [
             .foregroundColor: UIColor.label,
             .font: UIFont.systemFont(ofSize: 14.0)
         ]))
@@ -319,7 +320,7 @@ extension TaskDetailPresenter {
         return formatter.string(from: date)
     }
 
-    func toEpocTime(_ data: Int?) -> Date {
+    private func toEpocTime(_ data: Int?) -> Date {
         return Date(timeIntervalSince1970: Double((data ?? 1000) / 1000))
     }
 }

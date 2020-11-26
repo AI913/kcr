@@ -43,6 +43,28 @@ struct MainBuilder {
         }
     }
 
+    struct JobDetailWork {
+        func build(vc: JobDetailWorkViewController, viewData: MainViewData.Job) -> JobDetailWorkPresenter {
+            return JobDetailWorkPresenter(dataUseCase: Builder().dataUseCase,
+                                          vc: vc,
+                                          viewData: viewData)
+        }
+    }
+
+    struct JobDetailFlow {
+        func build(vc: JobDetailFlowViewController, viewData: MainViewData.Job) -> JobDetailFlowPresenter {
+            return JobDetailFlowPresenter(vc: vc, viewData: viewData)
+        }
+    }
+
+    struct JobDetailRemarks {
+        func build(vc: JobDetailRemarksViewController, viewData: MainViewData.Job) -> JobDetailRemarksPresenter {
+            return JobDetailRemarksPresenter(dataUseCase: Builder().dataUseCase,
+                                             vc: vc,
+                                             viewData: viewData)
+        }
+    }
+
     struct RobotList {
         func build(vc: RobotListViewController) -> RobotListPresenter {
             return RobotListPresenter(settingsUseCase: Builder().settingsUseCase,

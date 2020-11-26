@@ -40,7 +40,6 @@ setup: # Install dependencies and prepared development configuration
 	$(MAKE) install-carthage
 	$(MAKE) install-cocoapods
 	$(MAKE) generate-licenses
-	$(MAKE) generate-documents
 	$(MAKE) open
 
 .PHONY: update
@@ -137,9 +136,13 @@ generate-xcodeproj: # Generate project with XcodeGen
 	$(MAKE) install-cocoapods
 	$(MAKE) open
 
-.PHONY: generate-documents
-generate-documents: # Generate document with Jazzy
-	sh jazzy.sh
+.PHONY: generate-documents-release
+generate-documents-release: # Generate document with Jazzy
+	sh jazzy.sh Release
+
+.PHONY: generate-documents-adhoc
+generate-documents-adhoc: # Generate document with Jazzy
+	sh jazzy.sh AdHoc
 
 .PHONY: open
 open: # Open workspace in Xcode

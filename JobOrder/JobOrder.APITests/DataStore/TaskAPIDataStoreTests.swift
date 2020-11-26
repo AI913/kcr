@@ -85,6 +85,72 @@ class TaskAPIDataStoreTests: XCTestCase {
                 XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
             })
     }
+
+    func test_getCommandsFromTask() {
+        let handlerExpectation = expectation(description: "handler")
+        let completionExpectation = expectation(description: "completion")
+
+        mock.getResUrlHandler = { url, token, dataId in
+            return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
+                handlerExpectation.fulfill()
+                promise(.success(APITestsStub().commandsFromTaskResult))
+            }.eraseToAnyPublisher()
+        }
+
+        getCommandsFromTask(
+            [handlerExpectation, completionExpectation],
+            onSuccess: { data in
+                XCTAssert(data == APITestsStub().commandsFromTaskResult, "正しい値が取得できていない: \(data)")
+            },
+            onError: { error in
+                XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+            })
+    }
+
+    func test_getCommandsFromTaskError() {
+        let handlerExpectation = expectation(description: "handler")
+        let completionExpectation = expectation(description: "completion")
+
+        mock.getResUrlHandler = { url, token, dataId in
+            return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
+                handlerExpectation.fulfill()
+                let error = NSError(domain: "Error", code: -1, userInfo: nil)
+                promise(.failure(error))
+            }.eraseToAnyPublisher()
+        }
+
+        getCommandsFromTask(
+            [handlerExpectation, completionExpectation],
+            onSuccess: { data in
+                XCTFail("値を取得できてはいけない: \(data)")
+            },
+            onError: { error in
+                let error = error as NSError
+                XCTAssertEqual(error.code, -1, "正しい値が取得できていない: \(error.code)")
+                XCTAssertEqual(error.localizedDescription, "The operation couldn’t be completed. (Error error -1.)", "正しい値が取得できていない: \(error.localizedDescription)")
+            })
+    }
+
+    func test_getCommandsFromTaskNotReceived() {
+        let handlerExpectation = expectation(description: "handler")
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
+
+        mock.getResUrlHandler = { url, token, dataId in
+            return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
+                handlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        getCommandsFromTask(
+            [handlerExpectation, completionExpectation],
+            onSuccess: { data in
+                XCTFail("値を取得できてはいけない: \(data)")
+            },
+            onError: { error in
+                XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+            })
+    }
 }
 
 extension TaskAPIDataStoreTests {
@@ -92,6 +158,24 @@ extension TaskAPIDataStoreTests {
         let param = "test"
 
         dataStore.getCommand(param, taskId: param, robotId: param)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished: break
+                case .failure(let error):
+                    onError(error)
+                }
+                exps.last?.fulfill()
+            }, receiveValue: { response in
+                onSuccess(response)
+            }).store(in: &cancellables)
+
+        wait(for: exps, timeout: ms1000)
+    }
+
+    private func getCommandsFromTask(_ exps: [XCTestExpectation], onSuccess: @escaping (APIResult<[CommandEntity.Data]>) -> Void, onError: @escaping (Error) -> Void) {
+        let param = "test"
+
+        dataStore.getCommands(param, taskId: param)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished: break

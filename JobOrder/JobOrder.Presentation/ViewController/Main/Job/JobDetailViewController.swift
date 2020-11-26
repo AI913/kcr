@@ -13,6 +13,9 @@ import UIKit
 protocol JobDetailViewControllerProtocol: class {
     /// OrderEntryを起動
     func launchOrderEntry()
+    /// ページ変更
+    /// - Parameter index: インデックス
+    func pageChanged(index: Int)
 }
 
 class JobDetailViewController: UIViewController {
@@ -20,12 +23,15 @@ class JobDetailViewController: UIViewController {
     // MARK: - IBOutlet
     @IBOutlet weak var displayNameLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
-    @IBOutlet weak var remarksLabel: UILabel!
     @IBOutlet weak var orderButton: UIButton!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var containerViewHeight: NSLayoutConstraint!
 
     // MARK: - Variable
     var viewData: MainViewData.Job!
     var presenter: JobDetailPresenterProtocol!
+    var pageVc: JobDetailPageViewController?
 
     func inject(viewData: MainViewData.Job) {
         self.viewData = viewData
@@ -47,7 +53,26 @@ class JobDetailViewController: UIViewController {
         }
         displayNameLabel?.text = presenter?.displayName
         overviewLabel?.text = toLabelText(presenter?.overview)
-        remarksLabel?.text = toLabelText(presenter?.remarks)
+    }
+
+    override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
+        super.preferredContentSizeDidChange(forChildContentContainer: container)
+        containerViewHeight?.constant = container.preferredContentSize.height
+    }
+}
+
+// MARK: - View Controller Event
+extension JobDetailViewController {
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch StoryboardSegue.Main(segue) {
+        case .containerPage:
+            guard let data = presenter?.data else { return }
+            pageVc = segue.destination as? JobDetailPageViewController
+            pageVc?._delegate = self
+            pageVc?.inject(viewData: data)
+        default: break
+        }
     }
 }
 
@@ -56,6 +81,10 @@ extension JobDetailViewController {
 
     @IBAction private func touchUpInsideOrderButton(_ sender: UIButton) {
         presenter?.tapOrderButton()
+    }
+
+    @IBAction private func valueChangedSegment(_ sender: UISegmentedControl) {
+        pageVc?.changePage(index: sender.selectedSegmentIndex)
     }
 }
 
@@ -68,6 +97,12 @@ extension JobDetailViewController: JobDetailViewControllerProtocol {
             vc.inject(jobId: presenter?.data.id, robotId: nil)
             self.present(navigationController, animated: true, completion: nil)
         }
+    }
+
+    /// ページ変更
+    /// - Parameter index: インデックス
+    func pageChanged(index: Int) {
+        segmentedControl?.selectedSegmentIndex = index
     }
 }
 

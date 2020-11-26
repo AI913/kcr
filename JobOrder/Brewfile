@@ -2,4 +2,5 @@
 # tap 'peripheryapp/periphery'
 brew 'mint'
 brew 'rbenv'
+brew 'jq'
 # cask 'periphery'

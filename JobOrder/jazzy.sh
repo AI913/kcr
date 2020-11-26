@@ -1,12 +1,25 @@
+#!/bin/bash
 
-if [ $# = 0 ]; then
-    bundle exec jazzy --output docs/Presentation --module JobOrder.Presentation
-    bundle exec jazzy --output docs/Domain --module JobOrder.Domain
-    bundle exec jazzy --output docs/API --module JobOrder.API
-    bundle exec jazzy --output docs/Data --module JobOrder.Data
-    bundle exec jazzy --output docs/Utility --module JobOrder.Utility
-elif [ $1 = "Presentation" ] || [ $1 = "Domain" ] || [ $1 = "API" ] || [ $1 = "Data" ] || [ $1 = "Utility" ]; then
-    bundle exec jazzy --output docs/$1 --module JobOrder.$1
+APP="JobOrder"
+SCHEME="JobOrder"
+TARGETS=("Presentation" "Domain" "API" "Data" "Utility")
+
+if [ $# = 1 ]; then
+
+    for target in ${TARGETS[@]}
+    do
+        bundle exec jazzy \
+          --xcodebuild-arguments -configuration,$1,-workspace,${APP}.xcworkspace,-scheme,${SCHEME} \
+          --output docs/$target \
+          --module ${APP}.$target
+    done
+
+elif [ $2 = "Presentation" ] || [ $2 = "Domain" ] || [ $2 = "API" ] || [ $2 = "Data" ] || [ $2 = "Utility" ]; then
+
+    bundle exec jazzy \
+      --xcodebuild-arguments -configuration,$1,-workspace,${APP}.xcworkspace,-scheme,${SCHEME} \
+      --output docs/$2 \
+      --module ${APP}.$2
 else
     echo "Invalid argument!!"
 fi

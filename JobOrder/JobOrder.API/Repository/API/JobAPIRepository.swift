@@ -36,4 +36,9 @@ public protocol JobAPIRepository {
     ///   - token: トークン情報
     ///   - jobId: Job ID
     func delete(_ token: String, jobId: String) -> AnyPublisher<APIResult<JobAPIEntity.Data>, Error>
+    /// Taskを取得する
+    /// - Parameters:
+    ///   - token: トークン情報
+    ///   - id: Job ID
+    func getTasks(_ token: String, id: String) -> AnyPublisher<APIResult<[TaskAPIEntity.Data]>, Error>
 }
