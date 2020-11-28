@@ -164,8 +164,27 @@ extension JobDetailWorkViewController: JobDetailWorkViewControllerProtocol {
     /// TaskDetail画面へ遷移
     /// - Parameter jobId: Job ID
     func launchTaskDetail(taskId: String?, robotIds: [String]?) {
-        // TODO: Task詳細画面を表示
         Logger.debug(target: self, "taskId: \(taskId ?? "nil"), robotIds: \(robotIds?.joined(separator: ",") ?? "nil")")
+
+        guard let taskId = taskId else { return }
+        guard let robotIds = robotIds else { return }
+        //robotIdsが一つしか格納されていないのであればRobotSelection画面を飛ばす
+        if robotIds.count == 1 {
+            guard let jobid = presenter.data.id else { return }
+            let navigationController = StoryboardScene.TaskDetail.initialScene.instantiate()
+            if let vc = navigationController.topViewController as? TaskDetailViewController {
+                vc.inject(jobId: jobid, robotId: robotIds[0])
+                self.present(navigationController, animated: true, completion: nil)
+            }
+        } else {
+            let sb = StoryboardScene.TaskDetail.initialScene.instantiate()
+            if let vc = sb.storyboard?.instantiateViewController(identifier: "RobotSelect") as? TaskDetailRobotSelectionViewController {
+                vc.inject(taskId: taskId)
+                let navController = UINavigationController(rootViewController: vc)
+                // Creating a navigation controller with vc at the root of the navigation stack.
+                self.present(navController, animated: true, completion: nil)
+            }
+        }
     }
 
 }

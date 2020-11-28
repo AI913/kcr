@@ -100,6 +100,8 @@ internal enum StoryboardScene {
 
     internal static let robotSelect = SceneType<JobOrder_Presentation.TaskDetailRobotSelectionViewController>(storyboard: TaskDetail.self, identifier: "RobotSelect")
 
+    internal static let robotSelectionNavi = SceneType<UIKit.UINavigationController>(storyboard: TaskDetail.self, identifier: "RobotSelectionNavi")
+
     internal static let taskDetail = SceneType<JobOrder_Presentation.TaskDetailViewController>(storyboard: TaskDetail.self, identifier: "TaskDetail")
   }
 }

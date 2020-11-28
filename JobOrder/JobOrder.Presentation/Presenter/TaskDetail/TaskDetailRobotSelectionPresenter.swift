@@ -56,6 +56,9 @@ public protocol TaskDetailRobotSelectionPresenterProtocol {
 
     func isSelected(indexPath: IndexPath) -> Bool
     func tapCancelButton()
+    /// セルを選択
+    /// - Parameter index: 配列のIndex
+    func selectCell(indexPath: IndexPath)
 }
 
 // MARK: - Implementation
@@ -98,8 +101,8 @@ extension TaskDetailRobotSelectionPresenter: TaskDetailRobotSelectionPresenterPr
     /// - Returns: Job名
     func jobName() -> String? {
         //TODO:APIから値取得
-        //task?.jobId
-        return "N/A"
+        //taskのJobのDisplayNameを表示する
+        return task?.jobId
         //return taskExecutions?[index].jobId
     }
 
@@ -125,18 +128,13 @@ extension TaskDetailRobotSelectionPresenter: TaskDetailRobotSelectionPresenterPr
         //return data.taskId?.contains(id) ?? false
     }
 
-    //    /// セルの選択
-    //    /// - Parameter indexPath: インデックスパス
-    //    func selectItem(indexPath: IndexPath) {
-    //        guard let id = displayRobots?[indexPath.row].id else { return }
-    //        if let index = data.form.robotIds?.firstIndex(of: id) {
-    //            data.form.robotIds?.remove(at: index)
-    //        } else if data.form.robotIds == nil {
-    //            data.form.robotIds = [id]
-    //        } else {
-    //            data.form.robotIds?.append(id)
-    //        }
-    //    }
+    /// セルの選択
+    /// - Parameter indexPath: インデックスパス
+    func selectCell(indexPath: IndexPath) {
+        let taskId = commands?[indexPath.section].taskId
+        let robotId = commands?[indexPath.section].robotId
+        vc.launchTaskDetail(jobId: taskId, robotId: robotId)
+    }
 
     /// 更新時間取得
     /// - Parameters:

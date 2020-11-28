@@ -19,7 +19,9 @@ protocol TaskDetailRobotSelectionViewControllerProtocol: class {
     /// 処理中変更通知
     /// - Parameter isProcessing: 処理状態
     func changedProcessing(_ isProcessing: Bool)
-
+    /// TaskDetail画面へ遷移
+    /// - Parameter jobId: Job ID
+    func launchTaskDetail(jobId: String?, robotId: String?)
     /// 画面再描画
     func viewReload()
 }
@@ -32,6 +34,7 @@ class TaskDetailRobotSelectionViewController: UIViewController {
     @IBOutlet weak var updatedAtLabel: UILabel!
     @IBOutlet weak var CircularProgressView: CircularProgressView!
     @IBOutlet weak var cancelAllTasksButton: UIButton!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
 
     @IBAction func segueButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "backToJobDetail", sender: self)
@@ -60,12 +63,24 @@ class TaskDetailRobotSelectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         robotCollection?.allowsSelection = true
+        self.navigationController?.navigationBar.isHidden = false
+
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel",
+                                                                style: .plain,
+                                                                target: self,
+                                                                action: #selector(dismissSelf))
+        self.navigationController?.navigationBar.tintColor = UIColor.systemRed
+    }
+
+    @objc private func dismissSelf() {
+        dismiss(animated: true, completion: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        presenter?.viewWillAppear(taskId: self.taskId)
         setViewItemData()
+        self.navigationController?.isNavigationBarHidden = false
+        presenter?.viewWillAppear(taskId: self.taskId)
     }
 
     //    private let reuseIdentifier = "TaskDetailRobotSelectionCell"
@@ -75,7 +90,6 @@ class TaskDetailRobotSelectionViewController: UIViewController {
     //                                             left: 20.0,
     //                                             bottom: 50.0,
     //                                             right: 20.0)
-
 }
 
 // MARK: - Protocol Function
@@ -99,6 +113,16 @@ extension TaskDetailRobotSelectionViewController: TaskDetailRobotSelectionViewCo
     /// - Parameter isProcessing: 処理状態
     func changedProcessing(_ isProcessing: Bool) {
     }
+
+    func launchTaskDetail(jobId: String?, robotId: String?) {
+        guard let jobId = jobId else { return }
+        guard let robotId = robotId else { return }
+        let navigationController = StoryboardScene.TaskDetail.initialScene.instantiate()
+        if let vc = navigationController.topViewController as? TaskDetailViewController {
+            vc.inject(jobId: jobId, robotId: robotId)
+            self.present(navigationController, animated: true, completion: nil)
+        }
+    }
 }
 
 extension TaskDetailRobotSelectionViewController {
@@ -108,6 +132,7 @@ extension TaskDetailRobotSelectionViewController {
         updatedAtLabel?.attributedText = presenter?.updatedAt(textColor: updatedAtLabel.textColor, font: updatedAtLabel.font)
         cancelAllTasksButton?.isEnabled = true
     }
+
 }
 
 // MARK: - Implement UICollectionViewDataSource
@@ -130,6 +155,11 @@ extension TaskDetailRobotSelectionViewController: UICollectionViewDataSource {
             collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
         }
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter?.selectCell(indexPath: indexPath)
+        collectionView.deselectItem(at: indexPath, animated: true)
     }
 }
 

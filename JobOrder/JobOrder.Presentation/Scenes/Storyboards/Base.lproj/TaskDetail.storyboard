@@ -21,17 +21,17 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zhp-f1-6v0" customClass="CustomScrollView" customModule="JobOrder_Presentation" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="88" width="414" height="853"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vON-6N-dCd" userLabel="Container View">
-                                        <rect key="frame" x="0.0" y="8" width="414" height="766"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vON-6N-dCd" userLabel="Container View">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="766"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="eeb-GJ-GM0">
-                                                <rect key="frame" x="20" y="20" width="374" height="726"/>
+                                                <rect key="frame" x="20" y="0.0" width="374" height="746"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="1sa-p8-Kty">
-                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="141"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="161"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="XtT-06-p4o">
-                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="130.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="150.5"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="S4H-lg-q3q">
                                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="33.5"/>
@@ -44,13 +44,13 @@
                                                                         </subviews>
                                                                     </stackView>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="tBV-WD-it8">
-                                                                        <rect key="frame" x="0.0" y="43.5" width="374" height="87"/>
+                                                                        <rect key="frame" x="0.0" y="43.5" width="374" height="107"/>
                                                                         <subviews>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" distribution="fillProportionally" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="AkE-DY-dG8">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="38"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="58"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Job:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fM-yk-7Z4" userLabel="Job Name Label">
-                                                                                        <rect key="frame" x="0.0" y="9.5" width="150" height="19.5"/>
+                                                                                        <rect key="frame" x="0.0" y="19.5" width="150" height="19.5"/>
                                                                                         <constraints>
                                                                                             <constraint firstAttribute="width" constant="150" id="0Xd-yX-fgU"/>
                                                                                         </constraints>
@@ -59,14 +59,14 @@
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Job1 (arm or com)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5Z-fE-1hl" userLabel="Job Name Value Label">
-                                                                                        <rect key="frame" x="155" y="9.5" width="219" height="19.5"/>
+                                                                                        <rect key="frame" x="155" y="19.5" width="219" height="19.5"/>
                                                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                 </subviews>
                                                                             </stackView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="F0X-sS-b8L">
-                                                                                <rect key="frame" x="0.0" y="43" width="374" height="19.5"/>
+                                                                                <rect key="frame" x="0.0" y="63" width="374" height="19.5"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Created at : " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TKa-TA-bYq" userLabel="Created At Label">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="150" height="19.5"/>
@@ -85,7 +85,7 @@
                                                                                 </subviews>
                                                                             </stackView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Lni-IT-110">
-                                                                                <rect key="frame" x="0.0" y="67.5" width="374" height="19.5"/>
+                                                                                <rect key="frame" x="0.0" y="87.5" width="374" height="19.5"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last updated at : " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0jt-DY-HCC" userLabel="Last Updated At Label">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="150" height="19.5"/>
@@ -108,7 +108,7 @@
                                                                 </subviews>
                                                             </stackView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hnC-v7-DrT">
-                                                                <rect key="frame" x="0.0" y="140.5" width="374" height="0.5"/>
+                                                                <rect key="frame" x="0.0" y="160.5" width="374" height="0.5"/>
                                                                 <color key="backgroundColor" systemColor="secondarySystemFillColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="0.5" id="Wni-pz-yIS"/>
@@ -117,7 +117,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="azW-bw-ALS" userLabel="Cancel Button">
-                                                        <rect key="frame" x="0.0" y="161" width="374" height="44"/>
+                                                        <rect key="frame" x="0.0" y="181" width="374" height="44"/>
                                                         <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="44" id="e3r-1h-CWO"/>
@@ -136,7 +136,7 @@
                                                         </connections>
                                                     </button>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="cJU-iF-fBc">
-                                                        <rect key="frame" x="0.0" y="225" width="374" height="48.5"/>
+                                                        <rect key="frame" x="0.0" y="245" width="374" height="48.5"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="TCa-K3-G5I">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="48.5"/>
@@ -157,7 +157,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="rmJ-IL-V1T">
-                                                        <rect key="frame" x="0.0" y="293.5" width="374" height="132.5"/>
+                                                        <rect key="frame" x="0.0" y="313.5" width="374" height="132.5"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="su3-3s-bAj">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="24"/>
@@ -253,7 +253,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="dF1-kp-Dca">
-                                                        <rect key="frame" x="0.0" y="446" width="374" height="280"/>
+                                                        <rect key="frame" x="0.0" y="466" width="374" height="280"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="IE9-oJ-bff">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="24"/>
@@ -303,8 +303,8 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
+                                            <constraint firstItem="eeb-GJ-GM0" firstAttribute="top" secondItem="vON-6N-dCd" secondAttribute="top" id="H6n-gF-YiK"/>
                                             <constraint firstItem="eeb-GJ-GM0" firstAttribute="leading" secondItem="vON-6N-dCd" secondAttribute="leading" constant="20" id="Phh-I8-CBf"/>
-                                            <constraint firstItem="eeb-GJ-GM0" firstAttribute="top" secondItem="vON-6N-dCd" secondAttribute="top" constant="20" id="PlY-aa-A5A"/>
                                             <constraint firstAttribute="bottom" secondItem="eeb-GJ-GM0" secondAttribute="bottom" constant="20" id="g1p-bY-Yzt"/>
                                             <constraint firstAttribute="trailing" secondItem="eeb-GJ-GM0" secondAttribute="trailing" constant="20" id="t2W-Lg-6fm"/>
                                         </constraints>
@@ -318,6 +318,7 @@
                                     <constraint firstItem="vON-6N-dCd" firstAttribute="top" secondItem="Zhp-f1-6v0" secondAttribute="top" id="V26-bv-gwn"/>
                                     <constraint firstItem="vON-6N-dCd" firstAttribute="leading" secondItem="Zhp-f1-6v0" secondAttribute="leading" id="h8w-gf-sJp"/>
                                     <constraint firstItem="vON-6N-dCd" firstAttribute="trailing" secondItem="Zhp-f1-6v0" secondAttribute="trailing" id="wAa-x6-ks8"/>
+                                    <constraint firstItem="vON-6N-dCd" firstAttribute="top" secondItem="mlg-dq-IQb" secondAttribute="top" id="xRx-ZH-UXS"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="vzs-Cm-Opi"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="ZIF-Wh-6Jn"/>
@@ -337,8 +338,8 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <navigationItem key="navigationItem" id="bcJ-2k-1sy">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="3Tp-BQ-GXw">
-                            <color key="tintColor" systemColor="systemBlueColor"/>
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="3Tp-BQ-GXw">
+                            <color key="tintColor" systemColor="systemRedColor"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="cancel_button"/>
                             </userDefinedRuntimeAttributes>
@@ -347,6 +348,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="CircularProgress" destination="z4k-Yg-UcT" id="TBy-MJ-14s"/>
                         <outlet property="cancelTaskButton" destination="azW-bw-ALS" id="I8H-zg-yPu"/>
@@ -381,43 +383,43 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4m9-lM-2RI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-845" y="40"/>
+            <point key="canvasLocation" x="-852" y="40"/>
         </scene>
         <!--Task Detail Robot Selection View Controller-->
         <scene sceneID="LJK-cG-xPb">
             <objects>
                 <viewController storyboardIdentifier="RobotSelect" title="Task Detail Robot Selection View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qfa-y7-o2A" userLabel="Task Detail Robot Selection View Controller" customClass="TaskDetailRobotSelectionViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cR7-Lt-KFC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r9A-s9-Ido" customClass="CustomScrollView" customModule="JobOrder_Presentation" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="730"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="64C-Hz-Aei" userLabel="Container View">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="810"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="722"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="3L3-vE-c3E">
-                                                <rect key="frame" x="20" y="20" width="374" height="770"/>
+                                                <rect key="frame" x="20" y="0.0" width="374" height="702"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="22A-Js-rhu">
-                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="122.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="105"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="VHI-HG-mvP">
-                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="112"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="94.5"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="5kh-GJ-aMj">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="33.5"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="16"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Task Information" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gkk-8T-BhD" userLabel="Task Information">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="217.5" height="33.5"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="217.5" height="16"/>
                                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                         </subviews>
                                                                     </stackView>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="lD5-n6-wHn">
-                                                                        <rect key="frame" x="0.0" y="43.5" width="374" height="68.5"/>
+                                                                        <rect key="frame" x="0.0" y="26" width="374" height="68.5"/>
                                                                         <subviews>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="dV3-20-cGf">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="19.5"/>
@@ -495,7 +497,7 @@
                                                                 </constraints>
                                                             </stackView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IcQ-ZT-IFX">
-                                                                <rect key="frame" x="0.0" y="122" width="374" height="0.5"/>
+                                                                <rect key="frame" x="0.0" y="104.5" width="374" height="0.5"/>
                                                                 <color key="backgroundColor" systemColor="secondarySystemFillColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="0.5" id="5UH-7B-4CZ"/>
@@ -504,7 +506,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="top" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1cA-bw-FUx" userLabel="Cance All Tasksl Button">
-                                                        <rect key="frame" x="0.0" y="142.5" width="374" height="44"/>
+                                                        <rect key="frame" x="0.0" y="125" width="374" height="44"/>
                                                         <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="44" id="2zf-ds-QBM"/>
@@ -520,7 +522,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </button>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="zWQ-Oo-zyS">
-                                                        <rect key="frame" x="0.0" y="206.5" width="374" height="24"/>
+                                                        <rect key="frame" x="0.0" y="189" width="374" height="24"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="zjb-ob-9XE">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="24"/>
@@ -539,7 +541,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="PX8-Ks-bQN" userLabel="Robot Collection">
-                                                        <rect key="frame" x="0.0" y="250.5" width="374" height="519.5"/>
+                                                        <rect key="frame" x="0.0" y="233" width="374" height="469"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hnu-6m-KJp">
                                                             <size key="itemSize" width="50" height="50"/>
@@ -637,18 +639,18 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstItem="3L3-vE-c3E" firstAttribute="top" secondItem="64C-Hz-Aei" secondAttribute="top" constant="20" id="KNp-Tm-ODe"/>
                                             <constraint firstAttribute="bottom" secondItem="3L3-vE-c3E" secondAttribute="bottom" constant="20" id="bkg-TV-0Mj"/>
                                             <constraint firstAttribute="trailing" secondItem="3L3-vE-c3E" secondAttribute="trailing" constant="20" id="imz-mw-Aop"/>
+                                            <constraint firstItem="3L3-vE-c3E" firstAttribute="top" secondItem="64C-Hz-Aei" secondAttribute="top" id="xrB-Dc-aYf"/>
                                             <constraint firstItem="3L3-vE-c3E" firstAttribute="leading" secondItem="64C-Hz-Aei" secondAttribute="leading" constant="20" id="yOj-Mg-mDe"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <viewLayoutGuide key="safeArea" id="MVn-PQ-Axv"/>
                                 <constraints>
+                                    <constraint firstItem="64C-Hz-Aei" firstAttribute="top" secondItem="MVn-PQ-Axv" secondAttribute="top" id="BQK-0t-R34"/>
                                     <constraint firstItem="64C-Hz-Aei" firstAttribute="leading" secondItem="r9A-s9-Ido" secondAttribute="leading" id="E4R-Vt-w3s"/>
                                     <constraint firstItem="MVn-PQ-Axv" firstAttribute="bottom" secondItem="64C-Hz-Aei" secondAttribute="bottom" constant="8" id="dvP-rX-mTL"/>
-                                    <constraint firstItem="64C-Hz-Aei" firstAttribute="top" secondItem="r9A-s9-Ido" secondAttribute="top" id="wwo-Z5-ZBY"/>
                                     <constraint firstItem="64C-Hz-Aei" firstAttribute="trailing" secondItem="r9A-s9-Ido" secondAttribute="trailing" id="yAj-cR-2GF"/>
                                     <constraint firstItem="64C-Hz-Aei" firstAttribute="bottom" secondItem="r9A-s9-Ido" secondAttribute="bottom" id="z5P-dr-jAt"/>
                                 </constraints>
@@ -669,14 +671,9 @@
                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="taskdetail_view"/>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <navigationItem key="navigationItem" id="gee-k7-s0V">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="Nqq-ZB-doT">
-                            <color key="tintColor" systemColor="systemRedColor"/>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="cancel_button"/>
-                            </userDefinedRuntimeAttributes>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="Yys-KB-JB0"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO"/>
+                    <splitViewDetailSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="identifier" value=""/>
                     </userDefinedRuntimeAttributes>
@@ -690,7 +687,28 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xq4-WN-xyg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1002.8985507246377" y="39.508928571428569"/>
+            <point key="canvasLocation" x="74" y="706"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="J9b-sb-iT2">
+            <objects>
+                <navigationController storyboardIdentifier="RobotSelectionNavi" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="emP-aI-ml5" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="xyM-fr-cae">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="identifier" value="RobotNavi"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <segue destination="qfa-y7-o2A" kind="relationship" relationship="rootViewController" id="Z40-vX-TBl"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e7h-5Q-uPJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-822" y="706"/>
         </scene>
     </scenes>
     <resources>
