@@ -122,6 +122,23 @@ public struct DataManageModel {
                 self.updateTime = job.updateTime
                 self.updator = job.updator
             }
+            
+            /// エンティティ -> モデル変換
+            /// - Parameter job: Jobエンティティ
+            init(_ job: JobOrder_API.JobAPIEntity.Data) {
+                self.id = job.id
+                self.name = job.name
+                self.actions.append(contentsOf: Array(actions))
+                self.entryPoint = job.entryPoint
+                self.overview = job.overview
+                self.remarks = job.remarks
+                self.requirements = job.requirements
+                self.version = job.version
+                self.createTime = job.createTime
+                self.creator = job.creator
+                self.updateTime = job.updateTime
+                self.updator = job.updator
+            }
 
             static func == (lhs: Job, rhs: Job) -> Bool {
                 return lhs.id == rhs.id &&
@@ -460,6 +477,7 @@ public struct DataManageModel {
             public let jobId: String
             public let robotIds: [String]
             public let exit: Exit
+            public let job:Job
             public let createTime: Int
             public let creator: String
             public let updateTime: Int
@@ -470,6 +488,7 @@ public struct DataManageModel {
                     lhs.jobId == rhs.jobId &&
                     lhs.robotIds == rhs.robotIds &&
                     lhs.exit == rhs.exit &&
+                    lhs.job == rhs.job &&
                     lhs.createTime == rhs.createTime &&
                     lhs.creator == rhs.creator &&
                     lhs.updateTime == rhs.updateTime &&
@@ -505,11 +524,12 @@ public struct DataManageModel {
                 }
             }
 
-            public init(id: String, jobId: String, robotIds: [String], exit: Exit, createTime: Int, creator: String, updateTime: Int, updator: String) {
+            public init(id: String, jobId: String, robotIds: [String], exit: Exit, job:Job, createTime: Int, creator: String, updateTime: Int, updator: String) {
                 self.id = id
                 self.jobId = jobId
                 self.robotIds = robotIds
                 self.exit = exit
+                self.job = job
                 self.createTime = createTime
                 self.creator = creator
                 self.updateTime = updateTime
@@ -521,6 +541,7 @@ public struct DataManageModel {
                 self.jobId = task.jobId
                 self.robotIds = task.robotIds
                 self.exit = Exit(task.exit)
+                self.job = Job(task.job)
                 self.createTime = task.createTime
                 self.creator = task.creator
                 self.updateTime = task.updateTime

@@ -18,9 +18,6 @@ class TaskDetailRobotSelectionCollectionViewCell: UICollectionViewCell, UICollec
 
     // MARK: - Constant
     static let identifier: String = "TaskDetailRobotSelectionCollectionViewCell"
-
-    // MARK: - Variable
-    var viewData: TaskDetailRobotSelectionViewData.Command!
     private var presenter: TaskDetailRobotSelectionPresenterProtocol!
 
     func inject(presenter: TaskDetailRobotSelectionPresenterProtocol) {        self.presenter = presenter
@@ -47,7 +44,7 @@ class TaskDetailRobotSelectionCollectionViewCell: UICollectionViewCell, UICollec
     func setItem(_ indexPath: IndexPath) {
         robotNameLabel?.text = toLabelText(presenter?.displayName(indexPath.row))
         robotTypeLabel?.text = toLabelText(presenter?.type(indexPath.row))
-        let status: TaskDetailRobotSelectionViewData.Command.Status = .init(presenter?.status(indexPath.row) ?? "")
+        let status: TaskDetailViewData.Command.Status = .init(presenter?.status(indexPath.row) ?? "")
 
         presenter?.image(index: indexPath.row) {
             guard let data = $0 else { return }

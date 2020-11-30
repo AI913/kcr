@@ -389,7 +389,6 @@
 		E586CB1A2525D604007AD3EC /* WebPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E586CB192525D604007AD3EC /* WebPageObject.swift */; };
 		E586CB1C2525D60E007AD3EC /* AboutPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E586CB1B2525D60E007AD3EC /* AboutPageObject.swift */; };
 		E58A13702568DD390040D3B2 /* TaskDetailRobotSelectionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58A136F2568DD390040D3B2 /* TaskDetailRobotSelectionPresenter.swift */; };
-		E58A13802568DD9D0040D3B2 /* TaskDetailRobotSelectionViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58A137F2568DD9D0040D3B2 /* TaskDetailRobotSelectionViewData.swift */; };
 		E58A138F2568DDFC0040D3B2 /* TaskDetailRobotSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58A138E2568DDFC0040D3B2 /* TaskDetailRobotSelectionCollectionViewCell.swift */; };
 		E5AB6564255BA7F1001D7414 /* TaskDetailViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB6563255BA7F1001D7414 /* TaskDetailViewControllerTests.swift */; };
 		E5AB664F255BF117001D7414 /* TaskDetailPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AB664E255BF117001D7414 /* TaskDetailPresenterTests.swift */; };
@@ -968,7 +967,6 @@
 		E586CB192525D604007AD3EC /* WebPageObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebPageObject.swift; sourceTree = "<group>"; };
 		E586CB1B2525D60E007AD3EC /* AboutPageObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutPageObject.swift; sourceTree = "<group>"; };
 		E58A136F2568DD390040D3B2 /* TaskDetailRobotSelectionPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailRobotSelectionPresenter.swift; sourceTree = "<group>"; };
-		E58A137F2568DD9D0040D3B2 /* TaskDetailRobotSelectionViewData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailRobotSelectionViewData.swift; sourceTree = "<group>"; };
 		E58A138E2568DDFC0040D3B2 /* TaskDetailRobotSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailRobotSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
 		E5AB6563255BA7F1001D7414 /* TaskDetailViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewControllerTests.swift; sourceTree = "<group>"; };
 		E5AB664E255BF117001D7414 /* TaskDetailPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailPresenterTests.swift; sourceTree = "<group>"; };
@@ -2302,7 +2300,6 @@
 		E58A137E2568DD8F0040D3B2 /* TaskDetail */ = {
 			isa = PBXGroup;
 			children = (
-				E58A137F2568DD9D0040D3B2 /* TaskDetailRobotSelectionViewData.swift */,
 				FC760837257491580039E8B8 /* TaskDetailViewData.swift */,
 			);
 			path = TaskDetail;
@@ -3661,7 +3658,6 @@
 				E5BA085F256E34E1000C9BE1 /* TaskDetailRobotSelectionCircularProgress.swift in Sources */,
 				A33622B624283F99003C75F0 /* NewPasswordRequiredViewController.swift in Sources */,
 				A32D7AFC2421E04C00DCBE45 /* MailVerificationEntryPresenter.swift in Sources */,
-				E58A13802568DD9D0040D3B2 /* TaskDetailRobotSelectionViewData.swift in Sources */,
 				A38C2B01244FE4FA0089A70E /* AboutAppViewController.swift in Sources */,
 				B7FD419F25626C7400643AAE /* JobDetailWorkPresenter.swift in Sources */,
 				A32BCB0424693663000287D2 /* OrderEntryRobotSelectionPresenter.swift in Sources */,

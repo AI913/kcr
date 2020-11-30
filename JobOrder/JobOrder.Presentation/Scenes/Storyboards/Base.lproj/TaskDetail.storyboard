@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="GZY-Jy-Ljs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="GZY-Jy-Ljs">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -618,7 +618,7 @@
                                                                     <outlet property="robotNameLabel" destination="4au-9G-wKF" id="KP1-y3-n0w"/>
                                                                     <outlet property="robotTypeLabel" destination="j9W-dm-XWg" id="CLc-G9-whI"/>
                                                                     <outlet property="statusImageView" destination="rzU-Lk-fcv" id="bYY-Vg-sqM"/>
-                                                                    <segue destination="aIc-7j-N0J" kind="presentation" identifier="robotSelectionCellToTaskDetail" id="fTV-oc-ma0"/>
+                                                                    <segue destination="aIc-7j-N0J" kind="presentation" identifier="robotSelectionCellToTaskInfo" id="fTV-oc-ma0"/>
                                                                 </connections>
                                                             </collectionViewCell>
                                                         </cells>

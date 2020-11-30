@@ -21,7 +21,7 @@ protocol TaskDetailRobotSelectionViewControllerProtocol: class {
     func changedProcessing(_ isProcessing: Bool)
     /// TaskDetail画面へ遷移
     /// - Parameter jobId: Job ID
-    func launchTaskDetail(jobId: String?, robotId: String?)
+    func launchTaskDetail()
     /// 画面再描画
     func viewReload()
 }
@@ -43,22 +43,24 @@ class TaskDetailRobotSelectionViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "backToJobDetail" {
             guard segue.destination is JobDetailViewController else { return }            }
-        if segue.identifier == "robotSelectionToTaskDetail" {
+        if segue.identifier == "robotSelectionCellToTaskInfo" {
             guard segue.destination is TaskDetailViewController else { return }
             let taskdetail = segue.destination as! TaskDetailViewController
-            taskdetail.inject(jobId: taskDetailData.jobId!, robotId: taskDetailData.robotId!)
+
+            guard let taskId = presenter.data.taskId else { return }
+            guard let robotId = presenter.data.robotId else { return }
+            taskdetail.inject(jobId: taskId, robotId: robotId)
         }
     }
 
     // MARK: - Variable
-    var viewData: TaskDetailRobotSelectionViewData!
-    var taskDetailData: TaskDetailViewData!
+    var viewData: TaskDetailViewData!
     var presenter: TaskDetailRobotSelectionPresenterProtocol!
     var taskId: String!
     private var computedCellSize: CGSize?
 
     func inject(taskId: String) {
-        viewData = TaskDetailRobotSelectionViewData(taskId)
+        viewData = TaskDetailViewData(taskId: taskId)
         presenter = TaskDetailBuilder.TaskDetailRobotSelection().build(vc: self, viewData: viewData
         )
         self.taskId = taskId
@@ -119,15 +121,8 @@ extension TaskDetailRobotSelectionViewController: TaskDetailRobotSelectionViewCo
     func changedProcessing(_ isProcessing: Bool) {
     }
 
-    func launchTaskDetail(jobId: String?, robotId: String?) {
-        guard let jobId = jobId else { return }
-        guard let robotId = robotId else { return }
-        let navigationController = StoryboardScene.TaskDetail.initialScene.instantiate()
-        if let vc = navigationController.topViewController as? TaskDetailViewController {
-            vc.inject(jobId: jobId, robotId: robotId)
-            self.present(navigationController, animated: true, completion: nil)
-        }
-        performSegue(withIdentifier: "robotSelectionCellToTaskDetail", sender: self)
+    func launchTaskDetail() {
+        performSegue(withIdentifier: "robotSelectionCellToTaskInfo", sender: self)
     }
 }
 
@@ -189,30 +184,3 @@ extension TaskDetailRobotSelectionViewController: UICollectionViewDelegateFlowLa
         return cellSize
     }
 }
-//UICollectionViewDelegateFlowLayout {
-//    //1
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        //2
-//        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-//        let availableWidth = view.frame.width - paddingSpace
-//        let widthPerItem = availableWidth / itemsPerRow
-//
-//        return CGSize(width: widthPerItem, height: widthPerItem)
-//    }
-//
-//    //3
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return sectionInsets
-//    }
-//
-//    // 4
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return sectionInsets.left
-//    }
-//}
