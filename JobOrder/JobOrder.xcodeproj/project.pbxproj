@@ -410,6 +410,7 @@
 		E5DE36FC2525629700D41B8B /* SettingsPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DE36FB2525629700D41B8B /* SettingsPageObject.swift */; };
 		E5EA88EC25271B7E0060E4FC /* RobotDetailPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EA88EB25271B7E0060E4FC /* RobotDetailPageObject.swift */; };
 		E5EA88EE25271BB30060E4FC /* JobSelectionPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EA88ED25271BB30060E4FC /* JobSelectionPageObject.swift */; };
+		FC760838257491580039E8B8 /* TaskDetailViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC760837257491580039E8B8 /* TaskDetailViewData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -989,6 +990,7 @@
 		E5EA88EB25271B7E0060E4FC /* RobotDetailPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobotDetailPageObject.swift; sourceTree = "<group>"; };
 		E5EA88ED25271BB30060E4FC /* JobSelectionPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobSelectionPageObject.swift; sourceTree = "<group>"; };
 		F72453146312863759CA8C49 /* Pods-All-JobOrder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-JobOrder.debug.xcconfig"; path = "Target Support Files/Pods-All-JobOrder/Pods-All-JobOrder.debug.xcconfig"; sourceTree = "<group>"; };
+		FC760837257491580039E8B8 /* TaskDetailViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1198,8 +1200,8 @@
 			isa = PBXGroup;
 			children = (
 				E5BA085E256E34E1000C9BE1 /* TaskDetailRobotSelectionCircularProgress.swift */,
-				E58A138E2568DDFC0040D3B2 /* TaskDetailRobotSelectionCollectionViewCell.swift */,
 				E55A438C255E7DAF0079739D /* TaskDetailRobotSelectionViewController.swift */,
+				E58A138E2568DDFC0040D3B2 /* TaskDetailRobotSelectionCollectionViewCell.swift */,
 				E5CF313825566CF80054F782 /* CircularProgressViewController.swift */,
 				A32BCA7F2468E99F000287D2 /* TaskDetailViewController.swift */,
 			);
@@ -2301,6 +2303,7 @@
 			isa = PBXGroup;
 			children = (
 				E58A137F2568DD9D0040D3B2 /* TaskDetailRobotSelectionViewData.swift */,
+				FC760837257491580039E8B8 /* TaskDetailViewData.swift */,
 			);
 			path = TaskDetail;
 			sourceTree = "<group>";
@@ -3677,6 +3680,7 @@
 				A32BCB25246FD903000287D2 /* AuthenticationViewData.swift in Sources */,
 				A38C2B0B24502B710089A70E /* RobotDetailWorkTableViewCell.swift in Sources */,
 				A38C2AFF244FE4FA0089A70E /* RobotDetailViewController.swift in Sources */,
+				FC760838257491580039E8B8 /* TaskDetailViewData.swift in Sources */,
 				A32BCAC824693425000287D2 /* OrderEntryBuilder.swift in Sources */,
 				A38C2AF5244FE4FA0089A70E /* JobListViewController.swift in Sources */,
 				A3B26D39251C59B7008DFEC5 /* WorkbenchLibrarySelectionViewController.swift in Sources */,

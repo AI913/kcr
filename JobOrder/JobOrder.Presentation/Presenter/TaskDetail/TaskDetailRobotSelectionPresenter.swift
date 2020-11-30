@@ -16,7 +16,7 @@ import JobOrder_Utility
 /// @mockable
 public protocol TaskDetailRobotSelectionPresenterProtocol {
     /// TaskDetailRobotSlectionのViewData
-    //var data: TaskDetailRobotSelectionViewData.Command { get }
+    var data: TaskDetailRobotSelectionViewData { get }
     func viewWillAppear(taskId: String)
     /// リストの行数
     var numberOfItems: Int { get }
@@ -66,6 +66,8 @@ class TaskDetailRobotSelectionPresenter {
     private let dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol
     private let vc: TaskDetailRobotSelectionViewControllerProtocol
     /// TaskDetailRobotSelectionのViewData
+    var data: TaskDetailRobotSelectionViewData
+    /// TaskDetailRobotSelectionのViewData
     //var data: TaskDetailRobotSelectionViewData.Command
     private var cancellables: Set<AnyCancellable> = []
     private var displayRobots: [JobOrder_Domain.DataManageModel.Output.Robot]?
@@ -74,12 +76,12 @@ class TaskDetailRobotSelectionPresenter {
     var robot: JobOrder_Domain.DataManageModel.Output.Robot?
 
     required init(dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol,
-                  vc: TaskDetailRobotSelectionViewControllerProtocol
-                  //,viewData: TaskDetailRobotSelectionViewData.Command
+                  vc: TaskDetailRobotSelectionViewControllerProtocol,
+                  viewData: TaskDetailRobotSelectionViewData
     ) {
         self.dataUseCase = dataUseCase
         self.vc = vc
-        //self.data = viewData
+        self.data = viewData
         observeRobots()
     }
 }
@@ -131,9 +133,11 @@ extension TaskDetailRobotSelectionPresenter: TaskDetailRobotSelectionPresenterPr
     /// セルの選択
     /// - Parameter indexPath: インデックスパス
     func selectCell(indexPath: IndexPath) {
-        let taskId = commands?[indexPath.section].taskId
+        //        data.jobId = commands?[indexPath.section].taskId
+        //        data.robotId = commands?[indexPath.section].robotId
+        let jobId = commands?[indexPath.section].taskId
         let robotId = commands?[indexPath.section].robotId
-        vc.launchTaskDetail(jobId: taskId, robotId: robotId)
+        vc.launchTaskDetail(jobId: jobId, robotId: robotId)
     }
 
     /// 更新時間取得

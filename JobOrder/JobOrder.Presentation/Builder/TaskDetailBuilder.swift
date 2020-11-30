@@ -18,12 +18,10 @@ struct TaskDetailBuilder {
     }
 
     struct TaskDetailRobotSelection {
-        func build(vc: TaskDetailRobotSelectionViewController
-                   //,viewData: TaskDetailRobotSelectionViewData.Command
+        func build(vc: TaskDetailRobotSelectionViewController, viewData: TaskDetailRobotSelectionViewData
         ) -> TaskDetailRobotSelectionPresenter {
             return TaskDetailRobotSelectionPresenter(dataUseCase: Builder().dataUseCase,
-                                                     vc: vc
-                                                     //,viewData: viewData
+                                                     vc: vc, viewData: viewData
             )
         }
     }

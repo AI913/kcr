@@ -177,16 +177,20 @@ extension JobDetailWorkViewController: JobDetailWorkViewControllerProtocol {
                 self.present(navigationController, animated: true, completion: nil)
             }
         } else {
-            let sb = StoryboardScene.TaskDetail.initialScene.instantiate()
-            if let vc = sb.storyboard?.instantiateViewController(identifier: "RobotSelect") as? TaskDetailRobotSelectionViewController {
+            let navigationController = StoryboardScene.TaskDetail.robotSelectionNavi.instantiate()
+            if let vc = navigationController.topViewController as? TaskDetailRobotSelectionViewController {
                 vc.inject(taskId: taskId)
-                let navController = UINavigationController(rootViewController: vc)
-                // Creating a navigation controller with vc at the root of the navigation stack.
-                self.present(navController, animated: true, completion: nil)
+                self.present(navigationController, animated: true, completion: nil)
             }
         }
+        //            let sb = StoryboardScene.TaskDetail.initialScene.instantiate()
+        //            if let vc = sb.storyboard?.instantiateViewController(identifier: "RobotSelect") as? TaskDetailRobotSelectionViewController {
+        //                //                vc.inject(taskId: taskId)
+        //                let navController = UINavigationController(rootViewController: vc)
+        //                // Creating a navigation controller with vc at the root of the navigation stack.
+        //                self.present(navController, animated: true, completion: nil)
+        //            }
     }
-
 }
 
 // MARK: - Private Function

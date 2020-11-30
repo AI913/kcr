@@ -19,6 +19,8 @@ public protocol TaskDetailPresenterProtocol {
     /// - Parameters:
     ///   - taskId: TaskID
     ///   - robotId: RobotID
+    var data: TaskDetailViewData { get }
+
     func viewWillAppear(taskId: String, robotId: String)
     /// Job名取得
     func jobName() -> String?
@@ -78,6 +80,7 @@ class TaskDetailPresenter {
     var command: JobOrder_Domain.DataManageModel.Output.Command?
     var task: JobOrder_Domain.DataManageModel.Output.Task?
     var robot: JobOrder_Domain.DataManageModel.Output.Robot?
+    var job: JobOrder_Domain.DataManageModel.Output.Job?
 
     required init(dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol,
                   vc: TaskDetailViewControllerProtocol) {
@@ -89,6 +92,10 @@ class TaskDetailPresenter {
 
 // MARK: - Protocol Function
 extension TaskDetailPresenter: TaskDetailPresenterProtocol {
+    var data: TaskDetailViewData {
+        return TaskDetailViewData()
+    }
+
     /// 起動時
     /// - Parameters:
     ///   - taskId: TaskID
@@ -98,13 +105,14 @@ extension TaskDetailPresenter: TaskDetailPresenterProtocol {
         getCommand(taskId: taskId, robotId: robotId)
         getTask(taskId: taskId)
         getRobot(robotId: robotId)
+        //        getJob(jobId: taskId)
     }
     /// Job名取得
     /// - Returns: Job名
     func jobName() -> String? {
         //TODO:APIから値取得
-        //task?.jobId
-        return "N/A"
+        //        task?.jobId
+        return task?.jobId ?? "Can't be fetched"
         //return taskExecutions?[index].jobId
     }
 
@@ -271,6 +279,22 @@ extension TaskDetailPresenter {
                 self.vc.viewReload()
             }).store(in: &cancellables)
     }
+
+    //    func getJob(jobId: String) {
+    //        dataUseCase.job(id: jobId)
+    //            .receive(on: DispatchQueue.main)
+    //            .sink(receiveCompletion: { completion in
+    //                switch completion {
+    //                case .finished: break
+    //                case .failure(let error):
+    //                    self.vc.showErrorAlert(error)
+    //                }
+    //            }, receiveValue: { response in
+    //                Logger.debug(target: self, "\(String(describing: response))")
+    //                self.job = response
+    //                self.vc.viewReload()
+    //            }).store(in: &cancellables)
+    //    }
 
     private func getRunHistories(id: String) {}
 

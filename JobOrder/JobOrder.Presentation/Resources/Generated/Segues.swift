@@ -47,6 +47,9 @@ internal enum StoryboardSegue {
     case showMailVerificationEntry
     case showNewPasswordRequired
   }
+  internal enum TaskDetail: String, SegueType {
+    case robotSelectionCellToTaskDetail
+  }
 }
 // swiftlint:enable explicit_type_interface identifier_name line_length type_body_length type_name
 
