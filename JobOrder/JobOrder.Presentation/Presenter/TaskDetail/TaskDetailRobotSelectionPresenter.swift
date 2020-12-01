@@ -100,10 +100,7 @@ extension TaskDetailRobotSelectionPresenter: TaskDetailRobotSelectionPresenterPr
     /// Job名取得
     /// - Returns: Job名
     func jobName() -> String? {
-        //TODO:APIから値取得
-        //taskのJobのDisplayNameを表示する
         return task?.job.name
-        //return taskExecutions?[index].jobId
     }
 
     /// Robot名取得

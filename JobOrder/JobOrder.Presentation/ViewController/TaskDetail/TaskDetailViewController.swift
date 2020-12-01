@@ -66,10 +66,8 @@ class TaskDetailViewController: UIViewController {
                                                                     target: self,
                                                                     action: #selector(dismissSelf))
             self.navigationController?.navigationBar.tintColor = UIColor.systemRed
-        } else if (self.navigationController?.viewControllers.count) == 2 {
-            //            if self.navigationItem.leftBarButtonItem?.title == "Cancel" {
-            //                self.navigationController?.navigationBar.tintColor = UIColor.systemRed
-            //            } else {
+        }
+        else{
             self.navigationController?.navigationBar.tintColor = UIColor.systemBlue
         }
     }
