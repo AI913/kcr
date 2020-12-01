@@ -68,14 +68,7 @@ class TaskDetailRobotSelectionViewController: UIViewController {
     // MARK: - Override function (view controller lifecycle)
     override func viewDidLoad() {
         super.viewDidLoad()
-        robotCollection?.allowsSelection = true
-        self.navigationController?.navigationBar.isHidden = false
 
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel",
-                                                                style: .plain,
-                                                                target: self,
-                                                                action: #selector(dismissSelf))
-        self.navigationController?.navigationBar.tintColor = UIColor.systemRed
     }
 
     @objc private func dismissSelf() {
@@ -85,6 +78,13 @@ class TaskDetailRobotSelectionViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setViewItemData()
+        robotCollection?.allowsSelection = true
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel",
+                                                                style: .plain,
+                                                                target: self,
+                                                                action: #selector(dismissSelf))
+        self.navigationController?.navigationBar.tintColor = UIColor.systemRed
         self.navigationController?.isNavigationBarHidden = false
         presenter?.viewWillAppear(taskId: self.taskId)
     }
