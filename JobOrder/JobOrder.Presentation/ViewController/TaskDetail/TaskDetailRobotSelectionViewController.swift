@@ -41,15 +41,14 @@ class TaskDetailRobotSelectionViewController: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "backToJobDetail" {
-            guard segue.destination is JobDetailViewController else { return }            }
-        if segue.identifier == "robotSelectionCellToTaskInfo" {
+        switch StoryboardSegue.TaskDetail(segue) {
+        case .robotSelectionCellToTaskInfo:
             guard segue.destination is TaskDetailViewController else { return }
             let taskdetail = segue.destination as! TaskDetailViewController
-
             guard let taskId = presenter.data.taskId else { return }
             guard let robotId = presenter.data.robotId else { return }
             taskdetail.inject(jobId: taskId, robotId: robotId)
+        default: break
         }
     }
 
@@ -122,7 +121,7 @@ extension TaskDetailRobotSelectionViewController: TaskDetailRobotSelectionViewCo
     }
 
     func launchTaskDetail() {
-        performSegue(withIdentifier: "robotSelectionCellToTaskInfo", sender: self)
+        self.perform(segue: StoryboardSegue.TaskDetail.robotSelectionCellToTaskInfo)
     }
 }
 
