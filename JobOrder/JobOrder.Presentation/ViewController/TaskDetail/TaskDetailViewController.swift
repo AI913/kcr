@@ -66,8 +66,7 @@ class TaskDetailViewController: UIViewController {
                                                                     target: self,
                                                                     action: #selector(dismissSelf))
             self.navigationController?.navigationBar.tintColor = UIColor.systemRed
-        }
-        else{
+        } else {
             self.navigationController?.navigationBar.tintColor = UIColor.systemBlue
         }
     }

@@ -33,6 +33,7 @@ class APIRequestTests: XCTestCase {
     private let assetJson = "list_hw_config_asset_response_example"
     private let tasksFromJobJson = "list_task_filtered_by_jobid_response_example"
     private let commandsFromTaskJson = "api_mock_examples_GET_tasks_taskid_commands_response"
+    private let commandsFilteredByTaskJson = "list_command_filtered_by_taskid_response_example"
 
     override func setUpWithError() throws {}
     override func tearDownWithError() throws {}
@@ -205,6 +206,25 @@ class APIRequestTests: XCTestCase {
             request(
                 APIResult<TaskAPIEntity.Data>.self,
                 result: api.get(resUrl: task.url, token: nil, dataId: param),
+                onSuccess: { data in
+                    XCTAssertNotNil(data, "値が取得できていない: \(data)")
+                },
+                onError: { error in
+                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+                })
+        }
+
+        XCTContext.runActivity(named: "commands filtered by taskId を取得する場合") { _ in
+            guard let data = try? getJSONData(commandsFilteredByTaskJson) else {
+                XCTFail("jsonデータが存在しない")
+                return
+            }
+
+            stub(uri(task.url.absoluteString + "/\(param)/commands"), jsonData(data))
+
+            request(
+                APIResult<[CommandEntity.Data]>.self,
+                result: api.get(resUrl: task.url, token: nil, dataId: param  + "/commands"),
                 onSuccess: { data in
                     XCTAssertNotNil(data, "値が取得できていない: \(data)")
                 },

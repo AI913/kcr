@@ -106,14 +106,18 @@ extension TaskDetailRobotSelectionPresenter: TaskDetailRobotSelectionPresenterPr
     /// Robot名取得
     /// - Returns: Robot名
     func displayName(_ index: Int) -> String? {
-        return commands?[index].robot?.name
+        guard let robotId = commands?[index].robotId else { return nil }
+        guard let name = dataUseCase.robots?.first(where: { $0.id == robotId })?.name else { return nil }
+        return name
     }
 
     /// Robotのタイプ取得
     /// - Parameter index: 配列のIndex
     /// - Returns: Robotのタイプ名
     func type(_ index: Int) -> String? {
-        return commands?[index].robot?.overview
+        guard let robotId = commands?[index].robotId else { return nil }
+        guard let overview = dataUseCase.robots?.first(where: { $0.id == robotId })?.overview else { return nil }
+        return overview
     }
 
     /// セルの選択可否
@@ -275,7 +279,7 @@ extension TaskDetailRobotSelectionPresenter {
 
     private func getRunHistories(id: String) {}
 
-    private func string(date: Date?, label: String, textColor: UIColor, font: UIFont) -> NSAttributedString? {
+    func string(date: Date?, label: String, textColor: UIColor, font: UIFont) -> NSAttributedString? {
         let mutableAttributedString = NSMutableAttributedString()
         mutableAttributedString.append(NSAttributedString(string: label, attributes: [
             .foregroundColor: textColor,
@@ -289,7 +293,7 @@ extension TaskDetailRobotSelectionPresenter {
         return mutableAttributedString
     }
 
-    private func string(time: Int?, label: String, textColor: UIColor, font: UIFont) -> NSAttributedString? {
+    func string(time: Int?, label: String, textColor: UIColor, font: UIFont) -> NSAttributedString? {
         let mutableAttributedString = NSMutableAttributedString()
         mutableAttributedString.append(NSAttributedString(string: label, attributes: [
             .foregroundColor: textColor,
@@ -302,12 +306,12 @@ extension TaskDetailRobotSelectionPresenter {
         return mutableAttributedString
     }
 
-    private func toDateString(_ date: Int?) -> String {
+    func toDateString(_ date: Int?) -> String {
         guard let date = date, date != 0 else { return "" }
         return toDateString(Date(timeIntervalSince1970: TimeInterval(date)))
     }
 
-    private func toDateString(_ date: Date?) -> String {
+    func toDateString(_ date: Date?) -> String {
         guard let date = date, date.timeIntervalSince1970 != 0 else { return "" }
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -315,7 +319,7 @@ extension TaskDetailRobotSelectionPresenter {
         return formatter.string(from: date)
     }
 
-    private func toEpocTime(_ data: Int?) -> Date {
+    func toEpocTime(_ data: Int?) -> Date {
         return Date(timeIntervalSince1970: Double((data ?? 1000) / 1000))
     }
 }

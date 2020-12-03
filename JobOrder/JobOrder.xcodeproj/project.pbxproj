@@ -410,6 +410,9 @@
 		E5EA88EC25271B7E0060E4FC /* RobotDetailPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EA88EB25271B7E0060E4FC /* RobotDetailPageObject.swift */; };
 		E5EA88EE25271BB30060E4FC /* JobSelectionPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EA88ED25271BB30060E4FC /* JobSelectionPageObject.swift */; };
 		FC760838257491580039E8B8 /* TaskDetailViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC760837257491580039E8B8 /* TaskDetailViewData.swift */; };
+		FCAC01992577337100133743 /* TaskDetailRobotSelectionViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAC01982577337100133743 /* TaskDetailRobotSelectionViewControllerTests.swift */; };
+		FCAC01A825774FAB00133743 /* TaskDetailRobotSelectionPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAC01A725774FAB00133743 /* TaskDetailRobotSelectionPresenterTests.swift */; };
+		FCAC01B72577607500133743 /* list_command_filtered_by_taskid_response_example.json in Resources */ = {isa = PBXBuildFile; fileRef = FCAC01B62577607500133743 /* list_command_filtered_by_taskid_response_example.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -989,6 +992,9 @@
 		E5EA88ED25271BB30060E4FC /* JobSelectionPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobSelectionPageObject.swift; sourceTree = "<group>"; };
 		F72453146312863759CA8C49 /* Pods-All-JobOrder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-JobOrder.debug.xcconfig"; path = "Target Support Files/Pods-All-JobOrder/Pods-All-JobOrder.debug.xcconfig"; sourceTree = "<group>"; };
 		FC760837257491580039E8B8 /* TaskDetailViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewData.swift; sourceTree = "<group>"; };
+		FCAC01982577337100133743 /* TaskDetailRobotSelectionViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailRobotSelectionViewControllerTests.swift; sourceTree = "<group>"; };
+		FCAC01A725774FAB00133743 /* TaskDetailRobotSelectionPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailRobotSelectionPresenterTests.swift; sourceTree = "<group>"; };
+		FCAC01B62577607500133743 /* list_command_filtered_by_taskid_response_example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list_command_filtered_by_taskid_response_example.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1505,6 +1511,7 @@
 				E5C0CFEF2542A5F400957D86 /* api_openapi-spec_v1_examples_list_command_response_example.json */,
 				A38FB12625144ABE00A0632F /* list_job_response_example.json */,
 				A38FB12725144ABF00A0632F /* list_robot_response_example.json */,
+				FCAC01B62577607500133743 /* list_command_filtered_by_taskid_response_example.json */,
 			);
 			path = json;
 			sourceTree = "<group>";
@@ -2309,6 +2316,7 @@
 			isa = PBXGroup;
 			children = (
 				E5AB6563255BA7F1001D7414 /* TaskDetailViewControllerTests.swift */,
+				FCAC01982577337100133743 /* TaskDetailRobotSelectionViewControllerTests.swift */,
 			);
 			path = TaskDetail;
 			sourceTree = "<group>";
@@ -2317,6 +2325,7 @@
 			isa = PBXGroup;
 			children = (
 				E5AB664E255BF117001D7414 /* TaskDetailPresenterTests.swift */,
+				FCAC01A725774FAB00133743 /* TaskDetailRobotSelectionPresenterTests.swift */,
 			);
 			path = TaskDetail;
 			sourceTree = "<group>";
@@ -2825,6 +2834,7 @@
 				A38FB12A25144ABF00A0632F /* list_job_response_example.json in Resources */,
 				A38FB12925144ABF00A0632F /* list_ai_library_response_example.json in Resources */,
 				A3AD72D62522EBD300DD5DBE /* tmrobot.png in Resources */,
+				FCAC01B72577607500133743 /* list_command_filtered_by_taskid_response_example.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3742,6 +3752,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5AB664F255BF117001D7414 /* TaskDetailPresenterTests.swift in Sources */,
+				FCAC01A825774FAB00133743 /* TaskDetailRobotSelectionPresenterTests.swift in Sources */,
 				A32E99CB24EBB3D1005C4605 /* RobotDetailRemarksPresenterTests.swift in Sources */,
 				A3F98D4E24EB52120016A181 /* MainTabBarControllerTests.swift in Sources */,
 				A32E99DF24EC33CC005C4605 /* AboutAppPresenterTests.swift in Sources */,
@@ -3757,6 +3768,7 @@
 				A3F98D4824EA78460016A181 /* OrderEntryCompleteViewControllerTests.swift in Sources */,
 				A3F98D3A24EA252A0016A181 /* OrderEntryJobSelectionViewControllerTests.swift in Sources */,
 				A3F98D3E24EA61CB0016A181 /* OrderEntryRobotSelectionViewControllerTests.swift in Sources */,
+				FCAC01992577337100133743 /* TaskDetailRobotSelectionViewControllerTests.swift in Sources */,
 				A32E99C724EBB2EC005C4605 /* RobotDetailSystemPresenterTests.swift in Sources */,
 				B7FD418325626A7500643AAE /* JobDetailRemarksViewControllerTests.swift in Sources */,
 				A3F98D2424DE883A0016A181 /* MailVerificationConfirmViewControllerTests.swift in Sources */,

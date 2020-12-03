@@ -25,8 +25,8 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
     private let mqtt = JobOrder_Domain.MQTTUseCaseProtocolMock()
     private let data = JobOrder_Domain.DataManageUseCaseProtocolMock()
     private lazy var presenter = TaskDetailRobotSelectionPresenter(dataUseCase: data,
-                                                                   vc: vc)
-    private let viewData = MainViewData.Robot()
+                                                                   vc: vc, viewData: viewData)
+    private let viewData = TaskDetailViewData()
 
     override func tearDownWithError() throws {}
 
@@ -42,9 +42,9 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
         completionExpectation.isInverted = true
         let taskId = "taskId"
 
-        data.commandsFromTaskHandler = { _, _ in
+        data.commandsFromTaskHandler = { taskId in
             return Future<[JobOrder_Domain.DataManageModel.Output.Command], Error> { promise in
-                promise(.success(self.stub.commands()))
+                promise(.success(self.stub.commands))
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
@@ -62,7 +62,7 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
         completionExpectation.isInverted = true
         let param = ""
 
-        data.commandsFromTaskHandler = { _, _ in
+        data.commandsFromTaskHandler = { taskId in
             return Future<[JobOrder_Domain.DataManageModel.Output.Command], Error> { promise in
                 let error = NSError(domain: "Error", code: -1, userInfo: nil)
                 promise(.failure(error))
@@ -77,22 +77,22 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
         XCTAssertEqual(vc.showErrorAlertCallCount, 1, "ViewControllerのメソッドが呼ばれない")
     }
 
-    func test_getCommandNotReceived() {
+    func test_getCommandsNotReceived() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
         let param = ""
 
-        data.commandFromTaskHandler = { _, _ in
+        data.commandsFromTaskHandler = { taskId in
             return Future<[JobOrder_Domain.DataManageModel.Output.Command], Error> { promise in
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
 
-        presenter.getCommand(taskId: param, robotId: param)
+        presenter.getCommands(taskId: param)
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
 
-        XCTAssertNil(presenter.command, "値が取得できてはいけない")
+        XCTAssertNil(presenter.commands, "値が取得できてはいけない")
     }
 
     func test_getTask() {
@@ -222,24 +222,41 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
     // TODO: - テスト作成する
     func test_jobName() {
         // jobName()は現在ハードコーディングで固定値を返却している
+        presenter.task = stub.task
+        XCTAssertEqual(presenter.jobName(), stub.task.job.name, "正しい値が取得できていない")
     }
 
-    func test_RobotName() {
-        presenter.robot = stub.robot
-        XCTAssertEqual(presenter.RobotName(), stub.robot.name, "正しい値が取得できていない")
+    func test_jobNameWithoutTask() {
+        XCTAssertEqual(presenter.jobName(), nil, "正しい値が取得できていない")
     }
 
-    func test_RobotNameWithoutRobot() {
-        XCTAssertEqual(presenter.RobotName(), nil, "正しい値が取得できていない")
+    func test_displayName() {
+        let robotId = stub.commands[0].robotId
+        let name = stub.robots.first(where: { $0.id == robotId })?.name
+        XCTAssertEqual(presenter.displayName(0), name, "正しい値が取得できていない")
+    }
+
+    func test_displayNameWithoutRobot() {
+        XCTAssertEqual(presenter.displayName(1), nil, "正しい値が取得できていない")
+    }
+
+    func test_type() {
+        let robotId = stub.commands[0].robotId
+        let overview = stub.robots.first(where: { $0.id == robotId })?.overview
+        XCTAssertEqual(presenter.type(0), overview, "正しい値が取得できていない")
+    }
+
+    func test_typeWithoutRobot() {
+        XCTAssertEqual(presenter.type(1), nil, "正しい値が取得できていない")
     }
 
     func test_updatedAt() {
-        presenter.command = stub.command1()
+        presenter.task = stub.task()
 
         let textColor = UIColor.clear
         let font = UIFont.systemFont(ofSize: 12)
 
-        let dateStr = presenter.string(date: presenter.toEpocTime(stub.command1().updateTime), label: "", textColor: textColor, font: font)
+        let dateStr = presenter.string(date: presenter.toEpocTime(stub.task().updateTime), label: "", textColor: textColor, font: font)
         XCTAssertEqual(presenter.updatedAt(textColor: textColor, font: font), dateStr)
     }
 
@@ -254,12 +271,12 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
     }
 
     func test_createdAt() {
-        presenter.command = stub.command1()
+        presenter.task = stub.task()
 
         let textColor = UIColor.clear
         let font = UIFont.systemFont(ofSize: 12)
 
-        let dateStr = presenter.string(date: presenter.toEpocTime(stub.command1().createTime), label: "", textColor: textColor, font: font)
+        let dateStr = presenter.string(date: presenter.toEpocTime(stub.task().createTime), label: "", textColor: textColor, font: font)
         XCTAssertEqual(presenter.createdAt(textColor: textColor, font: font), dateStr)
     }
 
@@ -273,138 +290,68 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
         XCTAssertEqual(presenter.createdAt(textColor: textColor, font: font), dateStr)
     }
 
-    func test_startedAt() {
-        presenter.command = stub.command1()
-
-        let textColor = UIColor.clear
-        let font = UIFont.systemFont(ofSize: 12)
-
-        let date = Date(timeIntervalSince1970: Double(stub.command1().started ?? 1000))
-        let dateStr = presenter.string(date: date, label: "", textColor: textColor, font: font)
-        XCTAssertEqual(presenter.startedAt(textColor: textColor, font: font), dateStr)
-    }
-
-    func text_startedAtWithoutCommand() {
-        let textColor = UIColor.clear
-        let font = UIFont.systemFont(ofSize: 12)
-
-        let date = Date(timeIntervalSince1970: Double(1))
-        let dateStr = presenter.string(date: date, label: "", textColor: textColor, font: font)
-
-        XCTAssertEqual(presenter.startedAt(textColor: textColor, font: font), dateStr)
-    }
-
-    func test_exitedAt() {
-        presenter.command = stub.command1()
-
-        let textColor = UIColor.clear
-        let font = UIFont.systemFont(ofSize: 12)
-
-        let date = Date(timeIntervalSince1970: Double(stub.command1().exited ?? 1000))
-        let dateStr = presenter.string(date: date, label: "", textColor: textColor, font: font)
-        XCTAssertEqual(presenter.exitedAt(textColor: textColor, font: font), dateStr)
-    }
-
-    func test_exitedAtWithoutCommand() {
-        let textColor = UIColor.clear
-        let font = UIFont.systemFont(ofSize: 12)
-
-        let date = Date(timeIntervalSince1970: Double(1))
-        let dateStr = presenter.string(date: date, label: "", textColor: textColor, font: font)
-
-        XCTAssertEqual(presenter.exitedAt(textColor: textColor, font: font), dateStr)
-
-    }
-
-    func test_duration() {
-        presenter.command = stub.command1()
-
-        let textColor = UIColor.clear
-        let font = UIFont.systemFont(ofSize: 12)
-
-        let dateStr = presenter.string(time: stub.command1().execDuration, label: "", textColor: textColor, font: font)
-        XCTAssertEqual(presenter.duration(textColor: textColor, font: font), dateStr)
-    }
-
-    func test_durationWithoutTask() {
-        let textColor = UIColor.clear
-        let font = UIFont.systemFont(ofSize: 12)
-
-        let dateStr = presenter.string(time: 0, label: "", textColor: textColor, font: font)
-        XCTAssertEqual(presenter.duration(textColor: textColor, font: font), dateStr)
-    }
-
     func test_success() {
-        presenter.command = stub.command1()
-        XCTAssertEqual(presenter.success(), stub.command1().success, "正しい値が取得できていない")
+        presenter.commands = stub.commands
+        XCTAssertEqual(presenter.success(1), stub.commands[1].success, "正しい値が取得できていない")
     }
 
     func test_successWithoutTask() {
-        XCTAssertEqual(presenter.success(), nil, "正しい値が取得できていない")
+        XCTAssertEqual(presenter.success(1), nil, "正しい値が取得できていない")
     }
 
     func test_failure() {
-        presenter.command = stub.command1()
-        XCTAssertEqual(presenter.failure(), stub.command.fail, "正しい値が取得できていない")
+        presenter.commands = stub.commands
+        XCTAssertEqual(presenter.failure(1), stub.commands[1].fail, "正しい値が取得できていない")
     }
 
     func test_failureWithoutTask() {
-        XCTAssertEqual(presenter.failure(), nil, "正しい値が取得できていない")
+        XCTAssertEqual(presenter.failure(1), nil, "正しい値が取得できていない")
     }
 
     func test_error() {
-        presenter.command = stub.command
-        XCTAssertEqual(presenter.error(), stub.command.error, "正しい値が取得できていない")
+        presenter.commands = stub.commands
+        XCTAssertEqual(presenter.error(1), stub.commands[1].error, "正しい値が取得できていない")
     }
 
     func test_errorWithoutTask() {
-        XCTAssertEqual(presenter.error(), nil, "正しい値が取得できていない")
+        XCTAssertEqual(presenter.error(1), nil, "正しい値が取得できていない")
     }
 
     func test_status() {
-        presenter.command = stub.command
-        XCTAssertEqual(presenter.status(), stub.command.status, "正しい値が取得できていない")
+        presenter.commands = stub.commands
+        XCTAssertEqual(presenter.status(1), stub.commands[1].status, "正しい値が取得できていない")
     }
 
     func test_statusWithoutTask() {
-        XCTAssertEqual(presenter.status(), nil, "正しい値が取得できていない")
-    }
-
-    func test_remarks() {
-        presenter.robot = stub.robot1()
-        XCTAssertEqual(presenter.remarks(), stub.robot1().remarks, "正しい値が取得できていない")
-    }
-
-    func test_remarksWithoutRobot() {
-        XCTAssertEqual(presenter.remarks(), nil, "正しい値が取得できていない")
+        XCTAssertEqual(presenter.status(1), nil, "正しい値が取得できていない")
     }
 
     // Command, Taskともに存在する場合
     func test_na() {
-        presenter.command = stub.command
+        presenter.commands = stub.commands
         presenter.task = stub.task
-        XCTAssert(presenter.na() == calcNA(command: stub.command, task: stub.task), "正しい値が取得できていない")
+        XCTAssert(presenter.na(0) == calcNA(command: stub.command, task: stub.task), "正しい値が取得できていない")
     }
 
     // Command, Taskともに存在しない場合
     func test_naWithoutCommandTask() {
-        XCTAssertEqual(presenter.na(), 0, "正しい値が取得できていない")
+        XCTAssertEqual(presenter.na(1), 0, "正しい値が取得できていない")
     }
 
     // Commandが存在する, Taskが存在しない場合
     func test_naWithoutTask() {
-        presenter.command = stub.command
-        XCTAssertEqual(presenter.na(), 0, "正しい値が取得できていない")
+        presenter.commands = stub.commands
+        XCTAssertEqual(presenter.na(1), 0, "正しい値が取得できていない")
     }
 
     // Commandが存在しない, Taskが存在する場合
     func test_naWithoutCommand() {
         presenter.task = stub.task
-        XCTAssertEqual(presenter.na(), presenter.task?.exit.option.numberOfRuns, "正しい値が取得できていない")
+        XCTAssertEqual(presenter.na(1), presenter.task?.exit.option.numberOfRuns, "正しい値が取得できていない")
     }
 
     // TODO: テスト作成
-    func test_tapOrderEntryButton() {
+    func test_tapCancelAllTasksButton() {
         // tapOrderEntryButtonが実装されていない
     }
 

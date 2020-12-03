@@ -303,7 +303,7 @@ struct PresentationTestsStub {
                                                            jobId: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
                                                            robotIds: robotIds,
                                                            exit: JobOrder_Domain.DataManageModel.Output.Task.Exit(
-                                                            JobOrder_Domain.DataManageModel.Output.Task.Exit.Option(5)),
+                                                            JobOrder_Domain.DataManageModel.Output.Task.Exit.Option(5)), job: JobOrder_Domain.DataManageModel.Output.Job(id: "", name: "", actions: [], entryPoint: 0, overview: "", remarks: "", requirements: "", version: 0, createTime: 0, creator: "", updateTime: 0, updator: ""),
                                                            createTime: 1_601_165_183_557,
                                                            creator: "user@kyocera.jp",
                                                            updateTime: 1_592_618_421_000,

@@ -24,10 +24,11 @@ class TaskDetailRobotSelectionViewControllerTests: XCTestCase {
     override func tearDownWithError() throws {}
 
     func test_outlets() {
-        XCTAssertNotNil(vc.cancelAllTasksButton, "cancelTaskButtonがOutletに接続されていない")
-        XCTAssertNotNil(vc.jobNameLabel, "jobValueLabelがOutletに接続されていない")
+        //        XCTAssertNotNil(vc.cancelButton, "cancelButtonがOutletに接続されていない")
+        XCTAssertNotNil(vc.cancelAllTasksButton, "cancelAllTasksButtonがOutletに接続されていない")
+        XCTAssertNotNil(vc.jobNameLabel, "jobNameLabelがOutletに接続されていない")
         XCTAssertNotNil(vc.createdAtValueLabel, "createdAtValueLabelがOutletに接続されていない")
-        XCTAssertNotNil(vc.updatedAtLabel, "lastUpdatedAtValueLabelがOutletに接続されていない")
+        XCTAssertNotNil(vc.updatedAtLabel, "lastUpdatedAtLabelがOutletに接続されていない")
     }
 
     func test_actions() throws {
@@ -51,10 +52,11 @@ class TaskDetailRobotSelectionViewControllerTests: XCTestCase {
         XCTAssertEqual(mock.viewWillAppearCallCount, 1, "Presenterのメソッドが呼ばれない")
     }
 
-    func test_tapOrderButton() {
-        vc.cancelAllTasksButton.sendActions(for: .touchUpInside)
-        //TODO:未実装
-    }
+    //    func test_cancelAllTasksButton() {
+    //        vc.cancelAllTasksButton.sendActions(for: .touchUpInside)
+    //TODO:未実装
+    //        XCTAssertEqual(mock.tap, 1, "CncelButtonがtapされない")
+    //    }
 
     func test_showErrorAlert() {
         vc.showErrorAlert(NSError(domain: "Error", code: -1, userInfo: nil))

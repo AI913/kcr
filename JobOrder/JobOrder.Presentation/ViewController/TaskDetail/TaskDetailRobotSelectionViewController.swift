@@ -8,6 +8,8 @@
 
 import UIKit
 
+/// TaskDetailRobotSelectionViewControllerProtocol
+/// @mockable
 protocol TaskDetailRobotSelectionViewControllerProtocol: class {
     /// エラーアラート表示
     /// - Parameter error: エラー
@@ -68,7 +70,6 @@ class TaskDetailRobotSelectionViewController: UIViewController {
     // MARK: - Override function (view controller lifecycle)
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
 
     @objc private func dismissSelf() {
