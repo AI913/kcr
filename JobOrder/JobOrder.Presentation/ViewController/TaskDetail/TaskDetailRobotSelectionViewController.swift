@@ -148,10 +148,6 @@ extension TaskDetailRobotSelectionViewController: UICollectionViewDataSource {
 
         cell.inject(presenter: presenter)
         cell.setItem(indexPath)
-        if let presenter = presenter, presenter.isSelected(indexPath: indexPath) {
-            cell.isSelected = true
-            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
-        }
         return cell
     }
 

@@ -156,65 +156,67 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
         XCTAssertNil(presenter.task, "値が取得できてはいけない")
     }
 
-    func test_getRobot() {
-        let param = "test"
+    func test_image() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
-        completionExpectation.isInverted = true
-        data.robots = stub.robots
+        presenter.commands = stub.commands
 
-        data.robotHandler = { _ in
-            return Future<JobOrder_Domain.DataManageModel.Output.Robot, Error> { promise in
-                promise(.success(self.stub.robot))
+        data.robotImageHandler = { id in
+            return Future<JobOrder_Domain.DataManageModel.Output.RobotImage, Error> { promise in
+                promise(.success(.init(data: Data())))
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
 
-        presenter.getRobot(robotId: param)
+        presenter.image(index: 0, {
+            XCTAssertEqual($0, Data(), "正しい値が取得できていない")
+            completionExpectation.fulfill()
+        })
+
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-        //レスポンスが間に合ってない
-        guard let presenterRobot = presenter.robot else { return }
-        XCTAssert(presenterRobot == stub.robot, "正しい値が取得できていない")
-        XCTAssertEqual(vc.showErrorAlertCallCount, 0, "エラーが起こってはいけない")
     }
 
-    func test_getRobotError() {
-        let param = ""
+    func test_imageError() {
         let handlerExpectation = expectation(description: "handler")
-        let completionExpectation = expectation(description: "completion")
+        let completionExpectation = expectation(description: "completion error")
         completionExpectation.isInverted = true
-        data.robots = stub.robots
+        presenter.commands = stub.commands
 
-        data.robotHandler = { _ in
-            return Future<JobOrder_Domain.DataManageModel.Output.Robot, Error> { promise in
+        data.robotImageHandler = { id in
+            return Future<JobOrder_Domain.DataManageModel.Output.RobotImage, Error> { promise in
                 let error = NSError(domain: "Error", code: -1, userInfo: nil)
                 promise(.failure(error))
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
 
-        presenter.getRobot(robotId: param)
+        presenter.image(index: 0, {_ in
+            XCTFail("呼ばれてはいけない")
+        })
+
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-        XCTAssertNil(presenter.robot, "値が取得できてはいけない")
-        XCTAssertEqual(vc.showErrorAlertCallCount, 1, "ViewControllerのメソッドが呼ばれない")
+        // TODO: エラーケース
     }
 
-    func test_getRobotNotReceived() {
-        let param = ""
+    func test_imageNoId() {
         let handlerExpectation = expectation(description: "handler")
-        let completionExpectation = expectation(description: "completion")
+        let completionExpectation = expectation(description: "completion error")
+        handlerExpectation.isInverted = true
         completionExpectation.isInverted = true
-        data.robots = stub.robots
+        presenter.commands = nil
 
-        data.robotHandler = { _ in
-            return Future<JobOrder_Domain.DataManageModel.Output.Robot, Error> { promise in
-                handlerExpectation.fulfill()
+        data.robotImageHandler = { id in
+            return Future<JobOrder_Domain.DataManageModel.Output.RobotImage, Error> { promise in
+                XCTFail("呼ばれてはいけない")
             }.eraseToAnyPublisher()
         }
 
-        presenter.getRobot(robotId: param)
+        presenter.image(index: 0, {_ in
+            XCTFail("呼ばれてはいけない")
+        })
+
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-        XCTAssertNil(presenter.robot, "値が取得できてはいけない")
+        // TODO: エラーケース
     }
 
     func test_jobName() {

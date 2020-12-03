@@ -53,8 +53,6 @@ public protocol TaskDetailRobotSelectionPresenterProtocol {
     /// - Parameter completion: クロージャ
     /// - Parameter index: 配列のIndex
     func image(index: Int, _ completion: @escaping (Data?) -> Void)
-
-    func isSelected(indexPath: IndexPath) -> Bool
     func tapCancelButton()
     /// セルを選択
     /// - Parameter index: 配列のIndex
@@ -118,15 +116,6 @@ extension TaskDetailRobotSelectionPresenter: TaskDetailRobotSelectionPresenterPr
         guard let robotId = commands?[index].robotId else { return nil }
         guard let overview = dataUseCase.robots?.first(where: { $0.id == robotId })?.overview else { return nil }
         return overview
-    }
-
-    /// セルの選択可否
-    /// - Parameter indexPath: インデックスパス
-    /// - Returns: 選択中かどうか
-    func isSelected(indexPath: IndexPath) -> Bool {
-        guard let id = displayRobots?[indexPath.row].id else { return false }
-        return false
-        //return data.taskId?.contains(id) ?? false
     }
 
     /// セルの選択
@@ -260,24 +249,6 @@ extension TaskDetailRobotSelectionPresenter {
                 self.vc.reloadCollection()
             }).store(in: &cancellables)
     }
-
-    func getRobot(robotId: String) {
-        dataUseCase.robot(id: robotId)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished: break
-                case .failure(let error):
-                    self.vc.showErrorAlert(error)
-                }
-            }, receiveValue: { response in
-                Logger.debug(target: self, "\(String(describing: response))")
-                self.robot = response
-                self.vc.changedProcessing(false)
-            }).store(in: &cancellables)
-    }
-
-    private func getRunHistories(id: String) {}
 
     func string(date: Date?, label: String, textColor: UIColor, font: UIFont) -> NSAttributedString? {
         let mutableAttributedString = NSMutableAttributedString()
