@@ -59,24 +59,9 @@ class TaskDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         cancelTaskButton.setTitleColor(.tertiaryLabel, for: .disabled)
-
-        if (self.navigationController?.viewControllers.count)! == 1 {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel",
-                                                                    style: .plain,
-                                                                    target: self,
-                                                                    action: #selector(dismissSelf))
-            self.navigationController?.navigationBar.tintColor = UIColor.systemRed
-        } else {
-            self.navigationController?.navigationBar.tintColor = UIColor.systemBlue
+        if self.navigationController?.viewControllers.first != self {
+            self.navigationItem.leftBarButtonItem = nil
         }
-    }
-
-    @objc func backAction() {
-        self.navigationController?.popViewController(animated: true)
-    }
-
-    @objc private func dismissSelf() {
-        dismiss(animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {

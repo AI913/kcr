@@ -53,9 +53,6 @@ public protocol DataManageUseCaseProtocol {
     /// Task情報を取得する
     /// - Parameter taskId: TaskID
     func task(taskId: String) -> AnyPublisher<DataManageModel.Output.Task, Error>
-    /// Job情報を取得する
-    /// - Parameter id: Job ID
-    //    func job(id: String) -> AnyPublisher<DataManageModel.Output.Job, Error>
     /// RobotSystemの情報を取得する
     /// - Parameter id: Robot ID
     func robotSystem(id: String) -> AnyPublisher<DataManageModel.Output.System, Error>
@@ -464,40 +461,6 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
     }
-
-    //    public func job(id: String) -> AnyPublisher<DataManageModel.Output.Job, Error> {
-    //        Logger.info(target: self)
-    //
-    //        self.processing = true
-    //        return Future<DataManageModel.Output.Job, Error> { promise in
-    //            self.auth.getTokens()
-    //                .flatMap { value -> AnyPublisher<APIResult<JobOrder_API.JobAPIEntity.Data>, Error> in
-    //                    guard let token = value.idToken else {
-    //                        return Future<APIResult<JobOrder_API.JobAPIEntity.Data>, Error> { promise in
-    //                            let userInfo = ["__type": "getTokens", "message": "idToken is null."]
-    //                            promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
-    //                        }.eraseToAnyPublisher()
-    //                    }
-    //                    return self.jobAPI.get(token, jobId: id).eraseToAnyPublisher()
-    //                }.sink(receiveCompletion: { completion in
-    //                    self.processing = false
-    //                    switch completion {
-    //                    case .finished: break
-    //                    case .failure(let error):
-    //                        Logger.error(target: self, error.localizedDescription)
-    //                        promise(.failure(error))
-    //                    }
-    //                }, receiveValue: { response in
-    //                    if let output = response {
-    //                        promise(.success(.init(response)))
-    //                    } else {
-    //                        let userInfo = ["__type": "job", "message": "API Resuponse is null"]
-    //                        promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
-    //                    }
-    //                }).store(in: &self.cancellables)
-    //        }.eraseToAnyPublisher()
-    //    }
-
     /// RobotSystemの情報を取得する
     /// - Parameter id: Robot ID
     /// - Returns: System

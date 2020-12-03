@@ -22,7 +22,6 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
     private let ms3000 = 3.0
     private let stub = PresentationTestsStub()
     private let vc = TaskDetailRobotSelectionViewControllerProtocolMock()
-    private let mqtt = JobOrder_Domain.MQTTUseCaseProtocolMock()
     private let data = JobOrder_Domain.DataManageUseCaseProtocolMock()
     private lazy var presenter = TaskDetailRobotSelectionPresenter(dataUseCase: data,
                                                                    vc: vc, viewData: viewData)
@@ -112,7 +111,6 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
 
         presenter.getTask(taskId: param)
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-        //レスポンスが間に合ってない
         XCTAssert(presenter.task == stub.task, "正しい値が取得できていない")
         XCTAssertEqual(vc.showErrorAlertCallCount, 0, "エラーが起こってはいけない")
     }
@@ -219,9 +217,7 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
         XCTAssertNil(presenter.robot, "値が取得できてはいけない")
     }
 
-    // TODO: - テスト作成する
     func test_jobName() {
-        // jobName()は現在ハードコーディングで固定値を返却している
         presenter.task = stub.task
         XCTAssertEqual(presenter.jobName(), stub.task.job.name, "正しい値が取得できていない")
     }

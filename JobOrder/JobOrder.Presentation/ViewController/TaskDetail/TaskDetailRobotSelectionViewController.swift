@@ -7,7 +7,6 @@
 //
 
 import UIKit
-
 /// TaskDetailRobotSelectionViewControllerProtocol
 /// @mockable
 protocol TaskDetailRobotSelectionViewControllerProtocol: class {
@@ -70,23 +69,13 @@ class TaskDetailRobotSelectionViewController: UIViewController {
     // MARK: - Override function (view controller lifecycle)
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
 
-    @objc private func dismissSelf() {
-        dismiss(animated: true, completion: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setViewItemData()
         robotCollection?.allowsSelection = true
-        self.navigationController?.navigationBar.isHidden = false
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel",
-                                                                style: .plain,
-                                                                target: self,
-                                                                action: #selector(dismissSelf))
-        self.navigationController?.navigationBar.tintColor = UIColor.systemRed
-        self.navigationController?.isNavigationBarHidden = false
         presenter?.viewWillAppear(taskId: self.taskId)
     }
 
@@ -97,6 +86,14 @@ class TaskDetailRobotSelectionViewController: UIViewController {
     //                                             left: 20.0,
     //                                             bottom: 50.0,
     //                                             right: 20.0)
+}
+
+// MARK: - Action
+extension TaskDetailRobotSelectionViewController {
+
+    @IBAction private func selectorCancelBarButtonItem(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true)
+    }
 }
 
 // MARK: - Protocol Function
