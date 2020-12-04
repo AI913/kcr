@@ -114,8 +114,8 @@ extension TaskDetailRobotSelectionPresenter: TaskDetailRobotSelectionPresenterPr
     /// - Returns: Robotのタイプ名
     func type(_ index: Int) -> String? {
         guard let robotId = commands?[index].robotId else { return nil }
-        guard let overview = dataUseCase.robots?.first(where: { $0.id == robotId })?.overview else { return nil }
-        return overview
+        guard let type = dataUseCase.robots?.first(where: { $0.id == robotId })?.type else { return nil }
+        return type
     }
 
     /// セルの選択
