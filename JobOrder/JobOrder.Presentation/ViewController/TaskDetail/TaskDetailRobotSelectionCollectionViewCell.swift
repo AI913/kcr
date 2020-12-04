@@ -50,10 +50,10 @@ class TaskDetailRobotSelectionCollectionViewCell: UICollectionViewCell, UICollec
             guard let data = $0 else { return }
             self.robotImageView.image = UIImage(data: data)
         }
-        let successCount = presenter?.success(indexPath.row) ?? 0
-        let failCount = presenter?.failure(indexPath.row) ?? 0
-        let errorCount = presenter?.error(indexPath.row) ?? 0
-        let naCount = presenter?.na(indexPath.row) ?? 0
+        let successCount = Float((presenter?.success(indexPath.row) ?? 0))
+        let failCount = Float((presenter?.failure(indexPath.row) ?? 0))
+        let errorCount = Float((presenter?.error(indexPath.row) ?? 0))
+        let naCount = Float((presenter?.na(indexPath.row) ?? 0))
 
         // Code for the status image view
         //        let status: MainViewData.TaskExecution.Status = .init(presenter?.status() ?? "")
