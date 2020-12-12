@@ -11,63 +11,63 @@
 struct APITestsStub {
 
     var jobsResult: APIResult<[JobAPIEntity.Data]> {
-        return APIResult(time: 1_592_477_407_000, data: jobs, count: 3)
+        return APIResult(time: 1_592_477_407_000, data: jobs, count: 3, paging: nil)
     }
 
     var robotsResult: APIResult<[RobotAPIEntity.Data]> {
-        return APIResult(time: 1_592_477_407_000, data: robots, count: 3)
+        return APIResult(time: 1_592_477_407_000, data: robots, count: 3, paging: nil)
     }
 
     var swconfResult: APIResult<RobotAPIEntity.Swconf> {
-        return APIResult(time: 1_592_693_902_000, data: swconf, count: nil)
+        return APIResult(time: 1_592_693_902_000, data: swconf, count: nil, paging: nil)
     }
 
     var assetsResult: APIResult<[RobotAPIEntity.Asset]> {
-        return APIResult(time: 1_603_999_930_000, data: assets, count: 2)
+        return APIResult(time: 1_603_999_930_000, data: assets, count: 2, paging: nil)
     }
 
     var actionLibrariesResult: APIResult<[ActionLibraryAPIEntity.Data]> {
-        return APIResult(time: 1_592_477_407_000, data: actionLibraries, count: 1)
+        return APIResult(time: 1_592_477_407_000, data: actionLibraries, count: 1, paging: nil)
     }
 
     var aiLibrariesResult: APIResult<[AILibraryAPIEntity.Data]> {
-        return APIResult(time: 1_592_477_407_000, data: aiLibraries, count: 2)
+        return APIResult(time: 1_592_477_407_000, data: aiLibraries, count: 2, paging: nil)
     }
 
     var jobResult: APIResult<JobAPIEntity.Data> {
-        return APIResult(time: 1_592_477_407_000, data: job1, count: 1)
+        return APIResult(time: 1_592_477_407_000, data: job1, count: 1, paging: nil)
     }
 
     var tasksFromJobResult: APIResult<[TaskAPIEntity.Data]> {
-        return APIResult(time: 1_602_795_182_227, data: tasks, count: 2)
+        return APIResult(time: 1_602_795_182_227, data: tasks, count: 2, paging: nil)
     }
 
     var robotResult: APIResult<RobotAPIEntity.Data> {
-        return APIResult(time: 1_592_477_407_000, data: robot1, count: 1)
+        return APIResult(time: 1_592_477_407_000, data: robot1, count: 1, paging: nil)
     }
 
     var commandResult: APIResult<CommandEntity.Data> {
-        return APIResult(time: 1_592_477_407_000, data: command1, count: 1)
+        return APIResult(time: 1_592_477_407_000, data: command1, count: 1, paging: nil)
     }
 
     var commandsFromRobotResult: APIResult<[CommandEntity.Data]> {
-        return APIResult(time: 1_592_477_407_000, data: commands, count: 2)
+        return APIResult(time: 1_592_477_407_000, data: commands, count: 2, paging: nil)
     }
 
     var commandFromTaskResult: APIResult<CommandEntity.Data> {
-        return APIResult(time: 1_592_477_407_000, data: command1, count: 1)
+        return APIResult(time: 1_592_477_407_000, data: command1, count: 1, paging: nil)
     }
 
     var commandsFromTaskResult: APIResult<[CommandEntity.Data]> {
-        return APIResult(time: 1_592_477_407_000, data: commands, count: 2)
+        return APIResult(time: 1_592_477_407_000, data: commands, count: 2, paging: nil)
     }
 
     var actionLibraryResult: APIResult<ActionLibraryAPIEntity.Data> {
-        return APIResult(time: 1_592_477_407_000, data: actionLibrary1, count: 1)
+        return APIResult(time: 1_592_477_407_000, data: actionLibrary1, count: 1, paging: nil)
     }
 
     var aiLibraryResult: APIResult<AILibraryAPIEntity.Data> {
-        return APIResult(time: 1_592_477_407_000, data: aiLibrary1, count: 1)
+        return APIResult(time: 1_592_477_407_000, data: aiLibrary1, count: 1, paging: nil)
     }
 }
 

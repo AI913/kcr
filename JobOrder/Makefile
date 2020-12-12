@@ -50,6 +50,7 @@ update: # Update dependencies and prepared development configuration
 
 .PHONY: prepare-ci
 prepare-ci: # Install dependencies and prepared development configuration in CI service
+	brew update # https://github.com/Homebrew/homebrew-bundle/issues/835
 	$(MAKE) install-brew
 	$(MAKE) install-templates
 	$(MAKE) install-mint
@@ -122,7 +123,9 @@ install-templates: # Install Generamba templates
 
 .PHONY: generate-licenses
 generate-licenses: # Generate licenses with LicensePlist and regenerate project
-	mint run LicensePlist license-plist --output-path ${PRODUCT_NAME}/Resources/Settings.bundle
+	mint run LicensePlist license-plist \
+		--output-path ${PRODUCT_NAME}/Resources/Settings.bundle \
+		--package-path ${PRODUCT_NAME}.xcworkspace/xcshareddata/swiftpm/Package.resolved
 #	$(MAKE) generate-xcodeproj
 
 .PHONY: generate-module
@@ -143,6 +146,11 @@ generate-documents-release: # Generate document with Jazzy
 .PHONY: generate-documents-adhoc
 generate-documents-adhoc: # Generate document with Jazzy
 	sh jazzy.sh AdHoc
+
+.PHONY: lint
+lint: # Lint with SwiftLint
+	mint run swiftlint swiftlint autocorrect --format
+	mint run swiftlint swiftlint
 
 .PHONY: open
 open: # Open workspace in Xcode

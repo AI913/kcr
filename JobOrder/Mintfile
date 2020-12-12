@@ -1,5 +1,5 @@
 Carthage/Carthage@0.36.0
-realm/SwiftLint@0.40.3
-uber/mockolo@1.2.8
-SwiftGen/SwiftGen@6.3.0
-mono0926/LicensePlist@2.16.0
+realm/SwiftLint@0.41.0
+uber/mockolo@1.2.9
+SwiftGen/SwiftGen@6.4.0
+mono0926/LicensePlist@3.0.5

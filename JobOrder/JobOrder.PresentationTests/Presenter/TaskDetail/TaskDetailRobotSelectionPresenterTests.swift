@@ -240,7 +240,7 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
 
     func test_type() {
         let robotId = stub.commands[0].robotId
-        let overview = stub.robots.first(where: { $0.id == robotId })?.overview
+        let overview = stub.robots.first(where: { $0.id == robotId })?.type
         XCTAssertEqual(presenter.type(0), overview, "正しい値が取得できていない")
     }
 
@@ -254,16 +254,14 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
         let textColor = UIColor.clear
         let font = UIFont.systemFont(ofSize: 12)
 
-        let dateStr = presenter.string(date: presenter.toEpocTime(stub.task().updateTime), label: "", textColor: textColor, font: font)
+        let dateStr = presenter.string(date: stub.task().updateTime.toEpocTime, label: "", textColor: textColor, font: font)
         XCTAssertEqual(presenter.updatedAt(textColor: textColor, font: font), dateStr)
     }
 
     func test_updatedAtWithoutCommand() {
         let textColor = UIColor.clear
         let font = UIFont.systemFont(ofSize: 12)
-
-        let date = Date(timeIntervalSince1970: Double(1))
-        let dateStr = presenter.string(date: date, label: "", textColor: textColor, font: font)
+        let dateStr = presenter.string(date: nil, label: "", textColor: textColor, font: font)
 
         XCTAssertEqual(presenter.updatedAt(textColor: textColor, font: font), dateStr)
     }
@@ -274,16 +272,14 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
         let textColor = UIColor.clear
         let font = UIFont.systemFont(ofSize: 12)
 
-        let dateStr = presenter.string(date: presenter.toEpocTime(stub.task().createTime), label: "", textColor: textColor, font: font)
+        let dateStr = presenter.string(date: stub.task().createTime.toEpocTime, label: "", textColor: textColor, font: font)
         XCTAssertEqual(presenter.createdAt(textColor: textColor, font: font), dateStr)
     }
 
     func test_createdAtWithoutCommand() {
         let textColor = UIColor.clear
         let font = UIFont.systemFont(ofSize: 12)
-
-        let date = Date(timeIntervalSince1970: Double(1))
-        let dateStr = presenter.string(date: date, label: "", textColor: textColor, font: font)
+        let dateStr = presenter.string(date: nil, label: "", textColor: textColor, font: font)
 
         XCTAssertEqual(presenter.createdAt(textColor: textColor, font: font), dateStr)
     }

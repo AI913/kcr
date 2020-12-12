@@ -8,7 +8,6 @@
 
 import XCTest
 import Combine
-import AWSMobileClient
 @testable import JobOrder_API
 @testable import AWSMobileClient
 

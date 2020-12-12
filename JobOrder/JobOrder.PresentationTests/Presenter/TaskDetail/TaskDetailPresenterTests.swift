@@ -24,8 +24,8 @@ class TaskDetailPresenterTests: XCTestCase {
     private let vc = TaskDetailViewControllerProtocolMock()
     private let mqtt = JobOrder_Domain.MQTTUseCaseProtocolMock()
     private let data = JobOrder_Domain.DataManageUseCaseProtocolMock()
-    private lazy var presenter = TaskDetailPresenter(dataUseCase: data,
-                                                     vc: vc)
+    private lazy var presenter = TaskDetailTaskInformationPresenter(dataUseCase: data,
+                                                                    vc: vc)
     private let viewData = MainViewData.Robot()
 
     override func tearDownWithError() throws {}
@@ -159,67 +159,6 @@ class TaskDetailPresenterTests: XCTestCase {
         XCTAssertNil(presenter.task, "値が取得できてはいけない")
     }
 
-    func test_getRobot() {
-        let param = "test"
-        let handlerExpectation = expectation(description: "handler")
-        let completionExpectation = expectation(description: "completion")
-        completionExpectation.isInverted = true
-        data.robots = stub.robots
-
-        data.robotHandler = { _ in
-            return Future<JobOrder_Domain.DataManageModel.Output.Robot, Error> { promise in
-                promise(.success(self.stub.robot))
-                handlerExpectation.fulfill()
-            }.eraseToAnyPublisher()
-        }
-
-        presenter.getRobot(robotId: param)
-        wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-        //レスポンスが間に合ってない
-        guard let presenterRobot = presenter.robot else { return }
-        XCTAssert(presenterRobot == stub.robot, "正しい値が取得できていない")
-        XCTAssertEqual(vc.showErrorAlertCallCount, 0, "エラーが起こってはいけない")
-    }
-
-    func test_getRobotError() {
-        let param = ""
-        let handlerExpectation = expectation(description: "handler")
-        let completionExpectation = expectation(description: "completion")
-        completionExpectation.isInverted = true
-        data.robots = stub.robots
-
-        data.robotHandler = { _ in
-            return Future<JobOrder_Domain.DataManageModel.Output.Robot, Error> { promise in
-                let error = NSError(domain: "Error", code: -1, userInfo: nil)
-                promise(.failure(error))
-                handlerExpectation.fulfill()
-            }.eraseToAnyPublisher()
-        }
-
-        presenter.getRobot(robotId: param)
-        wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-        XCTAssertNil(presenter.robot, "値が取得できてはいけない")
-        XCTAssertEqual(vc.showErrorAlertCallCount, 1, "ViewControllerのメソッドが呼ばれない")
-    }
-
-    func test_getRobotNotReceived() {
-        let param = ""
-        let handlerExpectation = expectation(description: "handler")
-        let completionExpectation = expectation(description: "completion")
-        completionExpectation.isInverted = true
-        data.robots = stub.robots
-
-        data.robotHandler = { _ in
-            return Future<JobOrder_Domain.DataManageModel.Output.Robot, Error> { promise in
-                handlerExpectation.fulfill()
-            }.eraseToAnyPublisher()
-        }
-
-        presenter.getRobot(robotId: param)
-        wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-        XCTAssertNil(presenter.robot, "値が取得できてはいけない")
-    }
-
     // TODO: - テスト作成する
     func test_jobName() {
         // jobName()は現在ハードコーディングで固定値を返却している
@@ -227,7 +166,8 @@ class TaskDetailPresenterTests: XCTestCase {
 
     func test_RobotName() {
         presenter.robot = stub.robot
-        XCTAssertEqual(presenter.RobotName(), stub.robot.name, "正しい値が取得できていない")
+        presenter.command = stub.command
+        XCTAssertEqual(presenter.RobotName(), stub.command.robot?.name, "正しい値が取得できていない")
     }
 
     func test_RobotNameWithoutRobot() {
@@ -240,7 +180,7 @@ class TaskDetailPresenterTests: XCTestCase {
         let textColor = UIColor.clear
         let font = UIFont.systemFont(ofSize: 12)
 
-        let dateStr = presenter.string(date: presenter.toEpocTime(stub.command1().updateTime), label: "", textColor: textColor, font: font)
+        let dateStr = presenter.string(date: stub.command1().updateTime.toEpocTime, label: "", textColor: textColor, font: font)
         XCTAssertEqual(presenter.updatedAt(textColor: textColor, font: font), dateStr)
     }
 
@@ -248,8 +188,7 @@ class TaskDetailPresenterTests: XCTestCase {
         let textColor = UIColor.clear
         let font = UIFont.systemFont(ofSize: 12)
 
-        let date = Date(timeIntervalSince1970: Double(1))
-        let dateStr = presenter.string(date: date, label: "", textColor: textColor, font: font)
+        let dateStr = presenter.string(date: nil, label: "", textColor: textColor, font: font)
 
         XCTAssertEqual(presenter.updatedAt(textColor: textColor, font: font), dateStr)
     }
@@ -260,7 +199,7 @@ class TaskDetailPresenterTests: XCTestCase {
         let textColor = UIColor.clear
         let font = UIFont.systemFont(ofSize: 12)
 
-        let dateStr = presenter.string(date: presenter.toEpocTime(stub.command1().createTime), label: "", textColor: textColor, font: font)
+        let dateStr = presenter.string(date: stub.command1().createTime.toEpocTime, label: "", textColor: textColor, font: font)
         XCTAssertEqual(presenter.createdAt(textColor: textColor, font: font), dateStr)
     }
 
@@ -268,8 +207,7 @@ class TaskDetailPresenterTests: XCTestCase {
         let textColor = UIColor.clear
         let font = UIFont.systemFont(ofSize: 12)
 
-        let date = Date(timeIntervalSince1970: Double(1))
-        let dateStr = presenter.string(date: date, label: "", textColor: textColor, font: font)
+        let dateStr = presenter.string(date: nil, label: "", textColor: textColor, font: font)
 
         XCTAssertEqual(presenter.createdAt(textColor: textColor, font: font), dateStr)
     }
@@ -285,12 +223,11 @@ class TaskDetailPresenterTests: XCTestCase {
         XCTAssertEqual(presenter.startedAt(textColor: textColor, font: font), dateStr)
     }
 
-    func text_startedAtWithoutCommand() {
+    func test_startedAtWithoutCommand() {
         let textColor = UIColor.clear
         let font = UIFont.systemFont(ofSize: 12)
 
-        let date = Date(timeIntervalSince1970: Double(1))
-        let dateStr = presenter.string(date: date, label: "", textColor: textColor, font: font)
+        let dateStr = presenter.string(date: nil, label: "", textColor: textColor, font: font)
 
         XCTAssertEqual(presenter.startedAt(textColor: textColor, font: font), dateStr)
     }
@@ -310,8 +247,7 @@ class TaskDetailPresenterTests: XCTestCase {
         let textColor = UIColor.clear
         let font = UIFont.systemFont(ofSize: 12)
 
-        let date = Date(timeIntervalSince1970: Double(1))
-        let dateStr = presenter.string(date: date, label: "", textColor: textColor, font: font)
+        let dateStr = presenter.string(date: nil, label: "", textColor: textColor, font: font)
 
         XCTAssertEqual(presenter.exitedAt(textColor: textColor, font: font), dateStr)
 

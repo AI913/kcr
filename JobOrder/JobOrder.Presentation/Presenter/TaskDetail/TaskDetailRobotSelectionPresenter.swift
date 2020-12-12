@@ -73,8 +73,7 @@ class TaskDetailRobotSelectionPresenter {
 
     required init(dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol,
                   vc: TaskDetailRobotSelectionViewControllerProtocol,
-                  viewData: TaskDetailViewData
-    ) {
+                  viewData: TaskDetailViewData) {
         self.dataUseCase = dataUseCase
         self.vc = vc
         self.data = viewData
@@ -132,7 +131,7 @@ extension TaskDetailRobotSelectionPresenter: TaskDetailRobotSelectionPresenterPr
     ///   - font: フォント
     /// - Returns: 更新時間
     func updatedAt(textColor: UIColor, font: UIFont) -> NSAttributedString? {
-        return string(date: toEpocTime(task?.updateTime), label: "", textColor: textColor, font: font)
+        return string(date: task?.updateTime.toEpocTime, label: "", textColor: textColor, font: font)
     }
 
     /// 作成時間取得
@@ -141,7 +140,7 @@ extension TaskDetailRobotSelectionPresenter: TaskDetailRobotSelectionPresenterPr
     ///   - font: フォント
     /// - Returns: 作成時間
     func createdAt(textColor: UIColor, font: UIFont) -> NSAttributedString? {
-        return string(date: toEpocTime(task?.createTime), label: "", textColor: textColor, font: font)
+        return string(date: task?.createTime.toEpocTime, label: "", textColor: textColor, font: font)
     }
 
     /// ステータス取得
@@ -256,7 +255,7 @@ extension TaskDetailRobotSelectionPresenter {
             .foregroundColor: textColor,
             .font: font
         ]))
-        let queuedAt = toDateString(date)
+        let queuedAt = date?.toDateString ?? ""
         mutableAttributedString.append(NSAttributedString(string: queuedAt, attributes: [
             .foregroundColor: UIColor.label,
             .font: UIFont.systemFont(ofSize: 14.0)
@@ -277,20 +276,4 @@ extension TaskDetailRobotSelectionPresenter {
         return mutableAttributedString
     }
 
-    func toDateString(_ date: Int?) -> String {
-        guard let date = date, date != 0 else { return "" }
-        return toDateString(Date(timeIntervalSince1970: TimeInterval(date)))
-    }
-
-    func toDateString(_ date: Date?) -> String {
-        guard let date = date, date.timeIntervalSince1970 != 0 else { return "" }
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .long
-        return formatter.string(from: date)
-    }
-
-    func toEpocTime(_ data: Int?) -> Date {
-        return Date(timeIntervalSince1970: Double((data ?? 1000) / 1000))
-    }
 }

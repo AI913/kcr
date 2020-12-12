@@ -100,7 +100,7 @@ extension JobListViewController {
 extension JobListViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
-        presenter?.filterAndSort(keyword: searchController.searchBar.text)
+        presenter?.filterAndSort(keyword: searchController.searchBar.text, keywordChanged: true)
     }
 }
 

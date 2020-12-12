@@ -29,7 +29,7 @@ public class RobotAPIDataStore: RobotAPIRepository {
     /// - Returns: Robot情報リスト
     public func fetch(_ token: String) -> AnyPublisher<APIResult<[RobotAPIEntity.Data]>, Error> {
         Logger.info(target: self)
-        return api.get(url: url, token: token)
+        return api.get(url: url, token: token, query: nil)
     }
 
     /// Robot情報を取得する
@@ -39,7 +39,7 @@ public class RobotAPIDataStore: RobotAPIRepository {
     /// - Returns: Robot情報
     public func getRobot(_ token: String, id: String) -> AnyPublisher<APIResult<RobotAPIEntity.Data>, Error> {
         Logger.info(target: self)
-        return api.get(resUrl: url, token: token, dataId: id)
+        return api.get(resUrl: url, token: token, dataId: id, query: nil)
     }
 
     /// Robot画像を取得する
@@ -57,9 +57,13 @@ public class RobotAPIDataStore: RobotAPIRepository {
     ///   - token: トークン情報
     ///   - id: Robot ID
     /// - Returns: Robot Command情報
-    public func getCommands(_ token: String, id: String) -> AnyPublisher<APIResult<[CommandEntity.Data]>, Error> {
+    public func getCommands(_ token: String, id: String, status: [String]?, paging: APIPaging.Input?) -> AnyPublisher<APIResult<[CommandEntity.Data]>, Error> {
         Logger.info(target: self)
-        return api.get(resUrl: url, token: token, dataId: "\(id)/commands")
+        let query = QueryBuilder()
+            .add(status: status)
+            .add(paging: paging)
+            .build()
+        return api.get(resUrl: url, token: token, dataId: "\(id)/commands", query: query)
     }
 
     /// Robot SW構成情報を取得する
@@ -69,7 +73,7 @@ public class RobotAPIDataStore: RobotAPIRepository {
     /// - Returns: Robot SW構成情報
     public func getRobotSwconf(_ token: String, id: String) -> AnyPublisher<APIResult<RobotAPIEntity.Swconf>, Error> {
         Logger.info(target: self)
-        return api.get(resUrl: url, token: token, dataId: "\(id)/swconf")
+        return api.get(resUrl: url, token: token, dataId: "\(id)/swconf", query: nil)
     }
 
     /// Robot アセット情報を取得する
@@ -79,6 +83,6 @@ public class RobotAPIDataStore: RobotAPIRepository {
     /// - Returns: Robot アセット情報
     public func getRobotAssets(_ token: String, id: String) -> AnyPublisher<APIResult<[RobotAPIEntity.Asset]>, Error> {
         Logger.info(target: self)
-        return api.get(resUrl: url, token: token, dataId: "\(id)/assets")
+        return api.get(resUrl: url, token: token, dataId: "\(id)/assets", query: nil)
     }
 }

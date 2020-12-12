@@ -122,7 +122,7 @@ public struct DataManageModel {
                 self.updateTime = job.updateTime
                 self.updator = job.updator
             }
-            
+
             /// エンティティ -> モデル変換
             /// - Parameter job: Jobエンティティ
             init(_ job: JobOrder_API.JobAPIEntity.Data) {
@@ -477,7 +477,7 @@ public struct DataManageModel {
             public let jobId: String
             public let robotIds: [String]
             public let exit: Exit
-            public let job:Job
+            public let job: Job
             public let createTime: Int
             public let creator: String
             public let updateTime: Int
@@ -524,7 +524,7 @@ public struct DataManageModel {
                 }
             }
 
-            public init(id: String, jobId: String, robotIds: [String], exit: Exit, job:Job, createTime: Int, creator: String, updateTime: Int, updator: String) {
+            public init(id: String, jobId: String, robotIds: [String], exit: Exit, job: Job, createTime: Int, creator: String, updateTime: Int, updator: String) {
                 self.id = id
                 self.jobId = jobId
                 self.robotIds = robotIds

@@ -24,7 +24,7 @@ class TaskAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<CommandEntity.Data>, Error> { promise in
                 handlerExpectation.fulfill()
                 promise(.success(APITestsStub().commandFromTaskResult))
@@ -45,7 +45,7 @@ class TaskAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<CommandEntity.Data>, Error> { promise in
                 handlerExpectation.fulfill()
                 let error = NSError(domain: "Error", code: -1, userInfo: nil)
@@ -70,7 +70,7 @@ class TaskAPIDataStoreTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<CommandEntity.Data>, Error> { promise in
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
@@ -90,7 +90,7 @@ class TaskAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
                 promise(.success(APITestsStub().commandsFromTaskResult))
@@ -111,7 +111,7 @@ class TaskAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
                 let error = NSError(domain: "Error", code: -1, userInfo: nil)
@@ -136,7 +136,7 @@ class TaskAPIDataStoreTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()

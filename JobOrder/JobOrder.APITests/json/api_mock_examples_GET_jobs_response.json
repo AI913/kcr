@@ -67,6 +67,12 @@
             "updatedBy": "user@kyocera.jp"
         }
     ],
-    "count": 3,
-    "time": 1592477407000
+    "count" : 3,
+    "time" : 1592477337000,
+    "paging": {
+        "page": 2,
+        "size": 5,
+        "totalPages": 2,
+        "totalCount": 8
+    }
 }

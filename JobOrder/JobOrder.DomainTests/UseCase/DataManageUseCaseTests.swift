@@ -277,7 +277,7 @@ class DataManageUseCaseTests: XCTestCase {
         jobAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.JobAPIEntity.Data]>, Error> { promise in
                 jobFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1)
+                let entity = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -285,7 +285,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.RobotAPIEntity.Data]>, Error> { promise in
                 robotFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[RobotAPIEntity.Data]>(time: 1, data: DomainTestsStub().robots, count: 1)
+                let entity = APIResult<[RobotAPIEntity.Data]>(time: 1, data: DomainTestsStub().robots, count: 1, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -293,7 +293,7 @@ class DataManageUseCaseTests: XCTestCase {
         actionLibraryAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.ActionLibraryAPIEntity.Data]>, Error> { promise in
                 actionLibraryFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[ActionLibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().actionLibraries, count: 1)
+                let entity = APIResult<[ActionLibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().actionLibraries, count: 1, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -301,7 +301,7 @@ class DataManageUseCaseTests: XCTestCase {
         aiLibraryAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.AILibraryAPIEntity.Data]>, Error> { promise in
                 aiLibraryFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[AILibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().aiLibraries, count: 1)
+                let entity = APIResult<[AILibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().aiLibraries, count: 1, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -437,7 +437,7 @@ class DataManageUseCaseTests: XCTestCase {
         jobAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.JobAPIEntity.Data]>, Error> { promise in
                 jobFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1)
+                let entity = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -487,7 +487,7 @@ class DataManageUseCaseTests: XCTestCase {
         jobAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.JobAPIEntity.Data]>, Error> { promise in
                 jobFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1)
+                let entity = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -495,7 +495,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.RobotAPIEntity.Data]>, Error> { promise in
                 robotFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[RobotAPIEntity.Data]>(time: 1, data: DomainTestsStub().robots, count: 1)
+                let entity = APIResult<[RobotAPIEntity.Data]>(time: 1, data: DomainTestsStub().robots, count: 1, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -546,7 +546,7 @@ class DataManageUseCaseTests: XCTestCase {
         jobAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.JobAPIEntity.Data]>, Error> { promise in
                 jobFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1)
+                let entity = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -554,7 +554,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.RobotAPIEntity.Data]>, Error> { promise in
                 robotFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[RobotAPIEntity.Data]>(time: 1, data: DomainTestsStub().robots, count: 1)
+                let entity = APIResult<[RobotAPIEntity.Data]>(time: 1, data: DomainTestsStub().robots, count: 1, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -562,7 +562,7 @@ class DataManageUseCaseTests: XCTestCase {
         actionLibraryAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.ActionLibraryAPIEntity.Data]>, Error> { promise in
                 actionLibraryFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[ActionLibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().actionLibraries, count: 1)
+                let entity = APIResult<[ActionLibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().actionLibraries, count: 1, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -667,7 +667,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.getRobotHandler = { token, id in
             return Future<APIResult<JobOrder_API.RobotAPIEntity.Data>, Error> { promise in
                 getRobotHandlerExpectation.fulfill()
-                let entity = APIResult<RobotAPIEntity.Data>(time: 1, data: DomainTestsStub().robot, count: 1)
+                let entity = APIResult<RobotAPIEntity.Data>(time: 1, data: DomainTestsStub().robot, count: 1, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -768,6 +768,21 @@ class DataManageUseCaseTests: XCTestCase {
 
     func test_robotCommand() {
         let param = "test"
+        let size = 5
+
+        let (expectedPage, expectedSize) = (3, size)
+        let (expectedOffset, expectedLimit) = (15, size)
+        let expectedTotal = size * 10
+
+        let offset = 10	// (expectedPage - 1) * size
+        let page = 4	// expectedOffset / size + 1
+        let totalPages = 10
+
+        let cursor = PagingModel.Cursor(offset: offset, limit: size)
+        let status: [CommandModel.Status.Value] = [.Open, .Close]
+
+        let pagingOutput = APIPaging.Output(page: page, size: size, totalPages: totalPages, totalCount: expectedTotal)
+
         let tokenHandlerExpectation = expectation(description: "Token handler")
         let getRobotCommandsHandlerExpectation = expectation(description: "Get command handler")
         let completionExpectation = expectation(description: "completion")
@@ -782,15 +797,17 @@ class DataManageUseCaseTests: XCTestCase {
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
-        robotAPI.getCommandsHandler = { token, id in
+        robotAPI.getCommandsHandler = { token, id, status, paging in
             return Future<APIResult<[JobOrder_API.CommandEntity.Data]>, Error> { promise in
                 getRobotCommandsHandlerExpectation.fulfill()
-                let entity = APIResult<[CommandEntity.Data]>(time: 1, data: DomainTestsStub().commandsFromRobot, count: 1)
+                let entity = APIResult<[CommandEntity.Data]>(time: 1, data: DomainTestsStub().commandsFromRobot, count: 1, paging: pagingOutput)
                 promise(.success(entity))
+                XCTAssertEqual(status?.sorted(), ["open", "close"].sorted(), "正しい値が設定されていない")
+                XCTAssertEqual(paging, APIPaging.Input(page: expectedPage, size: expectedSize), "正しい値が設定されていない")
             }.eraseToAnyPublisher()
         }
 
-        useCase.commandFromRobot(id: param)
+        useCase.commandFromRobot(id: param, status: status, cursor: cursor)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished: break
@@ -800,6 +817,8 @@ class DataManageUseCaseTests: XCTestCase {
                 completionExpectation.fulfill()
             }, receiveValue: { response in
                 XCTAssertNotNil(response, "値が取得できていない")
+                XCTAssertEqual(response.cursor, PagingModel.Cursor(offset: expectedOffset, limit: expectedLimit), "正しい値が設定されていない")
+                XCTAssertEqual(response.total, expectedTotal, "正しい値が設定されていない")
             }).store(in: &cancellables)
 
         wait(for: [tokenHandlerExpectation, getRobotCommandsHandlerExpectation, completionExpectation], timeout: ms1000)
@@ -823,13 +842,13 @@ class DataManageUseCaseTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        robotAPI.getCommandsHandler = { token, id in
+        robotAPI.getCommandsHandler = { token, id, _, _ in
             return Future<APIResult<[JobOrder_API.CommandEntity.Data]>, Error> { promise in
                 getRobotCommandsHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
 
-        useCase.commandFromRobot(id: param)
+        useCase.commandFromRobot(id: param, status: nil, cursor: nil)
             .sink(receiveCompletion: { _ in
                 XCTFail("値を取得できてはいけない")
             }, receiveValue: { _ in
@@ -856,14 +875,14 @@ class DataManageUseCaseTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        robotAPI.getCommandsHandler = { token, id in
+        robotAPI.getCommandsHandler = { token, id, _, _ in
             return Future<APIResult<[JobOrder_API.CommandEntity.Data]>, Error> { promise in
                 getRobotCommandsHandlerExpectation.fulfill()
                 promise(.failure(error))
             }.eraseToAnyPublisher()
         }
 
-        useCase.commandFromRobot(id: param)
+        useCase.commandFromRobot(id: param, status: nil, cursor: nil)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
@@ -899,7 +918,7 @@ class DataManageUseCaseTests: XCTestCase {
         taskAPI.getCommandHandler = { token, taskId, robotId in
             return Future<APIResult<CommandEntity.Data>, Error> { promise in
                 getTaskCommandsHandlerExpectation.fulfill()
-                let entity = APIResult<CommandEntity.Data>(time: 1, data: DomainTestsStub().commandFromTask, count: 1)
+                let entity = APIResult<CommandEntity.Data>(time: 1, data: DomainTestsStub().commandFromTask, count: 1, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -1013,7 +1032,7 @@ class DataManageUseCaseTests: XCTestCase {
         taskAPI.getCommandsHandler = { token, taskId in
             return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
                 getTaskCommandsHandlerExpectation.fulfill()
-                let entity = APIResult<[CommandEntity.Data]>(time: 1, data: DomainTestsStub().commandsFromTask, count: 2)
+                let entity = APIResult<[CommandEntity.Data]>(time: 1, data: DomainTestsStub().commandsFromTask, count: 2, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -1240,7 +1259,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.getRobotSwconfHandler = { token, id in
             return Future<APIResult<JobOrder_API.RobotAPIEntity.Swconf>, Error> { promise in
                 getRobotSwconfHandlerExpectation.fulfill()
-                let entity = APIResult<RobotAPIEntity.Swconf>(time: 1, data: DomainTestsStub().swconf, count: nil)
+                let entity = APIResult<RobotAPIEntity.Swconf>(time: 1, data: DomainTestsStub().swconf, count: nil, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -1248,7 +1267,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.getRobotAssetsHandler = { token, id in
             return Future<APIResult<[JobOrder_API.RobotAPIEntity.Asset]>, Error> { promise in
                 getRobotAssetsHandlerExpectation.fulfill()
-                let entity = APIResult<[RobotAPIEntity.Asset]>(time: 1, data: DomainTestsStub().assets, count: 1)
+                let entity = APIResult<[RobotAPIEntity.Asset]>(time: 1, data: DomainTestsStub().assets, count: 1, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -1336,7 +1355,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.getRobotAssetsHandler = { token, id in
             return Future<APIResult<[JobOrder_API.RobotAPIEntity.Asset]>, Error> { promise in
                 getRobotAssetsHandlerExpectation.fulfill()
-                let entity = APIResult<[RobotAPIEntity.Asset]>(time: 1, data: DomainTestsStub().assets, count: 1)
+                let entity = APIResult<[RobotAPIEntity.Asset]>(time: 1, data: DomainTestsStub().assets, count: 1, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -1372,7 +1391,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.getRobotSwconfHandler = { token, id in
             return Future<APIResult<JobOrder_API.RobotAPIEntity.Swconf>, Error> { promise in
                 getRobotSwconfHandlerExpectation.fulfill()
-                let entity = APIResult<RobotAPIEntity.Swconf>(time: 1, data: DomainTestsStub().swconf, count: nil)
+                let entity = APIResult<RobotAPIEntity.Swconf>(time: 1, data: DomainTestsStub().swconf, count: nil, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -1469,7 +1488,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.getRobotAssetsHandler = { token, id in
             return Future<APIResult<[JobOrder_API.RobotAPIEntity.Asset]>, Error> { promise in
                 getRobotAssetsHandlerExpectation.fulfill()
-                let entity = APIResult<[RobotAPIEntity.Asset]>(time: 1, data: DomainTestsStub().assets, count: 1)
+                let entity = APIResult<[RobotAPIEntity.Asset]>(time: 1, data: DomainTestsStub().assets, count: 1, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -1511,7 +1530,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.getRobotSwconfHandler = { token, id in
             return Future<APIResult<JobOrder_API.RobotAPIEntity.Swconf>, Error> { promise in
                 getRobotSwconfHandlerExpectation.fulfill()
-                let entity = APIResult<RobotAPIEntity.Swconf>(time: 1, data: DomainTestsStub().swconf, count: nil)
+                let entity = APIResult<RobotAPIEntity.Swconf>(time: 1, data: DomainTestsStub().swconf, count: nil, paging: nil)
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -1544,6 +1563,8 @@ class DataManageUseCaseTests: XCTestCase {
         let getTasksFromJobHandlerExpectation = expectation(description: "Get Tasks from job handler")
         let completionExpectation = expectation(description: "completion")
 
+        let cursor = PagingModel.Cursor(offset: 0, limit: 10)
+
         auth.getTokensHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
                 tokenHandlerExpectation.fulfill()
@@ -1555,15 +1576,16 @@ class DataManageUseCaseTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        jobAPI.getTasksHandler = { token, id in
+        jobAPI.getTasksHandler = { token, id, paging in
             return Future<APIResult<[TaskAPIEntity.Data]>, Error> { promise in
                 getTasksFromJobHandlerExpectation.fulfill()
-                let entity = APIResult<[TaskAPIEntity.Data]>(time: 1, data: DomainTestsStub().tasksFromJob, count: 1)
+                let entity = APIResult<[TaskAPIEntity.Data]>(time: 1, data: DomainTestsStub().tasksFromJob, count: 1, paging: nil)
                 promise(.success(entity))
+                XCTAssertEqual(paging, APIPaging.Input(page: 1, size: 10))
             }.eraseToAnyPublisher()
         }
 
-        useCase.tasksFromJob(id: param)
+        useCase.tasksFromJob(id: param, cursor: cursor)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished: break
@@ -1596,13 +1618,13 @@ class DataManageUseCaseTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        jobAPI.getTasksHandler = { token, id in
+        jobAPI.getTasksHandler = { token, id, _ in
             return Future<APIResult<[TaskAPIEntity.Data]>, Error> { promise in
                 getTasksFromJobHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
 
-        useCase.tasksFromJob(id: param)
+        useCase.tasksFromJob(id: param, cursor: nil)
             .sink(receiveCompletion: { _ in
                 XCTFail("値を取得できてはいけない")
             }, receiveValue: { _ in
@@ -1629,14 +1651,14 @@ class DataManageUseCaseTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        jobAPI.getTasksHandler = { token, id in
+        jobAPI.getTasksHandler = { token, id, _ in
             return Future<APIResult<[TaskAPIEntity.Data]>, Error> { promise in
                 getTasksFromJobHandlerExpectation.fulfill()
                 promise(.failure(error))
             }.eraseToAnyPublisher()
         }
 
-        useCase.tasksFromJob(id: param)
+        useCase.tasksFromJob(id: param, cursor: nil)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
@@ -1652,10 +1674,10 @@ class DataManageUseCaseTests: XCTestCase {
     }
 
     func test_saveData() {
-        let jobsResult = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1)
-        let robotsResult = APIResult<[RobotAPIEntity.Data]>(time: 1, data: DomainTestsStub().robots, count: 1)
-        let actionLibrariesResult = APIResult<[ActionLibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().actionLibraries, count: 1)
-        let aiLibrariesResult = APIResult<[AILibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().aiLibraries, count: 1)
+        let jobsResult = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1, paging: nil)
+        let robotsResult = APIResult<[RobotAPIEntity.Data]>(time: 1, data: DomainTestsStub().robots, count: 1, paging: nil)
+        let actionLibrariesResult = APIResult<[ActionLibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().actionLibraries, count: 1, paging: nil)
+        let aiLibrariesResult = APIResult<[AILibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().aiLibraries, count: 1, paging: nil)
         job.timestamp = 0
         robot.timestamp = 0
         actionLibrary.timestamp = 0
@@ -1678,10 +1700,10 @@ class DataManageUseCaseTests: XCTestCase {
     }
 
     func test_saveDataOldJobTimestamp() {
-        let jobsResult = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1)
-        let robotsResult = APIResult<[RobotAPIEntity.Data]>(time: 1, data: DomainTestsStub().robots, count: 1)
-        let actionLibrariesResult = APIResult<[ActionLibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().actionLibraries, count: 1)
-        let aiLibrariesResult = APIResult<[AILibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().aiLibraries, count: 1)
+        let jobsResult = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1, paging: nil)
+        let robotsResult = APIResult<[RobotAPIEntity.Data]>(time: 1, data: DomainTestsStub().robots, count: 1, paging: nil)
+        let actionLibrariesResult = APIResult<[ActionLibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().actionLibraries, count: 1, paging: nil)
+        let aiLibrariesResult = APIResult<[AILibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().aiLibraries, count: 1, paging: nil)
         job.timestamp = 1
         robot.timestamp = 1
         actionLibrary.timestamp = 1
@@ -1704,10 +1726,10 @@ class DataManageUseCaseTests: XCTestCase {
     }
 
     func test_saveDataNil() {
-        let jobsResult = APIResult<[JobAPIEntity.Data]>(time: 1, data: nil, count: 1)
-        let robotsResult = APIResult<[RobotAPIEntity.Data]>(time: 1, data: nil, count: 1)
-        let actionLibrariesResult = APIResult<[ActionLibraryAPIEntity.Data]>(time: 1, data: nil, count: 1)
-        let aiLibrariesResult = APIResult<[AILibraryAPIEntity.Data]>(time: 1, data: nil, count: 1)
+        let jobsResult = APIResult<[JobAPIEntity.Data]>(time: 1, data: nil, count: 1, paging: nil)
+        let robotsResult = APIResult<[RobotAPIEntity.Data]>(time: 1, data: nil, count: 1, paging: nil)
+        let actionLibrariesResult = APIResult<[ActionLibraryAPIEntity.Data]>(time: 1, data: nil, count: 1, paging: nil)
+        let aiLibrariesResult = APIResult<[AILibraryAPIEntity.Data]>(time: 1, data: nil, count: 1, paging: nil)
 
         useCase.saveData(results: (jobsResult,
                                    robotsResult,

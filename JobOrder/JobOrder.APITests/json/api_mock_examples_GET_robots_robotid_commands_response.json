@@ -1,8 +1,8 @@
 {
   "data": [
     {
-      "taskId": "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
-      "robotId": "255d07b8-22fe-11eb-adc1-0242ac120002",
+      "taskId": "75098344-f3fc-11ea-adc1-0242ac120002",
+      "robotId": "78abfbd4-6613-42a6-a691-23c3748fa346",
       "startedAt": 0,
       "exitedAt": 0,
       "execDuration": 0,
@@ -20,8 +20,8 @@
       "updatedBy": "user@kyocera.jp"
     },
     {
-      "taskId": "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
-      "robotId": "255d07b8-22fe-11eb-adc1-0242ac120002",
+      "taskId": "1528f46e-f33e-11ea-adc1-0242ac120002",
+      "robotId": "78abfbd4-6613-42a6-a691-23c3748fa346",
       "startedAt": 1592620113000,
       "exitedAt": 0,
       "execDuration": 0,
@@ -39,7 +39,7 @@
       "updatedBy": "user@kyocera.jp"
     },
     {
-      "taskId": "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
+      "taskId": "5e1d9cfa-233c-11eb-adc1-0242ac120002",
       "robotId": "78abfbd4-6613-42a6-a691-23c3748fa346",
       "startedAt": 1592619013000,
       "exitedAt": 0,
@@ -62,9 +62,9 @@
       "robotId": "78abfbd4-6613-42a6-a691-23c3748fa346",
       "startedAt": 1592660113000,
       "exitedAt": 1592661502000,
-      "execDuration": 1389000,
-      "receivedStartReortAt": 1592660112000,
-      "receivedExitReortAt": 1592661501000,
+      "execDuration": 41389000,
+      "receivedStartReortAt": 1592652512000,
+      "receivedExitReortAt": 1592693902000,
       "status": "succeeded",
       "resultInfo": "All success",
       "success": 73,
@@ -77,7 +77,7 @@
       "updatedBy": "user@kyocera.jp"
     },
     {
-      "taskId": "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
+      "taskId": "ac5f5a3c-233e-11eb-adc1-0242ac120002",
       "robotId": "78abfbd4-6613-42a6-a691-23c3748fa346",
       "startedAt": 1591990021000,
       "exitedAt": 1591996666000,
@@ -96,12 +96,12 @@
       "updatedBy": "user@kyocera.jp"
     }
   ],
+  "count": 5,
+  "time": 1592693902000,
   "paging": {
     "page": 2,
     "size": 5,
-    "totalPages": 16,
-    "totalCount": 77
-  },
-  "count": 5,
-  "time": 1592693902000
+    "totalPages": 8,
+    "totalCount": 37
+  }
 }

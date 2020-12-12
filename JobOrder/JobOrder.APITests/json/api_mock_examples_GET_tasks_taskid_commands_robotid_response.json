@@ -1,0 +1,117 @@
+{
+    "data": {
+        "taskId": "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
+        "robotId": "78abfbd4-6613-42a6-a691-23c3748fa346",
+        "startedAt": 1592620113000,
+        "exitedAt": 1592661502000,
+        "execDuration": 41389000,
+        "receivedStartReortAt": 1592652512000,
+        "receivedExitReortAt": 1592693902000,
+        "status": "succeeded",
+        "resultInfo": "All success",
+        "success": 73,
+        "fail": 0,
+        "error": 0,
+        "robot": {
+            "robotInfo": {
+                "robotId": "78abfbd4-6613-42a6-a691-23c3748fa346",
+                "awsKey": {
+                    "thingArn": "arn:aws:iot:ap-northeast-1:701006255006:thing/raspberrypi_3",
+                    "thingName": "raspberrypi_3"
+                },
+                "createdBy": "user@kyocera.jp",
+                "createTime": 1592477287000,
+                "dataVersion": 1,
+                "displayMaker": "RS Components Ltd.",
+                "displayModel": "3BPLUS-R",
+                "displayModelClass": "Raspberry Pi3 ModelB+",
+                "displayName": "Minami's Raspberry Pi",
+                "displaySerial": "B8AE9C426FC1",
+                "locale": "ja_JP",
+                "overview": "",
+                "remarks": "",
+                "simulator": false,
+                "type": "Raspberry Pi",
+                "updatedBy": "user@kyocera.jp",
+                "updateTime": 1592477287000
+            },
+            "hwConfigurationAssetList": [
+                {
+                    "robotId": "78abfbd4-6613-42a6-a691-23c3748fa346",
+                    "assetId": "fa9f7d4a-0ba6-4a10-9abc-f97f805dd3f3",
+                    "type": "camera",
+                    "displayMaker": "Intel Corporation",
+                    "displayModelClass": "Intel RealSense Depth Camera D435",
+                    "displayModel": "82635AWGDVKPRQ",
+                    "displaySerial": "f97f805dd3f3",
+                    "dataVersion": 1,
+                    "createTime": 1592477367000,
+                    "createdBy": "user@kyocera.jp",
+                    "updateTime": 1592477367000,
+                    "updatedBy": "user@kyocera.jp"
+                }
+            ],
+            "swConfiguration": [
+                {
+                    "robotId": "78abfbd4-6613-42a6-a691-23c3748fa346",
+                    "operatingSystem": {
+                        "system": "Linux",
+                        "systemVersion": "4.18",
+                        "distribution": "Ubuntu",
+                        "distributionVersion": "18.04"
+                    },
+                    "software": [
+                        {
+                            "swArtifactId": "67059389-a813-495c-a95b-08b3f434bab9",
+                            "softwareId": "26c61745-5ba3-4744-b4f1-c2d3daf3f472",
+                            "versionId": "59ac9537-0c49-4ea6-a1f4-6e27703ed66c",
+                            "displayName": "Common Module",
+                            "displayVersion": "1.0"
+                        }
+                    ],
+                    "dataVersion": 1,
+                    "createTime": 1592477367000,
+                    "createdBy": "user@kyocera.jp",
+                    "updateTime": 1592477367000,
+                    "updatedBy": "user@kyocera.jp"
+                }
+            ],
+            "swConfigurationActLibList": [
+                {
+                    "robotId": "78abfbd4-6613-42a6-a691-23c3748fa346",
+                    "actLibArtifactId": "67059389-a813-495c-a95b-08b3f434bab9",
+                    "actionLibraryId": "fa9f7d4a-0ba6-4a10-9abc-f97f805dd3f3",
+                    "versionId": "8c0ddb3e-ec01-4a0c-8412-d52b83b2c8de",
+                    "displayName": "Kyocera Basic Action",
+                    "displayVersion": "1.0",
+                    "dataVersion": 1,
+                    "createTime": 1592477367000,
+                    "createdBy": "user@kyocera.jp",
+                    "updateTime": 1592477367000,
+                    "updatedBy": "user@kyocera.jp"
+                }
+            ],
+            "swConfigurationAiLibList": [
+                {
+                    "robotId": "78abfbd4-6613-42a6-a691-23c3748fa346",
+                    "aiLibArtifactId": "652b8f0b-10be-4426-9d18-e6d0774059bc",
+                    "aiLibraryId": "fa9f7d4a-0ba6-4a10-9abc-f97f805dd3f3",
+                    "versionId": "c9da9e8a-d5a9-45bf-9d48-34df3ad19d66",
+                    "displayName": "Kyocera Basic AI Library",
+                    "displayVersion": "1.0",
+                    "dataVersion": 1,
+                    "createTime": 1592477367000,
+                    "createdBy": "user@kyocera.jp",
+                    "updateTime": 1592477367000,
+                    "updatedBy": "user@kyocera.jp"
+                }
+            ]
+        },
+        "dataVersion": 1,
+        "createTime": 1592617637000,
+        "createdBy": "user@kyocera.jp",
+        "updateTime": 1592618421000,
+        "updatedBy": "user@kyocera.jp"
+    },
+    "time": 1592618431000
+}

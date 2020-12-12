@@ -289,4 +289,9 @@ class RobotDetailPresenterTests: XCTestCase {
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
         // TODO: エラーケース
     }
+
+    func test_tapOrderEntryButton() {
+        presenter.tapOrderEntryButton()
+        XCTAssertEqual(vc.launchOrderEntryCallCount, 1, "ViewControllerのメソッドが呼ばれない")
+    }
 }

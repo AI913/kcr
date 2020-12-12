@@ -235,7 +235,7 @@ class JobListPresenterTests: XCTestCase {
             let Job2 = stub.job2(id: "3", name: "b")
             let Job3 = stub.job3(id: "1", name: "a")
 
-            presenter.filterAndSort(keyword: nil, jobs: [Job1, Job2, Job3])
+            presenter.filterAndSort(keyword: nil, jobs: [Job1, Job2, Job3], keywordChanged: false)
             XCTAssertEqual(presenter.displayJobs?[0].id, "1", "name順にソートされていない")
             XCTAssertEqual(presenter.displayJobs?[1].id, "3", "name順にソートされていない")
             XCTAssertEqual(presenter.displayJobs?[2].id, "2", "name順にソートされていない")
@@ -246,7 +246,7 @@ class JobListPresenterTests: XCTestCase {
             let Job2 = stub.job2(id: "3", name: "a")
             let Job3 = stub.job3(id: "1", name: "a")
 
-            presenter.filterAndSort(keyword: nil, jobs: [Job1, Job2, Job3])
+            presenter.filterAndSort(keyword: nil, jobs: [Job1, Job2, Job3], keywordChanged: false)
             XCTAssertEqual(presenter.displayJobs?[0].id, "1", "id順にソートされていない")
             XCTAssertEqual(presenter.displayJobs?[1].id, "2", "id順にソートされていない")
             XCTAssertEqual(presenter.displayJobs?[2].id, "3", "id順にソートされていない")
@@ -257,7 +257,7 @@ class JobListPresenterTests: XCTestCase {
             let Job2 = stub.job2(id: "3", name: "a")
             let Job3 = stub.job3(id: "1", name: "a")
 
-            presenter.filterAndSort(keyword: nil, jobs: [Job1, Job2, Job3])
+            presenter.filterAndSort(keyword: nil, jobs: [Job1, Job2, Job3], keywordChanged: false)
             XCTAssertEqual(presenter.displayJobs?[0].id, "1", "name順にソートされ、同じ場合はid順にソートされていない")
             XCTAssertEqual(presenter.displayJobs?[1].id, "3", "name順にソートされ、同じ場合はid順にソートされていない")
             XCTAssertEqual(presenter.displayJobs?[2].id, "2", "name順にソートされ、同じ場合はid順にソートされていない")

@@ -32,6 +32,8 @@ class JobDetailWorkViewControllerTests: XCTestCase {
     }
 
     func test_actions() throws {
+        let param = "test"
+        vc.viewData = MainViewData.Job(id: param)
         let seeAllButton = try XCTUnwrap(vc.seeAllButton, "Unwrap失敗")
         XCTAssertNoThrow(seeAllButton.sendActions(for: .touchUpInside), "タップで例外発生: \(seeAllButton)")
     }

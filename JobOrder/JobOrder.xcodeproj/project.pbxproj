@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -49,7 +49,7 @@
 		A32ACEE524331C96003E1955 /* MQTTModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32ACEE424331C96003E1955 /* MQTTModel.swift */; };
 		A32ACEE72433302C003E1955 /* PasswordAuthenticationNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32ACEE62433302C003E1955 /* PasswordAuthenticationNavigationController.swift */; };
 		A32BCA7D2466A8C4000287D2 /* RealmDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32BCA7C2466A8C4000287D2 /* RealmDataStore.swift */; };
-		A32BCA822468E99F000287D2 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32BCA7F2468E99F000287D2 /* TaskDetailViewController.swift */; };
+		A32BCA822468E99F000287D2 /* TaskDetailTaskInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32BCA7F2468E99F000287D2 /* TaskDetailTaskInformationViewController.swift */; };
 		A32BCA882468F65A000287D2 /* TaskDetailBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32BCA872468F65A000287D2 /* TaskDetailBuilder.swift */; };
 		A32BCAC824693425000287D2 /* OrderEntryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32BCAC724693425000287D2 /* OrderEntryBuilder.swift */; };
 		A32BCAF324693492000287D2 /* OrderEntryCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32BCAE524693492000287D2 /* OrderEntryCompleteViewController.swift */; };
@@ -160,6 +160,12 @@
 		A37B1D68244D87E00082F61C /* RobotDetailWorkPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37B1D66244D87E00082F61C /* RobotDetailWorkPresenter.swift */; };
 		A37EFD9724457EA800130EB6 /* JobListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37EFD9624457EA800130EB6 /* JobListPresenter.swift */; };
 		A37EFD9924457F2600130EB6 /* JobDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37EFD9824457F2600130EB6 /* JobDetailPresenter.swift */; };
+		A37F6976257634200013A3F6 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = A37F6975257634200013A3F6 /* SkeletonView */; };
+		A37F6978257634200013A3F6 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = A37F6977257634200013A3F6 /* Charts */; };
+		A37F697A257634200013A3F6 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A37F6979257634200013A3F6 /* KeychainAccess */; };
+		A37F69CB257636380013A3F6 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A37F69CA257636380013A3F6 /* KeychainAccess */; };
+		A37F6A0B257636D30013A3F6 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = A37F6A0A257636D30013A3F6 /* SkeletonView */; };
+		A37F6A0D257636D30013A3F6 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = A37F6A0C257636D30013A3F6 /* Charts */; };
 		A38195802506105800F35508 /* AWSKVSDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A381957F2506105800F35508 /* AWSKVSDataStoreTests.swift */; };
 		A38B6EDB24D2595900A9914F /* JobAPIDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38B6ED324D2595800A9914F /* JobAPIDataStoreTests.swift */; };
 		A38B6EDC24D2595900A9914F /* RobotAPIDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38B6ED424D2595800A9914F /* RobotAPIDataStoreTests.swift */; };
@@ -193,10 +199,6 @@
 		A38C4CC624B4687900CC6A80 /* WebRTCMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38C4CC124B4687900CC6A80 /* WebRTCMessage.swift */; };
 		A38C4CC724B4687900CC6A80 /* SignalingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38C4CC224B4687900CC6A80 /* SignalingClient.swift */; };
 		A38C4CC924B468E900CC6A80 /* VideoStreamingEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38C4CC824B468E800CC6A80 /* VideoStreamingEntity.swift */; };
-		A38FB12925144ABF00A0632F /* list_ai_library_response_example.json in Resources */ = {isa = PBXBuildFile; fileRef = A38FB12525144ABE00A0632F /* list_ai_library_response_example.json */; };
-		A38FB12A25144ABF00A0632F /* list_job_response_example.json in Resources */ = {isa = PBXBuildFile; fileRef = A38FB12625144ABE00A0632F /* list_job_response_example.json */; };
-		A38FB12B25144ABF00A0632F /* list_robot_response_example.json in Resources */ = {isa = PBXBuildFile; fileRef = A38FB12725144ABF00A0632F /* list_robot_response_example.json */; };
-		A38FB12C25144ABF00A0632F /* list_action_library_response_example.json in Resources */ = {isa = PBXBuildFile; fileRef = A38FB12825144ABF00A0632F /* list_action_library_response_example.json */; };
 		A3905492248949080021DEBA /* TaskDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3905494248949080021DEBA /* TaskDetail.storyboard */; };
 		A3905495248949110021DEBA /* OrderEntry.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3905497248949110021DEBA /* OrderEntry.storyboard */; };
 		A390549C248953260021DEBA /* Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3905499248953260021DEBA /* Localized.swift */; };
@@ -249,12 +251,8 @@
 		A3B3B21824FDDBA7002EF89E /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B3B21724FDDBA7002EF89E /* TimeInterval.swift */; };
 		A3B3B21A24FDE5DF002EF89E /* UserDefaultsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B3B21924FDE5DF002EF89E /* UserDefaultsRepository.swift */; };
 		A3B91C5C2510AE47005400D1 /* RobotDetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B91C5B2510AE46005400D1 /* RobotDetailPageViewController.swift */; };
-		A3CE645224EF66D600999753 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3CE645124EF66D600999753 /* Charts.framework */; };
-		A3CE645424EF66F200999753 /* SkeletonView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3CE645324EF66F200999753 /* SkeletonView.framework */; };
 		A3CE645724EF677D00999753 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3CE645624EF677D00999753 /* RealmSwift.framework */; };
-		A3CE645924EF678C00999753 /* KeychainAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3CE645824EF678C00999753 /* KeychainAccess.framework */; };
 		A3CE646024EF6EC100999753 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3CE645624EF677D00999753 /* RealmSwift.framework */; };
-		A3CE646224EF6F9400999753 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3CE645124EF66D600999753 /* Charts.framework */; };
 		A3CE646424EF70B100999753 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3CE646324EF70B100999753 /* Realm.framework */; };
 		A3CE646524EF70C400999753 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3CE646324EF70B100999753 /* Realm.framework */; };
 		A3D5AF5C248F30C200D8F85D /* PageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D5AF5B248F30C200D8F85D /* PageObject.swift */; };
@@ -288,14 +286,37 @@
 		A3F98D4A24EA79BF0016A181 /* OrderEntryConfirmPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F98D4924EA79BF0016A181 /* OrderEntryConfirmPresenterTests.swift */; };
 		A3F98D4E24EB52120016A181 /* MainTabBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F98D4D24EB52120016A181 /* MainTabBarControllerTests.swift */; };
 		ACD83D98D70B7AF79D151C77 /* Pods_JobOrder_APITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EAF9D06050FF3DBC72A641 /* Pods_JobOrder_APITests.framework */; };
-		B712D63C255E7BBB00D5F01E /* list_task_filtered_by_jobid_response_example.json in Resources */ = {isa = PBXBuildFile; fileRef = B712D63B255E7BBB00D5F01E /* list_task_filtered_by_jobid_response_example.json */; };
-		B75AF586255248500081A50F /* list_hw_config_asset_response_example.json in Resources */ = {isa = PBXBuildFile; fileRef = B75AF584255248500081A50F /* list_hw_config_asset_response_example.json */; };
-		B75AF587255248500081A50F /* swconfig_response_example01.json in Resources */ = {isa = PBXBuildFile; fileRef = B75AF585255248500081A50F /* swconfig_response_example01.json */; };
+		B70A22472579B7150057582C /* api_mock_examples_GET_jobs_jobid_response.json in Resources */ = {isa = PBXBuildFile; fileRef = B70A22462579B7150057582C /* api_mock_examples_GET_jobs_jobid_response.json */; };
+		B70A22632579B9300057582C /* api_mock_examples_GET_robots_robotid_assets_response.json in Resources */ = {isa = PBXBuildFile; fileRef = B70A22622579B92F0057582C /* api_mock_examples_GET_robots_robotid_assets_response.json */; };
+		B70A227F2579BAE60057582C /* api_mock_examples_GET_robots_robotid_response.json in Resources */ = {isa = PBXBuildFile; fileRef = B70A227E2579BAE50057582C /* api_mock_examples_GET_robots_robotid_response.json */; };
+		B70A229B2579BBE90057582C /* api_mock_examples_GET_robots_robotid_swconf_response.json in Resources */ = {isa = PBXBuildFile; fileRef = B70A229A2579BBE90057582C /* api_mock_examples_GET_robots_robotid_swconf_response.json */; };
+		B70A22B72579BD450057582C /* api_mock_examples_GET_tasks_taskid_commands_robotid_response.json in Resources */ = {isa = PBXBuildFile; fileRef = B70A22B62579BD450057582C /* api_mock_examples_GET_tasks_taskid_commands_robotid_response.json */; };
+		B70A22D32579BEAD0057582C /* api_mock_examples_GET_tasks_taskid_response.json in Resources */ = {isa = PBXBuildFile; fileRef = B70A22D22579BEAD0057582C /* api_mock_examples_GET_tasks_taskid_response.json */; };
+		B72469682574B2DE001CC873 /* PagingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72469672574B2DE001CC873 /* PagingModel.swift */; };
+		B72469772574BA89001CC873 /* APIPaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72469762574BA89001CC873 /* APIPaging.swift */; };
+		B738A50E2580A78500A5E937 /* TaskDetailRunHistoryTaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B738A50D2580A78500A5E937 /* TaskDetailRunHistoryTaskTableViewCell.swift */; };
+		B738A51D2580A79B00A5E937 /* TaskDetailRunHistoryCommandTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B738A51C2580A79B00A5E937 /* TaskDetailRunHistoryCommandTableViewCell.swift */; };
+		B73990282578CB47008C2EE6 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73990272578CB47008C2EE6 /* Int.swift */; };
+		B73990372578CBB5008C2EE6 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73990362578CBB5008C2EE6 /* Date.swift */; };
+		B73990462578D8C7008C2EE6 /* QueryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73990452578D8C7008C2EE6 /* QueryBuilder.swift */; };
+		B75B5B6D2576468600B90A64 /* api_mock_examples_GET_robots_response.json in Resources */ = {isa = PBXBuildFile; fileRef = B75B5B6C2576468600B90A64 /* api_mock_examples_GET_robots_response.json */; };
+		B75B5B89257648CB00B90A64 /* api_mock_examples_GET_jobs_response.json in Resources */ = {isa = PBXBuildFile; fileRef = B75B5B88257648CB00B90A64 /* api_mock_examples_GET_jobs_response.json */; };
+		B75B5BA52576498700B90A64 /* api_mock_examples_GET_action_libs_response.json in Resources */ = {isa = PBXBuildFile; fileRef = B75B5BA42576498700B90A64 /* api_mock_examples_GET_action_libs_response.json */; };
+		B75B5BC125764A9200B90A64 /* api_mock_examples_GET_ai_libs_response.json in Resources */ = {isa = PBXBuildFile; fileRef = B75B5BC025764A9200B90A64 /* api_mock_examples_GET_ai_libs_response.json */; };
+		B75B5BD025764B7000B90A64 /* api_mock_examples_GET_robots_robotid_commands_response.json in Resources */ = {isa = PBXBuildFile; fileRef = B75B5BCF25764B7000B90A64 /* api_mock_examples_GET_robots_robotid_commands_response.json */; };
+		B75B5BEC25764DF000B90A64 /* api_mock_examples_GET_jobs_jobid_tasks_response.json in Resources */ = {isa = PBXBuildFile; fileRef = B75B5BEB25764DF000B90A64 /* api_mock_examples_GET_jobs_jobid_tasks_response.json */; };
 		B7614438256CC2E2008DA411 /* api_mock_examples_GET_tasks_taskid_commands_response.json in Resources */ = {isa = PBXBuildFile; fileRef = B7614437256CC2E2008DA411 /* api_mock_examples_GET_tasks_taskid_commands_response.json */; };
 		B76F39E92564B5AD000ECBDE /* JobDetailWorkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76F39E82564B5AD000ECBDE /* JobDetailWorkTableViewCell.swift */; };
 		B76F39F82564B5E8000ECBDE /* JobDetailWorkTaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76F39F72564B5E8000ECBDE /* JobDetailWorkTaskTableViewCell.swift */; };
 		B76F3A072564B5FC000ECBDE /* JobDetailWorkHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76F3A062564B5FC000ECBDE /* JobDetailWorkHistoryTableViewCell.swift */; };
 		B77B505E2558E79000CAA683 /* RobotDetailSystemDetailTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77B505D2558E79000CAA683 /* RobotDetailSystemDetailTableViewHeader.xib */; };
+		B798D48A257F018500030FE0 /* TaskDetailRunHistoryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798D489257F018500030FE0 /* TaskDetailRunHistoryPresenter.swift */; };
+		B798D4BD257F080F00030FE0 /* TaskDetailRunHistoryPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798D4BC257F080F00030FE0 /* TaskDetailRunHistoryPresenterTest.swift */; };
+		B7A6F2C3257E21AF00A8A492 /* TaskDetailRunHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A6F2C2257E21AF00A8A492 /* TaskDetailRunHistoryViewController.swift */; };
+		B7A6F2D2257E2BE300A8A492 /* TaskDetailRunHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A6F2D1257E2BE300A8A492 /* TaskDetailRunHistoryTableViewCell.swift */; };
+		B7A6F2E1257E360F00A8A492 /* TaskDetailRunHistoryViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A6F2E0257E360F00A8A492 /* TaskDetailRunHistoryViewControllerTests.swift */; };
+		B7AB6EE225776DB3004760A5 /* CommandModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AB6EE125776DB3004760A5 /* CommandModel.swift */; };
+		B7AD6085256F32D100FD4897 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AD6084256F32D100FD4897 /* Collection.swift */; };
 		B7B234C4253E9CFA00DFB21C /* OrderEntryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B234C3253E9CFA00DFB21C /* OrderEntryUITests.swift */; };
 		B7D029982558DE76007D65C8 /* RobotDetailSystemDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D029972558DE76007D65C8 /* RobotDetailSystemDetailTableViewCell.swift */; };
 		B7D029A72558E0C4007D65C8 /* RobotDetailSystemDetailTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D029A62558E0C4007D65C8 /* RobotDetailSystemDetailTableViewHeader.swift */; };
@@ -380,10 +401,8 @@
 		E51C1C0D252EA487008DF3B0 /* JobInfoEntryPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51C1C0C252EA487008DF3B0 /* JobInfoEntryPageObject.swift */; };
 		E52B86C5254AC0860038ECA0 /* TaskAPIRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52B86C4254AC0860038ECA0 /* TaskAPIRepository.swift */; };
 		E52B86E1254AC09A0038ECA0 /* TaskAPIDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52B86E0254AC09A0038ECA0 /* TaskAPIDataStore.swift */; };
-		E52B86F0254AC0AC0038ECA0 /* api_openapi-spec_v1_examples_command_response_succeeded_example01.json in Resources */ = {isa = PBXBuildFile; fileRef = E52B86EF254AC0AC0038ECA0 /* api_openapi-spec_v1_examples_command_response_succeeded_example01.json */; };
 		E52B870C254AC5F10038ECA0 /* TaskAPIDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52B870B254AC5F10038ECA0 /* TaskAPIDataStoreTests.swift */; };
 		E55A438D255E7DAF0079739D /* TaskDetailRobotSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A438C255E7DAF0079739D /* TaskDetailRobotSelectionViewController.swift */; };
-		E5757FBA2554F02900A5544D /* task_response_example01.json in Resources */ = {isa = PBXBuildFile; fileRef = E5757FB92554F02900A5544D /* task_response_example01.json */; };
 		E586CB1525257240007AD3EC /* MainUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E586CB1425257240007AD3EC /* MainUITests.swift */; };
 		E586CB182525A4E3007AD3EC /* RobotListPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E586CB172525A4E3007AD3EC /* RobotListPageObject.swift */; };
 		E586CB1A2525D604007AD3EC /* WebPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E586CB192525D604007AD3EC /* WebPageObject.swift */; };
@@ -395,8 +414,6 @@
 		E5BA085F256E34E1000C9BE1 /* TaskDetailRobotSelectionCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BA085E256E34E1000C9BE1 /* TaskDetailRobotSelectionCircularProgress.swift */; };
 		E5C0A4A22554CEBA00C31567 /* CommandEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C0A4A12554CEBA00C31567 /* CommandEntity.swift */; };
 		E5C0A4B12554CFAD00C31567 /* TaskAPIEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C0A4B02554CFAD00C31567 /* TaskAPIEntity.swift */; };
-		E5C0CFF02542A5F400957D86 /* api_openapi-spec_v1_examples_list_command_response_example.json in Resources */ = {isa = PBXBuildFile; fileRef = E5C0CFEF2542A5F400957D86 /* api_openapi-spec_v1_examples_list_command_response_example.json */; };
-		E5C325C82547F6D000A7BDB1 /* robot_response_example01.json in Resources */ = {isa = PBXBuildFile; fileRef = E5C325C72547F6D000A7BDB1 /* robot_response_example01.json */; };
 		E5CADCA7252C66AD000268C4 /* RobotSelectionPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CADCA2252C66AC000268C4 /* RobotSelectionPageObject.swift */; };
 		E5CADCA8252C66AD000268C4 /* RobotWorkTabPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CADCA3252C66AD000268C4 /* RobotWorkTabPageObject.swift */; };
 		E5CADCA9252C66AD000268C4 /* RobotSystemTabPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CADCA4252C66AD000268C4 /* RobotSystemTabPageObject.swift */; };
@@ -405,9 +422,8 @@
 		E5CADCAD252C6839000268C4 /* JobDetailPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CADCAC252C6839000268C4 /* JobDetailPageObject.swift */; };
 		E5CADCAF252C690A000268C4 /* JobListPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CADCAE252C690A000268C4 /* JobListPageObject.swift */; };
 		E5CF313925566CF80054F782 /* CircularProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CF313825566CF80054F782 /* CircularProgressViewController.swift */; };
-		E5CF31812556820B0054F782 /* TaskDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CF31802556820B0054F782 /* TaskDetailPresenter.swift */; };
+		E5CF31812556820B0054F782 /* TaskDetailTaskInformationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CF31802556820B0054F782 /* TaskDetailTaskInformationPresenter.swift */; };
 		E5DE36FC2525629700D41B8B /* SettingsPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DE36FB2525629700D41B8B /* SettingsPageObject.swift */; };
-		E5E04CA82578A67400C169B9 /* list_command_filtered_by_taskid_response_example.json in Resources */ = {isa = PBXBuildFile; fileRef = E5E04CA72578A67400C169B9 /* list_command_filtered_by_taskid_response_example.json */; };
 		E5E04CC42578A68A00C169B9 /* TaskDetailRobotSelectionPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E04CC32578A68A00C169B9 /* TaskDetailRobotSelectionPresenterTests.swift */; };
 		E5E04CE02578A69A00C169B9 /* TaskDetailRobotSelectionViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E04CDF2578A69A00C169B9 /* TaskDetailRobotSelectionViewControllerTests.swift */; };
 		E5EA88EC25271B7E0060E4FC /* RobotDetailPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EA88EB25271B7E0060E4FC /* RobotDetailPageObject.swift */; };
@@ -617,7 +633,7 @@
 		A32ACEE424331C96003E1955 /* MQTTModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTModel.swift; sourceTree = "<group>"; };
 		A32ACEE62433302C003E1955 /* PasswordAuthenticationNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordAuthenticationNavigationController.swift; sourceTree = "<group>"; };
 		A32BCA7C2466A8C4000287D2 /* RealmDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDataStore.swift; sourceTree = "<group>"; };
-		A32BCA7F2468E99F000287D2 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
+		A32BCA7F2468E99F000287D2 /* TaskDetailTaskInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailTaskInformationViewController.swift; sourceTree = "<group>"; };
 		A32BCA872468F65A000287D2 /* TaskDetailBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailBuilder.swift; sourceTree = "<group>"; };
 		A32BCAC724693425000287D2 /* OrderEntryBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderEntryBuilder.swift; sourceTree = "<group>"; };
 		A32BCAE524693492000287D2 /* OrderEntryCompleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderEntryCompleteViewController.swift; sourceTree = "<group>"; };
@@ -761,10 +777,6 @@
 		A38C4CC124B4687900CC6A80 /* WebRTCMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebRTCMessage.swift; sourceTree = "<group>"; };
 		A38C4CC224B4687900CC6A80 /* SignalingClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalingClient.swift; sourceTree = "<group>"; };
 		A38C4CC824B468E800CC6A80 /* VideoStreamingEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoStreamingEntity.swift; sourceTree = "<group>"; };
-		A38FB12525144ABE00A0632F /* list_ai_library_response_example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list_ai_library_response_example.json; sourceTree = "<group>"; };
-		A38FB12625144ABE00A0632F /* list_job_response_example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list_job_response_example.json; sourceTree = "<group>"; };
-		A38FB12725144ABF00A0632F /* list_robot_response_example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list_robot_response_example.json; sourceTree = "<group>"; };
-		A38FB12825144ABF00A0632F /* list_action_library_response_example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list_action_library_response_example.json; sourceTree = "<group>"; };
 		A3905493248949080021DEBA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TaskDetail.storyboard; sourceTree = "<group>"; };
 		A3905496248949110021DEBA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/OrderEntry.storyboard; sourceTree = "<group>"; };
 		A3905499248953260021DEBA /* Localized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localized.swift; sourceTree = "<group>"; };
@@ -818,10 +830,7 @@
 		A3B3B21724FDDBA7002EF89E /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		A3B3B21924FDE5DF002EF89E /* UserDefaultsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRepository.swift; sourceTree = "<group>"; };
 		A3B91C5B2510AE46005400D1 /* RobotDetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobotDetailPageViewController.swift; sourceTree = "<group>"; };
-		A3CE645124EF66D600999753 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = Carthage/Build/iOS/Charts.framework; sourceTree = "<group>"; };
-		A3CE645324EF66F200999753 /* SkeletonView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SkeletonView.framework; path = Carthage/Build/iOS/SkeletonView.framework; sourceTree = "<group>"; };
 		A3CE645624EF677D00999753 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
-		A3CE645824EF678C00999753 /* KeychainAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KeychainAccess.framework; path = Carthage/Build/iOS/KeychainAccess.framework; sourceTree = "<group>"; };
 		A3CE646324EF70B100999753 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
 		A3D5AF5B248F30C200D8F85D /* PageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageObject.swift; sourceTree = "<group>"; };
 		A3DCD5C6251AEE16004BC808 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/JobEntry.storyboard; sourceTree = "<group>"; };
@@ -855,14 +864,37 @@
 		A3F98D4D24EB52120016A181 /* MainTabBarControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarControllerTests.swift; sourceTree = "<group>"; };
 		AA0632E1FBB645D901E6F47B /* Pods-JobOrderUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JobOrderUITests.release.xcconfig"; path = "Target Support Files/Pods-JobOrderUITests/Pods-JobOrderUITests.release.xcconfig"; sourceTree = "<group>"; };
 		AD2E6768A83D3090B9B3D422 /* Pods_All_JobOrder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_All_JobOrder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B712D63B255E7BBB00D5F01E /* list_task_filtered_by_jobid_response_example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list_task_filtered_by_jobid_response_example.json; sourceTree = "<group>"; };
-		B75AF584255248500081A50F /* list_hw_config_asset_response_example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list_hw_config_asset_response_example.json; sourceTree = "<group>"; };
-		B75AF585255248500081A50F /* swconfig_response_example01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = swconfig_response_example01.json; sourceTree = "<group>"; };
+		B70A22462579B7150057582C /* api_mock_examples_GET_jobs_jobid_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_GET_jobs_jobid_response.json; sourceTree = "<group>"; };
+		B70A22622579B92F0057582C /* api_mock_examples_GET_robots_robotid_assets_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_GET_robots_robotid_assets_response.json; sourceTree = "<group>"; };
+		B70A227E2579BAE50057582C /* api_mock_examples_GET_robots_robotid_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_GET_robots_robotid_response.json; sourceTree = "<group>"; };
+		B70A229A2579BBE90057582C /* api_mock_examples_GET_robots_robotid_swconf_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_GET_robots_robotid_swconf_response.json; sourceTree = "<group>"; };
+		B70A22B62579BD450057582C /* api_mock_examples_GET_tasks_taskid_commands_robotid_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_GET_tasks_taskid_commands_robotid_response.json; sourceTree = "<group>"; };
+		B70A22D22579BEAD0057582C /* api_mock_examples_GET_tasks_taskid_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_GET_tasks_taskid_response.json; sourceTree = "<group>"; };
+		B72469672574B2DE001CC873 /* PagingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingModel.swift; sourceTree = "<group>"; };
+		B72469762574BA89001CC873 /* APIPaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIPaging.swift; sourceTree = "<group>"; };
+		B738A50D2580A78500A5E937 /* TaskDetailRunHistoryTaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailRunHistoryTaskTableViewCell.swift; sourceTree = "<group>"; };
+		B738A51C2580A79B00A5E937 /* TaskDetailRunHistoryCommandTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailRunHistoryCommandTableViewCell.swift; sourceTree = "<group>"; };
+		B73990272578CB47008C2EE6 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
+		B73990362578CBB5008C2EE6 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		B73990452578D8C7008C2EE6 /* QueryBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryBuilder.swift; sourceTree = "<group>"; };
+		B75B5B6C2576468600B90A64 /* api_mock_examples_GET_robots_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_GET_robots_response.json; sourceTree = "<group>"; };
+		B75B5B88257648CB00B90A64 /* api_mock_examples_GET_jobs_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_GET_jobs_response.json; sourceTree = "<group>"; };
+		B75B5BA42576498700B90A64 /* api_mock_examples_GET_action_libs_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_GET_action_libs_response.json; sourceTree = "<group>"; };
+		B75B5BC025764A9200B90A64 /* api_mock_examples_GET_ai_libs_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_GET_ai_libs_response.json; sourceTree = "<group>"; };
+		B75B5BCF25764B7000B90A64 /* api_mock_examples_GET_robots_robotid_commands_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_GET_robots_robotid_commands_response.json; sourceTree = "<group>"; };
+		B75B5BEB25764DF000B90A64 /* api_mock_examples_GET_jobs_jobid_tasks_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_GET_jobs_jobid_tasks_response.json; sourceTree = "<group>"; };
 		B7614437256CC2E2008DA411 /* api_mock_examples_GET_tasks_taskid_commands_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_GET_tasks_taskid_commands_response.json; sourceTree = "<group>"; };
 		B76F39E82564B5AD000ECBDE /* JobDetailWorkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailWorkTableViewCell.swift; sourceTree = "<group>"; };
 		B76F39F72564B5E8000ECBDE /* JobDetailWorkTaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailWorkTaskTableViewCell.swift; sourceTree = "<group>"; };
 		B76F3A062564B5FC000ECBDE /* JobDetailWorkHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailWorkHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		B77B505D2558E79000CAA683 /* RobotDetailSystemDetailTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RobotDetailSystemDetailTableViewHeader.xib; sourceTree = "<group>"; };
+		B798D489257F018500030FE0 /* TaskDetailRunHistoryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailRunHistoryPresenter.swift; sourceTree = "<group>"; };
+		B798D4BC257F080F00030FE0 /* TaskDetailRunHistoryPresenterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailRunHistoryPresenterTest.swift; sourceTree = "<group>"; };
+		B7A6F2C2257E21AF00A8A492 /* TaskDetailRunHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailRunHistoryViewController.swift; sourceTree = "<group>"; };
+		B7A6F2D1257E2BE300A8A492 /* TaskDetailRunHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailRunHistoryTableViewCell.swift; sourceTree = "<group>"; };
+		B7A6F2E0257E360F00A8A492 /* TaskDetailRunHistoryViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailRunHistoryViewControllerTests.swift; sourceTree = "<group>"; };
+		B7AB6EE125776DB3004760A5 /* CommandModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandModel.swift; sourceTree = "<group>"; };
+		B7AD6084256F32D100FD4897 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		B7B234C3253E9CFA00DFB21C /* OrderEntryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderEntryUITests.swift; sourceTree = "<group>"; };
 		B7D029972558DE76007D65C8 /* RobotDetailSystemDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobotDetailSystemDetailTableViewCell.swift; sourceTree = "<group>"; };
 		B7D029A62558E0C4007D65C8 /* RobotDetailSystemDetailTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobotDetailSystemDetailTableViewHeader.swift; sourceTree = "<group>"; };
@@ -961,10 +993,8 @@
 		E51C1C0C252EA487008DF3B0 /* JobInfoEntryPageObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobInfoEntryPageObject.swift; sourceTree = "<group>"; };
 		E52B86C4254AC0860038ECA0 /* TaskAPIRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskAPIRepository.swift; sourceTree = "<group>"; };
 		E52B86E0254AC09A0038ECA0 /* TaskAPIDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskAPIDataStore.swift; sourceTree = "<group>"; };
-		E52B86EF254AC0AC0038ECA0 /* api_openapi-spec_v1_examples_command_response_succeeded_example01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "api_openapi-spec_v1_examples_command_response_succeeded_example01.json"; sourceTree = "<group>"; };
 		E52B870B254AC5F10038ECA0 /* TaskAPIDataStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskAPIDataStoreTests.swift; sourceTree = "<group>"; };
 		E55A438C255E7DAF0079739D /* TaskDetailRobotSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailRobotSelectionViewController.swift; sourceTree = "<group>"; };
-		E5757FB92554F02900A5544D /* task_response_example01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = task_response_example01.json; sourceTree = "<group>"; };
 		E586CB1425257240007AD3EC /* MainUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainUITests.swift; sourceTree = "<group>"; };
 		E586CB172525A4E3007AD3EC /* RobotListPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobotListPageObject.swift; sourceTree = "<group>"; };
 		E586CB192525D604007AD3EC /* WebPageObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebPageObject.swift; sourceTree = "<group>"; };
@@ -976,8 +1006,6 @@
 		E5BA085E256E34E1000C9BE1 /* TaskDetailRobotSelectionCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailRobotSelectionCircularProgress.swift; sourceTree = "<group>"; };
 		E5C0A4A12554CEBA00C31567 /* CommandEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandEntity.swift; sourceTree = "<group>"; };
 		E5C0A4B02554CFAD00C31567 /* TaskAPIEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAPIEntity.swift; sourceTree = "<group>"; };
-		E5C0CFEF2542A5F400957D86 /* api_openapi-spec_v1_examples_list_command_response_example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "api_openapi-spec_v1_examples_list_command_response_example.json"; sourceTree = "<group>"; };
-		E5C325C72547F6D000A7BDB1 /* robot_response_example01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = robot_response_example01.json; sourceTree = "<group>"; };
 		E5CADCA2252C66AC000268C4 /* RobotSelectionPageObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RobotSelectionPageObject.swift; sourceTree = "<group>"; };
 		E5CADCA3252C66AD000268C4 /* RobotWorkTabPageObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RobotWorkTabPageObject.swift; sourceTree = "<group>"; };
 		E5CADCA4252C66AD000268C4 /* RobotSystemTabPageObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RobotSystemTabPageObject.swift; sourceTree = "<group>"; };
@@ -986,9 +1014,8 @@
 		E5CADCAC252C6839000268C4 /* JobDetailPageObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobDetailPageObject.swift; sourceTree = "<group>"; };
 		E5CADCAE252C690A000268C4 /* JobListPageObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobListPageObject.swift; sourceTree = "<group>"; };
 		E5CF313825566CF80054F782 /* CircularProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressViewController.swift; sourceTree = "<group>"; };
-		E5CF31802556820B0054F782 /* TaskDetailPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailPresenter.swift; sourceTree = "<group>"; };
+		E5CF31802556820B0054F782 /* TaskDetailTaskInformationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailTaskInformationPresenter.swift; sourceTree = "<group>"; };
 		E5DE36FB2525629700D41B8B /* SettingsPageObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPageObject.swift; sourceTree = "<group>"; };
-		E5E04CA72578A67400C169B9 /* list_command_filtered_by_taskid_response_example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list_command_filtered_by_taskid_response_example.json; sourceTree = "<group>"; };
 		E5E04CC32578A68A00C169B9 /* TaskDetailRobotSelectionPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailRobotSelectionPresenterTests.swift; sourceTree = "<group>"; };
 		E5E04CDF2578A69A00C169B9 /* TaskDetailRobotSelectionViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailRobotSelectionViewControllerTests.swift; sourceTree = "<group>"; };
 		E5EA88EB25271B7E0060E4FC /* RobotDetailPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobotDetailPageObject.swift; sourceTree = "<group>"; };
@@ -1022,6 +1049,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A37F697A257634200013A3F6 /* KeychainAccess in Frameworks */,
+				A37F6976257634200013A3F6 /* SkeletonView in Frameworks */,
+				A37F6978257634200013A3F6 /* Charts in Frameworks */,
 				8C0A00B41A0341D4D1CF1651 /* Pods_JobOrderUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1047,9 +1077,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3CE645924EF678C00999753 /* KeychainAccess.framework in Frameworks */,
 				A3CE646524EF70C400999753 /* Realm.framework in Frameworks */,
 				A3CE645724EF677D00999753 /* RealmSwift.framework in Frameworks */,
+				A37F69CB257636380013A3F6 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1099,9 +1129,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A37F6A0B257636D30013A3F6 /* SkeletonView in Frameworks */,
+				A37F6A0D257636D30013A3F6 /* Charts in Frameworks */,
 				CC5DE5E0735BF32159780D68 /* Pods_All_JobOrder_Presentation.framework in Frameworks */,
-				A3CE645424EF66F200999753 /* SkeletonView.framework in Frameworks */,
-				A3CE645224EF66D600999753 /* Charts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1111,7 +1141,6 @@
 			files = (
 				D78EC1E02411CAA6003E5ECD /* JobOrder_Presentation.framework in Frameworks */,
 				94DCF4706D19D31B9211169F /* Pods_JobOrder_PresentationTests.framework in Frameworks */,
-				A3CE646224EF6F9400999753 /* Charts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1122,10 +1151,7 @@
 			isa = PBXGroup;
 			children = (
 				A3CE646324EF70B100999753 /* Realm.framework */,
-				A3CE645824EF678C00999753 /* KeychainAccess.framework */,
 				A3CE645624EF677D00999753 /* RealmSwift.framework */,
-				A3CE645324EF66F200999753 /* SkeletonView.framework */,
-				A3CE645124EF66D600999753 /* Charts.framework */,
 				0898F4F8B5BDF3145C06A6DE /* Pods_All_JobOrder_Presentation.framework */,
 				73D42B267BEEF8AB3265B4F0 /* Pods_All_JobOrder_API.framework */,
 				73C125D945A798E96F8D20DE /* Pods_All_JobOrder_Domain.framework */,
@@ -1207,7 +1233,9 @@
 				E55A438C255E7DAF0079739D /* TaskDetailRobotSelectionViewController.swift */,
 				E58A138E2568DDFC0040D3B2 /* TaskDetailRobotSelectionCollectionViewCell.swift */,
 				E5CF313825566CF80054F782 /* CircularProgressViewController.swift */,
-				A32BCA7F2468E99F000287D2 /* TaskDetailViewController.swift */,
+				A32BCA7F2468E99F000287D2 /* TaskDetailTaskInformationViewController.swift */,
+				B7A6F2C2257E21AF00A8A492 /* TaskDetailRunHistoryViewController.swift */,
+				B76305F9257F4B8000583240 /* TableViewCell */,
 			);
 			path = TaskDetail;
 			sourceTree = "<group>";
@@ -1357,6 +1385,7 @@
 			isa = PBXGroup;
 			children = (
 				D7A4CBE12429F59000C62295 /* APIResult.swift */,
+				B72469762574BA89001CC873 /* APIPaging.swift */,
 				A32BCB1F246FABF1000287D2 /* APITaskEntity.swift */,
 				A33DAD3D2499079B000135C3 /* APIThingShadow.swift */,
 				E5C0A4A12554CEBA00C31567 /* CommandEntity.swift */,
@@ -1499,19 +1528,19 @@
 		A38B6EBC24CFEFB100A9914F /* json */ = {
 			isa = PBXGroup;
 			children = (
-				E5E04CA72578A67400C169B9 /* list_command_filtered_by_taskid_response_example.json */,
+				B75B5BA42576498700B90A64 /* api_mock_examples_GET_action_libs_response.json */,
+				B75B5BC025764A9200B90A64 /* api_mock_examples_GET_ai_libs_response.json */,
+				B70A22462579B7150057582C /* api_mock_examples_GET_jobs_jobid_response.json */,
+				B75B5BEB25764DF000B90A64 /* api_mock_examples_GET_jobs_jobid_tasks_response.json */,
+				B75B5B88257648CB00B90A64 /* api_mock_examples_GET_jobs_response.json */,
+				B75B5B6C2576468600B90A64 /* api_mock_examples_GET_robots_response.json */,
+				B70A22622579B92F0057582C /* api_mock_examples_GET_robots_robotid_assets_response.json */,
+				B75B5BCF25764B7000B90A64 /* api_mock_examples_GET_robots_robotid_commands_response.json */,
+				B70A227E2579BAE50057582C /* api_mock_examples_GET_robots_robotid_response.json */,
+				B70A229A2579BBE90057582C /* api_mock_examples_GET_robots_robotid_swconf_response.json */,
+				B70A22B62579BD450057582C /* api_mock_examples_GET_tasks_taskid_commands_robotid_response.json */,
 				B7614437256CC2E2008DA411 /* api_mock_examples_GET_tasks_taskid_commands_response.json */,
-				B712D63B255E7BBB00D5F01E /* list_task_filtered_by_jobid_response_example.json */,
-				E5757FB92554F02900A5544D /* task_response_example01.json */,
-				E52B86EF254AC0AC0038ECA0 /* api_openapi-spec_v1_examples_command_response_succeeded_example01.json */,
-				B75AF584255248500081A50F /* list_hw_config_asset_response_example.json */,
-				B75AF585255248500081A50F /* swconfig_response_example01.json */,
-				E5C325C72547F6D000A7BDB1 /* robot_response_example01.json */,
-				A38FB12825144ABF00A0632F /* list_action_library_response_example.json */,
-				A38FB12525144ABE00A0632F /* list_ai_library_response_example.json */,
-				E5C0CFEF2542A5F400957D86 /* api_openapi-spec_v1_examples_list_command_response_example.json */,
-				A38FB12625144ABE00A0632F /* list_job_response_example.json */,
-				A38FB12725144ABF00A0632F /* list_robot_response_example.json */,
+				B70A22D22579BEAD0057582C /* api_mock_examples_GET_tasks_taskid_response.json */,
 			);
 			path = json;
 			sourceTree = "<group>";
@@ -1932,6 +1961,16 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		B76305F9257F4B8000583240 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				B7A6F2D1257E2BE300A8A492 /* TaskDetailRunHistoryTableViewCell.swift */,
+				B738A50D2580A78500A5E937 /* TaskDetailRunHistoryTaskTableViewCell.swift */,
+				B738A51C2580A79B00A5E937 /* TaskDetailRunHistoryCommandTableViewCell.swift */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
 		D77CF215240EA4DD007A61EE = {
 			isa = PBXGroup;
 			children = (
@@ -2149,6 +2188,8 @@
 				A32ACEE424331C96003E1955 /* MQTTModel.swift */,
 				D7141CFD2437317D00945E08 /* DataManageModel.swift */,
 				A35DFA3124B822B300284271 /* VideoStreamingModel.swift */,
+				B72469672574B2DE001CC873 /* PagingModel.swift */,
+				B7AB6EE125776DB3004760A5 /* CommandModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2216,6 +2257,9 @@
 				A3947B6724A5B43A00525E98 /* Bundle.swift */,
 				D78EC14524111AEC003E5ECD /* String.swift */,
 				A32BCB0D2469A9E4000287D2 /* StringProtocol.swift */,
+				B7AD6084256F32D100FD4897 /* Collection.swift */,
+				B73990272578CB47008C2EE6 /* Int.swift */,
+				B73990362578CBB5008C2EE6 /* Date.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -2283,6 +2327,7 @@
 				D7A4CBD92429E9B600C62295 /* JobAPIDataStore.swift */,
 				D7A4CBEB2429F7B400C62295 /* ActionLibraryAPIDataStore.swift */,
 				D7A4CBED2429F7C100C62295 /* AILibraryAPIDataStore.swift */,
+				B73990452578D8C7008C2EE6 /* QueryBuilder.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -2317,6 +2362,7 @@
 			children = (
 				E5E04CDF2578A69A00C169B9 /* TaskDetailRobotSelectionViewControllerTests.swift */,
 				E5AB6563255BA7F1001D7414 /* TaskDetailViewControllerTests.swift */,
+				B7A6F2E0257E360F00A8A492 /* TaskDetailRunHistoryViewControllerTests.swift */,
 			);
 			path = TaskDetail;
 			sourceTree = "<group>";
@@ -2326,6 +2372,7 @@
 			children = (
 				E5E04CC32578A68A00C169B9 /* TaskDetailRobotSelectionPresenterTests.swift */,
 				E5AB664E255BF117001D7414 /* TaskDetailPresenterTests.swift */,
+				B798D4BC257F080F00030FE0 /* TaskDetailRunHistoryPresenterTest.swift */,
 			);
 			path = TaskDetail;
 			sourceTree = "<group>";
@@ -2333,8 +2380,9 @@
 		E5CF317F2556820B0054F782 /* TaskDetail */ = {
 			isa = PBXGroup;
 			children = (
-				E5CF31802556820B0054F782 /* TaskDetailPresenter.swift */,
+				E5CF31802556820B0054F782 /* TaskDetailTaskInformationPresenter.swift */,
 				E58A136F2568DD390040D3B2 /* TaskDetailRobotSelectionPresenter.swift */,
+				B798D489257F018500030FE0 /* TaskDetailRunHistoryPresenter.swift */,
 			);
 			path = TaskDetail;
 			sourceTree = "<group>";
@@ -2394,7 +2442,6 @@
 				D77CF21B240EA4DD007A61EE /* Frameworks */,
 				D77CF21C240EA4DD007A61EE /* Resources */,
 				D77CF26D240EA57B007A61EE /* Embed Frameworks */,
-				A3BA8BDD247EA2DE00A6CFF1 /* Run Script (SwiftLint) */,
 				A3CE645B24EF6B8700999753 /* Run Script (Carthage) */,
 				CCB6A5A8FC0A520478981182 /* [CP] Embed Pods Frameworks */,
 				E586CB16252572F2007AD3EC /* ShellScript */,
@@ -2409,6 +2456,8 @@
 				D78EC1EB2411CAA6003E5ECD /* PBXTargetDependency */,
 			);
 			name = JobOrder;
+			packageProductDependencies = (
+			);
 			productName = JobOrder;
 			productReference = D77CF21E240EA4DD007A61EE /* JobOrder.app */;
 			productType = "com.apple.product-type.application";
@@ -2448,6 +2497,11 @@
 				D77CF241240EA4DF007A61EE /* PBXTargetDependency */,
 			);
 			name = JobOrderUITests;
+			packageProductDependencies = (
+				A37F6975257634200013A3F6 /* SkeletonView */,
+				A37F6977257634200013A3F6 /* Charts */,
+				A37F6979257634200013A3F6 /* KeychainAccess */,
+			);
 			productName = JobOrderUITests;
 			productReference = D77CF23F240EA4DF007A61EE /* JobOrderUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -2511,6 +2565,9 @@
 				D78EC14E24111B3F003E5ECD /* PBXTargetDependency */,
 			);
 			name = JobOrder.Data;
+			packageProductDependencies = (
+				A37F69CA257636380013A3F6 /* KeychainAccess */,
+			);
 			productName = JobOrder.Data;
 			productReference = D77CF2DF240EA675007A61EE /* JobOrder_Data.framework */;
 			productType = "com.apple.product-type.framework";
@@ -2631,6 +2688,10 @@
 				D78EC2032411CE67003E5ECD /* PBXTargetDependency */,
 			);
 			name = JobOrder.Presentation;
+			packageProductDependencies = (
+				A37F6A0A257636D30013A3F6 /* SkeletonView */,
+				A37F6A0C257636D30013A3F6 /* Charts */,
+			);
 			productName = JobOrder.Presenter;
 			productReference = D78EC1D72411CAA6003E5ECD /* JobOrder_Presentation.framework */;
 			productType = "com.apple.product-type.framework";
@@ -2644,7 +2705,6 @@
 				D78EC1DC2411CAA6003E5ECD /* Frameworks */,
 				D78EC1DD2411CAA6003E5ECD /* Resources */,
 				034294EF0A34500CBA571919 /* [CP] Embed Pods Frameworks */,
-				A3CE646124EF6F6000999753 /* Run Script (Carthage) */,
 			);
 			buildRules = (
 			);
@@ -2652,6 +2712,8 @@
 				D78EC1E22411CAA6003E5ECD /* PBXTargetDependency */,
 			);
 			name = JobOrder.PresentationTests;
+			packageProductDependencies = (
+			);
 			productName = JobOrder.PresenterTests;
 			productReference = D78EC1DF2411CAA6003E5ECD /* JobOrder.PresentationTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -2731,6 +2793,11 @@
 				ja,
 			);
 			mainGroup = D77CF215240EA4DD007A61EE;
+			packageReferences = (
+				A37F6938257632C30013A3F6 /* XCRemoteSwiftPackageReference "SkeletonView" */,
+				A37F69482576330B0013A3F6 /* XCRemoteSwiftPackageReference "Charts" */,
+				A37F69582576339B0013A3F6 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+			);
 			productRefGroup = D77CF21F240EA4DD007A61EE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -2821,20 +2888,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A38FB12C25144ABF00A0632F /* list_action_library_response_example.json in Resources */,
-				E5757FBA2554F02900A5544D /* task_response_example01.json in Resources */,
+				B75B5BD025764B7000B90A64 /* api_mock_examples_GET_robots_robotid_commands_response.json in Resources */,
+				B75B5BC125764A9200B90A64 /* api_mock_examples_GET_ai_libs_response.json in Resources */,
+				B70A22632579B9300057582C /* api_mock_examples_GET_robots_robotid_assets_response.json in Resources */,
+				B75B5B6D2576468600B90A64 /* api_mock_examples_GET_robots_response.json in Resources */,
+				B70A22D32579BEAD0057582C /* api_mock_examples_GET_tasks_taskid_response.json in Resources */,
+				B70A22472579B7150057582C /* api_mock_examples_GET_jobs_jobid_response.json in Resources */,
+				B70A227F2579BAE60057582C /* api_mock_examples_GET_robots_robotid_response.json in Resources */,
 				B7614438256CC2E2008DA411 /* api_mock_examples_GET_tasks_taskid_commands_response.json in Resources */,
-				B75AF587255248500081A50F /* swconfig_response_example01.json in Resources */,
-				B75AF586255248500081A50F /* list_hw_config_asset_response_example.json in Resources */,
-				A38FB12B25144ABF00A0632F /* list_robot_response_example.json in Resources */,
-				E5C0CFF02542A5F400957D86 /* api_openapi-spec_v1_examples_list_command_response_example.json in Resources */,
-				E52B86F0254AC0AC0038ECA0 /* api_openapi-spec_v1_examples_command_response_succeeded_example01.json in Resources */,
-				B712D63C255E7BBB00D5F01E /* list_task_filtered_by_jobid_response_example.json in Resources */,
-				E5C325C82547F6D000A7BDB1 /* robot_response_example01.json in Resources */,
-				A38FB12A25144ABF00A0632F /* list_job_response_example.json in Resources */,
-				A38FB12925144ABF00A0632F /* list_ai_library_response_example.json in Resources */,
+				B70A22B72579BD450057582C /* api_mock_examples_GET_tasks_taskid_commands_robotid_response.json in Resources */,
+				B75B5B89257648CB00B90A64 /* api_mock_examples_GET_jobs_response.json in Resources */,
+				B75B5BEC25764DF000B90A64 /* api_mock_examples_GET_jobs_jobid_tasks_response.json in Resources */,
+				B75B5BA52576498700B90A64 /* api_mock_examples_GET_action_libs_response.json in Resources */,
+				B70A229B2579BBE90057582C /* api_mock_examples_GET_robots_robotid_swconf_response.json in Resources */,
 				A3AD72D62522EBD300DD5DBE /* tmrobot.png in Resources */,
-				E5E04CA82578A67400C169B9 /* list_command_filtered_by_taskid_response_example.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3075,9 +3142,6 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/KeychainAccess.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SkeletonView.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Charts.framework",
 			);
 			name = "Run Script (Carthage)";
 			outputFileListPaths = (
@@ -3200,24 +3264,6 @@
 			shellPath = /bin/sh;
 			shellScript = "unset SDKROOT\nif which mint >/dev/null; then\n  rm -f $SRCROOT/$TARGET_NAME/MockResults.swift\n  mint run mockolo mockolo --sourcedirs $SRCROOT/$TARGET_NAME --destination $SRCROOT/$TARGET_NAME/MockResults.swift\nelse\n  echo \"warning: Mint not installed, download from https://github.com/yonaskolb/Mint\"\nfi\n";
 		};
-		A3BA8BDD247EA2DE00A6CFF1 /* Run Script (SwiftLint) */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script (SwiftLint)";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "unset SDKROOT\nif which mint >/dev/null; then\n  mint run swiftlint swiftlint autocorrect --format\n  mint run swiftlint swiftlint\nelse\n  echo \"warning: Mint not installed, download from https://github.com/yonaskolb/Mint\"\nfi\n";
-		};
 		A3CE645B24EF6B8700999753 /* Run Script (Carthage) */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3228,9 +3274,6 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/KeychainAccess.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SkeletonView.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Charts.framework",
 			);
 			name = "Run Script (Carthage)";
 			outputFileListPaths = (
@@ -3251,25 +3294,6 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
-			);
-			name = "Run Script (Carthage)";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "unset SDKROOT\nif which mint >/dev/null; then\n  mint run Carthage/Carthage carthage copy-frameworks\nelse\n  echo \"warning: Mint not installed, download from https://github.com/yonaskolb/Mint\"\nfi\n";
-		};
-		A3CE646124EF6F6000999753 /* Run Script (Carthage) */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Charts.framework",
 			);
 			name = "Run Script (Carthage)";
 			outputFileListPaths = (
@@ -3460,7 +3484,9 @@
 				A32BCB1E246D2F5B000287D2 /* MQTTTranslator.swift in Sources */,
 				A327EDAB244039DE004440E3 /* DataTranslator.swift in Sources */,
 				A35DFA3024B8106500284271 /* VideoStreamingUseCase.swift in Sources */,
+				B7AB6EE225776DB3004760A5 /* CommandModel.swift in Sources */,
 				A32BD1B22431DD07000E9AE8 /* MQTTUseCase.swift in Sources */,
+				B72469682574B2DE001CC873 /* PagingModel.swift in Sources */,
 				A35DFA3224B822B300284271 /* VideoStreamingModel.swift in Sources */,
 				D7141CFE2437317D00945E08 /* DataManageModel.swift in Sources */,
 				A3AB8DEF24C04B0D0017411A /* MockResults.swift in Sources */,
@@ -3574,6 +3600,8 @@
 				D78EC21B24151CC6003E5ECD /* APIRequest.swift in Sources */,
 				A32BCB14246CE481000287D2 /* AWSS3DataStore.swift in Sources */,
 				E52B86E1254AC09A0038ECA0 /* TaskAPIDataStore.swift in Sources */,
+				B73990462578D8C7008C2EE6 /* QueryBuilder.swift in Sources */,
+				B72469772574BA89001CC873 /* APIPaging.swift in Sources */,
 				A3624A6424D8FFEE00D8F3CE /* MockResults.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3608,7 +3636,10 @@
 				A3947B6824A5B43A00525E98 /* Bundle.swift in Sources */,
 				D78EC1A52411C0DC003E5ECD /* OneOffFunc.swift in Sources */,
 				D78EC14624111AEC003E5ECD /* String.swift in Sources */,
+				B7AD6085256F32D100FD4897 /* Collection.swift in Sources */,
 				A15D9BAA24189B5C0089232E /* Logger.swift in Sources */,
+				B73990372578CBB5008C2EE6 /* Date.swift in Sources */,
+				B73990282578CB47008C2EE6 /* Int.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3625,6 +3656,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B738A51D2580A79B00A5E937 /* TaskDetailRunHistoryCommandTableViewCell.swift in Sources */,
 				A3B26D3D251C7979008DFEC5 /* JobEntryActionViewController.swift in Sources */,
 				A35DFA2A24B80AB200284271 /* RobotVideoViewController.swift in Sources */,
 				A33DAD412499BF5A000135C3 /* CustomButton.swift in Sources */,
@@ -3652,11 +3684,13 @@
 				A3B26D45251D7E16008DFEC5 /* WorkObjectSelectionViewController.swift in Sources */,
 				A32D7AFE242210C000DCBE45 /* MailVerificationConfirmViewController.swift in Sources */,
 				E58A13702568DD390040D3B2 /* TaskDetailRobotSelectionPresenter.swift in Sources */,
+				B7A6F2D2257E2BE300A8A492 /* TaskDetailRunHistoryTableViewCell.swift in Sources */,
 				A3AB8DD724BD50DE0017411A /* WebRTCClient.swift in Sources */,
 				B7FD40F4256261D000643AAE /* JobDetailRemarksViewController.swift in Sources */,
 				E55A438D255E7DAF0079739D /* TaskDetailRobotSelectionViewController.swift in Sources */,
 				A3141F70252191C200992F45 /* ActionEntryActionLibraryCollectionViewCell.swift in Sources */,
 				A32BCAFE24693492000287D2 /* OrderEntryRobotSelectionViewController.swift in Sources */,
+				B738A50E2580A78500A5E937 /* TaskDetailRunHistoryTaskTableViewCell.swift in Sources */,
 				A32BCB28246FDF9A000287D2 /* MainViewData.swift in Sources */,
 				A32ACEE72433302C003E1955 /* PasswordAuthenticationNavigationController.swift in Sources */,
 				A32BCAFD24693492000287D2 /* OrderEntryJobSelectionViewController.swift in Sources */,
@@ -3715,7 +3749,8 @@
 				A32BCAF624693492000287D2 /* OrderEntryRobotSelectionRobotCollectionViewCell.swift in Sources */,
 				A32BCB09246937CF000287D2 /* OrderEntryConfirmPresenter.swift in Sources */,
 				A3141F6E252191C200992F45 /* WorkObjectLibraryCollectionViewCell.swift in Sources */,
-				A32BCA822468E99F000287D2 /* TaskDetailViewController.swift in Sources */,
+				A32BCA822468E99F000287D2 /* TaskDetailTaskInformationViewController.swift in Sources */,
+				B798D48A257F018500030FE0 /* TaskDetailRunHistoryPresenter.swift in Sources */,
 				A38C2AFB244FE4FA0089A70E /* RobotDetailWorkViewController.swift in Sources */,
 				A3148331242B49BF00AFADC1 /* MainBuilder.swift in Sources */,
 				A32BCAFC24693492000287D2 /* OrderEntryConfirmViewController.swift in Sources */,
@@ -3738,11 +3773,12 @@
 				A314832F242B487600AFADC1 /* MainPresenter.swift in Sources */,
 				A3DCD5CF251AF15C004BC808 /* JobEntryStepView.swift in Sources */,
 				A3141F6D252191C200992F45 /* WorkBenchEntryTableViewCell.swift in Sources */,
-				E5CF31812556820B0054F782 /* TaskDetailPresenter.swift in Sources */,
+				E5CF31812556820B0054F782 /* TaskDetailTaskInformationPresenter.swift in Sources */,
 				A38C2B05245000D80089A70E /* RobotDetailWorkTaskTableViewCell.swift in Sources */,
 				A32BCB08246937CF000287D2 /* OrderEntryJobSelectionPresenter.swift in Sources */,
 				B7FD40C92562610000643AAE /* JobDetailWorkViewController.swift in Sources */,
 				A3B26D2E251C2BCC008DFEC5 /* ActionEntryStepView.swift in Sources */,
+				B7A6F2C3257E21AF00A8A492 /* TaskDetailRunHistoryViewController.swift in Sources */,
 				B7FD41AE25626C8700643AAE /* JobDetailFlowPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3779,8 +3815,10 @@
 				A32E99BF24EBA34E005C4605 /* RobotDetailPresenterTests.swift in Sources */,
 				A3F98D2E24EA19610016A181 /* NewPasswordRequiredPresenterTests.swift in Sources */,
 				A32E99DB24EBC2F7005C4605 /* AboutAppViewControllerTests.swift in Sources */,
+				B798D4BD257F080F00030FE0 /* TaskDetailRunHistoryPresenterTest.swift in Sources */,
 				A32E99B924EB7BAC005C4605 /* RobotListViewControllerTests.swift in Sources */,
 				B7FD417425626A5F00643AAE /* JobDetailFlowViewControllerTests.swift in Sources */,
+				B7A6F2E1257E360F00A8A492 /* TaskDetailRunHistoryViewControllerTests.swift in Sources */,
 				A32E99CD24EBB50B005C4605 /* RobotVideoViewControllerTests.swift in Sources */,
 				A32E99CF24EBB7AF005C4605 /* RobotVideoPresenterTests.swift in Sources */,
 				A3624A4624D402F300D8F3CE /* MailVerificationEntryPresenterTests.swift in Sources */,
@@ -4065,7 +4103,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = Z4B6XLKDY5;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4093,7 +4131,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4110,10 +4148,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS/Charts.framework",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.kyocera.robotics.client.joborder-Presentation";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -4134,7 +4169,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4166,7 +4201,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4203,7 +4238,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4235,7 +4270,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4566,7 +4601,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = Z4B6XLKDY5;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4597,7 +4632,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = Z4B6XLKDY5;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4612,7 +4647,7 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.co.kyocera.robotics.client.joborder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Job Order for AppStore";
+				PROVISIONING_PROFILE_SPECIFIER = "Job Order for App Store";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -4730,7 +4765,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4764,7 +4799,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4838,7 +4873,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4875,7 +4910,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4960,7 +4995,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4994,7 +5029,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -5068,7 +5103,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -5101,7 +5136,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -5173,16 +5208,13 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 3;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = JobOrder.Presentation/Resources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -5190,10 +5222,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS/Charts.framework",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.kyocera.robotics.client.joborder-Presentation";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -5213,16 +5242,13 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 3;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = JobOrder.Presentation/Resources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -5230,10 +5256,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS/Charts.framework",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.kyocera.robotics.client.joborder-Presentation";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -5451,6 +5474,66 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A37F6938257632C30013A3F6 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.11.0;
+			};
+		};
+		A37F69482576330B0013A3F6 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.6.0;
+			};
+		};
+		A37F69582576339B0013A3F6 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A37F6975257634200013A3F6 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A37F6938257632C30013A3F6 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
+		};
+		A37F6977257634200013A3F6 /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A37F69482576330B0013A3F6 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
+		A37F6979257634200013A3F6 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A37F69582576339B0013A3F6 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		A37F69CA257636380013A3F6 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A37F69582576339B0013A3F6 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		A37F6A0A257636D30013A3F6 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A37F6938257632C30013A3F6 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
+		};
+		A37F6A0C257636D30013A3F6 /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A37F69482576330B0013A3F6 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D77CF216240EA4DD007A61EE /* Project object */;
 }

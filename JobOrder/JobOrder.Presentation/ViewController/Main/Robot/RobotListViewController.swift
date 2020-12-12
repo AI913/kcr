@@ -62,10 +62,10 @@ extension RobotListViewController {
         default: break
         }
     }
-}
-
-// MARK: - Implement UITableViewDataSource, UITableViewDelegate
-extension RobotListViewController {
+    //}
+    //
+    // MARK: - Implement UITableViewDataSource, UITableViewDelegate
+    //extension RobotListViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         presenter?.numberOfRowsInSection ?? 0
@@ -91,7 +91,7 @@ extension RobotListViewController {
 extension RobotListViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
-        presenter?.filterAndSort(keyword: searchController.searchBar.text)
+        presenter?.filterAndSort(keyword: searchController.searchBar.text, keywordChanged: true)
     }
 }
 

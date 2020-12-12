@@ -35,7 +35,7 @@ abstract_target 'All' do
   def webrtc
     pod 'AWSCognitoIdentityProvider', '~> 2.17'
     pod 'AWSMobileClient', '~> 2.17'
-    pod 'CommonCryptoModule'
+    pod 'CommonCryptoModule', '~> 1.0.2'
     pod 'AWSKinesisVideo', '~> 2.17'
     pod 'AWSKinesisVideoSignaling', '~> 2.17'
     pod 'GoogleWebRTC', '~> 1.1'

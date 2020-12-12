@@ -94,7 +94,7 @@ struct DataTestsStub {
         let action = JobAction()
         action.index = 1
         action.id = "30cf3116-c823-4093-a62d-4fe07c81ffff"
-        action.parameter = JobParameter()
+        // action.parameter = JobParameter()
         action._catch = nil
         action.then = nil
 
@@ -117,7 +117,7 @@ struct DataTestsStub {
         let action = JobAction()
         action.index = 1
         action.id = "30cf3116-c823-4093-a62d-4fe07c81ffff"
-        action.parameter = JobParameter()
+        // action.parameter = JobParameter()
         action._catch = nil
         action.then = nil
 
@@ -140,7 +140,7 @@ struct DataTestsStub {
         let action = JobAction()
         action.index = 1
         action.id = "12cfcc68-634f-41c1-b5fb-e094cafdd512"
-        action.parameter = JobParameter()
+        // action.parameter = JobParameter()
         action._catch = nil
         action.then = nil
 

@@ -2,6 +2,7 @@ scheme("JobOrder")
 output_directory(ENV["FASTLANE_BUILD_OUTPUT_PATH"])
 output_name("JobOrder.ipa")
 archive_path(ENV["FASTLANE_BUILD_OUTPUT_PATH"] + "/JobOrder.xcarchive")
+cloned_source_packages_path(ENV["FASTLANE_PACKAGES_PATH"])
 clean(true)
 
 for_lane :deploy do

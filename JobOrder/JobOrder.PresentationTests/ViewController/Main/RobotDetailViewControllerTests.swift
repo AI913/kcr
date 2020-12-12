@@ -33,13 +33,16 @@ class RobotDetailViewControllerTests: XCTestCase {
         XCTAssertNotNil(vc.segmentedControl, "segmentedControlがOutletに接続されていない")
         XCTAssertNotNil(vc.containerView, "containerViewがOutletに接続されていない")
         XCTAssertNotNil(vc.containerViewHeight, "containerViewHeightがOutletに接続されていない")
+        XCTAssertNotNil(vc.orderButton, "orderButtonがOutletに接続されていない")
     }
 
     func test_actions() throws {
         let moreBarButtonItem = try XCTUnwrap(vc.moreBarButtonItem, "Unwrap失敗")
         let segmentedControl = try XCTUnwrap(vc.segmentedControl, "Unwrap失敗")
+        let orderButton = try XCTUnwrap(vc.orderButton, "Unwrap失敗")
         XCTAssertNoThrow(moreBarButtonItem.target?.perform(moreBarButtonItem.action, with: nil), "タップで例外発生: \(moreBarButtonItem)")
         XCTAssertNoThrow(segmentedControl.sendActions(for: .valueChanged), "セグメント選択で例外発生: \(segmentedControl)")
+        XCTAssertNoThrow(orderButton.sendActions(for: .touchUpInside), "タップで例外発生: \(orderButton)")
     }
 
     func test_inject() {
@@ -100,5 +103,10 @@ class RobotDetailViewControllerTests: XCTestCase {
     func test_showActionSheet() {
         vc.showActionSheet(vc.moreBarButtonItem)
         XCTAssertTrue(vc.presentedViewController is UIAlertController, "アクションシートが表示されない")
+    }
+
+    func test_tapOrderButton() {
+        vc.orderButton.sendActions(for: .touchUpInside)
+        XCTAssertEqual(mock.tapOrderEntryButtonCallCount, 1, "Presenterのメソッドが呼ばれない")
     }
 }

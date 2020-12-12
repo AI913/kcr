@@ -33,25 +33,27 @@ protocol JobListPresenterProtocol {
     func tapAddButton()
     /// 検索
     /// - Parameter index: 配列のIndex
-    func filterAndSort(keyword: String?)
+    func filterAndSort(keyword: String?, keywordChanged: Bool)
 }
 
 // MARK: - Implementation
 /// JobListPresenter
 class JobListPresenter {
-
+    private var searchKeyString: String = ""
     /// DataManageUseCaseProtocol
     private let useCase: JobOrder_Domain.DataManageUseCaseProtocol
     /// JobListViewControllerProtocol
     private let vc: JobListViewControllerProtocol
     /// A type-erasing cancellable objects that executes a provided closure when canceled.
     private var cancellables: Set<AnyCancellable> = []
-    /// リストに表示するJobのデータ配列
+    /// リストに表示するJobのデータ配列（フィルタ後）
     var displayJobs: [JobOrder_Domain.DataManageModel.Output.Job]?
+    /// リストに表示するJobのデータ配列（フィルタ前）
+    var originalJobs: [JobOrder_Domain.DataManageModel.Output.Job]?
 
     private var sortConditions = [SortCondition(key: .dataId, order: .ASC)] {
         didSet {
-            self.filterAndSort(keyword: nil)
+            self.filterAndSort(keyword: nil, keywordChanged: false)
         }
     }
 
@@ -109,8 +111,8 @@ extension JobListPresenter: JobListPresenterProtocol {
 
     /// 検索
     /// - Parameter keyword: 検索キーワード
-    func filterAndSort(keyword: String?) {
-        filterAndSort(keyword: keyword, jobs: displayJobs)
+    func filterAndSort(keyword: String?, keywordChanged: Bool) {
+        filterAndSort(keyword: keyword, jobs: displayJobs, keywordChanged: keywordChanged)
     }
 }
 
@@ -122,12 +124,21 @@ extension JobListPresenter {
             .receive(on: DispatchQueue.main)
             .sink { response in
                 // Logger.debug(target: self, "\(String(describing: response))")
-                self.filterAndSort(jobs: response)
+                self.filterAndSort(jobs: response, keywordChanged: false)
             }.store(in: &cancellables)
     }
 
-    func filterAndSort(keyword: String? = nil, jobs: [JobOrder_Domain.DataManageModel.Output.Job]?) {
-        guard let jobs = jobs else { return }
+    func filterAndSort(keyword: String? = nil, jobs: [JobOrder_Domain.DataManageModel.Output.Job]?, keywordChanged: Bool) {
+        guard var jobs = jobs else { return }
+
+        var searchKeyWord: String? = keyword
+        if keywordChanged {
+            searchKeyString = searchKeyWord!
+            jobs = originalJobs!
+        } else {
+            searchKeyWord = searchKeyString
+            originalJobs = jobs
+        }
 
         // TODO: - Sort by user settings.
         var display = jobs.sorted {
@@ -138,9 +149,9 @@ extension JobListPresenter {
             }
         }
 
-        if let keyword = keyword, !keyword.isEmpty {
+        if let searchKeyWord = searchKeyWord, !searchKeyWord.isEmpty {
             display = display.filter {
-                ($0.name).uppercased().contains(keyword.uppercased())
+                ($0.name).uppercased().contains(searchKeyWord.uppercased())
             }
         }
         displayJobs = display

@@ -30,7 +30,7 @@ public class JobAPIDataStore: JobAPIRepository {
     /// - Returns: Job情報
     public func fetch(_ token: String) -> AnyPublisher<APIResult<[JobAPIEntity.Data]>, Error> {
         Logger.info(target: self)
-        return api.get(url: url, token: token)
+        return api.get(url: url, token: token, query: nil)
     }
 
     /// 指定したJob情報を取得する
@@ -40,7 +40,7 @@ public class JobAPIDataStore: JobAPIRepository {
     /// - Returns: Job情報
     public func get(_ token: String, jobId: String) -> AnyPublisher<APIResult<JobAPIEntity.Data>, Error> {
         Logger.info(target: self)
-        return api.get(resUrl: url, token: token, dataId: jobId)
+        return api.get(resUrl: url, token: token, dataId: jobId, query: nil)
     }
 
     /// Job情報を作成する
@@ -78,8 +78,11 @@ public class JobAPIDataStore: JobAPIRepository {
     /// - Parameters:
     ///   - token: トークン情報
     ///   - id: Job ID
-    public func getTasks(_ token: String, id: String) -> AnyPublisher<APIResult<[TaskAPIEntity.Data]>, Error> {
+    public func getTasks(_ token: String, id: String, paging: APIPaging.Input?) -> AnyPublisher<APIResult<[TaskAPIEntity.Data]>, Error> {
         Logger.info(target: self)
-        return api.get(resUrl: url, token: token, dataId: "\(id)/tasks")
+        let query = QueryBuilder()
+            .add(paging: paging)
+            .build()
+        return api.get(resUrl: url, token: token, dataId: "\(id)/tasks", query: query)
     }
 }

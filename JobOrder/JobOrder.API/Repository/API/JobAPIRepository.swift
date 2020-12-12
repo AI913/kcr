@@ -40,5 +40,5 @@ public protocol JobAPIRepository {
     /// - Parameters:
     ///   - token: トークン情報
     ///   - id: Job ID
-    func getTasks(_ token: String, id: String) -> AnyPublisher<APIResult<[TaskAPIEntity.Data]>, Error>
+    func getTasks(_ token: String, id: String, paging: APIPaging.Input?) -> AnyPublisher<APIResult<[TaskAPIEntity.Data]>, Error>
 }

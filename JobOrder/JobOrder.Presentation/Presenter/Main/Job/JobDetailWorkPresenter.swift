@@ -78,7 +78,7 @@ extension JobDetailWorkPresenter: JobDetailWorkPresenterProtocol {
 
     /// View表示開始
     func viewWillAppear() {
-        getTasks()
+        getTasksAndCommands()
     }
 
     /// アイテム数取得
@@ -102,7 +102,7 @@ extension JobDetailWorkPresenter: JobDetailWorkPresenterProtocol {
     func orderName(in: JobDetailWorkPresenter.Dataset, index: Int) -> String? {
         guard let createTime = tasks?[index].createTime else { return nil }
         let suffix = "のオーダー"
-        return toDateString(toEpocTime(createTime)) + suffix
+        return createTime.toEpocTime.toMediumDateString + suffix
     }
     /// アサイン情報
     /// - Parameters:
@@ -138,33 +138,11 @@ extension JobDetailWorkPresenter {
         cancellables.forEach { $0.cancel() }
     }
 
-    private func getTasks() {
+    private func getTasksAndCommands() {
         guard let id = data.id else { return }
         reset()
 
-        dataUseCase.tasksFromJob(id: id)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    if let tasks = self.tasks {
-                        for task in tasks {
-                            guard let robotId = task.robotIds.first else { continue }
-                            self.getCommand(taskId: task.id, robotId: robotId)
-                        }
-                    }
-                case .failure(let error):
-                    self.vc.showErrorAlert(error)
-                }
-            }, receiveValue: { response in
-                Logger.debug(target: self, "\(String(describing: response))")
-                self.tasks = response.sorted { $0.createTime < $1.createTime }
-                self.vc.reloadTable()
-            }).store(in: &cancellables)
-    }
-
-    private func getCommand(taskId: String, robotId: String) {
-        dataUseCase.commandFromTask(taskId: taskId, robotId: robotId)
+        dataUseCase.tasksFromJob(id: id, cursor: PagingModel.Cursor(offset: 0, limit: 10))
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {
@@ -173,12 +151,27 @@ extension JobDetailWorkPresenter {
                     self.vc.showErrorAlert(error)
                 }
             }, receiveValue: { response in
-                Logger.debug(target: self, "taskId: \(taskId), robotId: \(robotId) -> \(String(describing: response))")
-                self.commands.append(response)
-                if let index = self.updateTaskItem(by: response) {
-                    self.vc.reloadRows(dataset: .task, at: [index])
-                    self.vc.reloadRows(dataset: .history, at: [index])
-                }
+                Logger.debug(target: self, "\(String(describing: response))")
+                self.tasks = response.data
+                self.tasks?.filter { !$0.robotIds.isEmpty }
+                    .compactMap { self.dataUseCase.commandFromTask(taskId: $0.id, robotId: $0.robotIds.first!) }
+                    .serialize()?
+                    .receive(on: DispatchQueue.main)
+                    .sink(receiveCompletion: { completion in
+                        switch completion {
+                        case .finished: break
+                        case .failure(let error):
+                            self.vc.showErrorAlert(error)
+                        }
+                    }, receiveValue: { response in
+                        Logger.debug(target: self, "\(String(describing: response))")
+                        self.commands.append(response)
+                        if let index = self.updateTaskItem(by: response) {
+                            self.vc.reloadRows(dataset: .task, at: [index])
+                            self.vc.reloadRows(dataset: .history, at: [index])
+                        }
+                    }).store(in: &self.cancellables)
+                self.vc.reloadTable()
             }).store(in: &cancellables)
     }
 
@@ -188,18 +181,6 @@ extension JobDetailWorkPresenter {
             return IndexPath(row: 0, section: index)
         }
         return nil
-    }
-
-    private func toDateString(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US")
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        return formatter.string(from: date)
-    }
-
-    private func toEpocTime(_ data: Int) -> Date {
-        return Date(timeIntervalSince1970: Double(data / 1000))
     }
 
 }

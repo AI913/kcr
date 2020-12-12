@@ -24,7 +24,7 @@ class ActionLibraryAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getHandler = { url, token in
+        mock.getHandler = { url, token, _ in
             return Future<APIResult<[ActionLibraryAPIEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
                 promise(.success(APITestsStub().actionLibrariesResult))
@@ -54,7 +54,7 @@ class ActionLibraryAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getHandler = { url, token in
+        mock.getHandler = { url, token, _ in
             return Future<APIResult<[ActionLibraryAPIEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
                 let error = NSError(domain: "Error", code: -1, userInfo: nil)
@@ -79,7 +79,7 @@ class ActionLibraryAPIDataStoreTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
 
-        mock.getHandler = { url, token in
+        mock.getHandler = { url, token, _ in
             return Future<APIResult<[ActionLibraryAPIEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()

@@ -2,7 +2,7 @@
   "data": [
     {
       "taskId": "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
-      "robotId": "255d07b8-22fe-11eb-adc1-0242ac120002",
+      "robotId": "0149308a-af44-4d03-9864-c5ab5561cd91",
       "startedAt": 0,
       "exitedAt": 0,
       "execDuration": 0,
@@ -21,7 +21,7 @@
     },
     {
       "taskId": "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
-      "robotId": "598ff046-2339-11eb-adc1-0242ac120002",
+      "robotId": "0c2ede75-65b9-4bce-99d5-a82c2a685655",
       "startedAt": 1592620113000,
       "exitedAt": 0,
       "execDuration": 0,
@@ -40,7 +40,7 @@
     },
     {
       "taskId": "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
-      "robotId": "78abfbd4-6613-42a6-a691-23c3748fa346",
+      "robotId": "c854fbc2-38af-4f1d-a155-72df574ed2a7",
       "startedAt": 1592619013000,
       "exitedAt": 0,
       "execDuration": 0,
@@ -59,12 +59,12 @@
     },
     {
       "taskId": "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
-      "robotId": "99c99304-233b-11eb-adc1-0242ac120002",
+      "robotId": "78abfbd4-6613-42a6-a691-23c3748fa346",
       "startedAt": 1592660113000,
       "exitedAt": 1592661502000,
-      "execDuration": 1389000,
-      "receivedStartReortAt": 1592660112000,
-      "receivedExitReortAt": 1592661501000,
+      "execDuration": 41389000,
+      "receivedStartReortAt": 1592652512000,
+      "receivedExitReortAt": 1592693902000,
       "status": "succeeded",
       "resultInfo": "All success",
       "success": 73,
@@ -75,33 +75,14 @@
       "createdBy": "user@kyocera.jp",
       "updateTime": 1592661502000,
       "updatedBy": "user@kyocera.jp"
-    },
-    {
-      "taskId": "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
-      "robotId": "83e7fe5e-233b-11eb-adc1-0242ac120002",
-      "startedAt": 1591990021000,
-      "exitedAt": 1591996666000,
-      "execDuration": 6645000,
-      "receivedStartReortAt": 1591990019000,
-      "receivedExitReortAt": 1591996664000,
-      "status": "failed",
-      "resultInfo": "Finished with some fails.",
-      "success": 70,
-      "fail": 2,
-      "error": 0,
-      "dataVersion": 1,
-      "createTime": 1591988886000,
-      "createdBy": "user@kyocera.jp",
-      "updateTime": 1591996666000,
-      "updatedBy": "user@kyocera.jp"
     }
   ],
   "paging": {
     "page": 2,
-    "size": 5,
+    "size": 4,
     "totalPages": 16,
-    "totalCount": 77
+    "totalCount": 61
   },
-  "count": 5,
+  "count": 4,
   "time": 1592693902000
 }

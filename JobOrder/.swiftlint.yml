@@ -3,6 +3,7 @@ excluded:
   - Pods
   - builds
   - vendor
+  - fastlane
   - JobOrder.Presentation/Resources/Generated
   - JobOrder.*/MockResults.swift
 

@@ -26,16 +26,10 @@ class RobotDetailWorkViewControllerTests: XCTestCase {
     func test_outlets() {
         XCTAssertNotNil(vc.assignedTaskLabel, "assignedTaskLabelがOutletに接続されていない")
         XCTAssertNotNil(vc.runHistoryLabel, "runHistoryLabelがOutletに接続されていない")
-        XCTAssertNotNil(vc.orderButton, "orderButtonがOutletに接続されていない")
         XCTAssertNotNil(vc.taskTableView, "taskTableViewがOutletに接続されていない")
         XCTAssertNotNil(vc.historyTableView, "historyTableViewがOutletに接続されていない")
         XCTAssertNotNil(vc.taskTableViewHeight, "taskTableViewHeightがOutletに接続されていない")
         XCTAssertNotNil(vc.historyTableViewHeight, "historyTableViewHeightがOutletに接続されていない")
-    }
-
-    func test_actions() throws {
-        let orderButton = try XCTUnwrap(vc.orderButton, "Unwrap失敗")
-        XCTAssertNoThrow(orderButton.sendActions(for: .touchUpInside), "タップで例外発生: \(orderButton)")
     }
 
     func test_inject() {
@@ -47,11 +41,6 @@ class RobotDetailWorkViewControllerTests: XCTestCase {
     func test_viewWillAppear() {
         vc.viewWillAppear(true)
         XCTAssertEqual(mock.viewWillAppearCallCount, 1, "Presenterのメソッドが呼ばれない")
-    }
-
-    func test_tapOrderButton() {
-        vc.orderButton.sendActions(for: .touchUpInside)
-        XCTAssertEqual(mock.tapOrderEntryButtonCallCount, 1, "Presenterのメソッドが呼ばれない")
     }
 
     func test_showErrorAlert() {

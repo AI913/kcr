@@ -386,7 +386,7 @@ class RobotListPresenterTests: XCTestCase {
             let robot2 = stub.robot2(id: "3", name: "b")
             let robot3 = stub.robot3(id: "1", name: "a")
 
-            presenter.filterAndSort(robots: [robot1, robot2, robot3])
+            presenter.filterAndSort(robots: [robot1, robot2, robot3], keywordChanged: false)
             XCTAssertEqual(presenter.displayRobots?[0].id, "1", "name順にソートされていない")
             XCTAssertEqual(presenter.displayRobots?[1].id, "3", "name順にソートされていない")
             XCTAssertEqual(presenter.displayRobots?[2].id, "2", "name順にソートされていない")
@@ -397,7 +397,7 @@ class RobotListPresenterTests: XCTestCase {
             let robot2 = stub.robot2(id: "3", name: "a")
             let robot3 = stub.robot3(id: "1", name: "a")
 
-            presenter.filterAndSort(robots: [robot1, robot2, robot3])
+            presenter.filterAndSort(robots: [robot1, robot2, robot3], keywordChanged: false)
             XCTAssertEqual(presenter.displayRobots?[0].id, "1", "id順にソートされていない")
             XCTAssertEqual(presenter.displayRobots?[1].id, "2", "id順にソートされていない")
             XCTAssertEqual(presenter.displayRobots?[2].id, "3", "id順にソートされていない")
@@ -408,7 +408,7 @@ class RobotListPresenterTests: XCTestCase {
             let robot2 = stub.robot2(id: "3", name: "a")
             let robot3 = stub.robot3(id: "1", name: "a")
 
-            presenter.filterAndSort(robots: [robot1, robot2, robot3])
+            presenter.filterAndSort(robots: [robot1, robot2, robot3], keywordChanged: false)
             XCTAssertEqual(presenter.displayRobots?[0].id, "1", "name順にソートされ、同じ場合はid順にソートされていない")
             XCTAssertEqual(presenter.displayRobots?[1].id, "3", "name順にソートされ、同じ場合はid順にソートされていない")
             XCTAssertEqual(presenter.displayRobots?[2].id, "2", "name順にソートされ、同じ場合はid順にソートされていない")

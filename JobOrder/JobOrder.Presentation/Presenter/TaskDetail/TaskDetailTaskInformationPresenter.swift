@@ -15,6 +15,10 @@ import JobOrder_Utility
 // MARK: - Interface
 /// @mockable
 public protocol TaskDetailPresenterProtocol {
+    /// 起動時
+    /// - Parameters:
+    ///   - taskId: TaskID
+    ///   - robotId: RobotID
     func viewWillAppear(taskId: String, robotId: String)
     /// Job名取得
     func jobName() -> String?
@@ -67,7 +71,7 @@ public protocol TaskDetailPresenterProtocol {
 }
 
 // MARK: - Implementation
-class TaskDetailPresenter {
+class TaskDetailTaskInformationPresenter {
     private let dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol
     private let vc: TaskDetailViewControllerProtocol
     private var cancellables: Set<AnyCancellable> = []
@@ -85,7 +89,7 @@ class TaskDetailPresenter {
 }
 
 // MARK: - Protocol Function
-extension TaskDetailPresenter: TaskDetailPresenterProtocol {
+extension TaskDetailTaskInformationPresenter: TaskDetailPresenterProtocol {
     /// 起動時
     /// - Parameters:
     ///   - taskId: TaskID
@@ -94,19 +98,17 @@ extension TaskDetailPresenter: TaskDetailPresenterProtocol {
         vc.changedProcessing(true)
         getCommand(taskId: taskId, robotId: robotId)
         getTask(taskId: taskId)
-        getRobot(robotId: robotId)
     }
     /// Job名取得
     /// - Returns: Job名
     func jobName() -> String? {
-        //TODO:APIから値取得
         return task?.job.name
     }
 
     /// Robot名取得
     /// - Returns: Robot名
     func RobotName() -> String? {
-        return robot?.name
+        return command?.robot?.name
     }
 
     /// 更新時間取得
@@ -115,7 +117,7 @@ extension TaskDetailPresenter: TaskDetailPresenterProtocol {
     ///   - font: フォント
     /// - Returns: 更新時間
     func updatedAt(textColor: UIColor, font: UIFont) -> NSAttributedString? {
-        return string(date: toEpocTime(command?.updateTime), label: "", textColor: textColor, font: font)
+        return string(date: command?.updateTime.toEpocTime, label: "", textColor: textColor, font: font)
     }
 
     /// 作成時間取得
@@ -124,7 +126,7 @@ extension TaskDetailPresenter: TaskDetailPresenterProtocol {
     ///   - font: フォント
     /// - Returns: 作成時間
     func createdAt(textColor: UIColor, font: UIFont) -> NSAttributedString? {
-        return string(date: toEpocTime(command?.createTime), label: "", textColor: textColor, font: font)
+        return string(date: command?.createTime.toEpocTime, label: "", textColor: textColor, font: font)
     }
     /// 開始時間取得
     /// - Parameters:
@@ -132,7 +134,7 @@ extension TaskDetailPresenter: TaskDetailPresenterProtocol {
     ///   - font: フォント
     /// - Returns: 開始時間
     func startedAt(textColor: UIColor, font: UIFont) -> NSAttributedString? {
-        return string(date: toEpocTime(command?.started), label: "", textColor: textColor, font: font)
+        return string(date: command?.started?.toEpocTime, label: "", textColor: textColor, font: font)
     }
     /// 完了時間取得
     /// - Parameters:
@@ -140,7 +142,7 @@ extension TaskDetailPresenter: TaskDetailPresenterProtocol {
     ///   - font: フォント
     /// - Returns: 完了時間
     func exitedAt(textColor: UIColor, font: UIFont) -> NSAttributedString? {
-        return string(date: toEpocTime(command?.exited), label: "", textColor: textColor, font: font)
+        return string(date: command?.exited?.toEpocTime, label: "", textColor: textColor, font: font)
     }
     /// 経過時間取得
     /// - Parameters:
@@ -211,7 +213,7 @@ extension TaskDetailPresenter: TaskDetailPresenterProtocol {
 }
 
 // MARK: - Private Function
-extension TaskDetailPresenter {
+extension TaskDetailTaskInformationPresenter {
 
     private func observeRobots() {
         dataUseCase.observeRobotData()
@@ -248,21 +250,6 @@ extension TaskDetailPresenter {
             }, receiveValue: { response in
                 Logger.debug(target: self, "\(String(describing: response))")
                 self.task = response
-            }).store(in: &cancellables)
-    }
-
-    func getRobot(robotId: String) {
-        dataUseCase.robot(id: robotId)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished: break
-                case .failure(let error):
-                    self.vc.showErrorAlert(error)
-                }
-            }, receiveValue: { response in
-                Logger.debug(target: self, "\(String(describing: response))")
-                self.robot = response
                 self.vc.viewReload()
             }).store(in: &cancellables)
     }
@@ -275,7 +262,7 @@ extension TaskDetailPresenter {
             .foregroundColor: textColor,
             .font: font
         ]))
-        let queuedAt = toDateString(date)
+        let queuedAt = date?.toDateString ?? "N/A"
         mutableAttributedString.append(NSAttributedString(string: queuedAt, attributes: [
             .foregroundColor: UIColor.label,
             .font: UIFont.systemFont(ofSize: 14.0)
@@ -301,20 +288,4 @@ extension TaskDetailPresenter {
         return mutableAttributedString
     }
 
-    private func toDateString(_ date: Int?) -> String {
-        guard let date = date, date != 0 else { return "" }
-        return toDateString(Date(timeIntervalSince1970: TimeInterval(date)))
-    }
-
-    private func toDateString(_ date: Date?) -> String {
-        guard let date = date, date.timeIntervalSince1970 != 0 else { return "" }
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .long
-        return formatter.string(from: date)
-    }
-
-    func toEpocTime(_ data: Int?) -> Date {
-        return Date(timeIntervalSince1970: Double((data ?? 1000) / 1000))
-    }
 }

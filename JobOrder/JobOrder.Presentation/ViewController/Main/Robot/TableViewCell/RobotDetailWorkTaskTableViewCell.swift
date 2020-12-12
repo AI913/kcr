@@ -23,10 +23,10 @@ class RobotDetailWorkTaskTableViewCell: RobotDetailWorkTableViewCell {
 
     // MARK: - Function
     override func setRow(_ indexPath: IndexPath) {
-        identifierValueLabel.text = presenter?.identifier(indexPath.section)
-        queuedAtValueLabel.attributedText = presenter?.queuedAt(indexPath.section, textColor: queuedAtValueLabel.textColor, font: queuedAtValueLabel.font)
+        identifierValueLabel.text = presenter?.jobName(indexPath.section)
+        queuedAtValueLabel.attributedText = presenter?.queuedAt(in: dataset, indexPath.section, textColor: queuedAtValueLabel.textColor, font: queuedAtValueLabel.font)
         if let presenter = presenter {
-            let status: MainViewData.TaskExecution.Status = .init(presenter.status(indexPath.section))
+            let status: MainViewData.TaskExecution.Status = .init(presenter.status(in: dataset, indexPath.section))
             statusImageView.image = status.imageName.withRenderingMode(.alwaysTemplate)
             statusImageView.tintColor = status.imageColor
         }

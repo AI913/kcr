@@ -24,7 +24,7 @@ class JobAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getHandler = { url, token in
+        mock.getHandler = { url, token, _ in
             return Future<APIResult<[JobAPIEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
                 promise(.success(APITestsStub().jobsResult))
@@ -54,7 +54,7 @@ class JobAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getHandler = { url, token in
+        mock.getHandler = { url, token, _ in
             return Future<APIResult<[JobAPIEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
                 let error = NSError(domain: "Error", code: -1, userInfo: nil)
@@ -79,7 +79,7 @@ class JobAPIDataStoreTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
 
-        mock.getHandler = { url, token in
+        mock.getHandler = { url, token, _ in
             return Future<APIResult<[JobAPIEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
@@ -99,10 +99,24 @@ class JobAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getResUrlHandler = { url, token, dataId in
+        let paging: APIPaging.Input = APIPaging.Input(page: 5, size: 10)
+
+        let expectedQuery: [URLQueryItem] = [
+            URLQueryItem(name: "size", value: "10"),
+            URLQueryItem(name: "page", value: "5")
+        ]
+
+        mock.getResUrlHandler = { url, token, dataId, query in
             return Future<APIResult<[TaskAPIEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
                 promise(.success(APITestsStub().tasksFromJobResult))
+                if let query = query {
+                    let canonicalizedQuery = self.canonicalized(queryitems: query)
+                    let canonicalizedExpected = self.canonicalized(queryitems: expectedQuery)
+                    XCTAssertTrue(canonicalizedQuery.elementsEqual(canonicalizedExpected), "正しい値が設定されていない")
+                } else {
+                    XCTFail("クエリが設定されていない")
+                }
             }.eraseToAnyPublisher()
         }
 
@@ -122,14 +136,15 @@ class JobAPIDataStoreTests: XCTestCase {
             },
             onError: { error in
                 XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
-            })
+            },
+            paging: paging)
     }
 
     func test_getTasksError() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<[TaskAPIEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
                 let error = NSError(domain: "Error", code: -1, userInfo: nil)
@@ -154,7 +169,7 @@ class JobAPIDataStoreTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<[TaskAPIEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
@@ -190,10 +205,10 @@ extension JobAPIDataStoreTests {
         wait(for: exps, timeout: ms1000)
     }
 
-    private func getTasks(_ exps: [XCTestExpectation], onSuccess: @escaping (APIResult<[TaskAPIEntity.Data]>) -> Void, onError: @escaping (Error) -> Void) {
+    private func getTasks(_ exps: [XCTestExpectation], onSuccess: @escaping (APIResult<[TaskAPIEntity.Data]>) -> Void, onError: @escaping (Error) -> Void, paging: APIPaging.Input? = nil) {
         let param = "test"
 
-        dataStore.getTasks(param, id: param)
+        dataStore.getTasks(param, id: param, paging: paging)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished: break
@@ -207,4 +222,20 @@ extension JobAPIDataStoreTests {
 
         wait(for: exps, timeout: ms1000)
     }
+
+    private func canonicalized(queryitems: [URLQueryItem]) -> [URLQueryItem] {
+        let sortRule = { (lhs: URLQueryItem, rhs: URLQueryItem) -> Bool in
+            if lhs.name == rhs.name {
+                switch (lhs.value, rhs.value) {
+                case let (lhs?, rhs?): return lhs < rhs
+                case (_, nil): return true
+                case (nil, _): return false
+                }
+            } else {
+                return lhs.name < rhs.name
+            }
+        }
+        return queryitems.sorted(by: sortRule)
+    }
+
 }

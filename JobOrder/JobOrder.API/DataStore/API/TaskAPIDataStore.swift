@@ -31,7 +31,7 @@ public class TaskAPIDataStore: TaskAPIRepository {
     /// - Returns: Command情報
     public func getCommand(_ token: String, taskId: String, robotId: String) -> AnyPublisher<APIResult<CommandEntity.Data>, Error> {
         Logger.info(target: self)
-        return api.get(resUrl: url, token: token, dataId: "/\(taskId)/commands/\(robotId)")
+        return api.get(resUrl: url, token: token, dataId: "/\(taskId)/commands/\(robotId)", query: nil)
     }
 
     /// Taskのコマンドを取得する
@@ -41,7 +41,7 @@ public class TaskAPIDataStore: TaskAPIRepository {
     /// - Returns: Command情報
     public func getCommands(_ token: String, taskId: String) -> AnyPublisher<APIResult<[CommandEntity.Data]>, Error> {
         Logger.info(target: self)
-        return api.get(resUrl: url, token: token, dataId: "/\(taskId)/commands")
+        return api.get(resUrl: url, token: token, dataId: "/\(taskId)/commands", query: nil)
     }
 
     /// Taskの情報を取得する
@@ -51,6 +51,6 @@ public class TaskAPIDataStore: TaskAPIRepository {
     /// - Returns: Task情報
     public func getTask(_ token: String, taskId: String) -> AnyPublisher<APIResult<TaskAPIEntity.Data>, Error> {
         Logger.info(target: self)
-        return api.get(resUrl: url, token: token, dataId: "/\(taskId)")
+        return api.get(resUrl: url, token: token, dataId: "/\(taskId)", query: nil)
     }
 }

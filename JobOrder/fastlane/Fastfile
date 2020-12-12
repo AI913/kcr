@@ -5,7 +5,6 @@ default_platform :ios
 platform :ios do
 
   before_all do |lane|
-    setup_library(useWorkaround: true)
   end
 
   after_all do |lane|
@@ -16,6 +15,8 @@ platform :ios do
 
   desc "Marge to master branch (Deploy to AppStore Connect)"
   lane :deploy do
+
+    setup_library(useWorkaround: true)
 
     import_certificates
     get_provisioning_profile
@@ -50,14 +51,19 @@ platform :ios do
   desc "Marge to staging branch (Deploy to AdHoc)"
   lane :stage do
 
+    setup_library(useWorkaround: true)
+
     import_certificates
     get_provisioning_profile(adhoc: true)
+
+    lint
+    commit_push(message: "Fixed autocorrect with Lint")
 
     run_tests
     # slather
 
     codecov
-    # danger
+    danger
 
     license_plist
     build_app
@@ -65,7 +71,13 @@ platform :ios do
   end
 
   desc "Push to development branch"
-  lane :cache do
+  lane :cache_configuration do
+    sh("cd .. && make prepare-ci")
+  end
+
+  desc "Push to development branch"
+  lane :cache_library do
+    setup_library(useWorkaround: true)
   end
 
   desc "Import certificates"
@@ -104,6 +116,12 @@ platform :ios do
     )
   end
 
+  desc "Commit & Push"
+  private_lane :commit_push do |options|
+        git_commit(path: "./*", message: options[:message])
+        push_to_git_remote
+  end
+
   desc "Setup libraries"
   private_lane :setup_library do |options|
     sh("cd .. && make prepare-ci")
@@ -121,6 +139,11 @@ platform :ios do
     cocoapods
   end
 
+  desc "Lint in SwiftLint"
+  private_lane :lint do
+    sh("cd .. && make lint")
+  end
+  
   desc "Generate acknowledgement in LicensePlist"
   private_lane :license_plist do
     sh("cd .. && make generate-licenses")

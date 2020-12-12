@@ -252,6 +252,10 @@ struct PresentationTestsStub {
                                                               updator: "user@kyocera.jp")
     }
 
+    var commands6: [JobOrder_Domain.DataManageModel.Output.Command] {
+        return [command1(), command2(), command3()]
+    }
+
     var command: JobOrder_Domain.DataManageModel.Output.Command {
         return _command()
     }
@@ -294,16 +298,24 @@ struct PresentationTestsStub {
         [task(robotIds: ["test1", "test2", "test3"])]
     }
 
+    var tasks5: [JobOrder_Domain.DataManageModel.Output.Task] {
+        [task(id: "test1"), task(id: "test2"), task(id: "test3")]
+    }
+
+    var tasks6: [JobOrder_Domain.DataManageModel.Output.Task] {
+        [task(), task(robotIds: ["test1"])]
+    }
+
     var task: JobOrder_Domain.DataManageModel.Output.Task {
         task()
     }
 
-    func task(robotIds: [String] = ["6592c2a4-3688-49c5-ac1e-4763c81680e4", "78abfbd4-6613-42a6-a691-23c3748fa346"]) -> JobOrder_Domain.DataManageModel.Output.Task {
-        return JobOrder_Domain.DataManageModel.Output.Task(id: "091bf5e2-d3e4-4426-a36b-8554d68f1167",
+    func task(id: String = "091bf5e2-d3e4-4426-a36b-8554d68f1167", robotIds: [String] = ["6592c2a4-3688-49c5-ac1e-4763c81680e4", "78abfbd4-6613-42a6-a691-23c3748fa346"]) -> JobOrder_Domain.DataManageModel.Output.Task {
+        return JobOrder_Domain.DataManageModel.Output.Task(id: id,
                                                            jobId: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
                                                            robotIds: robotIds,
-                                                           exit: JobOrder_Domain.DataManageModel.Output.Task.Exit(
-                                                            JobOrder_Domain.DataManageModel.Output.Task.Exit.Option(5)), job: job1(),
+                                                           exit: JobOrder_Domain.DataManageModel.Output.Task.Exit(JobOrder_Domain.DataManageModel.Output.Task.Exit.Option(5)),
+                                                           job: job1(),
                                                            createTime: 1_601_165_183_557,
                                                            creator: "user@kyocera.jp",
                                                            updateTime: 1_592_618_421_000,

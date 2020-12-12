@@ -15,6 +15,8 @@ protocol RobotDetailViewControllerProtocol: class {
     /// - Parameter button: 起点とするボタン
     func showActionSheet(_ button: UIBarButtonItem)
     func pageChanged(index: Int)
+    /// OrderEntry画面へ遷移
+    func launchOrderEntry()
 }
 
 class RobotDetailViewController: UIViewController {
@@ -29,7 +31,7 @@ class RobotDetailViewController: UIViewController {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var containerViewHeight: NSLayoutConstraint!
-
+    @IBOutlet weak var orderButton: UIButton!
     // MARK: - Variable
     var viewData: MainViewData.Robot!
     var presenter: RobotDetailPresenterProtocol!
@@ -97,6 +99,10 @@ extension RobotDetailViewController {
     @IBAction private func valueChangedSegment(_ sender: UISegmentedControl) {
         pageVc?.changePage(index: sender.selectedSegmentIndex)
     }
+
+    @IBAction private func touchUpInsideOrderButton(_ sender: UIButton) {
+        presenter?.tapOrderEntryButton()
+    }
 }
 
 // MARK: - Interface Function
@@ -119,6 +125,14 @@ extension RobotDetailViewController: RobotDetailViewControllerProtocol {
 
     func pageChanged(index: Int) {
         segmentedControl?.selectedSegmentIndex = index
+    }
+    /// OrderEntry画面へ遷移
+    func launchOrderEntry() {
+        let navigationController = StoryboardScene.OrderEntry.initialScene.instantiate()
+        if let vc = navigationController.topViewController as? OrderEntryJobSelectionViewController {
+            vc.inject(jobId: nil, robotId: presenter?.data.id)
+            self.present(navigationController, animated: true, completion: nil)
+        }
     }
 }
 

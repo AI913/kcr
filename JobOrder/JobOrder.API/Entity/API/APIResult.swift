@@ -17,6 +17,8 @@ public struct APIResult<T: Codable>: Codable {
     public let data: T?
     /// 回数
     public let count: Int?
+    /// ページング
+    public let paging: APIPaging.Output?
 
     static func == (lhs: APIResult, rhs: APIResult) -> Bool {
         return lhs.time == rhs.time && lhs.count == rhs.count

@@ -31,17 +31,25 @@ class JobDetailWorkPresenterTests: XCTestCase {
         completionExpectation.isInverted = true
         presenter.data.id = param
 
-        data.tasksFromJobHandler = { id in
-            return Future<[JobOrder_Domain.DataManageModel.Output.Task], Error> { promise in
-                promise(.success(self.stub.tasks))
+        data.tasksFromJobHandler = { id, cursor in
+            return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Task]>, Error> { promise in
+                promise(.success(.init(data: self.stub.tasks5, cursor: nil, total: nil)))
                 taksHandlerExpectation.fulfill()
+                XCTAssertEqual(cursor, PagingModel.Cursor(offset: 0, limit: 10), "先頭10件取得指定になっていない")
             }.eraseToAnyPublisher()
         }
 
         data.commandFromTaskHandler = { _, _ in
             return Future<JobOrder_Domain.DataManageModel.Output.Command, Error> { promise in
-                promise(.success(self.stub.command1()))
-                commandHandlerExpectation.fulfill()
+                switch self.data.commandFromTaskCallCount {
+                case 1:
+                    promise(.success(self.stub.command1()))
+                case 2:
+                    promise(.success(self.stub.command2()))
+                default:
+                    promise(.success(self.stub.command3()))
+                    commandHandlerExpectation.fulfill()
+                }
             }.eraseToAnyPublisher()
         }
 
@@ -49,9 +57,9 @@ class JobDetailWorkPresenterTests: XCTestCase {
         wait(for: [taksHandlerExpectation, commandHandlerExpectation, completionExpectation], timeout: ms1000)
 
         XCTAssertNotNil(presenter.tasks, "正しい値が取得できていない")
-        XCTAssertFalse(presenter.commands.isEmpty, "正しい値が取得できていない")
-        XCTAssertTrue(stub.tasks.elementsEqual(presenter.tasks!), "正しい値が取得できていない")
-        XCTAssertEqual(stub.command1(), presenter.commands.first!)
+        XCTAssertEqual(presenter.commands.count, 3, "正しい値が取得できていない")
+        XCTAssertTrue(stub.tasks5.elementsEqual(presenter.tasks!), "正しい値が取得できていない")
+        XCTAssertTrue([stub.command1(), stub.command2(), stub.command3()].elementsEqual(presenter.commands), "正しい値が取得できていない")
     }
 
     func test_viewWillAppearErrorTask() {
@@ -63,8 +71,8 @@ class JobDetailWorkPresenterTests: XCTestCase {
         commandHandlerExpectation.isInverted = true
         presenter.data.id = param
 
-        data.tasksFromJobHandler = { id in
-            return Future<[JobOrder_Domain.DataManageModel.Output.Task], Error> { promise in
+        data.tasksFromJobHandler = { id, _ in
+            return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Task]>, Error> { promise in
                 let error = NSError(domain: "Error", code: -1, userInfo: nil)
                 promise(.failure(error))
                 taksHandlerExpectation.fulfill()
@@ -94,9 +102,9 @@ class JobDetailWorkPresenterTests: XCTestCase {
         completionExpectation.isInverted = true
         presenter.data.id = param
 
-        data.tasksFromJobHandler = { id in
-            return Future<[JobOrder_Domain.DataManageModel.Output.Task], Error> { promise in
-                promise(.success(self.stub.tasks))
+        data.tasksFromJobHandler = { id, _ in
+            return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Task]>, Error> { promise in
+                promise(.success(.init(data: self.stub.tasks, cursor: nil, total: nil)))
                 taksHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }

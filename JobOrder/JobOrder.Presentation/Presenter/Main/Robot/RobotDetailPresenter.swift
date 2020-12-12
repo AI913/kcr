@@ -40,6 +40,8 @@ protocol RobotDetailPresenterProtocol {
     /// Moreボタンをタップ
     /// - Parameter button: ボタン
     func tapMoreBarButton(_ button: UIBarButtonItem)
+    /// OrderEntryボタンをタップ
+    func tapOrderEntryButton()
 }
 
 // MARK: - Implementation
@@ -144,5 +146,10 @@ extension RobotDetailPresenter: RobotDetailPresenterProtocol {
     func tapMoreBarButton(_ button: UIBarButtonItem) {
         guard let _ = data.id else { return }
         vc.showActionSheet(button)
+    }
+
+    /// OrderEntryボタンをタップ
+    func tapOrderEntryButton() {
+        vc.launchOrderEntry()
     }
 }

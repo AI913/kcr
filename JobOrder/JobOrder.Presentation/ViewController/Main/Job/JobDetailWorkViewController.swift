@@ -71,13 +71,18 @@ class JobDetailWorkViewController: JobDetailContainerViewController {
             historyTableView.contentSize.height
         preferredContentSize.height = max(height, initialHeight)
     }
+
 }
 
-// MARK: - Action
+// MARK: - View Controller Event
 extension JobDetailWorkViewController {
 
-    @IBAction private func touchUpInsideSeeAll(_ sender: UIButton) {
-        // TODO: See all
+    @IBAction private func touchUpInsideSeeAllButton(_ sender: UIButton) {
+        let navigationController = StoryboardScene.TaskDetail.taskDetailRunHistoryNavi.instantiate()
+        if let vc = navigationController.topViewController as? TaskDetailRunHistoryViewController {
+            vc.inject(jobData: viewData)
+            self.present(navigationController, animated: true, completion: nil)
+        }
     }
 
 }
@@ -165,14 +170,14 @@ extension JobDetailWorkViewController: JobDetailWorkViewControllerProtocol {
     /// - Parameter jobId: Job ID
     func launchTaskDetail(taskId: String?, robotIds: [String]?) {
         Logger.debug(target: self, "taskId: \(taskId ?? "nil"), robotIds: \(robotIds?.joined(separator: ",") ?? "nil")")
-
         guard let taskId = taskId else { return }
         guard let robotIds = robotIds else { return }
+
         //robotIdsが一つしか格納されていないのであればRobotSelection画面を飛ばす
         if robotIds.count == 1 {
             guard let jobid = presenter.data.id else { return }
             let navigationController = StoryboardScene.TaskDetail.initialScene.instantiate()
-            if let vc = navigationController.topViewController as? TaskDetailViewController {
+            if let vc = navigationController.topViewController as? TaskDetailTaskInformationViewController {
                 vc.inject(jobId: jobid, robotId: robotIds[0])
                 self.present(navigationController, animated: true, completion: nil)
             }
@@ -183,13 +188,6 @@ extension JobDetailWorkViewController: JobDetailWorkViewControllerProtocol {
                 self.present(navigationController, animated: true, completion: nil)
             }
         }
-        //            let sb = StoryboardScene.TaskDetail.initialScene.instantiate()
-        //            if let vc = sb.storyboard?.instantiateViewController(identifier: "RobotSelect") as? TaskDetailRobotSelectionViewController {
-        //                //                vc.inject(taskId: taskId)
-        //                let navController = UINavigationController(rootViewController: vc)
-        //                // Creating a navigation controller with vc at the root of the navigation stack.
-        //                self.present(navController, animated: true, completion: nil)
-        //            }
     }
 }
 

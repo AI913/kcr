@@ -36,7 +36,7 @@ class AboutAppViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        appNameLabel.text = presenter?.appName
+        appNameLabel.text = presenter?.appDisplayName
         appVersionLabel.text = presenter?.appVersion
         thingNameLabel.text = presenter?.thingName
     }

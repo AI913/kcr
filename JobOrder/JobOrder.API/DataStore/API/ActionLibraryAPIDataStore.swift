@@ -30,6 +30,6 @@ public class ActionLibraryAPIDataStore: ActionLibraryAPIRepository {
     /// - Returns: ActionLibrary情報
     public func fetch(_ token: String) -> AnyPublisher<APIResult<[ActionLibraryAPIEntity.Data]>, Error> {
         Logger.info(target: self)
-        return api.get(url: url, token: token)
+        return api.get(url: url, token: token, query: nil)
     }
 }

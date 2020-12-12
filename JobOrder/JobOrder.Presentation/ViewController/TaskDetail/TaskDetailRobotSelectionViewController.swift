@@ -44,8 +44,8 @@ class TaskDetailRobotSelectionViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch StoryboardSegue.TaskDetail(segue) {
         case .robotSelectionCellToTaskInfo:
-            guard segue.destination is TaskDetailViewController else { return }
-            let taskdetail = segue.destination as! TaskDetailViewController
+            guard segue.destination is TaskDetailTaskInformationViewController else { return }
+            let taskdetail = segue.destination as! TaskDetailTaskInformationViewController
             guard let taskId = presenter.data.taskId else { return }
             guard let robotId = presenter.data.robotId else { return }
             taskdetail.inject(jobId: taskId, robotId: robotId)
@@ -61,8 +61,7 @@ class TaskDetailRobotSelectionViewController: UIViewController {
 
     func inject(taskId: String) {
         viewData = TaskDetailViewData(taskId: taskId)
-        presenter = TaskDetailBuilder.TaskDetailRobotSelection().build(vc: self, viewData: viewData
-        )
+        presenter = TaskDetailBuilder.TaskDetailRobotSelection().build(vc: self, viewData: viewData)
         self.taskId = taskId
     }
 
@@ -70,6 +69,10 @@ class TaskDetailRobotSelectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // NavigationController の最初の画面は Cancel でそれ以外はBackに
+        if self.navigationController?.viewControllers.first != self {
+            self.navigationItem.leftBarButtonItem = nil
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -78,14 +81,6 @@ class TaskDetailRobotSelectionViewController: UIViewController {
         robotCollection?.allowsSelection = true
         presenter?.viewWillAppear(taskId: self.taskId)
     }
-
-    //    private let reuseIdentifier = "TaskDetailRobotSelectionCell"
-    //
-    //    private let itemsPerRow: CGFloat = 2
-    //    private let sectionInsets = UIEdgeInsets(top: 50.0,
-    //                                             left: 20.0,
-    //                                             bottom: 50.0,
-    //                                             right: 20.0)
 }
 
 // MARK: - Action
@@ -130,7 +125,6 @@ extension TaskDetailRobotSelectionViewController {
         updatedAtLabel?.attributedText = presenter?.updatedAt(textColor: updatedAtLabel.textColor, font: updatedAtLabel.font)
         cancelAllTasksButton?.isEnabled = true
     }
-
 }
 
 // MARK: - Implement UICollectionViewDataSource

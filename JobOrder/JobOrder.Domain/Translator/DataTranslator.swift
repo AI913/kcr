@@ -23,9 +23,7 @@ struct DataTranslator {
             let action = JobOrder_Data.JobAction()
             action.index = $0.index
             action.id = $0.id
-            let parameter = JobOrder_Data.JobParameter()
-            // parameter = $0.parameter
-            action.parameter = parameter
+            //action.parameter = $0.parameter
             action._catch = $0._catch
             action.then = $0.then
             actions.append(action)

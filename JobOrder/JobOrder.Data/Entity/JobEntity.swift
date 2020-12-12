@@ -41,7 +41,7 @@ public class JobEntity: Object, Codable {
         self.actions.append(objectsIn: actions)
     }
 
-    required init() {}
+    required override init() {}
 
     override public static func primaryKey() -> String? {
         return "id"
@@ -75,7 +75,7 @@ public class JobAction: Object, Codable {
     /// ID
     @objc public dynamic var id: String = ""
     /// パラメータ
-    @objc public dynamic var parameter: JobParameter?
+    // @objc public dynamic var parameter: JobParameter?
     /// catch
     @objc public dynamic var _catch: String?
     /// then
@@ -90,9 +90,10 @@ public class JobAction: Object, Codable {
     }
 }
 
-public class JobParameter: Object, Codable {
-
-    public static func == (lhs: JobParameter, rhs: JobParameter) -> Bool {
-        return true
-    }
-}
+// TODO: Realmでエラーが出るので中身が決まるまでコメントアウト
+//public class JobParameter: Object, Codable {
+//
+//    public static func == (lhs: JobParameter, rhs: JobParameter) -> Bool {
+//        return true
+//    }
+//}

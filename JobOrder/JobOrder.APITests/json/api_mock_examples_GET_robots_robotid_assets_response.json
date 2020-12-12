@@ -2,6 +2,7 @@
     "data": [
         {
             "assetId": "a4b2a8b5-a479-4a2a-bec8-3b96b87e65a4",
+            "robotId": "78abfbd4-6613-42a6-a691-23c3748fa346",
             "createdBy": "user@kyocera.jp",
             "createTime": 1592477367000,
             "dataVersion": 1,
@@ -9,14 +10,13 @@
             "displayModel": "82635AWGDVKPRQ",
             "displayModelClass": "Kyocera 6D",
             "displaySerial": "f97f805dd3f3",
-            "robotId": "6592c2a4-3688-49c5-ac1e-4763c81680e4",
             "type": "hand",
             "updatedBy": "user@kyocera.jp",
             "updateTime": 1592477367000
         },
         {
-            "robotId": "6592c2a4-3688-49c5-ac1e-4763c81680e4",
             "assetId": "fa9f7d4a-0ba6-4a10-9abc-f97f805dd3f3",
+            "robotId": "78abfbd4-6613-42a6-a691-23c3748fa346",
             "type": "camera",
             "displayMaker": "Intel Corporation",
             "displayModelClass": "Intel RealSense Depth Camera D435",

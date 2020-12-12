@@ -21,250 +21,235 @@ class APIRequestTests: XCTestCase {
     private lazy var aiLibrary = AILibraryAPIDataStore(api: api)
     private lazy var task = TaskAPIDataStore(api: api)
     private var cancellables: Set<AnyCancellable> = []
-    private let robotsJson = "list_robot_response_example"
-    private let jobsJson = "list_job_response_example"
-    private let actionLibrariesJson = "list_action_library_response_example"
-    private let aiLibrariesJson = "list_ai_library_response_example"
-    private let commandJson = "api_openapi-spec_v1_examples_list_command_response_example"
-    private let taskJson = "api_openapi-spec_v1_examples_command_response_succeeded_example01"
-    private let robotJson = "robot_response_example01"
-    private let tasksJson = "task_response_example01"
-    private let swconfJson = "swconfig_response_example01"
-    private let assetJson = "list_hw_config_asset_response_example"
-    private let tasksFromJobJson = "list_task_filtered_by_jobid_response_example"
-    private let commandsFromTaskJson = "api_mock_examples_GET_tasks_taskid_commands_response"
-    private let commandsFilteredByTaskJson = "list_command_filtered_by_taskid_response_example"
+
+    private let jobJson = "api_mock_examples_GET_jobs_jobid_response"
+    private let robotAssetsJson = "api_mock_examples_GET_robots_robotid_assets_response"
+    private let robotJson = "api_mock_examples_GET_robots_robotid_response"
+    private let robotSwconfJson = "api_mock_examples_GET_robots_robotid_swconf_response"
+    private let taskCommandJson = "api_mock_examples_GET_tasks_taskid_commands_robotid_response"
+    private let taskJson = "api_mock_examples_GET_tasks_taskid_response"
+
+    private let actionLibsJson = "api_mock_examples_GET_action_libs_response"
+    private let aiLibsJson = "api_mock_examples_GET_ai_libs_response"
+    private let jobTasksJson = "api_mock_examples_GET_jobs_jobid_tasks_response"
+    private let jobsJson = "api_mock_examples_GET_jobs_response"
+    private let robotsJson = "api_mock_examples_GET_robots_response"
+    private let robotCommandsJson = "api_mock_examples_GET_robots_robotid_commands_response"
+    private let taskCommandsJson = "api_mock_examples_GET_tasks_taskid_commands_response"
 
     override func setUpWithError() throws {}
     override func tearDownWithError() throws {}
 
+    func test_buildGetRequest() {
+        let url = URL(string: "http://example.org/endpoint")!
+        let token = "token"
+
+        XCTContext.runActivity(named: "クエリが未設定の場合") { _ in
+            let request = api.buildGetRequest(url: url, token: token, query: nil)
+            XCTAssertEqual(request.url?.absoluteString, "http://example.org/endpoint")
+        }
+
+        XCTContext.runActivity(named: "クエリが空の場合") { _ in
+            let query: [URLQueryItem] = []
+            let request = api.buildGetRequest(url: url, token: token, query: query)
+            XCTAssertEqual(request.url?.absoluteString, "http://example.org/endpoint")
+        }
+
+        XCTContext.runActivity(named: "クエリが設定済みの場合(1つ)") { _ in
+            let query: [URLQueryItem] = [
+                URLQueryItem(name: "param", value: "value")
+            ]
+            let request = api.buildGetRequest(url: url, token: token, query: query)
+            XCTAssertEqual(request.url?.absoluteString, "http://example.org/endpoint?param=value")
+        }
+
+        XCTContext.runActivity(named: "クエリが設定済みの場合(複数)") { _ in
+            let query: [URLQueryItem] = [
+                URLQueryItem(name: "param", value: "value"),
+                URLQueryItem(name: "param", value: "value")
+            ]
+            let request = api.buildGetRequest(url: url, token: token, query: query)
+            XCTAssertEqual(request.url?.absoluteString, "http://example.org/endpoint?param=value&param=value")
+        }
+
+        XCTContext.runActivity(named: "クエリが設定済みの場合(パラメータだけ)") { _ in
+            let query: [URLQueryItem] = [
+                URLQueryItem(name: "param", value: nil)
+            ]
+            let request = api.buildGetRequest(url: url, token: token, query: query)
+            XCTAssertEqual(request.url?.absoluteString, "http://example.org/endpoint?param")
+        }
+
+    }
+
     func test_get() {
-
-        XCTContext.runActivity(named: "Robotリストを取得した場合") { _ in
-            guard let data = try? getJSONData(robotsJson) else {
-                XCTFail("jsonデータが存在しない")
-                return
-            }
-
-            stub(uri(robot.url.absoluteString), jsonData(data))
-
-            request(
-                APIResult<[RobotAPIEntity.Data]>.self,
-                result: api.get(url: robot.url, token: nil),
-                onSuccess: { data in
-                    XCTAssertNotNil(data, "値が取得できていない: \(data)")
-                },
-                onError: { error in
-                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
-                })
-        }
-
-        XCTContext.runActivity(named: "Jobリストを取得した場合") { _ in
-            guard let data = try? getJSONData(jobsJson) else {
-                XCTFail("jsonデータが存在しない")
-                return
-            }
-
-            stub(uri(job.url.absoluteString), jsonData(data))
-
-            request(
-                APIResult<[JobAPIEntity.Data]>.self,
-                result: api.get(url: job.url, token: nil),
-                onSuccess: { data in
-                    XCTAssertNotNil(data, "値が取得できていない: \(data)")
-                },
-                onError: { error in
-                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
-                })
-        }
 
         let param = "test"
 
-        XCTContext.runActivity(named: "JobのTaskリストを取得する場合") { _ in
-            guard let data = try? getJSONData(tasksFromJobJson) else {
-                XCTFail("jsonデータが存在しない")
-                return
-            }
-
-            stub(uri(job.url.absoluteString + "/\(param)/tasks"), jsonData(data))
-
+        XCTContext.runActivity(named: "GET_jobs_jobid_response.json") { _ in
+            guard let data = try? getJSONData(jobJson) else { XCTFail("jsonデータが存在しない"); return }
+            stub(uri(job.url.absoluteString + "/\(param)"), jsonData(data))
             request(
-                APIResult<[TaskAPIEntity.Data]>.self,
-                result: api.get(resUrl: job.url, token: nil, dataId: param + "/tasks"),
-                onSuccess: { data in
-                    XCTAssertNotNil(data, "値が取得できていない: \(data)")
-                },
-                onError: { error in
-                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
-                })
+                APIResult<JobAPIEntity.Data>.self,
+                result: api.get(resUrl: job.url, token: nil, dataId: param),
+                onSuccess: { data in XCTAssertNotNil(data, "値が取得できていない: \(data)") },
+                onError: { error in XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)") })
         }
 
-        XCTContext.runActivity(named: "TaskのCommandリストを取得する場合") { _ in
-            guard let data = try? getJSONData(commandsFromTaskJson) else {
-                XCTFail("jsonデータが存在しない")
-                return
-            }
-
-            stub(uri(task.url.absoluteString + "/\(param)/commands"), jsonData(data))
-
+        XCTContext.runActivity(named: "GET_robots_robotid_assets_response.json") { _ in
+            guard let data = try? getJSONData(robotAssetsJson) else { XCTFail("jsonデータが存在しない"); return }
+            stub(uri(robot.url.absoluteString + "/\(param)/assets"), jsonData(data))
             request(
-                APIResult<[CommandEntity.Data]>.self,
-                result: api.get(resUrl: task.url, token: nil, dataId: param + "/commands"),
-                onSuccess: { data in
-                    XCTAssertNotNil(data, "値が取得できていない: \(data)")
-                },
-                onError: { error in
-                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
-                })
+                APIResult<[RobotAPIEntity.Asset]>.self,
+                result: api.get(resUrl: robot.url, token: nil, dataId: param + "/assets"),
+                onSuccess: { data in XCTAssertNotNil(data, "値が取得できていない: \(data)") },
+                onError: { error in XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)") })
         }
 
-        XCTContext.runActivity(named: "ActionLibraryリストを取得した場合") { _ in
-            guard let data = try? getJSONData(actionLibrariesJson) else {
-                XCTFail("jsonデータが存在しない")
-                return
-            }
+        XCTContext.runActivity(named: "GET_robots_robotid_response.json") { _ in
+            guard let data = try? getJSONData(robotJson) else { XCTFail("jsonデータが存在しない"); return }
+            stub(uri(robot.url.absoluteString + "/\(param)"), jsonData(data))
+            request(
+                APIResult<RobotAPIEntity.Data>.self,
+                result: api.get(resUrl: robot.url, token: nil, dataId: param),
+                onSuccess: { data in XCTAssertNotNil(data, "値が取得できていない: \(data)") },
+                onError: { error in XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)") })
+        }
 
+        XCTContext.runActivity(named: "GET_robots_robotid_swconf_response.json") { _ in
+            guard let data = try? getJSONData(robotSwconfJson) else { XCTFail("jsonデータが存在しない"); return }
+            stub(uri(robot.url.absoluteString + "/\(param)/swconf"), jsonData(data))
+            request(
+                APIResult<RobotAPIEntity.Swconf>.self,
+                result: api.get(resUrl: robot.url, token: nil, dataId: param + "/swconf"),
+                onSuccess: { data in XCTAssertNotNil(data, "値が取得できていない: \(data)") },
+                onError: { error in XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)") })
+        }
+
+        XCTContext.runActivity(named: "GET_tasks_taskid_commands_robotid_response.json") { _ in
+            guard let data = try? getJSONData(taskCommandJson) else { XCTFail("jsonデータが存在しない"); return }
+            stub(uri(task.url.absoluteString + "/\(param)/commands/\(param)"), jsonData(data))
+            request(
+                APIResult<CommandEntity.Data>.self,
+                result: api.get(resUrl: task.url, token: nil, dataId: param + "/commands/" + param),
+                onSuccess: { data in XCTAssertNotNil(data, "値が取得できていない: \(data)") },
+                onError: { error in XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)") })
+        }
+
+        XCTContext.runActivity(named: "GET_tasks_taskid_response.json") { _ in
+            guard let data = try? getJSONData(taskJson) else { XCTFail("jsonデータが存在しない"); return }
+            stub(uri(task.url.absoluteString + "/\(param)"), jsonData(data))
+            request(
+                APIResult<TaskAPIEntity.Data>.self,
+                result: api.get(resUrl: task.url, token: nil, dataId: param),
+                onSuccess: { data in XCTAssertNotNil(data, "値が取得できていない: \(data)") },
+                onError: { error in XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)") })
+        }
+
+    }
+
+    func test_getPaginated() {
+        let param = "test"
+
+        XCTContext.runActivity(named: "GET_action_libs_response.json") { _ in
+            guard let data = try? getJSONData(actionLibsJson) else { XCTFail("jsonデータが存在しない"); return }
             stub(uri(actionLibrary.url.absoluteString), jsonData(data))
-
             request(
                 APIResult<[ActionLibraryAPIEntity.Data]>.self,
                 result: api.get(url: actionLibrary.url, token: nil),
                 onSuccess: { data in
                     XCTAssertNotNil(data, "値が取得できていない: \(data)")
+                    XCTAssertEqual(data.paging, APIPaging.Output(page: 2, size: 5, totalPages: 2, totalCount: 8), "正しい値が取得できていない")
                 },
                 onError: { error in
                     XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
                 })
         }
 
-        XCTContext.runActivity(named: "AILibraryリストを取得した場合") { _ in
-            guard let data = try? getJSONData(aiLibrariesJson) else {
-                XCTFail("jsonデータが存在しない")
-                return
-            }
-
+        XCTContext.runActivity(named: "GET_ai_libs_response.json") { _ in
+            guard let data = try? getJSONData(aiLibsJson) else { XCTFail("jsonデータが存在しない"); return }
             stub(uri(aiLibrary.url.absoluteString), jsonData(data))
-
             request(
                 APIResult<[AILibraryAPIEntity.Data]>.self,
                 result: api.get(url: aiLibrary.url, token: nil),
                 onSuccess: { data in
                     XCTAssertNotNil(data, "値が取得できていない: \(data)")
+                    XCTAssertEqual(data.paging, APIPaging.Output(page: 1, size: 5, totalPages: 1, totalCount: 4), "正しい値が取得できていない")
                 },
                 onError: { error in
                     XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
                 })
         }
 
-        XCTContext.runActivity(named: "command listを取得する場合") { _ in
-            guard let data = try? getJSONData(commandJson) else {
-                XCTFail("jsonデータが存在しない")
-                return
-            }
+        XCTContext.runActivity(named: "GET_jobs_jobid_tasks_response.json") { _ in
+            guard let data = try? getJSONData(jobTasksJson) else { XCTFail("jsonデータが存在しない"); return }
+            stub(uri(job.url.absoluteString + "/\(param)/tasks"), jsonData(data))
+            request(
+                APIResult<[TaskAPIEntity.Data]>.self,
+                result: api.get(resUrl: job.url, token: nil, dataId: param + "/tasks"),
+                onSuccess: { data in
+                    XCTAssertNotNil(data, "値が取得できていない: \(data)")
+                    XCTAssertEqual(data.paging, APIPaging.Output(page: 2, size: 4, totalPages: 2, totalCount: 6), "正しい値が取得できていない")
+                },
+                onError: { error in
+                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+                })
+        }
 
+        XCTContext.runActivity(named: "GET_jobs_response.json") { _ in
+            guard let data = try? getJSONData(jobsJson) else { XCTFail("jsonデータが存在しない"); return }
+            stub(uri(job.url.absoluteString), jsonData(data))
+            request(
+                APIResult<[JobAPIEntity.Data]>.self,
+                result: api.get(url: job.url, token: nil),
+                onSuccess: { data in
+                    XCTAssertNotNil(data, "値が取得できていない: \(data)")
+                    XCTAssertEqual(data.paging, APIPaging.Output(page: 2, size: 5, totalPages: 2, totalCount: 8), "正しい値が取得できていない")
+                },
+                onError: { error in
+                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+                })
+        }
+
+        XCTContext.runActivity(named: "GET_robots_response.json") { _ in
+            guard let data = try? getJSONData(robotsJson) else { XCTFail("jsonデータが存在しない"); return }
+            stub(uri(robot.url.absoluteString), jsonData(data))
+            request(
+                APIResult<[RobotAPIEntity.Data]>.self,
+                result: api.get(url: robot.url, token: nil),
+                onSuccess: { data in
+                    XCTAssertNotNil(data, "値が取得できていない: \(data)")
+                    XCTAssertEqual(data.paging, APIPaging.Output(page: 1, size: 50, totalPages: 1, totalCount: 4), "正しい値が取得できていない")
+                },
+                onError: { error in
+                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+                })
+        }
+
+        XCTContext.runActivity(named: "GET_robots_robotid_commands_response.json") { _ in
+            guard let data = try? getJSONData(robotCommandsJson) else { XCTFail("jsonデータが存在しない"); return }
             stub(uri(robot.url.absoluteString + "/\(param)/commands"), jsonData(data))
-
             request(
                 APIResult<[CommandEntity.Data]>.self,
                 result: api.get(resUrl: robot.url, token: nil, dataId: param + "/commands"),
                 onSuccess: { data in
                     XCTAssertNotNil(data, "値が取得できていない: \(data)")
+                    XCTAssertEqual(data.paging, APIPaging.Output(page: 2, size: 5, totalPages: 8, totalCount: 37), "正しい値が取得できていない")
                 },
                 onError: { error in
                     XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
                 })
         }
 
-        XCTContext.runActivity(named: "taskのCommandを取得する場合") { _ in
-            guard let data = try? getJSONData(taskJson) else {
-                XCTFail("jsonデータが存在しない")
-                return
-            }
-
-            stub(uri(task.url.absoluteString + "/\(param)/commands/\(param)"), jsonData(data))
-
-            request(
-                APIResult<CommandEntity.Data>.self,
-                result: api.get(resUrl: task.url, token: nil, dataId: param + "/commands/" + param),
-                onSuccess: { data in
-                    XCTAssertNotNil(data, "値が取得できていない: \(data)")
-                },
-                onError: { error in
-                    //TODO:Entity変更の影響対応
-                    //XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
-                })
-        }
-
-        XCTContext.runActivity(named: "taskを取得する場合") { _ in
-            guard let data = try? getJSONData(tasksJson) else {
-                XCTFail("jsonデータが存在しない")
-                return
-            }
-
-            stub(uri(task.url.absoluteString + "/\(param)"), jsonData(data))
-
-            request(
-                APIResult<TaskAPIEntity.Data>.self,
-                result: api.get(resUrl: task.url, token: nil, dataId: param),
-                onSuccess: { data in
-                    XCTAssertNotNil(data, "値が取得できていない: \(data)")
-                },
-                onError: { error in
-                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
-                })
-        }
-
-        XCTContext.runActivity(named: "commands filtered by taskId を取得する場合") { _ in
-            guard let data = try? getJSONData(commandsFilteredByTaskJson) else {
-                XCTFail("jsonデータが存在しない")
-                return
-            }
-
+        XCTContext.runActivity(named: "GET_tasks_taskid_commands_response.json") { _ in
+            guard let data = try? getJSONData(taskCommandsJson) else { XCTFail("jsonデータが存在しない"); return }
             stub(uri(task.url.absoluteString + "/\(param)/commands"), jsonData(data))
-
             request(
                 APIResult<[CommandEntity.Data]>.self,
-                result: api.get(resUrl: task.url, token: nil, dataId: param  + "/commands"),
+                result: api.get(resUrl: task.url, token: nil, dataId: param + "/commands"),
                 onSuccess: { data in
                     XCTAssertNotNil(data, "値が取得できていない: \(data)")
-                },
-                onError: { error in
-                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
-                })
-        }
-
-        XCTContext.runActivity(named: "SW構成情報を取得する場合") { _ in
-            guard let data = try? getJSONData(swconfJson) else {
-                XCTFail("jsonデータが存在しない")
-                return
-            }
-
-            stub(uri(robot.url.absoluteString + "/\(param)/swconf"), jsonData(data))
-
-            request(
-                APIResult<RobotAPIEntity.Swconf>.self,
-                result: api.get(resUrl: robot.url, token: nil, dataId: param + "/swconf"),
-                onSuccess: { data in
-                    XCTAssertNotNil(data, "値が取得できていない: \(data)")
-                },
-                onError: { error in
-                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
-                })
-        }
-
-        XCTContext.runActivity(named: "アセット情報を取得する場合") { _ in
-            guard let data = try? getJSONData(assetJson) else {
-                XCTFail("jsonデータが存在しない")
-                return
-            }
-
-            stub(uri(robot.url.absoluteString + "/\(param)/assets"), jsonData(data))
-
-            request(
-                APIResult<[RobotAPIEntity.Asset]>.self,
-                result: api.get(resUrl: robot.url, token: nil, dataId: param + "/assets"),
-                onSuccess: { data in
-                    XCTAssertNotNil(data, "値が取得できていない: \(data)")
+                    XCTAssertEqual(data.paging, APIPaging.Output(page: 2, size: 4, totalPages: 16, totalCount: 61), "正しい値が取得できていない")
                 },
                 onError: { error in
                     XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")

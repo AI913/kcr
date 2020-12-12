@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "logo_company.jpg",
+      "filename" : "01_symbol_statement_color.png",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "02_symbol_statement_color_rev.png",
       "idiom" : "universal"
     }
   ],

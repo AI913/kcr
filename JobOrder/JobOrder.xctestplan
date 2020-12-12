@@ -59,6 +59,7 @@
       }
     },
     {
+      "enabled" : false,
       "parallelizable" : true,
       "skippedTests" : [
         "JobOrderUITests",

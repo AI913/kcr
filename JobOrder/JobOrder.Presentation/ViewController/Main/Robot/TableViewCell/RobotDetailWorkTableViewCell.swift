@@ -13,6 +13,7 @@ class RobotDetailWorkTableViewCell: UITableViewCell {
     // MARK: - Variable
     var identifier = ""
     var presenter: RobotDetailWorkPresenterProtocol!
+    var dataset: RobotDetailWorkPresenter.Dataset!
 
     func inject(presenter: RobotDetailWorkPresenterProtocol) {
         self.presenter = presenter

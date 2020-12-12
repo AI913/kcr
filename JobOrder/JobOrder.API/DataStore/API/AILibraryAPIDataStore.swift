@@ -30,6 +30,6 @@ public class AILibraryAPIDataStore: AILibraryAPIRepository {
     /// - Returns: AILibrary情報
     public func fetch(_ token: String) -> AnyPublisher<APIResult<[AILibraryAPIEntity.Data]>, Error> {
         Logger.info(target: self)
-        return api.get(url: url, token: token)
+        return api.get(url: url, token: token, query: nil)
     }
 }

@@ -24,7 +24,7 @@ class RobotAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getHandler = { url, token in
+        mock.getHandler = { url, token, _ in
             return Future<APIResult<[RobotAPIEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
                 promise(.success(APITestsStub().robotsResult))
@@ -54,7 +54,7 @@ class RobotAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getHandler = { url, token in
+        mock.getHandler = { url, token, _ in
             return Future<APIResult<[RobotAPIEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
                 let error = NSError(domain: "Error", code: -1, userInfo: nil)
@@ -79,7 +79,7 @@ class RobotAPIDataStoreTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
 
-        mock.getHandler = { url, token in
+        mock.getHandler = { url, token, _ in
             return Future<APIResult<[RobotAPIEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
@@ -99,7 +99,7 @@ class RobotAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<RobotAPIEntity.Data>, Error> { promise in
                 handlerExpectation.fulfill()
                 promise(.success(APITestsStub().robotResult))
@@ -127,7 +127,7 @@ class RobotAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<RobotAPIEntity.Data>, Error> { promise in
                 handlerExpectation.fulfill()
                 let error = NSError(domain: "Error", code: -1, userInfo: nil)
@@ -152,7 +152,7 @@ class RobotAPIDataStoreTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<RobotAPIEntity.Data>, Error> { promise in
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
@@ -172,10 +172,29 @@ class RobotAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getResUrlHandler = { url, token, dataId in
+        let status: [String] = ["Unissued", "Queued", "Processing", "Suspended"]
+        let paging: APIPaging.Input = APIPaging.Input(page: 5, size: 10)
+
+        let expectedQuery: [URLQueryItem] = [
+            URLQueryItem(name: "status", value: "Processing"),
+            URLQueryItem(name: "status", value: "Suspended"),
+            URLQueryItem(name: "status", value: "Unissued"),
+            URLQueryItem(name: "status", value: "Queued"),
+            URLQueryItem(name: "size", value: "10"),
+            URLQueryItem(name: "page", value: "5")
+        ]
+
+        mock.getResUrlHandler = { url, token, dataId, query in
             return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
                 promise(.success(APITestsStub().commandsFromRobotResult))
+                if let query = query {
+                    let canonicalizedQuery = self.canonicalized(queryitems: query)
+                    let canonicalizedExpected = self.canonicalized(queryitems: expectedQuery)
+                    XCTAssertTrue(canonicalizedQuery.elementsEqual(canonicalizedExpected), "正しい値が設定されていない")
+                } else {
+                    XCTFail("クエリが設定されていない")
+                }
             }.eraseToAnyPublisher()
         }
         getCommand(
@@ -194,7 +213,9 @@ class RobotAPIDataStoreTests: XCTestCase {
             },
             onError: { error in
                 XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
-            })
+            },
+            status: status,
+            paging: paging)
 
     }
 
@@ -202,7 +223,7 @@ class RobotAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
                 let error = NSError(domain: "Error", code: -1, userInfo: nil)
@@ -227,7 +248,7 @@ class RobotAPIDataStoreTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
@@ -313,7 +334,7 @@ class RobotAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<RobotAPIEntity.Swconf>, Error> { promise in
                 handlerExpectation.fulfill()
                 promise(.success(APITestsStub().swconfResult))
@@ -344,7 +365,7 @@ class RobotAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<RobotAPIEntity.Swconf>, Error> { promise in
                 handlerExpectation.fulfill()
                 let error = NSError(domain: "Error", code: -1, userInfo: nil)
@@ -369,7 +390,7 @@ class RobotAPIDataStoreTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<RobotAPIEntity.Swconf>, Error> { promise in
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
@@ -389,7 +410,7 @@ class RobotAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<[RobotAPIEntity.Asset]>, Error> { promise in
                 handlerExpectation.fulfill()
                 promise(.success(APITestsStub().assetsResult))
@@ -418,7 +439,7 @@ class RobotAPIDataStoreTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<[RobotAPIEntity.Asset]>, Error> { promise in
                 handlerExpectation.fulfill()
                 let error = NSError(domain: "Error", code: -1, userInfo: nil)
@@ -443,7 +464,7 @@ class RobotAPIDataStoreTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
 
-        mock.getResUrlHandler = { url, token, dataId in
+        mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<[RobotAPIEntity.Asset]>, Error> { promise in
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
@@ -515,9 +536,9 @@ extension RobotAPIDataStoreTests {
         wait(for: exps, timeout: ms1000)
     }
 
-    private func getCommand(_ exps: [XCTestExpectation], onSuccess: @escaping (APIResult<[CommandEntity.Data]>) -> Void, onError: @escaping (Error) -> Void) {
+    private func getCommand(_ exps: [XCTestExpectation], onSuccess: @escaping (APIResult<[CommandEntity.Data]>) -> Void, onError: @escaping (Error) -> Void, status: [String]? = nil, paging: APIPaging.Input? = nil) {
         let param = "test"
-        dataStore.getCommands(param, id: param)
+        dataStore.getCommands(param, id: param, status: status, paging: paging)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished: break
@@ -566,5 +587,20 @@ extension RobotAPIDataStoreTests {
             }).store(in: &cancellables)
 
         wait(for: exps, timeout: ms1000)
+    }
+
+    private func canonicalized(queryitems: [URLQueryItem]) -> [URLQueryItem] {
+        let sortRule = { (lhs: URLQueryItem, rhs: URLQueryItem) -> Bool in
+            if lhs.name == rhs.name {
+                switch (lhs.value, rhs.value) {
+                case let (lhs?, rhs?): return lhs < rhs
+                case (_, nil): return true
+                case (nil, _): return false
+                }
+            } else {
+                return lhs.name < rhs.name
+            }
+        }
+        return queryitems.sorted(by: sortRule)
     }
 }

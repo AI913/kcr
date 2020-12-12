@@ -16,6 +16,8 @@ import JobOrder_Domain
 protocol AboutAppPresenterProtocol {
     /// アプリ名
     var appName: String? { get }
+    /// アプリ名（表示用）
+    var appDisplayName: String? { get }
     /// アプリバージョン
     var appVersion: String { get }
     /// Thing名
@@ -48,6 +50,12 @@ extension AboutAppPresenter: AboutAppPresenterProtocol {
     /// アプリ名
     var appName: String? {
         Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String
+    }
+
+    /// アプリ名（表示用）
+    var appDisplayName: String? {
+        let displayName = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as! String
+        return displayName
     }
 
     /// アプリバージョン

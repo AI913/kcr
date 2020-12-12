@@ -122,6 +122,7 @@ extension RobotDetailSystemViewController: UITableViewDelegate, UITableViewDataS
         if let header = cell as? RobotDetailSystemDetailTableViewHeader {
             header.presenter = self.presenter
             header.dataset = dataset(by: tableView)
+            header.clipsToBounds = true
             if tableView.isEqual(hardwareConfigurationTableView), section < self.extendedHardwareConfiguration.count {
                 header.setRow(section, accessory: presenter.accessory(in: extendedHardwareConfiguration[section]), tapable: true)
             } else {
@@ -130,7 +131,6 @@ extension RobotDetailSystemViewController: UITableViewDelegate, UITableViewDataS
         }
         return cell
     }
-
 }
 
 // MARK: - Interface Function

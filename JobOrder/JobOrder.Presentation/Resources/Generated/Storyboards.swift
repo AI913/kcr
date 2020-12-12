@@ -6,7 +6,7 @@ import Foundation
 import UIKit
 
 // swiftlint:disable superfluous_disable_command
-// swiftlint:disable file_length
+// swiftlint:disable file_length implicit_return
 
 // MARK: - Storyboard Scenes
 
@@ -102,7 +102,11 @@ internal enum StoryboardScene {
 
     internal static let robotSelectionNavi = SceneType<UIKit.UINavigationController>(storyboard: TaskDetail.self, identifier: "RobotSelectionNavi")
 
-    internal static let taskDetail = SceneType<JobOrder_Presentation.TaskDetailViewController>(storyboard: TaskDetail.self, identifier: "TaskDetail")
+    internal static let taskDetail = SceneType<JobOrder_Presentation.TaskDetailTaskInformationViewController>(storyboard: TaskDetail.self, identifier: "TaskDetail")
+
+    internal static let taskDetailRunHistory = SceneType<JobOrder_Presentation.TaskDetailRunHistoryViewController>(storyboard: TaskDetail.self, identifier: "TaskDetailRunHistory")
+
+    internal static let taskDetailRunHistoryNavi = SceneType<UIKit.UINavigationController>(storyboard: TaskDetail.self, identifier: "TaskDetailRunHistoryNavi")
   }
 }
 // swiftlint:enable explicit_type_interface identifier_name line_length type_body_length type_name
@@ -131,6 +135,11 @@ internal struct SceneType<T: UIViewController> {
     }
     return controller
   }
+
+  @available(iOS 13.0, tvOS 13.0, *)
+  internal func instantiate(creator block: @escaping (NSCoder) -> T?) -> T {
+    return storyboard.storyboard.instantiateViewController(identifier: identifier, creator: block)
+  }
 }
 
 internal struct InitialSceneType<T: UIViewController> {
@@ -142,12 +151,24 @@ internal struct InitialSceneType<T: UIViewController> {
     }
     return controller
   }
+
+  @available(iOS 13.0, tvOS 13.0, *)
+  internal func instantiate(creator block: @escaping (NSCoder) -> T?) -> T {
+    guard let controller = storyboard.storyboard.instantiateInitialViewController(creator: block) else {
+      fatalError("Storyboard \(storyboard.storyboardName) does not have an initial scene.")
+    }
+    return controller
+  }
 }
 
 // swiftlint:disable convenience_type
 private final class BundleToken {
   static let bundle: Bundle = {
-    Bundle(for: BundleToken.self)
+    #if SWIFT_PACKAGE
+    return Bundle.module
+    #else
+    return Bundle(for: BundleToken.self)
+    #endif
   }()
 }
 // swiftlint:enable convenience_type

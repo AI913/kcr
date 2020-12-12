@@ -44,13 +44,13 @@ protocol RobotListPresenterProtocol {
     func selectRow(index: Int)
     /// 検索
     /// - Parameter keyword: 検索キーワード
-    func filterAndSort(keyword: String?)
+    func filterAndSort(keyword: String?, keywordChanged: Bool)
 }
 
 // MARK: - Implementation
 /// RobotListPresenter
 class RobotListPresenter {
-
+    private var searchKeyString: String = ""
     /// SettingsUseCaseProtocol
     private let settingsUseCase: JobOrder_Domain.SettingsUseCaseProtocol
     /// DataManageUseCaseProtocol
@@ -61,12 +61,14 @@ class RobotListPresenter {
     private let vc: RobotListViewControllerProtocol
     /// A type-erasing cancellable objects that executes a provided closure when canceled.
     private var cancellables: Set<AnyCancellable> = []
-    /// リストに表示するRobotのデータ配列
+    /// リストに表示するRobotのデータ配列（フィルタ処理後）
     var displayRobots: [JobOrder_Domain.DataManageModel.Output.Robot]?
+    /// リストに表示するRobotのデータ配列（フィルタ処理前）
+    var originalRobots: [JobOrder_Domain.DataManageModel.Output.Robot]?
 
     private var sortConditions = [SortCondition(key: .thingName, order: .ASC)] {
         didSet {
-            self.filterAndSort(keyword: nil)
+            self.filterAndSort(keyword: nil, keywordChanged: false)
         }
     }
 
@@ -90,7 +92,6 @@ class RobotListPresenter {
 
 // MARK: - Protocol Function
 extension RobotListPresenter: RobotListPresenterProtocol {
-
     /// リストの行数
     var numberOfRowsInSection: Int {
         displayRobots?.count ?? 0
@@ -159,8 +160,9 @@ extension RobotListPresenter: RobotListPresenterProtocol {
 
     /// 検索
     /// - Parameter keyword: 検索キーワード
-    func filterAndSort(keyword: String?) {
-        filterAndSort(keyword: keyword, robots: displayRobots)
+    func filterAndSort(keyword: String?, keywordChanged: Bool) {
+
+        filterAndSort(keyword: keyword, robots: displayRobots, keywordChanged: keywordChanged)
     }
 }
 
@@ -172,12 +174,21 @@ extension RobotListPresenter {
             .receive(on: DispatchQueue.main)
             .sink { response in
                 // Logger.debug(target: self, "\(String(describing: response))")
-                self.filterAndSort(robots: response)
+                self.filterAndSort(robots: response, keywordChanged: false)
             }.store(in: &cancellables)
     }
 
-    func filterAndSort(keyword: String? = nil, robots: [JobOrder_Domain.DataManageModel.Output.Robot]?) {
-        guard let robots = robots else { return }
+    func filterAndSort(keyword: String? = nil, robots: [JobOrder_Domain.DataManageModel.Output.Robot]?, keywordChanged: Bool) {
+        guard var robots = robots else { return }
+
+        var searchKeyWord: String? = keyword
+        if keywordChanged {
+            searchKeyString = searchKeyWord!
+            robots = originalRobots!
+        } else {
+            searchKeyWord = searchKeyString
+            originalRobots = robots
+        }
 
         // TODO: - Sort by user settings.
         var display = robots.sorted {
@@ -188,10 +199,10 @@ extension RobotListPresenter {
             }
         }
 
-        if let keyword = keyword, !keyword.isEmpty {
+        if let searchKeyWord = searchKeyWord, !searchKeyWord.isEmpty {
             display = display.filter {
                 guard let name = $0.name else { return false }
-                return name.uppercased().contains(keyword.uppercased())
+                return name.uppercased().contains(searchKeyWord.uppercased())
             }
         }
         displayRobots = display

@@ -23,7 +23,7 @@ protocol TaskDetailViewControllerProtocol: class {
     func viewReload()
 }
 
-class TaskDetailViewController: UIViewController {
+class TaskDetailTaskInformationViewController: UIViewController {
 
     // MARK: - IBOutlet
     @IBOutlet weak var cancelTaskButton: UIButton!
@@ -77,7 +77,7 @@ class TaskDetailViewController: UIViewController {
 }
 
 // MARK: - Action
-extension TaskDetailViewController {
+extension TaskDetailTaskInformationViewController {
 
     @IBAction private func selectorCancelBarButtonItem(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
@@ -88,7 +88,7 @@ extension TaskDetailViewController {
 }
 
 // MARK: - Protocol Function
-extension TaskDetailViewController: TaskDetailViewControllerProtocol {
+extension TaskDetailTaskInformationViewController: TaskDetailViewControllerProtocol {
     func viewReload() {
         setViewItemData()
     }
@@ -103,7 +103,7 @@ extension TaskDetailViewController: TaskDetailViewControllerProtocol {
 }
 
 // MARK: - Private Function
-extension TaskDetailViewController {
+extension TaskDetailTaskInformationViewController {
 
     private func didSetTaskData() {
         let formatter = DateFormatter()
@@ -119,22 +119,12 @@ extension TaskDetailViewController {
         jobValueLabel.hideSkeleton()
     }
 
-    private func toDateString(_ date: Date?) -> String? {
-        guard let date = date, date.timeIntervalSince1970 != 0 else {
-            return nil
-        }
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .long
-        return formatter.string(from: date)
-    }
-
     private func setViewItemData() {
         jobValueLabel?.text = presenter?.jobName()
-        let successCount = presenter?.success() ?? 0
-        let failCount = presenter?.failure() ?? 0
-        let errorCount = presenter?.error() ?? 0
-        let naCount = presenter?.na() ?? 0
+        let successCount = (presenter?.success() ?? 0)
+        let failCount = (presenter?.failure() ?? 0)
+        let errorCount = (presenter?.error() ?? 0)
+        let naCount = (presenter?.na() ?? 0)
 
         createdAtValueLabel.attributedText = presenter?.createdAt(textColor: createdAtValueLabel.textColor, font: createdAtValueLabel.font)
         lastUpdatedAtValueLabel.attributedText = presenter?.updatedAt(textColor: lastUpdatedAtValueLabel.textColor, font: lastUpdatedAtValueLabel.font)
@@ -142,6 +132,7 @@ extension TaskDetailViewController {
         exitedAtValueLabel.attributedText = presenter?.exitedAt(textColor: exitedAtValueLabel.textColor, font: exitedAtValueLabel.font)
         durationValueLabel.attributedText = presenter?.duration(textColor: durationValueLabel.textColor, font: durationValueLabel.font)
         statusValueLabel.text = presenter?.status()
+        robotsValueLabel.text = presenter?.RobotName()
 
         // Code for the status image view
         let status: MainViewData.TaskExecution.Status = .init(presenter?.status() ?? "")
@@ -166,7 +157,7 @@ extension TaskDetailViewController {
         if fullValue == 0 {
             nValue = 0
         } else {
-            nValue = Float((successCount + failCount + errorCount) / fullValue)
+            nValue = Float(Float(successCount + failCount + errorCount) / Float(fullValue))
         }
 
         CircularProgress.setProgressWithAnimation(duration: 1.0, value: nValue)
@@ -186,6 +177,7 @@ extension TaskDetailViewController {
         pieChartView.rotationEnabled = false
         pieChartView.isUserInteractionEnabled = false
         pieChartView.extraRightOffset = 5
+        pieChartView.drawEntryLabelsEnabled = false
 
         // 1. Set ChartDataEntry
         var dataEntries: [ChartDataEntry] = []
@@ -196,6 +188,7 @@ extension TaskDetailViewController {
         // 2. Set ChartDataSet
         let pieChartDataSet = PieChartDataSet(entries: dataEntries, label: nil)
         pieChartDataSet.colors = colorsOfCharts(numbersOfColor: dataPoints.count)
+        pieChartDataSet.drawValuesEnabled = false
 
         // 3. Set ChartData
         let pieChartData = PieChartData(dataSet: pieChartDataSet)

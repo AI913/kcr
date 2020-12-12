@@ -1,6 +1,8 @@
 scheme("JobOrder")
+testplan("JobOrder")
 devices(["iPhone 11"])
 result_bundle(true)
+cloned_source_packages_path(ENV["FASTLANE_PACKAGES_PATH"])
 clean(true)
 
 for_lane :deploy do
