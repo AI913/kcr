@@ -16,7 +16,6 @@ public class TaskAPIDataStore: TaskAPIRepository {
     private let api: APIRequestProtocol
     /// エンドポイントURL
     public let url: URL = URL(string: AWSConstants.APIGateway.endPoint)!.appendingPathComponent("v1").appendingPathComponent("tasks")
-
     /// イニシャライザ
     /// - Parameter api: APIRequestProtocol
     public init(api: APIRequestProtocol) {
@@ -52,5 +51,14 @@ public class TaskAPIDataStore: TaskAPIRepository {
     public func getTask(_ token: String, taskId: String) -> AnyPublisher<APIResult<TaskAPIEntity.Data>, Error> {
         Logger.info(target: self)
         return api.get(resUrl: url, token: token, dataId: "/\(taskId)", query: nil)
+    }
+
+    /// Taskの情報を送信する
+    /// - Parameters:
+    ///   - token: トークン情報
+    ///   - data: Task情報
+    public func postTask(_ token: String, data: JobOrder_API.TaskAPIEntity.Input.Data) -> AnyPublisher<APIResult<TaskAPIEntity.Data>, Error> {
+        Logger.info(target: self)
+        return api.post(resUrl: url, token: token, data: data)
     }
 }

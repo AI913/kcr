@@ -21,8 +21,8 @@ class MQTTTranslatorTests: XCTestCase {
 
         model.jobId = "jobId"
         model.robotIds = ["robotIds"]
-        model.startCondition = JobOrder_Domain.MQTTModel.Input.CreateJob.StartCondition(key: "Immediately")
-        model.exitCondition = JobOrder_Domain.MQTTModel.Input.CreateJob.ExitCondition(key: "Specified number of times")
+        model.startCondition = JobOrder_Domain.MQTTModel.Input.CreateJob.StartCondition(key: "immediately")
+        model.exitCondition = JobOrder_Domain.MQTTModel.Input.CreateJob.ExitCondition(key: "specifiedNumberOfTimes")
         model.numberOfRuns = 1
         model.remarks = "remarks"
         let data = translator.toData(model: model)

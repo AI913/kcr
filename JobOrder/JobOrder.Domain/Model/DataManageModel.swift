@@ -774,4 +774,25 @@ public struct DataManageModel {
             public let data: Data?
         }
     }
+
+    public struct InputTask: Codable {
+        /// Jobデータ
+        public var jobId: String
+        /// Robotデータ
+        public var robotIds: [String]
+
+        public var start: String
+
+        public var exit: String
+
+        public var numberOfRuns: String
+
+        public init(jobId: String, robotIds: [String], start: String, exit: String, numberOfRuns: String) {
+            self.jobId = jobId
+            self.robotIds = robotIds
+            self.start = start
+            self.exit = exit
+            self.numberOfRuns = numberOfRuns
+        }
+    }
 }

@@ -28,8 +28,8 @@ class OrderEntryConfigurationFormPresenterTests: XCTestCase {
         }
 
         XCTContext.runActivity(named: "設定済みの場合") { _ in
-            presenter.data.form.startCondition = OrderEntryViewData.Form.StartCondition(key: "Immediately")
-            XCTAssertEqual(presenter.startCondition, "Immediately", "正常に値が設定されていない")
+            presenter.data.form.startCondition = OrderEntryViewData.Form.StartCondition(key: "immediately")
+            XCTAssertEqual(presenter.startCondition, "immediately", "正常に値が設定されていない")
         }
 
         XCTContext.runActivity(named: "想定外の値が設定されていた場合") { _ in
@@ -46,8 +46,8 @@ class OrderEntryConfigurationFormPresenterTests: XCTestCase {
         }
 
         XCTContext.runActivity(named: "設定済みの場合") { _ in
-            presenter.data.form.exitCondition = OrderEntryViewData.Form.ExitCondition(key: "Specified number of times")
-            XCTAssertEqual(presenter.exitCondition, "Specified number of times", "正常に値が設定されていない")
+            presenter.data.form.exitCondition = OrderEntryViewData.Form.ExitCondition(key: "specifiedNumberOfTimes")
+            XCTAssertEqual(presenter.exitCondition, "specifiedNumberOfTimes", "正常に値が設定されていない")
         }
 
         XCTContext.runActivity(named: "想定外の値が設定されていた場合") { _ in

@@ -28,4 +28,10 @@ public protocol TaskAPIRepository {
     ///   - token: トークン情報
     ///   - taskId: RobotID
     func getTask(_ token: String, taskId: String) -> AnyPublisher<APIResult<TaskAPIEntity.Data>, Error>
+
+    /// Taskの情報を送信する
+    /// - Parameters:
+    ///   - token: トークン情報
+    ///   - data: Task情報
+    func postTask(_ token: String, data: JobOrder_API.TaskAPIEntity.Input.Data) -> AnyPublisher<APIResult<TaskAPIEntity.Data>, Error>
 }

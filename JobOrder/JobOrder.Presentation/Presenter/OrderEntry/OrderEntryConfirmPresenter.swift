@@ -47,6 +47,8 @@ class OrderEntryConfirmPresenter {
     var data: OrderEntryViewData
     /// A type-erasing cancellable objects that executes a provided closure when canceled.
     private var cancellables: Set<AnyCancellable> = []
+    /// DataManageModel.Output.Task
+    var task: JobOrder_Domain.DataManageModel.Output.Task?
 
     /// イニシャライザ
     /// - Parameters:
@@ -102,28 +104,19 @@ extension OrderEntryConfirmPresenter: OrderEntryConfirmPresenterProtocol {
 
     /// Sendボタンをタップ
     func tapSendButton() {
-
-        guard let model = createJobInputModel(), let robotIds = data.form.robotIds else { return }
-        let _arn = dataUseCase.robots?.filter { robotIds.contains($0.id) }.compactMap { $0.thingArn }
-        guard let arn = _arn else { return }
-
-        mqttUseCase.createJob(targets: arn, jobId: UUID().uuidString, form: model)
+        let inputTask = DataManageModel.InputTask(jobId: data.form.jobId!, robotIds: data.form.robotIds!, start: self.startCondition!, exit: self.exitCondition!, numberOfRuns: self.numberOfRuns)
+        dataUseCase.postTask(data: inputTask)
             .receive(on: DispatchQueue.main)
-            .map { value -> Bool in
-                return value == .completed
-            }.sink(receiveCompletion: { completion in
+            .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished: break
                 case .failure(let error):
                     self.vc.showErrorAlert(error)
                 }
             }, receiveValue: { response in
-                Logger.debug(target: self, "\(response)")
-                if response {
-                    self.vc.transitionToCompleteScreen()
-                } else {
-                    // TODO: エラーケース
-                }
+                Logger.debug(target: self, "\(String(describing: response))")
+                self.task = response
+                self.vc.transitionToCompleteScreen()
             }).store(in: &cancellables)
     }
 }

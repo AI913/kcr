@@ -59,6 +59,9 @@ public protocol DataManageUseCaseProtocol {
     /// Task情報を取得する
     /// - Parameter id: Job ID
     func tasksFromJob(id: String, cursor: PagingModel.Cursor?) -> AnyPublisher<PagingModel.PaginatedResult<[DataManageModel.Output.Task]>, Error>
+    /// Task情報を送信する
+    /// - Parameter id: Job ID
+    func postTask(data: DataManageModel.InputTask) -> AnyPublisher<DataManageModel.Output.Task, Error>
 
     //var _processing: Published<Bool> { get set }
     var processing: Bool { get }
@@ -443,6 +446,40 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                         }.eraseToAnyPublisher()
                     }
                     return self.taskAPI.getTask(token, taskId: taskId).eraseToAnyPublisher()
+                }.sink(receiveCompletion: { completion in
+                    self.processing = false
+                    switch completion {
+                    case .finished: break
+                    case .failure(let error):
+                        Logger.error(target: self, error.localizedDescription)
+                        promise(.failure(error))
+                    }
+                }, receiveValue: { response in
+                    if let output = response.data {
+                        promise(.success(.init(output)))
+                    } else {
+                        let userInfo = ["__type": "task", "message": "API Resuponse is null"]
+                        promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                    }
+                }).store(in: &self.cancellables)
+        }.eraseToAnyPublisher()
+    }
+    /// Task情報を送信する
+    /// - Parameter id: Job ID
+    public func postTask(data: DataManageModel.InputTask) -> AnyPublisher<DataManageModel.Output.Task, Error> {
+        Logger.info(target: self)
+
+        self.processing = true
+        return Future<DataManageModel.Output.Task, Error> { promise in
+            self.auth.getTokens()
+                .flatMap { value -> AnyPublisher<APIResult<JobOrder_API.TaskAPIEntity.Data>, Error> in
+                    guard let token = value.idToken else {
+                        return Future<APIResult<JobOrder_API.TaskAPIEntity.Data>, Error> { promise in
+                            let userInfo = ["__type": "getTokens", "message": "idToken is null."]
+                            promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                        }.eraseToAnyPublisher()
+                    }
+                    return self.taskAPI.postTask(token, data: self.translator.toData(model: data)!).eraseToAnyPublisher()
                 }.sink(receiveCompletion: { completion in
                     self.processing = false
                     switch completion {
