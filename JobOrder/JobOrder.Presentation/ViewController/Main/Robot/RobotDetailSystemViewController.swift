@@ -152,7 +152,7 @@ extension RobotDetailSystemViewController: RobotDetailSystemViewControllerProtoc
         softwareConfigurationTableView.reloadData()
         hardwareConfigurationTableView.reloadData()
 
-        self.view.setNeedsLayout()
+        self.view.layoutIfNeeded()
     }
 
     /// ハードウェア構成情報のアコーディオン開閉
@@ -166,7 +166,7 @@ extension RobotDetailSystemViewController: RobotDetailSystemViewControllerProtoc
         extendedHardwareConfiguration[section] = !extendedHardwareConfiguration[section]
         hardwareConfigurationTableView.reloadSections(IndexSet([section]), with: .automatic)
 
-        self.view.setNeedsLayout()
+        self.view.layoutIfNeeded()
     }
 
 }

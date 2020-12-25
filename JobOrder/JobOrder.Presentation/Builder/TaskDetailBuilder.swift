@@ -38,4 +38,11 @@ struct TaskDetailBuilder {
         }
     }
 
+    struct TaskDetailExecutionLog {
+        func build(vc: TaskDetailExecutionLogViewController, viewData: TaskDetailViewData) -> TaskDetailExecutionLogPresenter {
+            return TaskDetailExecutionLogPresenter(dataUseCase: Builder().dataUseCase,
+                                                   vc: vc,
+                                                   viewData: viewData)
+        }
+    }
 }

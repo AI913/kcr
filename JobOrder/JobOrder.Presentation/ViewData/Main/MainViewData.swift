@@ -284,5 +284,51 @@ struct MainViewData {
                 }
             }
         }
+
+        /// 実行結果
+        enum Result: CaseIterable {
+            /// 失敗
+            case fail
+            /// 成功
+            case success
+            /// 不明
+            case unknown
+
+            /// モデル -> ViewModel変換
+            /// - Parameter status: モデル
+            init(_ key: String) {
+                self = Result.toEnum(key)
+            }
+
+            var key: String {
+                switch self {
+                case .fail: return "fail"
+                case .success: return "success"
+                case .unknown: return "unknown"
+                }
+            }
+
+            public static func toEnum(_ value: String?) -> Result {
+                return Result.allCases.first { $0.key == value } ?? .unknown
+            }
+
+            /// 表示画像
+            var imageName: UIImage {
+                switch self {
+                case .fail: return UIImage(systemName: "exclamationmark.circle.fill")!
+                case .success: return UIImage(systemName: "checkmark.circle.fill")!
+                case .unknown: return UIImage(systemName: "questionmark.circle.fill")!
+                }
+            }
+
+            /// 表示画像カラー
+            var imageColor: UIColor {
+                switch self {
+                case .fail: return .systemRed
+                case .success: return .systemGreen
+                case .unknown: return .secondaryLabel
+                }
+            }
+        }
     }
 }

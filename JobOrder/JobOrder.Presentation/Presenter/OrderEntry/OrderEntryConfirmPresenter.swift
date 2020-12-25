@@ -36,9 +36,6 @@ protocol OrderEntryConfirmPresenterProtocol {
 // MARK: - Implementation
 /// OrderEntryConfirmPresenter
 class OrderEntryConfirmPresenter {
-
-    /// MQTTUseCaseProtocol
-    private let mqttUseCase: JobOrder_Domain.MQTTUseCaseProtocol
     /// DataManageUseCaseProtocol
     private let dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol
     /// OrderEntryConfirmViewControllerProtocol
@@ -47,20 +44,15 @@ class OrderEntryConfirmPresenter {
     var data: OrderEntryViewData
     /// A type-erasing cancellable objects that executes a provided closure when canceled.
     private var cancellables: Set<AnyCancellable> = []
-    /// DataManageModel.Output.Task
-    var task: JobOrder_Domain.DataManageModel.Output.Task?
 
     /// イニシャライザ
     /// - Parameters:
-    ///   - mqttUseCase: MQTTUseCaseProtocol
     ///   - dataUseCase: DataManageUseCaseProtocol
     ///   - vc: OrderEntryConfirmViewControllerProtocol
     ///   - viewData: OrderEntryViewData
-    required init(mqttUseCase: JobOrder_Domain.MQTTUseCaseProtocol,
-                  dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol,
+    required init(dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol,
                   vc: OrderEntryConfirmViewControllerProtocol,
                   viewData: OrderEntryViewData) {
-        self.mqttUseCase = mqttUseCase
         self.dataUseCase = dataUseCase
         self.vc = vc
         self.data = viewData
@@ -104,8 +96,10 @@ extension OrderEntryConfirmPresenter: OrderEntryConfirmPresenterProtocol {
 
     /// Sendボタンをタップ
     func tapSendButton() {
-        let inputTask = DataManageModel.InputTask(jobId: data.form.jobId!, robotIds: data.form.robotIds!, start: self.startCondition!, exit: self.exitCondition!, numberOfRuns: self.numberOfRuns)
-        dataUseCase.postTask(data: inputTask)
+
+        guard let model = createJobInputModel(), let robotIds = data.form.robotIds else { return }
+
+        dataUseCase.postTask(postData: model)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {
@@ -115,7 +109,6 @@ extension OrderEntryConfirmPresenter: OrderEntryConfirmPresenterProtocol {
                 }
             }, receiveValue: { response in
                 Logger.debug(target: self, "\(String(describing: response))")
-                self.task = response
                 self.vc.transitionToCompleteScreen()
             }).store(in: &cancellables)
     }
@@ -126,23 +119,24 @@ extension OrderEntryConfirmPresenter {
 
     private func subscribeUseCaseProcessing() {
         // 通信中はキー無効
-        // mqttUseCase.$processing.sink { response in
-        mqttUseCase.processingPublisher
+        //         mqttUseCase.$processing.sink { response in
+        dataUseCase.processingPublisher
             .receive(on: DispatchQueue.main)
             .sink { response in
-                Logger.debug(target: self, "MQTT: \(response)")
+                Logger.debug(target: self, "UseCase: \(response)")
                 self.vc.changedProcessing(response)
             }.store(in: &cancellables)
     }
 
-    private func createJobInputModel() -> JobOrder_Domain.MQTTModel.Input.CreateJob? {
-        var model = JobOrder_Domain.MQTTModel.Input.CreateJob()
-        model.jobId = data.form.jobId
-        model.robotIds = data.form.robotIds
-        model.startCondition = JobOrder_Domain.MQTTModel.Input.CreateJob.StartCondition(key: data.form.startCondition?.displayName)
-        model.exitCondition = JobOrder_Domain.MQTTModel.Input.CreateJob.ExitCondition(key: data.form.exitCondition?.displayName)
-        model.numberOfRuns = data.form.numberOfRuns
-        model.remarks = data.form.remarks
+    private func createJobInputModel() -> JobOrder_Domain.DataManageModel.Input.Task? {
+        guard let jobid = data.form.jobId, let robotIds = data.form.robotIds,
+              let start = data.form.startCondition, let exit = data.form.exitCondition else { return nil }
+        let model = JobOrder_Domain.DataManageModel.Input.Task(jobId: jobid,
+                                                               robotIds: robotIds,
+                                                               start: DataManageModel.Input.Task.Start(start.rawValue),
+                                                               exit: DataManageModel.Input.Task.Exit(
+                                                                condition: exit.rawValue,
+                                                                option: DataManageModel.Input.Task.Exit.Option(data.form.numberOfRuns)))
         return model
     }
 }

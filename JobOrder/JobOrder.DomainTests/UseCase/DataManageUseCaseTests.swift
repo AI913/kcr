@@ -1673,6 +1673,119 @@ class DataManageUseCaseTests: XCTestCase {
         wait(for: [tokenHandlerExpectation, getTasksFromJobHandlerExpectation, completionExpectation], timeout: ms1000)
     }
 
+    func test_postTask() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let postTaskHandlerExpectation = expectation(description: "Post task handler")
+        let completionExpectation = expectation(description: "completion")
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        taskAPI.postTaskHandler = {token, task  in
+            return Future<APIResult<TaskAPIEntity.Data>, Error> { promise in
+                postTaskHandlerExpectation.fulfill()
+                let entity = APIResult<TaskAPIEntity.Data>(time: 1, data: DomainTestsStub().task, count: 1, paging: nil)
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.postTask(postData: DataManageModel.Input.Task())
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished: break
+                case .failure(let error):
+                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+                }
+                completionExpectation.fulfill()
+            }, receiveValue: { response in
+                XCTAssertNotNil(response, "値が取得できていない")
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, postTaskHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_postTaskNotReceive() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let postTaskHandlerExpectation = expectation(description: "Post Task handler")
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        taskAPI.postTaskHandler = { token, id in
+            return Future<APIResult<TaskAPIEntity.Data>, Error> { promise in
+                postTaskHandlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.postTask(postData: DataManageModel.Input.Task())
+            .sink(receiveCompletion: { _ in
+                XCTFail("値を取得できてはいけない")
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, postTaskHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_postTaskError() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let postTaskHandlerExpectation = expectation(description: "Post task handler")
+        let completionExpectation = expectation(description: "completion")
+        let error = NSError(domain: "Error", code: -1, userInfo: nil)
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        taskAPI.postTaskHandler = { token, id in
+            return Future<APIResult<TaskAPIEntity.Data>, Error> { promise in
+                postTaskHandlerExpectation.fulfill()
+                promise(.failure(error))
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.postTask(postData: DataManageModel.Input.Task())
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    XCTFail("値を取得できてはいけない")
+                case .failure(let e):
+                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                }
+                completionExpectation.fulfill()
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, postTaskHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
     func test_saveData() {
         let jobsResult = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1, paging: nil)
         let robotsResult = APIResult<[RobotAPIEntity.Data]>(time: 1, data: DomainTestsStub().robots, count: 1, paging: nil)
@@ -1745,5 +1858,121 @@ class DataManageUseCaseTests: XCTestCase {
         XCTAssertEqual(actionLibrary.addCallCount, 0, "ActionLibraryRepositoryのメソッドが呼ばれてしまう")
         XCTAssertEqual(aiLibrary.timestampSetCallCount, 0, "AILibraryRepositoryのメソッドが呼ばれてしまう")
         XCTAssertEqual(aiLibrary.addCallCount, 0, "AILibraryRepositoryのメソッドが呼ばれてしまう")
+    }
+
+    func test_executionLogsFromTask() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let getExecutionsFromTaskHandlerExpectation = expectation(description: "Get Executions from task handler")
+        let completionExpectation = expectation(description: "completion")
+
+        let cursor = PagingModel.Cursor(offset: 0, limit: 10)
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        taskAPI.getExecutionLogsHandler = { _, _, _, paging in
+            return Future<APIResult<[ExecutionEntity.LogData]>, Error> { promise in
+                getExecutionsFromTaskHandlerExpectation.fulfill()
+                let entity = APIResult<[ExecutionEntity.LogData]>(time: 1, data: DomainTestsStub().executionLogsFromTask, count: 1, paging: nil)
+                promise(.success(entity))
+                XCTAssertEqual(paging, APIPaging.Input(page: 1, size: 10))
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.executionLogsFromTask(taskId: param, robotId: param, cursor: cursor)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished: break
+                case .failure(let error):
+                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+                }
+                completionExpectation.fulfill()
+            }, receiveValue: { response in
+                XCTAssertNotNil(response, "値が取得できていない")
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, getExecutionsFromTaskHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_executionLogsFromTaskError() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let getExecutionsFromTaskHandlerExpectation = expectation(description: "Get Executions from task handler")
+        let completionExpectation = expectation(description: "completion")
+        let error = NSError(domain: "Error", code: -1, userInfo: nil)
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        taskAPI.getExecutionLogsHandler = { _, _, _, _ in
+            return Future<APIResult<[ExecutionEntity.LogData]>, Error> { promise in
+                getExecutionsFromTaskHandlerExpectation.fulfill()
+                promise(.failure(error))
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.executionLogsFromTask(taskId: param, robotId: param, cursor: nil)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    XCTFail("値を取得できてはいけない")
+                case .failure(let e):
+                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                }
+                completionExpectation.fulfill()
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, getExecutionsFromTaskHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_executionLogsFromTaskNotReceive() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let getExecutionsFromTaskHandlerExpectation = expectation(description: "Get Executions from task handler")
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        taskAPI.getExecutionLogsHandler = { _, _, _, _ in
+            return Future<APIResult<[ExecutionEntity.LogData]>, Error> { promise in
+                getExecutionsFromTaskHandlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.executionLogsFromTask(taskId: param, robotId: param, cursor: nil)
+            .sink(receiveCompletion: { _ in
+                XCTFail("値を取得できてはいけない")
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, getExecutionsFromTaskHandlerExpectation, completionExpectation], timeout: ms1000)
     }
 }

@@ -76,6 +76,21 @@ class TaskDetailTaskInformationViewController: UIViewController {
     }
 }
 
+// MARK: - View Controller Event
+extension TaskDetailTaskInformationViewController {
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch StoryboardSegue.TaskDetail(segue) {
+        case .taskDetailTaskInformationToExecutionLog:
+            let vc = segue.destination as! TaskDetailExecutionLogViewController
+            let viewData = TaskDetailViewData(taskId: taskId, robotId: robotId)
+            vc.inject(viewData: viewData)
+        default: break
+        }
+    }
+
+}
+
 // MARK: - Action
 extension TaskDetailTaskInformationViewController {
 
@@ -85,6 +100,11 @@ extension TaskDetailTaskInformationViewController {
 
     @IBAction private func touchUpInsideCancelTaskButton(_ sender: UIButton) {
     }
+
+    @IBAction func touchUpInsideShowDetailButton(_ sender: Any) {
+        self.perform(segue: StoryboardSegue.TaskDetail.taskDetailTaskInformationToExecutionLog)
+    }
+
 }
 
 // MARK: - Protocol Function

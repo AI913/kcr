@@ -504,7 +504,7 @@ public struct DataManageModel {
                 public init(_ option: Option) {
                     self.option = option
                 }
-                public init(_ exit: TaskAPIEntity.Data.Exit) {
+                public init(_ exit: TaskAPIEntity.Exit) {
                     self.option = Option(exit.option)
                 }
 
@@ -518,7 +518,7 @@ public struct DataManageModel {
                     public init(_ numberOfRuns: Int) {
                         self.numberOfRuns = numberOfRuns
                     }
-                    public init(_ option: TaskAPIEntity.Data.Exit.Option) {
+                    public init(_ option: TaskAPIEntity.Exit.Option) {
                         self.numberOfRuns = option.numberOfRuns
                     }
                 }
@@ -773,26 +773,127 @@ public struct DataManageModel {
             /// 画像データ
             public let data: Data?
         }
+
+        /// Executionログ
+        public struct ExecutionLog: Codable, Equatable {
+            public let id: String
+            public let executedAt: Int
+            public let result: String
+
+            public static func == (lhs: ExecutionLog, rhs: ExecutionLog) -> Bool {
+                return lhs.id == rhs.id &&
+                    lhs.executedAt == rhs.executedAt &&
+                    lhs.result == rhs.result
+            }
+
+            public init(id: String, executedAt: Int, result: String) {
+                self.id = id
+                self.executedAt = executedAt
+                self.result = result
+            }
+
+            init(_ executionLog: JobOrder_API.ExecutionEntity.LogData) {
+                self.id = executionLog.id
+                self.executedAt = executionLog.executedAt
+                self.result = executionLog.result
+            }
+        }
     }
 
-    public struct InputTask: Codable {
-        /// Jobデータ
-        public var jobId: String
-        /// Robotデータ
-        public var robotIds: [String]
+    /// PostTask用データ
+    public struct Input: Codable {
+        public struct Task: Codable, Equatable {
+            public let jobId: String
+            public let robotIds: [String]
+            public let start: Start
+            public let exit: Exit
 
-        public var start: String
+            public init(jobId: String = "", robotIds: [String] = [], start: Start = DataManageModel.Input.Task.Start(""), exit: Exit = DataManageModel.Input.Task.Exit(condition: "", option: DataManageModel.Input.Task.Exit.Option(0))) {
+                self.jobId = jobId
+                self.robotIds = robotIds
+                self.start = start
+                self.exit = exit
+            }
 
-        public var exit: String
+            public static func == (lhs: Task, rhs: Task) -> Bool {
+                return lhs.jobId == rhs.jobId &&
+                    lhs.robotIds == rhs.robotIds &&
+                    lhs.start == rhs.start &&
+                    lhs.exit == rhs.exit
+            }
 
-        public var numberOfRuns: String
+            public struct Start: Codable, Equatable {
+                public let condition: String
 
-        public init(jobId: String, robotIds: [String], start: String, exit: String, numberOfRuns: String) {
-            self.jobId = jobId
-            self.robotIds = robotIds
-            self.start = start
-            self.exit = exit
-            self.numberOfRuns = numberOfRuns
+                public init(_ condition: String) {
+                    self.condition = condition
+                }
+                // FIXME: option仕様待ち
+
+                enum CodingKeys: String, CodingKey {
+                    case condition
+                }
+
+                public static func == (lhs: Start, rhs: Start) -> Bool {
+                    return lhs.condition == rhs.condition
+                }
+
+                public init(_ start: TaskAPIEntity.Start) {
+                    self.condition = start.condition
+                }
+            }
+
+            public struct Exit: Codable, Equatable {
+                public let condition: String
+                public let option: Option
+
+                public init(condition: String, option: Option) {
+                    self.condition = condition
+                    self.option = option
+                }
+
+                enum CodingKeys: String, CodingKey {
+                    case condition
+                    case option
+                }
+
+                public static func == (lhs: Exit, rhs: Exit) -> Bool {
+                    return lhs.condition == rhs.condition &&
+                        lhs.option == rhs.option
+                }
+
+                public init(_ exit: TaskAPIEntity.Exit) {
+                    self.condition = exit.condition
+                    self.option = Option(exit.option.numberOfRuns)
+                }
+
+                public struct Option: Codable, Equatable {
+                    public let numberOfRuns: Int?
+
+                    public init(_ numberOfRuns: Int) {
+                        self.numberOfRuns = numberOfRuns
+                    }
+
+                    enum CodingKeys: String, CodingKey {
+                        case numberOfRuns
+                    }
+
+                    public static func == (lhs: Option, rhs: Option) -> Bool {
+                        return lhs.numberOfRuns == rhs.numberOfRuns
+                    }
+
+                    public init(_ option: TaskAPIEntity.Exit.Option) {
+                        self.numberOfRuns = option.numberOfRuns
+                    }
+                }
+            }
+
+            public init(_ task: TaskAPIEntity.Input.Data) {
+                self.jobId = task.jobId
+                self.robotIds = task.robotIds
+                self.start = Start(task.start)
+                self.exit = Exit(task.exit)
+            }
         }
     }
 }

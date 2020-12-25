@@ -104,6 +104,8 @@ internal enum StoryboardScene {
 
     internal static let taskDetail = SceneType<JobOrder_Presentation.TaskDetailTaskInformationViewController>(storyboard: TaskDetail.self, identifier: "TaskDetail")
 
+    internal static let taskDetailExecutionLog = SceneType<JobOrder_Presentation.TaskDetailExecutionLogViewController>(storyboard: TaskDetail.self, identifier: "TaskDetailExecutionLog")
+
     internal static let taskDetailRunHistory = SceneType<JobOrder_Presentation.TaskDetailRunHistoryViewController>(storyboard: TaskDetail.self, identifier: "TaskDetailRunHistory")
 
     internal static let taskDetailRunHistoryNavi = SceneType<UIKit.UINavigationController>(storyboard: TaskDetail.self, identifier: "TaskDetailRunHistoryNavi")

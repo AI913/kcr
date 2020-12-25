@@ -147,9 +147,9 @@ struct DomainTestsStub {
         return JobOrder_API.TaskAPIEntity.Data(id: "091bf5e2-d3e4-4426-a36b-8554d68f1167",
                                                jobId: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
                                                robotIds: ["6592c2a4-3688-49c5-ac1e-4763c81680e4", "78abfbd4-6613-42a6-a691-23c3748fa346"],
-                                               start: TaskAPIEntity.Data.Start(condition: "immediately"),
-                                               exit: TaskAPIEntity.Data.Exit(condition: "specifiedNumberOfTimes",
-                                                                             option: TaskAPIEntity.Data.Exit.Option(numberOfRuns: 5)),
+                                               start: TaskAPIEntity.Start(condition: "immediately"),
+                                               exit: TaskAPIEntity.Exit(condition: "specifiedNumberOfTimes",
+                                                                        option: TaskAPIEntity.Exit.Option(numberOfRuns: 5)),
                                                job: JobAPIEntity.Data(id: "e64f75d2-78b4-47d2-9318-fd370d55c8d1",
                                                                       name: "LED Flicker Job (RED)",
                                                                       actions: [JobAPIEntity.Data.Action(index: 1,
@@ -172,6 +172,7 @@ struct DomainTestsStub {
                                                updateTime: 1_601_165_183_557,
                                                updator: "e2e_test_account")
     }
+
     var actionLibraries: [JobOrder_API.ActionLibraryAPIEntity.Data] {
         return [actionLibrary]
     }
@@ -207,5 +208,107 @@ struct DomainTestsStub {
                                                     creator: "creator",
                                                     updateTime: 1,
                                                     updator: "updator")
+    }
+
+    var executionLog1: JobOrder_API.ExecutionEntity.LogData {
+        return JobOrder_API.ExecutionEntity.LogData(taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
+                                                    robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
+                                                    id: "1f9314c0-f64a-11ea-adc1-0242ac120001",
+                                                    executedAt: 1_592_614_435_000,
+                                                    result: "success",
+                                                    sequenceNumber: 1,
+                                                    receivedExecutionReportAt: 1_592_614_437_000)
+    }
+
+    var executionLog2: JobOrder_API.ExecutionEntity.LogData {
+        return JobOrder_API.ExecutionEntity.LogData(taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
+                                                    robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
+                                                    id: "2f9314c0-f64a-11ea-adc1-0242ac120002",
+                                                    executedAt: 1_592_614_436_000,
+                                                    result: "success",
+                                                    sequenceNumber: 2,
+                                                    receivedExecutionReportAt: 1_592_614_438_000)
+    }
+    var executionLog3: JobOrder_API.ExecutionEntity.LogData {
+        return JobOrder_API.ExecutionEntity.LogData(taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
+                                                    robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
+                                                    id: "3f9314c0-f64a-11ea-adc1-0242ac120003",
+                                                    executedAt: 1_592_614_437_000,
+                                                    result: "fail",
+                                                    sequenceNumber: 3,
+                                                    receivedExecutionReportAt: 1_592_614_439_000)
+    }
+
+    var executionLog4: JobOrder_API.ExecutionEntity.LogData {
+        return JobOrder_API.ExecutionEntity.LogData(taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
+                                                    robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
+                                                    id: "4f9314c0-f64a-11ea-adc1-0242ac120004",
+                                                    executedAt: 1_592_614_439_000,
+                                                    result: "success",
+                                                    sequenceNumber: 4,
+                                                    receivedExecutionReportAt: 1_592_614_440_000)
+    }
+
+    var executionLog5: JobOrder_API.ExecutionEntity.LogData {
+        return JobOrder_API.ExecutionEntity.LogData(taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
+                                                    robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
+                                                    id: "5f9314c0-f64a-11ea-adc1-0242ac120005",
+                                                    executedAt: 1_592_614_438_000,
+                                                    result: "success",
+                                                    sequenceNumber: 5,
+                                                    receivedExecutionReportAt: 1_592_614_440_100)
+    }
+
+    var executionLog6: JobOrder_API.ExecutionEntity.LogData {
+        return JobOrder_API.ExecutionEntity.LogData(taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
+                                                    robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
+                                                    id: "6f9314c0-f64a-11ea-adc1-0242ac120006",
+                                                    executedAt: 1_592_614_440_000,
+                                                    result: "success",
+                                                    sequenceNumber: 6, receivedExecutionReportAt: 1_592_614_441_000)
+    }
+
+    var executionLog7: JobOrder_API.ExecutionEntity.LogData {
+        return JobOrder_API.ExecutionEntity.LogData(taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
+                                                    robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
+                                                    id: "7f9314c0-f64a-11ea-adc1-0242ac120007",
+                                                    executedAt: 1_592_614_441_000,
+                                                    result: "success",
+                                                    sequenceNumber: 7,
+                                                    receivedExecutionReportAt: 1_592_614_442_000)
+    }
+
+    var executionLog8: JobOrder_API.ExecutionEntity.LogData {
+        return JobOrder_API.ExecutionEntity.LogData(taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
+                                                    robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
+                                                    id: "8f9314c0-f64a-11ea-adc1-0242ac120008",
+                                                    executedAt: 1_592_614_442_000,
+                                                    result: "success",
+                                                    sequenceNumber: 8,
+                                                    receivedExecutionReportAt: 1_592_614_449_000)
+    }
+
+    var executionLog9: JobOrder_API.ExecutionEntity.LogData {
+        return JobOrder_API.ExecutionEntity.LogData(taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
+                                                    robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
+                                                    id: "9f9314c0-f64a-11ea-adc1-0242ac120009",
+                                                    executedAt: 1_592_614_443_000,
+                                                    result: "fail",
+                                                    sequenceNumber: 9,
+                                                    receivedExecutionReportAt: 1_592_614_449_100)
+    }
+
+    var executionLog10: JobOrder_API.ExecutionEntity.LogData {
+        return JobOrder_API.ExecutionEntity.LogData(taskId: "54b50d1e-a4a6-435e-9a38-0eaa91aa2559",
+                                                    robotId: "78abfbd4-6613-42a6-a691-23c3748fa346",
+                                                    id: "af9314c0-f64a-11ea-adc1-0242ac12000a",
+                                                    executedAt: 1_592_614_444_000,
+                                                    result: "success",
+                                                    sequenceNumber: 10,
+                                                    receivedExecutionReportAt: 1_592_614_449_200)
+    }
+
+    var executionLogsFromTask: [JobOrder_API.ExecutionEntity.LogData] {
+        [executionLog1, executionLog2, executionLog3, executionLog4, executionLog5, executionLog6, executionLog7, executionLog8, executionLog9, executionLog10]
     }
 }

@@ -35,7 +35,9 @@ class APIRequestTests: XCTestCase {
     private let jobsJson = "api_mock_examples_GET_jobs_response"
     private let robotsJson = "api_mock_examples_GET_robots_response"
     private let robotCommandsJson = "api_mock_examples_GET_robots_robotid_commands_response"
+    private let taskCommandExecutionsJson = "api_mock_examples_GET_tasks_taskid_commands_robotid_executions_response"
     private let taskCommandsJson = "api_mock_examples_GET_tasks_taskid_commands_response"
+    private let postTaskJson = "api_mock_examples_POST_tasks_response"
 
     override func setUpWithError() throws {}
     override func tearDownWithError() throws {}
@@ -145,7 +147,120 @@ class APIRequestTests: XCTestCase {
                 onSuccess: { data in XCTAssertNotNil(data, "値が取得できていない: \(data)") },
                 onError: { error in XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)") })
         }
+    }
 
+    func test_post() {
+
+        XCTContext.runActivity(named: "POST_tasks_response.json") { _ in
+            guard let data = try? getJSONData(postTaskJson) else { XCTFail("jsonデータが存在しない"); return }
+            stub(uri(task.url.absoluteString ), jsonData(data))
+            request(
+                APIResult<TaskAPIEntity.Data>.self,
+                result: api.post(resUrl: task.url, token: nil, data: TaskAPIEntity.Input.Data()),
+                onSuccess: { data in XCTAssertNotNil(data, "値が取得できていない: \(data)") },
+                onError: { error in XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)") })
+        }
+    }
+
+    func test_postError() {
+
+        XCTContext.runActivity(named: "通信エラーの場合") { _ in
+            let error = NSError(domain: "Error", code: -1, userInfo: nil)
+            stub(uri(task.url.absoluteString), failure(error))
+
+            request(
+                APIResult<[TaskAPIEntity.Data]>.self,
+                result: api.post(resUrl: task.url, token: nil, data: TaskAPIEntity.Input.Data()),
+                onSuccess: { data in
+                    XCTFail("値を取得できてはいけない: \(data)")
+                },
+                onError: { error in
+                    let error = error as NSError
+                    XCTAssertEqual(error.code, -1, "正しい値が取得できていない: \(error.code)")
+                    XCTAssertEqual(error.localizedDescription, "The operation couldn’t be completed. (NSURLErrorDomain error -1.)", "正しい値が取得できていない: \(error.localizedDescription)")
+                })
+        }
+
+        XCTContext.runActivity(named: "空のデータを取得した場合") { _ in
+            stub(uri(task.url.absoluteString), json([""]))
+
+            request(
+                APIResult<[TaskAPIEntity.Data]>.self,
+                result: api.post(resUrl: task.url, token: nil, data: TaskAPIEntity.Input.Data()),
+                onSuccess: { data in
+                    XCTFail("値を取得できてはいけない: \(data)")
+                },
+                onError: { error in
+                    let error = error as NSError
+                    XCTAssertEqual(error.code, 4864, "正しい値が取得できていない: \(error.code)")
+                    XCTAssertEqual(error.localizedDescription, "The data couldn’t be read because it isn’t in the correct format.", "正しい値が取得できていない: \(error.localizedDescription)")
+                })
+        }
+
+        XCTContext.runActivity(named: "無効なデータを取得した場合") { _ in
+            let body = ["test": "data"]
+            stub(uri(task.url.absoluteString), json(body))
+
+            request(
+                APIResult<[TaskAPIEntity.Data]>.self,
+                result: api.post(resUrl: task.url, token: nil, data: TaskAPIEntity.Input.Data()),
+                onSuccess: { data in
+                    XCTFail("値を取得できてはいけない: \(data)")
+                },
+                onError: { error in
+                    let error = error as NSError
+                    XCTAssertEqual(error.code, 4865, "正しい値が取得できていない: \(error.code)")
+                    XCTAssertEqual(error.localizedDescription, "The data couldn’t be read because it is missing.", "正しい値が取得できていない: \(error.localizedDescription)")
+                })
+        }
+    }
+
+    func test_postErrorCode() {
+        var errorCode = 300
+
+        XCTContext.runActivity(named: "\(errorCode)エラーの場合") { _ in
+            guard let data = try? getJSONData(taskJson) else {
+                XCTFail("jsonデータが存在しない")
+                return
+            }
+
+            stub(uri(task.url.absoluteString), jsonData(data, status: errorCode))
+
+            request(
+                APIResult<TaskAPIEntity.Data>.self,
+                result: api.post(resUrl: task.url, token: nil, data: TaskAPIEntity.Input.Data()),
+                onSuccess: { data in
+                    XCTFail("値を取得できてはいけない: \(data)")
+                },
+                onError: { error in
+                    switch error as! APIError {
+                    case .invalidStatus(let code, _):
+                        XCTAssertEqual(code, errorCode, "正しい値が取得できていない: \(errorCode)")
+                    default:
+                        XCTFail("想定外のエラー")
+                    }
+                })
+        }
+
+        errorCode = 299
+        XCTContext.runActivity(named: "\(errorCode)エラーの場合") { _ in
+            guard let data = try? getJSONData(taskJson) else {
+                XCTFail("jsonデータが存在しない")
+                return
+            }
+
+            stub(uri(task.url.absoluteString), jsonData(data, status: errorCode))
+
+            request(
+                APIResult<TaskAPIEntity.Data>.self,
+                result: api.post(resUrl: task.url, token: nil, data: TaskAPIEntity.Input.Data()),
+                onSuccess: { data in
+                    XCTAssertNotNil(data, "値が取得できていない: \(data)")
+                },
+                onError: { error in
+                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+                })
+        }
     }
 
     func test_getPaginated() {
@@ -235,6 +350,21 @@ class APIRequestTests: XCTestCase {
                 onSuccess: { data in
                     XCTAssertNotNil(data, "値が取得できていない: \(data)")
                     XCTAssertEqual(data.paging, APIPaging.Output(page: 2, size: 5, totalPages: 8, totalCount: 37), "正しい値が取得できていない")
+                },
+                onError: { error in
+                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+                })
+        }
+
+        XCTContext.runActivity(named: "GET_tasks_taskid_commands_robotid_executions_response.json") { _ in
+            guard let data = try? getJSONData(taskCommandExecutionsJson) else { XCTFail("jsonデータが存在しない"); return }
+            stub(uri(task.url.absoluteString + "/\(param)/commands/\(param)/executions"), jsonData(data))
+            request(
+                APIResult<[ExecutionEntity.LogData]>.self,
+                result: api.get(resUrl: task.url, token: nil, dataId: param + "/commands/" + param + "/executions"),
+                onSuccess: { data in
+                    XCTAssertNotNil(data, "値が取得できていない: \(data)")
+                    XCTAssertEqual(data.paging, APIPaging.Output(page: 2, size: 10, totalPages: 11, totalCount: 108), "正しい値が取得できていない")
                 },
                 onError: { error in
                     XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
@@ -383,30 +513,98 @@ class APIRequestTests: XCTestCase {
 
     func test_getImage() throws {
         let param = "test"
+        let bundle = Bundle(for: type(of: self))
+        guard let imagePath = bundle.path(forResource: "tmrobot", ofType: "png") else {
+            XCTFail("データが存在しない")
+            return
+        }
+        let url = URL(fileURLWithPath: imagePath)
+        guard let data = try? Data(contentsOf: url) else {
+            XCTFail("データが存在しない")
+            return
+        }
 
         XCTContext.runActivity(named: "Robot画像を取得した場合") { _ in
-
-            let bundle = Bundle(for: type(of: self))
-            guard let imagePath = bundle.path(forResource: "tmrobot", ofType: "png") else {
-                XCTFail("データが存在しない")
-                return
-            }
-            let url = URL(fileURLWithPath: imagePath)
-            guard let data = try? Data(contentsOf: url) else {
-                XCTFail("データが存在しない")
-                return
-            }
+            let completionExpectation = expectation(description: "completion")
             stub(uri(robot.url.absoluteString + "/\(param)/image"), http(download: .content(data)))
 
             request(
                 Data.self,
                 result: api.getImage(resUrl: robot.url, token: nil, dataId: param + "/image"),
                 onSuccess: { data in
+                    completionExpectation.fulfill()
                     XCTAssertNotNil(data, "値が取得できていない: \(data)")
                 },
                 onError: { error in
                     XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
                 })
+            wait(for: [completionExpectation], timeout: ms1000)
+        }
+
+        XCTContext.runActivity(named: "Robot画像を取得した場合(404)") { _ in
+            let completionExpectation = expectation(description: "completion")
+            stub(uri(robot.url.absoluteString + "/\(param)/image"), http(404, download: .noContent))
+
+            request(
+                Data.self,
+                result: api.getImage(resUrl: robot.url, token: nil, dataId: param + "/image"),
+                onSuccess: { data in
+                    XCTFail("値を取得できてはいけない: \(data)")
+                },
+                onError: { error in
+                    switch error as? APIError {
+                    case .invalidStatus(404, ""):
+                        completionExpectation.fulfill()
+                    default:
+                        XCTFail("予期しないエラー: \(error)")
+                    }
+                })
+            wait(for: [completionExpectation], timeout: ms1000)
+        }
+
+        XCTContext.runActivity(named: "Robot画像を取得した場合(未サポート形式)") { _ in
+            let completionExpectation = expectation(description: "completion")
+            let headers = ["Content-Type": "application/json"]
+            stub(uri(robot.url.absoluteString + "/\(param)/image"), http(headers: headers, download: .content(data)))
+
+            request(
+                Data.self,
+                result: api.getImage(resUrl: robot.url, token: nil, dataId: param + "/image"),
+                onSuccess: { data in
+                    XCTFail("値を取得できてはいけない: \(data)")
+                },
+                onError: { error in
+                    switch error as? APIError {
+                    case .unacceptableContentType("application/json"):
+                        completionExpectation.fulfill()
+                    default:
+                        XCTFail("予期しないエラー: \(error)")
+                    }
+                })
+            wait(for: [completionExpectation], timeout: ms1000)
+        }
+
+        XCTContext.runActivity(named: "Robot画像を取得した場合(不正データ)") { _ in
+            let completionExpectation = expectation(description: "completion")
+            let headers = ["Content-Type": "image/png"]
+            let invalidData = Data(bytes: [0x00], count: 1)
+            stub(uri(robot.url.absoluteString + "/\(param)/image"), http(headers: headers, download: .content(invalidData)))
+
+            request(
+                Data.self,
+                result: api.getImage(resUrl: robot.url, token: nil, dataId: param + "/image"),
+                onSuccess: { data in
+                    XCTFail("値を取得できてはいけない: \(data)")
+                },
+                onError: { error in
+                    switch error as? APIError {
+                    case .unsupportedMediaFormat:
+                        completionExpectation.fulfill()
+                    default:
+                        XCTFail("予期しないエラー: \(error)")
+                    }
+                })
+            wait(for: [completionExpectation], timeout: ms1000)
         }
     }
 }

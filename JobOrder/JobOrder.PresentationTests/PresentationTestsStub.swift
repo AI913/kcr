@@ -341,4 +341,67 @@ struct PresentationTestsStub {
                                                                       serialNo: "f97f805dd3f3")]
         return DataManageModel.Output.System(softwareConfiguration: sw, hardwareConfigurations: hw)
     }
+
+    var executionLog1: JobOrder_Domain.DataManageModel.Output.ExecutionLog {
+        return JobOrder_Domain.DataManageModel.Output.ExecutionLog(id: "1f9314c0-f64a-11ea-adc1-0242ac120001",
+                                                                   executedAt: 1_592_614_435_000,
+                                                                   result: "success")
+    }
+
+    var executionLog2: JobOrder_Domain.DataManageModel.Output.ExecutionLog {
+        return JobOrder_Domain.DataManageModel.Output.ExecutionLog(id: "2f9314c0-f64a-11ea-adc1-0242ac120002",
+                                                                   executedAt: 1_592_614_436_000,
+                                                                   result: "success")
+    }
+    var executionLog3: JobOrder_Domain.DataManageModel.Output.ExecutionLog {
+        return JobOrder_Domain.DataManageModel.Output.ExecutionLog(id: "3f9314c0-f64a-11ea-adc1-0242ac120003",
+                                                                   executedAt: 1_592_614_437_000,
+                                                                   result: "fail")
+    }
+
+    var executionLog4: JobOrder_Domain.DataManageModel.Output.ExecutionLog {
+        return JobOrder_Domain.DataManageModel.Output.ExecutionLog(id: "4f9314c0-f64a-11ea-adc1-0242ac120004",
+                                                                   executedAt: 1_592_614_439_000,
+                                                                   result: "success")
+    }
+
+    var executionLog5: JobOrder_Domain.DataManageModel.Output.ExecutionLog {
+        return JobOrder_Domain.DataManageModel.Output.ExecutionLog(id: "5f9314c0-f64a-11ea-adc1-0242ac120005",
+                                                                   executedAt: 1_592_614_438_000,
+                                                                   result: "success")
+    }
+
+    var executionLog6: JobOrder_Domain.DataManageModel.Output.ExecutionLog {
+        return JobOrder_Domain.DataManageModel.Output.ExecutionLog(id: "6f9314c0-f64a-11ea-adc1-0242ac120006",
+                                                                   executedAt: 1_592_614_440_000,
+                                                                   result: "success")
+    }
+
+    var executionLog7: JobOrder_Domain.DataManageModel.Output.ExecutionLog {
+        return JobOrder_Domain.DataManageModel.Output.ExecutionLog(id: "7f9314c0-f64a-11ea-adc1-0242ac120007",
+                                                                   executedAt: 1_592_614_441_000,
+                                                                   result: "success")
+    }
+
+    var executionLog8: JobOrder_Domain.DataManageModel.Output.ExecutionLog {
+        return JobOrder_Domain.DataManageModel.Output.ExecutionLog(id: "8f9314c0-f64a-11ea-adc1-0242ac120008",
+                                                                   executedAt: 1_592_614_442_000,
+                                                                   result: "success")
+    }
+
+    var executionLog9: JobOrder_Domain.DataManageModel.Output.ExecutionLog {
+        return JobOrder_Domain.DataManageModel.Output.ExecutionLog(id: "9f9314c0-f64a-11ea-adc1-0242ac120009",
+                                                                   executedAt: 1_592_614_443_000,
+                                                                   result: "fail")
+    }
+
+    var executionLog10: JobOrder_Domain.DataManageModel.Output.ExecutionLog {
+        return JobOrder_Domain.DataManageModel.Output.ExecutionLog(id: "af9314c0-f64a-11ea-adc1-0242ac12000a",
+                                                                   executedAt: 1_592_614_444_000,
+                                                                   result: "success")
+    }
+
+    var executionLogs: [JobOrder_Domain.DataManageModel.Output.ExecutionLog] {
+        [executionLog1, executionLog2, executionLog3, executionLog4, executionLog5, executionLog6, executionLog7, executionLog8, executionLog9, executionLog10]
+    }
 }

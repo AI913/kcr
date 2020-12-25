@@ -30,100 +30,114 @@ class RobotDetailWorkPresenterTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {}
-    //ハンドラー でFatalエラーが出る
-    //    func test_getTasksAndJob() {
-    //        let param = "test"
-    //        let handlerExpectation = expectation(description: "handler")
-    //        let completionExpectation = expectation(description: "completion")
-    //        completionExpectation.isInverted = true
-    //        presenter.data.id = param
-    //
-    //        data.commandFromRobotHandler = { id, status, cursor in
-    //            return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Command]>, Error> { promise in
-    //                promise(.success(.init(data: self.stub.commands, cursor: nil, total: nil)))
-    //                handlerExpectation.fulfill()
-    //                if let status = status {
-    //                    XCTAssertTrue(status.elementsEqual(CommandModel.Status.inProgress), "ステータス指定が実行中になっていない")
-    //                } else {
-    //                    XCTFail("ステータスが設定されていない")
-    //                }
-    //                XCTAssertNil(cursor, "全件取得設定になっていない")
-    //            }.eraseToAnyPublisher()
-    //        }
-    //        presenter.getTasksAndJob(id: presenter.data.id!)
-    //        wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-    //        stub.commands.enumerated().forEach {
-    //            XCTAssert(presenter.tasks?[$0.offset] == $0.element, "正しい値が取得できていない")
-    //        }
-    //    }
-    //
-    //    func test_getTasksAndJobError() {
-    //        let param = "test"
-    //        let handlerExpectation = expectation(description: "handler")
-    //        let completionExpectation = expectation(description: "completion")
-    //        completionExpectation.isInverted = true
-    //        presenter.data.id = param
-    //
-    //        data.commandFromRobotHandler = { id, _, _ in
-    //            return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Command]>, Error> { promise in
-    //                let error = NSError(domain: "Error", code: -1, userInfo: nil)
-    //                promise(.failure(error))
-    //                handlerExpectation.fulfill()
-    //            }.eraseToAnyPublisher()
-    //        }
-    //        presenter.getTasksAndJob(id: presenter.data.id!)
-    //        wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-    //        XCTAssertNil(presenter.tasks, "値が取得できてはいけない")
-    //    }
-    //
-    //    func test_getHistoryAndJob() {
-    //        let param = "test"
-    //        let handlerExpectation = expectation(description: "handler")
-    //        let completionExpectation = expectation(description: "completion")
-    //        completionExpectation.isInverted = true
-    //        presenter.data.id = param
-    //
-    //        data.commandFromRobotHandler = { id, status, cursor in
-    //            return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Command]>, Error> { promise in
-    //                promise(.success(.init(data: self.stub.commands, cursor: nil, total: nil)))
-    //                handlerExpectation.fulfill()
-    //                if let status = status {
-    //                    XCTAssertTrue(status.elementsEqual(CommandModel.Status.done), "ステータス指定が実行済になっていない")
-    //                } else {
-    //                    XCTFail("ステータスが設定されていない")
-    //                }
-    //                if let cursor = cursor {
-    //                    XCTAssertEqual(cursor, PagingModel.Cursor(offset: 0, limit: 20), "カーソル指定が1ページ目の20件になっていない")
-    //                } else {
-    //                    XCTFail("カーソルが設定されていない")
-    //                }
-    //            }.eraseToAnyPublisher()
-    //        }
-    //        presenter.getHistoryAndJob(id: presenter.data.id!)
-    //        wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-    //        stub.commands.enumerated().forEach {
-    //            XCTAssert(presenter.history?[$0.offset] == $0.element, "正しい値が取得できていない")
-    //        }
-    //    }
-    //
-    //    func test_getHistoryAndJobError() {
-    //        let param = "test"
-    //        let handlerExpectation = expectation(description: "handler")
-    //        let completionExpectation = expectation(description: "completion")
-    //        completionExpectation.isInverted = true
-    //        presenter.data.id = param
-    //
-    //        data.commandFromRobotHandler = { id, _, _ in
-    //            return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Command]>, Error> { promise in
-    //                let error = NSError(domain: "Error", code: -1, userInfo: nil)
-    //                promise(.failure(error))
-    //                handlerExpectation.fulfill()
-    //            }.eraseToAnyPublisher()
-    //        }
-    //        presenter.getHistoryAndJob(id: presenter.data.id!)
-    //        wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-    //        XCTAssertNil(presenter.history, "値が取得できてはいけない")
-    //    }
+    
+    func test_getTasksAndJob() {
+        let param = "test"
+        let handlerExpectation = expectation(description: "handler")
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
+        presenter.data.id = param
+
+        data.commandFromRobotHandler = { id, status, cursor in
+            return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Command]>, Error> { promise in
+                promise(.success(.init(data: self.stub.commands, cursor: nil, total: nil)))
+                handlerExpectation.fulfill()
+                if let status = status {
+                    XCTAssertTrue(status.elementsEqual(CommandModel.Status.inProgress), "ステータス指定が実行中になっていない")
+                } else {
+                    XCTFail("ステータスが設定されていない")
+                }
+                XCTAssertNil(cursor, "全件取得設定になっていない")
+            }.eraseToAnyPublisher()
+        }
+
+        data.taskHandler = { _ in
+            return Future<JobOrder_Domain.DataManageModel.Output.Task, Error> { promise in
+                promise(.success(self.stub.task))
+            }.eraseToAnyPublisher()
+        }
+
+        presenter.getTasksAndJob(id: presenter.data.id!)
+        wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
+        stub.commands.enumerated().forEach {
+            XCTAssert(presenter.tasks?[$0.offset] == $0.element, "正しい値が取得できていない")
+        }
+    }
+
+    func test_getTasksAndJobError() {
+        let param = "test"
+        let handlerExpectation = expectation(description: "handler")
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
+        presenter.data.id = param
+
+        data.commandFromRobotHandler = { id, _, _ in
+            return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Command]>, Error> { promise in
+                let error = NSError(domain: "Error", code: -1, userInfo: nil)
+                promise(.failure(error))
+                handlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+        presenter.getTasksAndJob(id: presenter.data.id!)
+        wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
+        XCTAssertNil(presenter.tasks, "値が取得できてはいけない")
+    }
+
+    func test_getHistoryAndJob() {
+        let param = "test"
+        let handlerExpectation = expectation(description: "handler")
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
+        presenter.data.id = param
+
+        data.commandFromRobotHandler = { id, status, cursor in
+            return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Command]>, Error> { promise in
+                promise(.success(.init(data: self.stub.commands, cursor: nil, total: nil)))
+                handlerExpectation.fulfill()
+                if let status = status {
+                    XCTAssertTrue(status.elementsEqual(CommandModel.Status.done), "ステータス指定が実行済になっていない")
+                } else {
+                    XCTFail("ステータスが設定されていない")
+                }
+                if let cursor = cursor {
+                    XCTAssertEqual(cursor, PagingModel.Cursor(offset: 0, limit: 20), "カーソル指定が1ページ目の20件になっていない")
+                } else {
+                    XCTFail("カーソルが設定されていない")
+                }
+            }.eraseToAnyPublisher()
+        }
+
+        data.taskHandler = { _ in
+            return Future<JobOrder_Domain.DataManageModel.Output.Task, Error> { promise in
+                promise(.success(self.stub.task))
+            }.eraseToAnyPublisher()
+        }
+
+        presenter.getHistoryAndJob(id: presenter.data.id!)
+        wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
+        stub.commands.enumerated().forEach {
+            XCTAssert(presenter.history?[$0.offset] == $0.element, "正しい値が取得できていない")
+        }
+    }
+
+    func test_getHistoryAndJobError() {
+        let param = "test"
+        let handlerExpectation = expectation(description: "handler")
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
+        presenter.data.id = param
+
+        data.commandFromRobotHandler = { id, _, _ in
+            return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Command]>, Error> { promise in
+                let error = NSError(domain: "Error", code: -1, userInfo: nil)
+                promise(.failure(error))
+                handlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+        presenter.getHistoryAndJob(id: presenter.data.id!)
+        wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
+        XCTAssertNil(presenter.history, "値が取得できてはいけない")
+    }
 
     func test_getTasksNoId() {
         presenter.data.id = nil
@@ -255,29 +269,29 @@ class RobotDetailWorkPresenterTests: XCTestCase {
             }
         }
     }
-    //表示内容を変更したことにより通らない
-    //    func test_resultInfo() {
-    //        XCTContext.runActivity(named: "未設定の場合") { _ in
-    //            presenter.tasks = nil
-    //            stub.commands.enumerated().forEach {
-    //                XCTAssertNil(presenter.resultInfo(in: .tasks, $0.offset), "値が取得できてはいけない")
-    //            }
-    //        }
-    //
-    //        XCTContext.runActivity(named: "Taskが存在する場合") { _ in
-    //            presenter.tasks = stub.commands
-    //            stub.commands.enumerated().forEach {
-    //                XCTAssertEqual(presenter.resultInfo(in: .tasks, $0.offset), stub.commands[$0.offset].resultInfo, "正しい値が取得できていない")
-    //            }
-    //        }
-    //
-    //        XCTContext.runActivity(named: "Historyが存在する場合") { _ in
-    //            presenter.history = stub.commands
-    //            stub.commands.enumerated().forEach {
-    //                XCTAssertEqual(presenter.resultInfo(in: .history, $0.offset), stub.commands[$0.offset].resultInfo, "正しい値が取得できていない")
-    //            }
-    //        }
-    //    }
+
+    func test_resultInfo() {
+        XCTContext.runActivity(named: "未設定の場合") { _ in
+            presenter.tasks = nil
+            stub.commands.enumerated().forEach {
+                XCTAssertNil(presenter.resultInfo(in: .tasks, $0.offset), "値が取得できてはいけない")
+            }
+        }
+
+        XCTContext.runActivity(named: "Taskが存在する場合") { _ in
+            presenter.tasks = stub.commands
+            stub.commands.enumerated().forEach {
+                XCTAssertEqual(presenter.resultInfo(in: .tasks, $0.offset), "Success \(stub.commands[$0.offset].success ) / Fail \(stub.commands[$0.offset].fail) / Error \(stub.commands[$0.offset].error)", "正しい値が取得できていない")
+            }
+        }
+
+        XCTContext.runActivity(named: "Historyが存在する場合") { _ in
+            presenter.history = stub.commands
+            stub.commands.enumerated().forEach {
+                XCTAssertEqual(presenter.resultInfo(in: .history, $0.offset), "Success \(stub.commands[$0.offset].success ) / Fail \(stub.commands[$0.offset].fail) / Error \(stub.commands[$0.offset].error)", "正しい値が取得できていない")
+            }
+        }
+    }
 
     func test_observeRobotsNotReceived() {
         let handlerExpectation = expectation(description: "handler")
@@ -335,5 +349,10 @@ class RobotDetailWorkPresenterTests: XCTestCase {
         ]))
         return mutableAttributedString
     }
-
+    
+    func test_jobName() {
+        presenter.task.append(stub.task)
+        XCTAssertEqual(presenter.jobName(0), "test1", "正しい値が取得できていない")
+        XCTAssertEqual(presenter.jobName(1), "", "正しい値が取得できていない")
+    }
 }

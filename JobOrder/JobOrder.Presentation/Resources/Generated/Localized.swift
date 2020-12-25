@@ -34,6 +34,8 @@ internal enum L10n {
   internal static let information = L10n.tr("Localizable", "information")
   /// Keyword
   internal static let keyword = L10n.tr("Localizable", "keyword")
+  /// Notification Test
+  internal static let notification = L10n.tr("Localizable", "notification")
   /// Open Source
   internal static let openSource = L10n.tr("Localizable", "open_source")
   /// Restore identifier

@@ -83,6 +83,9 @@ struct Builder {
                                           aiLibraryDataRepository: aiLibraryDataRepository
         )
     }
+    var analyticsUseCase: JobOrder_Domain.AnalyticsUseCase {
+        JobOrder_Domain.AnalyticsUseCase(analyticsServiceRepository: JobOrder_API.AWSAnalyticsDataStore())
+    }
     var videoStreamingUseCase: JobOrder_Domain.VideoStreamingUseCase {
         JobOrder_Domain.VideoStreamingUseCase(videoRepository: JobOrder_API.AWSKVSDataStore())
     }

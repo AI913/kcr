@@ -17,6 +17,7 @@
 "sign_out" = "Sign out";
 "sync_cloud" = "Sync cloud / edge data";
 "robot_video" = "WebRTC Test";
+"notification" = "Notification Test";
 "about_this_app" = "About this app";
 "account" = "Account";
 "cloud" = "Cloud";

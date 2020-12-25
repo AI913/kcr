@@ -21,10 +21,12 @@ class SettingsPresenterTests: XCTestCase {
     private let auth = JobOrder_Domain.AuthenticationUseCaseProtocolMock()
     private let mqtt = JobOrder_Domain.MQTTUseCaseProtocolMock()
     private let data = JobOrder_Domain.DataManageUseCaseProtocolMock()
+    private let analytics = JobOrder_Domain.AnalyticsUseCaseProtocolMock()
     private lazy var presenter = SettingsPresenter(useCase: settings,
                                                    authUseCase: auth,
                                                    mqttUseCase: mqtt,
                                                    dataUseCase: data,
+                                                   analyticsUseCase: analytics,
                                                    vc: vc)
     override func setUpWithError() throws {
         auth.processingPublisher = $authProcessing
@@ -117,6 +119,7 @@ class SettingsPresenterTests: XCTestCase {
     func test_isUsedBiometricsAuthenticationWithSet() {
         presenter.isUsedBiometricsAuthentication = true
         XCTAssertEqual(settings.useBiometricsAuthenticationSetCallCount, 1, "SettingsUseCaseのメソッドが呼ばれない")
+        XCTAssertEqual(analytics.recordEventSwitchCallCount, 1, "AnalyticsUseCaseのメソッドが呼ばれない")
     }
 
     func test_canUseBiometricsWithErrorDescription() {
@@ -145,6 +148,24 @@ class SettingsPresenterTests: XCTestCase {
         XCTContext.runActivity(named: "設定されている場合") { _ in
             settings.lastSynced = 1_592_477_407_000
             XCTAssertNotNil(presenter.syncedDate, "値が取得できなければいけない")
+        }
+    }
+
+    func test_endpointId() {
+        let param = "test"
+
+        XCTContext.runActivity(named: "未設定の場合") { _ in
+            analytics.endpointId = nil
+            XCTAssertNil(presenter.endpointId, "値を取得できてはいけない")
+        }
+
+        XCTContext.runActivity(named: "設定されている場合") { _ in
+            analytics.endpointId = param
+            #if DEBUG
+            XCTAssertNotNil(presenter.endpointId, "値が取得できなければいけない")
+            #else
+            XCTAssertNil(presenter.endpointId, "値を取得できてはいけない")
+            #endif
         }
     }
 
@@ -193,12 +214,14 @@ class SettingsPresenterTests: XCTestCase {
         XCTContext.runActivity(named: "RobotVideoの場合") { _ in
             let indexPath = IndexPath(row: 1, section: 1)
             presenter.selectRow(indexPath: indexPath)
+            XCTAssertEqual(analytics.recordEventButtonCallCount, 1, "AnalyticsUseCaseのメソッドが呼ばれない")
             XCTAssertEqual(vc.transitionToRobotVideoScreenCallCount, 1, "ViewControllerのメソッドが呼ばれない")
         }
 
         XCTContext.runActivity(named: "AboutAppの場合") { _ in
             let indexPath = IndexPath(row: 0, section: 2)
             presenter.selectRow(indexPath: indexPath)
+            XCTAssertEqual(analytics.recordEventButtonCallCount, 2, "AnalyticsUseCaseのメソッドが呼ばれない")
             XCTAssertEqual(vc.transitionToAboutAppScreenCallCount, 1, "ViewControllerのメソッドが呼ばれない")
         }
     }
@@ -212,6 +235,7 @@ class SettingsPresenterTests: XCTestCase {
                                       authUseCase: auth,
                                       mqttUseCase: mqtt,
                                       dataUseCase: data,
+                                      analyticsUseCase: analytics,
                                       vc: vc)
 
         wait(for: [completionExpectation], timeout: ms1000)

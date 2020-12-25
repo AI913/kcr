@@ -25,7 +25,7 @@ platform :ios do
     # slather
 
     codecov
-    # danger
+    danger_wrapper
 
     increment_build_number
     clean_build_artifacts
@@ -56,14 +56,11 @@ platform :ios do
     import_certificates
     get_provisioning_profile(adhoc: true)
 
-    lint
-    commit_push(message: "Fixed autocorrect with Lint")
-
     run_tests
     # slather
 
     codecov
-    danger
+    danger_wrapper
 
     license_plist
     build_app
@@ -78,6 +75,28 @@ platform :ios do
   desc "Push to development branch"
   lane :cache_library do
     setup_library(useWorkaround: true)
+  end
+
+  desc "https://gist.github.com/hjanuschka/94ba3678553ebcb40b97a62304eb8418"
+  lane :danger_wrapper do
+    puts ENV['DANGER_GITLAB_HOST']
+    puts ENV['DANGER_GITLAB_API_BASE_URL']
+    puts ENV['DANGER_GITLAB_API_TOKEN']
+    puts ENV['CI_MERGE_REQUEST_ID']
+    puts ENV['BITRISE_PULL_REQUEST']
+    puts ENV['BITRISE_GIT_COMMIT']
+    remotes= sh("git ls-remote -q origin merge-requests\\*head|grep #{ENV['CI_MERGE_REQUEST_ID']} || echo 'no pr' ")
+    match_data = /.*merge-requests\/([0-9]+)\//.match(remotes)
+    puts "remotes="
+    puts remotes
+    puts "match_data ="
+    puts match_data
+    if match_data && match_data[1]
+      ENV['CI_MERGE_REQUEST_ID'] =  match_data[1]
+      danger
+    else 
+      UI.important "not a MR"
+    end
   end
 
   desc "Import certificates"

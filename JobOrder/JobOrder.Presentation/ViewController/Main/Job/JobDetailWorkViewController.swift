@@ -91,7 +91,7 @@ extension JobDetailWorkViewController {
 extension JobDetailWorkViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        let num = presenter.numberOfSections(in: dataset(by: tableView))
+        let num = presenter?.numberOfSections(in: dataset(by: tableView)) ?? 0
         let noDataLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
         noDataLabel.text = num == 0 ? "N/A" : ""
         noDataLabel.textColor = .systemGray

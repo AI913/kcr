@@ -57,7 +57,7 @@ class RobotDetailPageViewController: UIPageViewController {
 
         setViewControllers([controllers[index]], direction: .forward, animated: false, completion: { finished in
             self.nowIndex = index
-            self.preferredContentSize.height = self.controllers[self.nowIndex].preferredContentSize.height
+            self.preferredContentSize.height = self.controllers[index].preferredContentSize.height
         })
     }
 }
@@ -72,7 +72,7 @@ extension RobotDetailPageViewController: UIPageViewControllerDelegate {
         if let vc = pendingViewControllers.first as? RobotDetailContainerViewController,
            let index = controllers.firstIndex(of: vc) {
             _delegate?.pageChanged(index: index)
-            self.preferredContentSize.height = vc.preferredContentSize.height
+            self.preferredContentSize.height = max(self.preferredContentSize.height, vc.preferredContentSize.height)
         }
     }
 
@@ -82,7 +82,9 @@ extension RobotDetailPageViewController: UIPageViewControllerDelegate {
                             previousViewControllers: [UIViewController],
                             transitionCompleted completed: Bool) {
 
-        if completed, let vc = pageViewController.viewControllers?[0] {
+        if completed, let vc = pageViewController.viewControllers?[0] as? RobotDetailContainerViewController,
+           let index = controllers.firstIndex(of: vc) {
+            nowIndex = index
             self.preferredContentSize.height = vc.preferredContentSize.height
         } else if let vc = previousViewControllers.first as? RobotDetailContainerViewController,
                   let index = controllers.firstIndex(of: vc) {
@@ -97,8 +99,7 @@ extension RobotDetailPageViewController: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         if let index = controllers.firstIndex(of: viewController as! RobotDetailContainerViewController),
            index > 0 {
-            nowIndex = index - 1
-            return controllers[nowIndex]
+            return controllers[index - 1]
         } else {
             return nil
         }
@@ -108,8 +109,7 @@ extension RobotDetailPageViewController: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         if let index = controllers.firstIndex(of: viewController as! RobotDetailContainerViewController),
            index < controllers.count - 1 {
-            nowIndex = index + 1
-            return controllers[nowIndex]
+            return controllers[index + 1]
         } else {
             return nil
         }

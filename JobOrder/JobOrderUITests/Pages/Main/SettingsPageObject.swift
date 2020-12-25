@@ -18,7 +18,7 @@ class SettingsPageObject: PageObject {
     private enum Indexs {
         static let SignOut: Int = 2
         static let WebRTC: Int = 4
-        static let AboutThisApp: Int = 5
+        static let AboutThisApp: Int = 6
     }
 
     let app: XCUIApplication

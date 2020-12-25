@@ -9,6 +9,28 @@
 import Foundation
 
 public struct TaskAPIEntity: Codable {
+    public struct Input: Codable {
+        public struct Data: Codable, Equatable {
+            public let jobId: String
+            public let robotIds: [String]
+            public let start: Start
+            public let exit: Exit
+
+            public init(jobId: String = "", robotIds: [String] = [], start: Start = TaskAPIEntity.Start(condition: ""), exit: Exit = TaskAPIEntity.Exit(condition: "", option: TaskAPIEntity.Exit.Option(numberOfRuns: 0))) {
+                self.jobId = jobId
+                self.robotIds = robotIds
+                self.start = start
+                self.exit = exit
+            }
+
+            public static func == (lhs: Data, rhs: Data) -> Bool {
+                return lhs.jobId == rhs.jobId &&
+                    lhs.robotIds == rhs.robotIds &&
+                    lhs.start == rhs.start &&
+                    lhs.exit == rhs.exit
+            }
+        }
+    }
 
     public struct Data: Codable, Equatable {
         public let id: String
@@ -52,121 +74,55 @@ public struct TaskAPIEntity: Codable {
                 lhs.updateTime == rhs.updateTime &&
                 lhs.updator == rhs.updator
         }
+    }
 
-        public struct Start: Codable, Equatable {
-            public let condition: String
-            // FIXME: option仕様待ち
+    public struct Start: Codable, Equatable {
+        public let condition: String
 
-            enum CodingKeys: String, CodingKey {
-                case condition
-            }
+        public init(condition: String) {
+            self.condition = condition
+        }
+        // FIXME: option仕様待ち
 
-            public static func == (lhs: Start, rhs: Start) -> Bool {
-                return lhs.condition == rhs.condition
-            }
+        enum CodingKeys: String, CodingKey {
+            case condition
         }
 
-        public struct Exit: Codable, Equatable {
-            public let condition: String
-            public let option: Option
-
-            enum CodingKeys: String, CodingKey {
-                case condition
-                case option
-            }
-
-            public static func == (lhs: Exit, rhs: Exit) -> Bool {
-                return lhs.condition == rhs.condition &&
-                    lhs.option == rhs.option
-            }
-
-            public struct Option: Codable, Equatable {
-                public let numberOfRuns: Int
-
-                enum CodingKeys: String, CodingKey {
-                    case numberOfRuns
-                }
-
-                public static func == (lhs: Option, rhs: Option) -> Bool {
-                    return lhs.numberOfRuns == rhs.numberOfRuns
-                }
-            }
+        public static func == (lhs: Start, rhs: Start) -> Bool {
+            return lhs.condition == rhs.condition
         }
     }
 
-    public struct Input: Codable {
-        public struct Data: Codable {
-            public let jobId: String
-            public let robotIds: [String]
-            public let start: Start
-            public let exit: Exit
+    public struct Exit: Codable, Equatable {
+        public let condition: String
+        public let option: Option
+        public init(condition: String, option: Option) {
+            self.condition = condition
+            self.option = option
+        }
 
-            public init(jobId: String, robotIds: [String], start: String, exit: String, numberOfRuns: String) {
-                self.jobId = jobId
-                self.robotIds = robotIds
-                self.start = Start(condition: start, option: Start.Option())
-                self.exit = Exit(condition: exit, option: Exit.Option(numberOfRuns: Int(numberOfRuns)!))
+        enum CodingKeys: String, CodingKey {
+            case condition
+            case option
+        }
+
+        public static func == (lhs: Exit, rhs: Exit) -> Bool {
+            return lhs.condition == rhs.condition &&
+                lhs.option == rhs.option
+        }
+
+        public struct Option: Codable, Equatable {
+            public let numberOfRuns: Int
+            public init(numberOfRuns: Int) {
+                self.numberOfRuns = numberOfRuns
             }
 
             enum CodingKeys: String, CodingKey {
-                case jobId
-                case robotIds
-                case start
-                case exit
+                case numberOfRuns
             }
 
-            public struct Start: Codable, Equatable {
-                public let condition: String
-                public let option: Option
-                // FIXME: option仕様待ち
-
-                enum CodingKeys: String, CodingKey {
-                    case condition
-                    case option
-                }
-
-                public static func == (lhs: Start, rhs: Start) -> Bool {
-                    return lhs.condition == rhs.condition
-                }
-
-                public struct Option: Codable, Equatable {
-                    //                    public let numberOfRuns: Int
-                    //
-                    //                    enum CodingKeys: String, CodingKey {
-                    //                        case numberOfRuns
-                    //                    }
-                    //
-                    //                    public static func == (lhs: Option, rhs: Option) -> Bool {
-                    //                        return lhs.numberOfRuns == rhs.numberOfRuns
-                    //                    }
-                }
-            }
-
-            public struct Exit: Codable, Equatable {
-                public let condition: String
-                public let option: Option
-
-                enum CodingKeys: String, CodingKey {
-                    case condition
-                    case option
-                }
-
-                public static func == (lhs: Exit, rhs: Exit) -> Bool {
-                    return lhs.condition == rhs.condition &&
-                        lhs.option == rhs.option
-                }
-
-                public struct Option: Codable, Equatable {
-                    public let numberOfRuns: Int
-
-                    enum CodingKeys: String, CodingKey {
-                        case numberOfRuns
-                    }
-
-                    public static func == (lhs: Option, rhs: Option) -> Bool {
-                        return lhs.numberOfRuns == rhs.numberOfRuns
-                    }
-                }
+            public static func == (lhs: Option, rhs: Option) -> Bool {
+                return lhs.numberOfRuns == rhs.numberOfRuns
             }
         }
     }

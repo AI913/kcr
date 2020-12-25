@@ -15,6 +15,9 @@ import JobOrder_Utility
 /// MainPresenterProtocol
 /// @mockable
 protocol MainPresenterProtocol {
+    /// 行動解析エンドポイントプロファイルの設定
+    /// - Parameter displayAppearance: 表示モード
+    func setAnalyticsEndpointProfiles(displayAppearance: String)
     /// View表示開始
     func viewDidAppear()
     /// 生体認証によるサインイン
@@ -35,6 +38,8 @@ class MainPresenter {
     private let settingsUseCase: JobOrder_Domain.SettingsUseCaseProtocol
     /// DataManageUseCaseProtocol
     private let dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol
+    /// AnalyticsUseCaseProtocol
+    private let analyticsUseCase: JobOrder_Domain.AnalyticsUseCaseProtocol
     /// MainTabBarControllerProtocol
     private let vc: MainTabBarControllerProtocol
     /// 接続情報のViewData
@@ -50,16 +55,19 @@ class MainPresenter {
     ///   - mqttUseCase: MQTTUseCaseProtocol
     ///   - settingsUseCase: SettingsUseCaseProtocol
     ///   - dataUseCase: DataManageUseCaseProtocol
+    ///   - analyticsUseCase: AnalyticsUseCaseProtocol
     ///   - vc: MainTabBarControllerProtocol
     required init(authUseCase: JobOrder_Domain.AuthenticationUseCaseProtocol,
                   mqttUseCase: JobOrder_Domain.MQTTUseCaseProtocol,
                   settingsUseCase: JobOrder_Domain.SettingsUseCaseProtocol,
                   dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol,
+                  analyticsUseCase: JobOrder_Domain.AnalyticsUseCaseProtocol,
                   vc: MainTabBarControllerProtocol) {
         self.authUseCase = authUseCase
         self.mqttUseCase = mqttUseCase
         self.settingsUseCase = settingsUseCase
         self.dataUseCase = dataUseCase
+        self.analyticsUseCase = analyticsUseCase
         self.vc = vc
         registerStateChanges()
     }
@@ -72,6 +80,16 @@ class MainPresenter {
 
 // MARK: - Protocol Function
 extension MainPresenter: MainPresenterProtocol {
+
+    /// 行動解析エンドポイントプロファイルの設定
+    /// - Parameter displayAppearance: 表示モード
+    func setAnalyticsEndpointProfiles(displayAppearance: String) {
+        analyticsUseCase.setDisplayAppearance(displayAppearance)
+        analyticsUseCase.setBiometricsSetting(settingsUseCase.useBiometricsAuthentication)
+        if let name = authUseCase.currentUsername {
+            analyticsUseCase.setUserName(name)
+        }
+    }
 
     /// View表示開始
     func viewDidAppear() {

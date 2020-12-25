@@ -123,4 +123,25 @@ class DataTranslatorTests: XCTestCase {
 
         XCTAssertNil(data, "値を取得できてはいけない")
     }
+
+    func test_toDataWithTaskInput() {
+        let translator = DataTranslator()
+        let model = DataManageModel.Input.Task()
+        guard let data = translator.toData(model: model) else {
+            XCTFail("値が取得できていない: \(model)")
+            return
+        }
+
+        XCTAssertEqual(model.jobId, data.jobId, "値が取得できていない: \(model)")
+        XCTAssertEqual(model.robotIds, data.robotIds, "値が取得できていない: \(model)")
+        XCTAssertEqual(model.start, JobOrder_Domain.DataManageModel.Input.Task.Start(data.start), "値が取得できていない: \(model)")
+        XCTAssertEqual(model.exit, JobOrder_Domain.DataManageModel.Input.Task.Exit(data.exit), "値が取得できていない: \(model)")
+    }
+
+    func test_toDataWithoutTaskInput() {
+        let translator = DataTranslator()
+        let data = translator.toData(model: nil)
+
+        XCTAssertNil(data, "値を取得できてはいけない")
+    }
 }

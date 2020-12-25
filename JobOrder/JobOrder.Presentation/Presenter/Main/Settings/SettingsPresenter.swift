@@ -36,6 +36,8 @@ protocol SettingsPresenterProtocol {
     var canUseBiometricsWithErrorDescription: (Bool, String?) { get }
     /// 同期した日時
     var syncedDate: String? { get }
+    /// Pinpoint のエンドポイントID
+    var endpointId: String? { get }
     /// e-mailアドレス
     /// - Parameter completion: クロージャ
     func email(_ completion: @escaping (String?) -> Void)
@@ -62,6 +64,8 @@ class SettingsPresenter {
     private let mqttUseCase: JobOrder_Domain.MQTTUseCaseProtocol
     /// DataManageUseCaseProtocol
     private let dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol
+    /// AnalyticsUseCaseProtocol
+    private let analyticsUseCase: JobOrder_Domain.AnalyticsUseCaseProtocol
     /// SettingsViewControllerProtocol
     private let vc: SettingsViewControllerProtocol
     /// A type-erasing cancellable objects that executes a provided closure when canceled.
@@ -73,16 +77,19 @@ class SettingsPresenter {
     ///   - authUseCase: AuthenticationUseCaseProtocol
     ///   - mqttUseCase: MQTTUseCaseProtocol
     ///   - dataUseCase: DataManageUseCaseProtocol
+    ///   - analyticsUseCase: AnalyticsUseCaseProtocol
     ///   - vc: SettingsViewControllerProtocol
     required init(useCase: JobOrder_Domain.SettingsUseCaseProtocol,
                   authUseCase: JobOrder_Domain.AuthenticationUseCaseProtocol,
                   mqttUseCase: JobOrder_Domain.MQTTUseCaseProtocol,
                   dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol,
+                  analyticsUseCase: JobOrder_Domain.AnalyticsUseCaseProtocol,
                   vc: SettingsViewControllerProtocol) {
         self.useCase = useCase
         self.authUseCase = authUseCase
         self.mqttUseCase = mqttUseCase
         self.dataUseCase = dataUseCase
+        self.analyticsUseCase = analyticsUseCase
         self.vc = vc
         subscribeUseCaseProcessing()
     }
@@ -125,13 +132,21 @@ extension SettingsPresenter: SettingsPresenterProtocol {
     /// ログインID保存可否
     var isRestoredIdentifier: Bool {
         get { useCase.restoreIdentifier }
-        set { useCase.restoreIdentifier = newValue }
+        set {
+            let name = SettingsViewData.SettingsMenu.restoreIdentifier.rawValue
+            analyticsUseCase.recordEventSwitch(name: name, view: vc.className, isOn: newValue)
+            useCase.restoreIdentifier = newValue
+        }
     }
 
     /// 生体認証使用可否
     var isUsedBiometricsAuthentication: Bool {
         get { useCase.useBiometricsAuthentication }
-        set { useCase.useBiometricsAuthentication = newValue }
+        set {
+            let name = SettingsViewData.SettingsMenu.biometricsAuthentication.rawValue
+            analyticsUseCase.recordEventSwitch(name: name, view: vc.className, isOn: newValue)
+            useCase.useBiometricsAuthentication = newValue
+        }
     }
 
     /// 生体認証有効無効
@@ -143,6 +158,15 @@ extension SettingsPresenter: SettingsPresenterProtocol {
     var syncedDate: String? {
         guard let time = useCase.lastSynced else { return nil }
         return TimeInterval(time).date
+    }
+
+    /// Pinpoint のエンドポイントID
+    var endpointId: String? {
+        #if DEBUG
+        return analyticsUseCase.endpointId
+        #else
+        return nil
+        #endif
     }
 
     /// e-mailアドレス
@@ -176,6 +200,8 @@ extension SettingsPresenter: SettingsPresenterProtocol {
     func selectRow(indexPath: IndexPath) {
 
         let menu = data(indexPath: indexPath)
+        analyticsUseCase.recordEventButton(name: menu.rawValue, view: vc.className)
+
         switch menu {
         case .signOut:
             signOut()
@@ -183,6 +209,7 @@ extension SettingsPresenter: SettingsPresenterProtocol {
             sync()
         case .robotVideo:
             vc.transitionToRobotVideoScreen()
+        case .notification: break
         case .aboutApp:
             vc.transitionToAboutAppScreen()
         default: break

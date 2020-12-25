@@ -16,6 +16,7 @@ public class TaskAPIDataStore: TaskAPIRepository {
     private let api: APIRequestProtocol
     /// エンドポイントURL
     public let url: URL = URL(string: AWSConstants.APIGateway.endPoint)!.appendingPathComponent("v1").appendingPathComponent("tasks")
+
     /// イニシャライザ
     /// - Parameter api: APIRequestProtocol
     public init(api: APIRequestProtocol) {
@@ -53,12 +54,26 @@ public class TaskAPIDataStore: TaskAPIRepository {
         return api.get(resUrl: url, token: token, dataId: "/\(taskId)", query: nil)
     }
 
+    /// Executionログを取得する
+    /// - Parameters:
+    ///   - token: トークン情報
+    ///   - taskId: Task ID
+    ///   - robotId: Robot ID
+    public func getExecutionLogs(_ token: String, taskId: String, robotId: String, paging: APIPaging.Input?) -> AnyPublisher<APIResult<[ExecutionEntity.LogData]>, Error> {
+        Logger.info(target: self)
+        let query = QueryBuilder()
+            .add(paging: paging)
+            .build()
+        return api.get(resUrl: url, token: token, dataId: "/\(taskId)/commands/\(robotId)/executions", query: query)
+    }
+
     /// Taskの情報を送信する
     /// - Parameters:
     ///   - token: トークン情報
-    ///   - data: Task情報
-    public func postTask(_ token: String, data: JobOrder_API.TaskAPIEntity.Input.Data) -> AnyPublisher<APIResult<TaskAPIEntity.Data>, Error> {
+    ///   - task: Taskデータ
+    /// - Returns: Task情報
+    public func postTask(_ token: String, task: TaskAPIEntity.Input.Data) -> AnyPublisher<APIResult<TaskAPIEntity.Data>, Error> {
         Logger.info(target: self)
-        return api.post(resUrl: url, token: token, data: data)
+        return api.post(resUrl: url, token: token, data: task)
     }
 }

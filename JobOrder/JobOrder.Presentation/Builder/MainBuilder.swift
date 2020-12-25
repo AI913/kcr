@@ -16,6 +16,7 @@ struct MainBuilder {
                                  mqttUseCase: Builder().mqttUseCase,
                                  settingsUseCase: Builder().settingsUseCase,
                                  dataUseCase: Builder().dataUseCase,
+                                 analyticsUseCase: Builder().analyticsUseCase,
                                  vc: vc)
         }
     }
@@ -120,6 +121,7 @@ struct MainBuilder {
                                      authUseCase: Builder().authUseCase,
                                      mqttUseCase: Builder().mqttUseCase,
                                      dataUseCase: Builder().dataUseCase,
+                                     analyticsUseCase: Builder().analyticsUseCase,
                                      vc: vc)
         }
     }

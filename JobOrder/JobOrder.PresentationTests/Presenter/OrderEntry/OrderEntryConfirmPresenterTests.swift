@@ -20,13 +20,12 @@ class OrderEntryConfirmPresenterTests: XCTestCase {
     private let mqtt = JobOrder_Domain.MQTTUseCaseProtocolMock()
     private let data = JobOrder_Domain.DataManageUseCaseProtocolMock()
     private let viewData = OrderEntryViewData(nil, nil)
-    private lazy var presenter = OrderEntryConfirmPresenter(mqttUseCase: mqtt,
-                                                            dataUseCase: data,
+    private lazy var presenter = OrderEntryConfirmPresenter(dataUseCase: data,
                                                             vc: vc,
                                                             viewData: viewData)
 
     override func setUpWithError() throws {
-        mqtt.processingPublisher = $processing
+        data.processingPublisher = $processing
     }
 
     override func tearDownWithError() throws {}
@@ -67,8 +66,8 @@ class OrderEntryConfirmPresenterTests: XCTestCase {
         }
 
         XCTContext.runActivity(named: "設定済みの場合") { _ in
-            presenter.data.form.startCondition = OrderEntryViewData.Form.StartCondition(key: "immediately")
-            XCTAssertEqual(presenter.startCondition, "immediately", "正常に値が設定されていない")
+            presenter.data.form.startCondition = OrderEntryViewData.Form.StartCondition(key: "Immediately")
+            XCTAssertEqual(presenter.startCondition, "Immediately", "正常に値が設定されていない")
         }
 
         XCTContext.runActivity(named: "想定外の値が設定されていた場合") { _ in
@@ -85,8 +84,8 @@ class OrderEntryConfirmPresenterTests: XCTestCase {
         }
 
         XCTContext.runActivity(named: "設定済みの場合") { _ in
-            presenter.data.form.exitCondition = OrderEntryViewData.Form.ExitCondition(key: "specifiedNumberOfTimes")
-            XCTAssertEqual(presenter.exitCondition, "specifiedNumberOfTimes", "正常に値が設定されていない")
+            presenter.data.form.exitCondition = OrderEntryViewData.Form.ExitCondition(key: "Specified number of times")
+            XCTAssertEqual(presenter.exitCondition, "Specified number of times", "正常に値が設定されていない")
         }
 
         XCTContext.runActivity(named: "想定外の値が設定されていた場合") { _ in
@@ -123,31 +122,28 @@ class OrderEntryConfirmPresenterTests: XCTestCase {
 
     func test_tapSendButton() {
 
-        JobOrder_Domain.MQTTModel.Output.CreateJobState.allCases.forEach { state in
-            let handlerExpectation = expectation(description: "handler \(state)")
-            let completionExpectation = expectation(description: "completion \(state)")
-            completionExpectation.isInverted = true
+        let handlerExpectation = expectation(description: "handler")
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
 
-            mqtt.createJobHandler = { targets, jobId, form in
-                return Future<JobOrder_Domain.MQTTModel.Output.CreateJobState, Error> { promise in
-                    promise(.success(state))
-                    handlerExpectation.fulfill()
-                }.eraseToAnyPublisher()
-            }
-
-            presenter.data.form.robotIds = ["test1", "test2"]
-            data.robots = stub.robots
-            presenter.tapSendButton()
-
-            wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-
-            switch state {
-            case .completed:
-                XCTAssertEqual(vc.transitionToCompleteScreenCallCount, 1, "ViewControllerのメソッドが呼ばれない")
-            default: break
-            // TODO: エラーケース
-            }
+        data.postTaskHandler = { postData in
+            return Future<DataManageModel.Output.Task, Error> { promise in
+                promise(.success(self.stub.task))
+                handlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
         }
+
+        presenter.data.form.jobId = stub.task.jobId
+        presenter.data.form.robotIds = stub.task.robotIds
+        presenter.data.form.startCondition = OrderEntryViewData.Form.StartCondition.immediately
+        presenter.data.form.exitCondition = OrderEntryViewData.Form.ExitCondition.specifiedNumberOfTimes
+        presenter.data.form.numberOfRuns = 1
+
+        data.robots = stub.robots
+        presenter.tapSendButton()
+
+        wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
+        XCTAssertEqual(vc.transitionToCompleteScreenCallCount, 1, "ViewControllerのメソッドが呼ばれない")
     }
 
     func test_tapSendButtonNotReceived() {
@@ -156,18 +152,24 @@ class OrderEntryConfirmPresenterTests: XCTestCase {
         handlerExpectation.isInverted = true
         completionExpectation.isInverted = true
 
-        mqtt.createJobHandler = { targets, jobId, form in
-            return Future<JobOrder_Domain.MQTTModel.Output.CreateJobState, Error> { promise in
+        data.postTaskHandler = { postData in
+            return Future<DataManageModel.Output.Task, Error> { promise in
+                promise(.success(self.stub.task))
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
 
         presenter.data.form.robotIds = nil
+        presenter.data.form.jobId = nil
+        presenter.data.form.startCondition = nil
+        presenter.data.form.exitCondition = nil
+        presenter.data.form.numberOfRuns = 0
+
         data.robots = nil
         presenter.tapSendButton()
 
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-        XCTAssertEqual(mqtt.createJobCallCount, 0, "MQTTUseCaseのメソッドが呼ばれてしまう")
+        XCTAssertEqual(data.postTaskCallCount, 0, "DatabaseUseCaseのメソッドが呼ばれてしまう")
     }
 
     func test_tapSendButtonError() {
@@ -175,15 +177,20 @@ class OrderEntryConfirmPresenterTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
 
-        mqtt.createJobHandler = { targets, jobId, form in
-            return Future<JobOrder_Domain.MQTTModel.Output.CreateJobState, Error> { promise in
+        data.postTaskHandler = { postData in
+            return Future<DataManageModel.Output.Task, Error> { promise in
                 let error = NSError(domain: "Error", code: -1, userInfo: nil)
                 promise(.failure(error))
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
 
-        presenter.data.form.robotIds = ["test1", "test2"]
+        presenter.data.form.jobId = stub.task.jobId
+        presenter.data.form.robotIds = stub.task.robotIds
+        presenter.data.form.startCondition = OrderEntryViewData.Form.StartCondition.immediately
+        presenter.data.form.exitCondition = OrderEntryViewData.Form.ExitCondition.specifiedNumberOfTimes
+        presenter.data.form.numberOfRuns = 1
+
         data.robots = stub.robots
         presenter.tapSendButton()
 
@@ -196,8 +203,7 @@ class OrderEntryConfirmPresenterTests: XCTestCase {
         completionExpectation.isInverted = true
 
         // 初期化時に登録
-        presenter = OrderEntryConfirmPresenter(mqttUseCase: mqtt,
-                                               dataUseCase: data,
+        presenter = OrderEntryConfirmPresenter(dataUseCase: data,
                                                vc: vc,
                                                viewData: viewData)
 

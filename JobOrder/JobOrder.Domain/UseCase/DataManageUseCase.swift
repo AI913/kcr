@@ -53,16 +53,22 @@ public protocol DataManageUseCaseProtocol {
     /// Task情報を取得する
     /// - Parameter taskId: TaskID
     func task(taskId: String) -> AnyPublisher<DataManageModel.Output.Task, Error>
+
+    /// Task情報を送信する
+    /// - Parameter postData: 送信用Task Data
+    func postTask(postData: DataManageModel.Input.Task) -> AnyPublisher<DataManageModel.Output.Task, Error>
     /// RobotSystemの情報を取得する
     /// - Parameter id: Robot ID
     func robotSystem(id: String) -> AnyPublisher<DataManageModel.Output.System, Error>
     /// Task情報を取得する
     /// - Parameter id: Job ID
     func tasksFromJob(id: String, cursor: PagingModel.Cursor?) -> AnyPublisher<PagingModel.PaginatedResult<[DataManageModel.Output.Task]>, Error>
-    /// Task情報を送信する
-    /// - Parameter id: Job ID
-    func postTask(data: DataManageModel.InputTask) -> AnyPublisher<DataManageModel.Output.Task, Error>
-
+    /// Executionログを取得する
+    /// - Parameters:
+    ///   - taskId: Task ID
+    ///   - robotId: Robot ID
+    ///   - cursor: カーソル
+    func executionLogsFromTask(taskId: String, robotId: String, cursor: PagingModel.Cursor?) -> AnyPublisher<PagingModel.PaginatedResult<[DataManageModel.Output.ExecutionLog]>, Error>
     //var _processing: Published<Bool> { get set }
     var processing: Bool { get }
     var processingPublished: Published<Bool> { get }
@@ -464,13 +470,19 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
     }
-    /// Task情報を送信する
-    /// - Parameter id: Job ID
-    public func postTask(data: DataManageModel.InputTask) -> AnyPublisher<DataManageModel.Output.Task, Error> {
-        Logger.info(target: self)
 
+    /// Task情報を送信する
+    /// - Parameter postData: 送信用Task Data
+    /// - Returns: Task
+    public func postTask(postData: DataManageModel.Input.Task) -> AnyPublisher<DataManageModel.Output.Task, Error> {
+        Logger.info(target: self)
         self.processing = true
         return Future<DataManageModel.Output.Task, Error> { promise in
+            guard let data = self.translator.toData(model: postData) else {
+                let userInfo = ["__type": "RobotCommand", "message": "PostData is Nil"]
+                promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                return
+            }
             self.auth.getTokens()
                 .flatMap { value -> AnyPublisher<APIResult<JobOrder_API.TaskAPIEntity.Data>, Error> in
                     guard let token = value.idToken else {
@@ -479,7 +491,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                             promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
                         }.eraseToAnyPublisher()
                     }
-                    return self.taskAPI.postTask(token, data: self.translator.toData(model: data)!).eraseToAnyPublisher()
+                    return self.taskAPI.postTask(token, task: data).eraseToAnyPublisher()
                 }.sink(receiveCompletion: { completion in
                     self.processing = false
                     switch completion {
@@ -567,6 +579,44 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     }
                 }, receiveValue: { response in
                     if let output = response.data?.compactMap({ DataManageModel.Output.Task($0) }) {
+                        promise(.success(.init(data: output, paging: response.paging)))
+                    } else {
+                        let userInfo = ["__type": "task", "message": "API Resuponse is null"]
+                        promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                    }
+                }).store(in: &self.cancellables)
+        }.eraseToAnyPublisher()
+    }
+
+    /// Executionログを取得する
+    /// - Parameters:
+    ///   - taskId: Task ID
+    ///   - robotId: Robot ID
+    ///   - cursor: カーソル
+    public func executionLogsFromTask(taskId: String, robotId: String, cursor: PagingModel.Cursor?) -> AnyPublisher<PagingModel.PaginatedResult<[DataManageModel.Output.ExecutionLog]>, Error> {
+        Logger.info(target: self)
+
+        self.processing = true
+        return Future<PagingModel.PaginatedResult<[DataManageModel.Output.ExecutionLog]>, Error> { promise in
+            self.auth.getTokens()
+                .flatMap { value -> AnyPublisher<APIResult<[JobOrder_API.ExecutionEntity.LogData]>, Error> in
+                    guard let token = value.idToken else {
+                        return Future<APIResult<[JobOrder_API.ExecutionEntity.LogData]>, Error> { promise in
+                            let userInfo = ["__type": "getTokens", "message": "idToken is null."]
+                            promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                        }.eraseToAnyPublisher()
+                    }
+                    return self.taskAPI.getExecutionLogs(token, taskId: taskId, robotId: robotId, paging: cursor?.toPaging()).eraseToAnyPublisher()
+                }.sink(receiveCompletion: { completion in
+                    self.processing = false
+                    switch completion {
+                    case .finished: break
+                    case .failure(let error):
+                        Logger.error(target: self, error.localizedDescription)
+                        promise(.failure(error))
+                    }
+                }, receiveValue: { response in
+                    if let output = response.data?.compactMap({ DataManageModel.Output.ExecutionLog($0) }) {
                         promise(.success(.init(data: output, paging: response.paging)))
                     } else {
                         let userInfo = ["__type": "task", "message": "API Resuponse is null"]

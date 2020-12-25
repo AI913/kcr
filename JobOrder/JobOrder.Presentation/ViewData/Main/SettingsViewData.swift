@@ -13,13 +13,14 @@ import UIKit
 struct SettingsViewData {
 
     /// Settingsリストメニュー
-    enum SettingsMenu: CaseIterable {
+    enum SettingsMenu: String, CaseIterable {
 
         case restoreIdentifier
         case biometricsAuthentication
         case signOut
         case syncData
         case robotVideo
+        case notification
         case aboutApp
 
         var displayName: String {
@@ -29,6 +30,7 @@ struct SettingsViewData {
             case .signOut: return L10n.signOut
             case .syncData: return L10n.syncCloud
             case .robotVideo: return L10n.robotVideo
+            case .notification: return L10n.notification
             case .aboutApp: return L10n.aboutThisApp
             }
         }
@@ -40,6 +42,7 @@ struct SettingsViewData {
             case .signOut: return nil
             case .syncData: return nil
             case .robotVideo: return nil
+            case .notification: return nil
             case .aboutApp: return nil
             }
         }
@@ -51,6 +54,7 @@ struct SettingsViewData {
             case .signOut: return UIImage(systemName: "escape")!
             case .syncData: return UIImage(systemName: "arrow.2.circlepath")!
             case .robotVideo: return UIImage(systemName: "video")!
+            case .notification: return UIImage(systemName: "app.badge")!
             case .aboutApp: return UIImage(systemName: "info.circle")!
             }
         }
@@ -62,6 +66,7 @@ struct SettingsViewData {
             case .signOut: return .account
             case .syncData: return .cloud
             case .robotVideo: return .cloud
+            case .notification: return .cloud
             case .aboutApp: return .information
             }
         }
@@ -73,6 +78,7 @@ struct SettingsViewData {
             case .signOut: return .none
             case .syncData: return .none
             case .robotVideo: return .disclosureIndicator
+            case .notification: return .none
             case .aboutApp: return .disclosureIndicator
             }
         }

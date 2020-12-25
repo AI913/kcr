@@ -51,6 +51,7 @@ internal enum StoryboardSegue {
     case robotSelectionCellToTaskInfo
     case taskDetailRunHistoryCellToRobotSelection
     case taskDetailRunHistoryCellToTaskInformation
+    case taskDetailTaskInformationToExecutionLog
   }
 }
 // swiftlint:enable explicit_type_interface identifier_name line_length type_body_length type_name

@@ -50,6 +50,8 @@ class SettingsMenuTableViewCell: UITableViewCell {
         switch data {
         case .syncData:
             remarks = presenter.syncedDate
+        case .notification:
+            remarks = presenter.endpointId
         default: break
         }
     }

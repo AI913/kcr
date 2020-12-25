@@ -117,13 +117,11 @@ struct DataTranslator {
         return aiLibrary
     }
 
-    /// AILibraryAPIから取得した結果をDBへ保存する構造体に変換する
-    /// - Parameter entity: APIから取得したデータ
-    /// - Returns: DBへ保存するデータ
-    func toData(model: DataManageModel.InputTask?) -> JobOrder_API.TaskAPIEntity.Input.Data? {
-        guard let entity = model else { return nil }
-
-        let inputData = JobOrder_API.TaskAPIEntity.Input.Data(jobId: entity.jobId, robotIds: entity.robotIds, start: entity.start, exit: entity.exit, numberOfRuns: entity.numberOfRuns)
-        return inputData
+    func toData(model: DataManageModel.Input.Task?) -> JobOrder_API.TaskAPIEntity.Input.Data? {
+        guard let model = model else { return nil }
+        return JobOrder_API.TaskAPIEntity.Input.Data(jobId: model.jobId,
+                                                     robotIds: model.robotIds,
+                                                     start: TaskAPIEntity.Start(condition: model.start.condition),
+                                                     exit: TaskAPIEntity.Exit(condition: model.exit.condition, option: TaskAPIEntity.Exit.Option(numberOfRuns: model.exit.option.numberOfRuns ?? 0)))
     }
 }

@@ -158,8 +158,8 @@ extension RobotDetailWorkPresenter: RobotDetailWorkPresenterProtocol {
     /// - Parameter index: 配列のIndex
     /// - Returns: 実行結果
     func resultInfo(in dataset: RobotDetailWorkPresenter.Dataset, _ index: Int) -> String? {
-        let commands = selectCommands(in: dataset)
-        return "Success \(commands?[index].success ?? 0) / Fail \(commands?[index].fail ?? 0) / Error \(commands?[index].error ?? 0)"
+        guard let commands = selectCommands(in: dataset) else { return nil }
+        return "Success \(commands[index].success ) / Fail \(commands[index].fail) / Error \(commands[index].error)"
     }
 
     /// 状態取得

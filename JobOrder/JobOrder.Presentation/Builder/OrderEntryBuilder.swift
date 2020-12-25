@@ -35,8 +35,7 @@ struct OrderEntryBuilder {
 
     struct Confirm {
         func build(vc: OrderEntryConfirmViewController, viewData: OrderEntryViewData) -> OrderEntryConfirmPresenter {
-            return OrderEntryConfirmPresenter(mqttUseCase: Builder().mqttUseCase,
-                                              dataUseCase: Builder().dataUseCase,
+            return OrderEntryConfirmPresenter(dataUseCase: Builder().dataUseCase,
                                               vc: vc,
                                               viewData: viewData)
         }

@@ -26,4 +26,13 @@ extension Date {
         return formatter.string(from: self)
     }
 
+    public var toMediumDateTimeString: String {
+        // February 28, 2020 18:00:00 JST
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        formatter.dateFormat = "MMMM d, y HH:mm:ss"
+        return formatter.string(from: self) + " JST"
+    }
+
 }

@@ -17,6 +17,7 @@
 "sign_out" = "サインアウト";
 "sync_cloud" = "データ更新";
 "robot_video" = "WebRTCテスト";
+"notification" = "通知テスト";
 "about_this_app" = "このアプリについて";
 "account" = "アカウント";
 "cloud" = "クラウド";

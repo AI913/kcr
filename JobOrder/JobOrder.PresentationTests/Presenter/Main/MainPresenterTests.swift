@@ -19,10 +19,12 @@ class MainPresenterTests: XCTestCase {
     private let mqtt = JobOrder_Domain.MQTTUseCaseProtocolMock()
     private let settings = JobOrder_Domain.SettingsUseCaseProtocolMock()
     private let data = JobOrder_Domain.DataManageUseCaseProtocolMock()
+    private let analytics = JobOrder_Domain.AnalyticsUseCaseProtocolMock()
     private lazy var presenter = MainPresenter(authUseCase: auth,
                                                mqttUseCase: mqtt,
                                                settingsUseCase: settings,
                                                dataUseCase: data,
+                                               analyticsUseCase: analytics,
                                                vc: vc)
     override func setUpWithError() throws {
         auth.registerAuthenticationStateChangeHandler = {
@@ -40,6 +42,25 @@ class MainPresenterTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {}
+
+    func test_setAnalyticsEndpointProfiles() {
+        let param = "test"
+
+        XCTContext.runActivity(named: "Usernameが未設定の場合") { _ in
+            presenter.setAnalyticsEndpointProfiles(displayAppearance: param)
+            XCTAssertEqual(analytics.setDisplayAppearanceCallCount, 1, "AnalyticsUseCaseのメソッドが呼ばれない")
+            XCTAssertEqual(analytics.setBiometricsSettingCallCount, 1, "AnalyticsUseCaseのメソッドが呼ばれない")
+            XCTAssertEqual(analytics.setUserNameCallCount, 0, "ViewControllerのメソッドが呼ばれてしまう")
+        }
+
+        XCTContext.runActivity(named: "Usernameが設定済みの場合") { _ in
+            auth.currentUsername = "test"
+            presenter.setAnalyticsEndpointProfiles(displayAppearance: param)
+            XCTAssertEqual(analytics.setDisplayAppearanceCallCount, 2, "AnalyticsUseCaseのメソッドが呼ばれない")
+            XCTAssertEqual(analytics.setBiometricsSettingCallCount, 2, "AnalyticsUseCaseのメソッドが呼ばれない")
+            XCTAssertEqual(analytics.setUserNameCallCount, 1, "ViewControllerのメソッドが呼ばれない")
+        }
+    }
 
     func test_viewDidAppear() {
 
@@ -75,6 +96,7 @@ class MainPresenterTests: XCTestCase {
                                   mqttUseCase: mqtt,
                                   settingsUseCase: settings,
                                   dataUseCase: data,
+                                  analyticsUseCase: analytics,
                                   vc: vc)
 
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
@@ -104,6 +126,7 @@ class MainPresenterTests: XCTestCase {
                                       mqttUseCase: mqtt,
                                       settingsUseCase: settings,
                                       dataUseCase: data,
+                                      analyticsUseCase: analytics,
                                       vc: vc)
 
             wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
@@ -137,6 +160,7 @@ class MainPresenterTests: XCTestCase {
                                   mqttUseCase: mqtt,
                                   settingsUseCase: settings,
                                   dataUseCase: data,
+                                  analyticsUseCase: analytics,
                                   vc: vc)
 
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
@@ -163,6 +187,7 @@ class MainPresenterTests: XCTestCase {
                                       mqttUseCase: mqtt,
                                       settingsUseCase: settings,
                                       dataUseCase: data,
+                                      analyticsUseCase: analytics,
                                       vc: vc)
 
             wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)

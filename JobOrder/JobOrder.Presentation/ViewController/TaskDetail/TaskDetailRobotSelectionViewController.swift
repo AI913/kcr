@@ -36,6 +36,8 @@ class TaskDetailRobotSelectionViewController: UIViewController {
     @IBOutlet weak var CircularProgressView: CircularProgressView!
     @IBOutlet weak var cancelAllTasksButton: UIButton!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var robotCollectionView: UICollectionView!
+    @IBOutlet weak var robotCollectionViewHeight: NSLayoutConstraint!
 
     @IBAction func segueButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "backToJobDetail", sender: self)
@@ -103,6 +105,8 @@ extension TaskDetailRobotSelectionViewController: TaskDetailRobotSelectionViewCo
 
     func reloadCollection() {
         robotCollection?.reloadData()
+        robotCollectionView.layoutIfNeeded()
+        robotCollectionViewHeight.constant = robotCollectionView.contentSize.height
     }
 
     func showErrorAlert(_ error: Error) {

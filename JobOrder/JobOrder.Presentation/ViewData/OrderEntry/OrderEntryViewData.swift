@@ -86,7 +86,7 @@ struct OrderEntryViewData {
             /// 表示名
             var displayName: String {
                 switch self {
-                case .immediately: return "immediately"
+                case .immediately: return "Immediately"
                 case .unknown: return "Unknown"
                 }
             }
@@ -110,7 +110,7 @@ struct OrderEntryViewData {
             /// 表示名
             var displayName: String {
                 switch self {
-                case .specifiedNumberOfTimes: return "specifiedNumberOfTimes"
+                case .specifiedNumberOfTimes: return "Specified number of times"
                 case .unknown: return "Unknown"
                 }
             }

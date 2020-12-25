@@ -38,6 +38,9 @@ class MainTabBarController: UITabBarController {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         presenter = MainBuilder.Main().build(vc: self)
+
+        let isDarkMode = self.traitCollection.userInterfaceStyle == .dark
+        presenter?.setAnalyticsEndpointProfiles(displayAppearance: isDarkMode ? "Dark" : "Light" )
     }
 
     // MARK: - Override function (view controller lifecycle)

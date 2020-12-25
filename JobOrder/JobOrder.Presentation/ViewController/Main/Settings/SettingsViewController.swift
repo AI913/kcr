@@ -12,6 +12,8 @@ import SkeletonView
 /// SettingsViewControllerProtocol
 /// @mockable
 protocol SettingsViewControllerProtocol: class {
+    /// クラス名
+    var className: String { get }
     /// 戻る
     func back()
     /// エラーアラート表示
@@ -111,6 +113,10 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
 
 // MARK: - Interface Function
 extension SettingsViewController: SettingsViewControllerProtocol {
+
+    var className: String {
+        String(describing: type(of: self))
+    }
 
     func back() {
         self.navigationController?.popViewController(animated: true)
