@@ -8,7 +8,7 @@
 
 import Foundation
 import RealmSwift
-
+import JobOrder_API
 /// Jobのエンティティ
 public class JobEntity: Object, Codable {
 
@@ -25,7 +25,7 @@ public class JobEntity: Object, Codable {
     /// 備考
     @objc public dynamic var remarks: String?
     /// 要求事項
-    @objc public dynamic var requirements: String?
+    public dynamic var requirements: [JobOrder_API.JobAPIEntity.Data.Requirement]?
     /// バージョン
     @objc public dynamic var version: Int = 0
     /// 作成日時
@@ -66,6 +66,18 @@ public class JobEntity: Object, Codable {
             lhs.creator == rhs.creator &&
             lhs.updateTime == rhs.updateTime &&
             lhs.updator == rhs.updator
+    }
+    
+    public struct Requirement: Codable, Equatable {}
+    
+    public struct Parameter: Codable, Equatable {
+        
+        public static func == (lhs: Parameter, rhs: Parameter) -> Bool {
+            return true
+        }
+        
+//                public let aiLibraryId: Int
+//                public let aiLibraryObjectId: Int
     }
 }
 

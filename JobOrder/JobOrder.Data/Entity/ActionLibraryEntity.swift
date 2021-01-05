@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import JobOrder_API
 
 /// ActionLibraryのエンティティ
 public class ActionLibraryEntity: Object, Codable {
@@ -17,7 +18,8 @@ public class ActionLibraryEntity: Object, Codable {
     /// 名前
     @objc public dynamic var name: String = ""
     /// 要求事項
-    @objc public dynamic var requirements: String?
+    
+    public dynamic var requirements: [JobOrder_API.ActionLibraryAPIEntity.Data.Requirement]?
     /// 画像パス
     @objc public dynamic var imagePath: String?
     /// 概要
@@ -56,4 +58,15 @@ public class ActionLibraryEntity: Object, Codable {
             lhs.updateTime == rhs.updateTime &&
             lhs.updator == rhs.updator
     }
-}
+    
+    public struct Requirement: Codable, Equatable {}
+    
+    public struct Parameter: Codable, Equatable {
+        
+        public static func == (lhs: Parameter, rhs: Parameter) -> Bool {
+            return true
+        }
+        
+//                public let aiLibraryId: Int
+//                public let aiLibraryObjectId: Int
+    }}

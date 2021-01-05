@@ -105,7 +105,5 @@ public struct JobAPIEntity: Codable {
 //                public let aiLibraryObjectId: Int
             }
         }
-        
-        
     }
 }

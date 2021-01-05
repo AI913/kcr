@@ -64,7 +64,15 @@ public struct ActionLibraryAPIEntity: Codable {
         }
         
         public struct Requirement: Codable, Equatable {}
-        
-        public struct Parameter: Codable, Equatable {}
+        public struct Parameter: Codable, Equatable {
+            
+            public static func == (lhs: Parameter, rhs: Parameter) -> Bool {
+                return true
+            }
+            
+//                public let aiLibraryId: Int
+//                public let aiLibraryObjectId: Int
+        }
+
     }
 }

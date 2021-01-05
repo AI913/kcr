@@ -64,7 +64,7 @@ public struct DataManageModel {
             /// 備考
             public let remarks: String?
             /// 要求事項
-            public let requirements: String?
+            public var requirements: [JobAPIEntity.Data.Requirement] = []
             /// バージョン
             public let version: Int
             /// 作成日時
@@ -91,7 +91,7 @@ public struct DataManageModel {
             ///   - creator: 作成者
             ///   - updateTime: 更新日時
             ///   - updator: 更新者
-            public init(id: String, name: String, actions: [Action], entryPoint: Int, overview: String?, remarks: String?, requirements: String?, version: Int, createTime: Int, creator: String, updateTime: Int, updator: String) {
+            public init(id: String, name: String, actions: [Action], entryPoint: Int, overview: String?, remarks: String?, requirements: [JobAPIEntity.Data.Requirement], version: Int, createTime: Int, creator: String, updateTime: Int, updator: String) {
                 self.id = id
                 self.name = name
                 self.actions.append(contentsOf: Array(actions))
@@ -115,7 +115,7 @@ public struct DataManageModel {
                 self.entryPoint = job.entryPoint
                 self.overview = job.overview
                 self.remarks = job.remarks
-                self.requirements = job.requirements
+                self.requirements = job.requirements!
                 self.version = job.version
                 self.createTime = job.createTime
                 self.creator = job.creator
@@ -132,7 +132,7 @@ public struct DataManageModel {
                 self.entryPoint = job.entryPoint
                 self.overview = job.overview
                 self.remarks = job.remarks
-                self.requirements = job.requirements
+                self.requirements = job.requirements!
                 self.version = job.version
                 self.createTime = job.createTime
                 self.creator = job.creator
@@ -183,6 +183,9 @@ public struct DataManageModel {
                     }
                 }
             }
+            
+            public struct Requirement: Codable, Equatable {}
+
         }
 
         /// Robotデータ
@@ -631,7 +634,7 @@ public struct DataManageModel {
             /// 名前
             public let name: String
             /// 要求事項
-            public let requirements: String?
+            public let requirements: [ActionLibraryAPIEntity.Data.Requirement]?
             /// 画像パス
             public let imagePath: String?
             /// 概要
@@ -649,6 +652,9 @@ public struct DataManageModel {
             /// 更新者
             public let updator: String
 
+            
+            public struct Requirement: Codable, Equatable {}
+
             /// イニシャライザ
             /// - Parameters:
             /// 更新者
@@ -663,7 +669,7 @@ public struct DataManageModel {
             ///   - creator: 作成者
             ///   - updateTime: 更新日時
             ///   - updator: 更新者
-            public init(id: String, name: String, requirements: String?, imagePath: String?, overview: String?, remarks: String?, version: Int, createTime: Int, creator: String, updateTime: Int, updator: String) {
+            public init(id: String, name: String, requirements: [ActionLibraryAPIEntity.Data.Requirement]?, imagePath: String?, overview: String?, remarks: String?, version: Int, createTime: Int, creator: String, updateTime: Int, updator: String) {
                 self.id = id
                 self.name = name
                 self.requirements = requirements
