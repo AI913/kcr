@@ -25,7 +25,7 @@ public class JobEntity: Object, Codable {
     /// 備考
     @objc public dynamic var remarks: String?
     /// 要求事項
-    public dynamic var requirements: [JobOrder_API.JobAPIEntity.Data.Requirement]?
+    public var requirements = List<Requirement>()
     /// バージョン
     @objc public dynamic var version: Int = 0
     /// 作成日時
@@ -40,6 +40,10 @@ public class JobEntity: Object, Codable {
     public init(actions: [JobAction]) {
         self.actions.append(objectsIn: actions)
     }
+    
+    public init(requirements: [Requirement]) {
+        self.requirements.append(objectsIn: requirements)
+    }
 
     required override init() {}
 
@@ -53,6 +57,8 @@ public class JobEntity: Object, Codable {
 
     static func === (lhs: JobEntity, rhs: JobEntity) -> Bool {
         let isEqualActions = lhs.actions.enumerated().filter { $0.element == rhs.actions[$0.offset] }.count == rhs.actions.count
+        
+        let isEqualRequirements = lhs.requirements.enumerated().filter { $0.element == rhs.requirements[$0.offset] }.count == rhs.requirements.count
 
         return lhs.id == rhs.id &&
             lhs.name == rhs.name &&
@@ -60,7 +66,7 @@ public class JobEntity: Object, Codable {
             isEqualActions &&
             lhs.overview == rhs.overview &&
             lhs.remarks == rhs.remarks &&
-            lhs.requirements == rhs.requirements &&
+            isEqualRequirements &&
             lhs.version == rhs.version &&
             lhs.createTime == rhs.createTime &&
             lhs.creator == rhs.creator &&
@@ -68,7 +74,6 @@ public class JobEntity: Object, Codable {
             lhs.updator == rhs.updator
     }
     
-    public struct Requirement: Codable, Equatable {}
     
     public struct Parameter: Codable, Equatable {
         
@@ -101,6 +106,9 @@ public class JobAction: Object, Codable {
             lhs.then == rhs.then
     }
 }
+
+public class Requirement: Object, Codable {}
+
 
 // TODO: Realmでエラーが出るので中身が決まるまでコメントアウト
 //public class JobParameter: Object, Codable {

@@ -28,14 +28,19 @@ struct DataTranslator {
             action.then = $0.then
             actions.append(action)
         }
-
+        
+        var requirements = [JobOrder_Data.Requirement]()
+//        _ = entity.requirements.map {
+//            let requirement = JobOrder_Data.Requirement()
+//            requirements.append(requirement)
+//        }
+       
         let job = JobOrder_Data.JobEntity(actions: actions)
         job.id = entity.id
         job.name = entity.name
         job.entryPoint = entity.entryPoint
         job.overview = entity.overview
         job.remarks = entity.remarks
-        job.requirements = entity.requirements
         job.version = entity.version
         job.createTime = entity.createTime
         job.creator = entity.creator
@@ -80,10 +85,11 @@ struct DataTranslator {
     func toData(actionLibraryEntity: JobOrder_API.ActionLibraryAPIEntity.Data?) -> JobOrder_Data.ActionLibraryEntity? {
         guard let entity = actionLibraryEntity else { return nil }
 
-        let actionLibrary = JobOrder_Data.ActionLibraryEntity()
+        var requirements = [JobOrder_Data.Requirement]()
+
+        let actionLibrary = JobOrder_Data.ActionLibraryEntity(requirements: requirements)
         actionLibrary.id = entity.id
         actionLibrary.name = entity.name
-        actionLibrary.requirements = entity.requirements
         actionLibrary.imagePath = entity.imagePath
         actionLibrary.overview = entity.overview
         actionLibrary.remarks = entity.remarks
@@ -101,11 +107,12 @@ struct DataTranslator {
     func toData(aiLibraryEntity: JobOrder_API.AILibraryAPIEntity.Data?) -> JobOrder_Data.AILibraryEntity? {
         guard let entity = aiLibraryEntity else { return nil }
 
-        let aiLibrary = JobOrder_Data.AILibraryEntity()
+        var requirements = [JobOrder_Data.Requirement]()
+
+        let aiLibrary = JobOrder_Data.AILibraryEntity(requirements: requirements)
         aiLibrary.id = entity.id
         aiLibrary.name = entity.name
         aiLibrary.type = entity.type
-        aiLibrary.requirements = entity.requirements
         aiLibrary.imagePath = entity.imagePath
         aiLibrary.overview = entity.overview
         aiLibrary.remarks = entity.remarks

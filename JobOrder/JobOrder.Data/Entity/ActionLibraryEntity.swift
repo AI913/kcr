@@ -12,14 +12,13 @@ import JobOrder_API
 
 /// ActionLibraryのエンティティ
 public class ActionLibraryEntity: Object, Codable {
-
+    
     /// ID
     @objc public dynamic var id: String = ""
     /// 名前
     @objc public dynamic var name: String = ""
     /// 要求事項
-    
-    public dynamic var requirements: [JobOrder_API.ActionLibraryAPIEntity.Data.Requirement]?
+    public var requirements = List<Requirement>()
     /// 画像パス
     @objc public dynamic var imagePath: String?
     /// 概要
@@ -36,19 +35,27 @@ public class ActionLibraryEntity: Object, Codable {
     @objc public dynamic var updateTime: Int = 0
     /// 更新者
     @objc public dynamic var updator: String = ""
-
+    
     override public static func primaryKey() -> String? {
         return "id"
     }
-
+    
+    required override init() {}
+    
+    public init(requirements: [Requirement]) {
+        self.requirements.append(objectsIn: requirements)
+    }
+    
     static func == (lhs: ActionLibraryEntity, rhs: ActionLibraryEntity) -> Bool {
         return lhs.id == rhs.id
     }
-
+    
     static func === (lhs: ActionLibraryEntity, rhs: ActionLibraryEntity) -> Bool {
+        let isEqualRequirements = lhs.requirements.enumerated().filter { $0.element == rhs.requirements[$0.offset] }.count == rhs.requirements.count
+        
         return lhs.id == rhs.id &&
             lhs.name == rhs.name &&
-            lhs.requirements == rhs.requirements &&
+            isEqualRequirements &&
             lhs.imagePath == rhs.imagePath &&
             lhs.overview == rhs.overview &&
             lhs.remarks == rhs.remarks &&
@@ -59,7 +66,6 @@ public class ActionLibraryEntity: Object, Codable {
             lhs.updator == rhs.updator
     }
     
-    public struct Requirement: Codable, Equatable {}
     
     public struct Parameter: Codable, Equatable {
         
@@ -67,6 +73,8 @@ public class ActionLibraryEntity: Object, Codable {
             return true
         }
         
-//                public let aiLibraryId: Int
-//                public let aiLibraryObjectId: Int
-    }}
+        //                public let aiLibraryId: Int
+        //                public let aiLibraryObjectId: Int
+    }
+}
+

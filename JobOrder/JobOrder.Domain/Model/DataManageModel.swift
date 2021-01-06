@@ -64,7 +64,7 @@ public struct DataManageModel {
             /// 備考
             public let remarks: String?
             /// 要求事項
-            public var requirements: [JobAPIEntity.Data.Requirement] = []
+            public var requirements: [Requirement] = []
             /// バージョン
             public let version: Int
             /// 作成日時
@@ -91,14 +91,14 @@ public struct DataManageModel {
             ///   - creator: 作成者
             ///   - updateTime: 更新日時
             ///   - updator: 更新者
-            public init(id: String, name: String, actions: [Action], entryPoint: Int, overview: String?, remarks: String?, requirements: [JobAPIEntity.Data.Requirement], version: Int, createTime: Int, creator: String, updateTime: Int, updator: String) {
+            public init(id: String, name: String, actions: [Action], entryPoint: Int, overview: String?, remarks: String?, requirements: [Requirement], version: Int, createTime: Int, creator: String, updateTime: Int, updator: String) {
                 self.id = id
                 self.name = name
                 self.actions.append(contentsOf: Array(actions))
                 self.entryPoint = entryPoint
                 self.overview = overview
                 self.remarks = remarks
-                self.requirements = requirements
+                self.requirements.append(contentsOf: Array(requirements))
                 self.version = version
                 self.createTime = createTime
                 self.creator = creator
@@ -115,7 +115,7 @@ public struct DataManageModel {
                 self.entryPoint = job.entryPoint
                 self.overview = job.overview
                 self.remarks = job.remarks
-                self.requirements = job.requirements!
+                self.requirements.append(contentsOf: Array(requirements))
                 self.version = job.version
                 self.createTime = job.createTime
                 self.creator = job.creator
@@ -132,7 +132,7 @@ public struct DataManageModel {
                 self.entryPoint = job.entryPoint
                 self.overview = job.overview
                 self.remarks = job.remarks
-                self.requirements = job.requirements!
+                self.requirements.append(contentsOf: Array(requirements))
                 self.version = job.version
                 self.createTime = job.createTime
                 self.creator = job.creator
@@ -634,7 +634,7 @@ public struct DataManageModel {
             /// 名前
             public let name: String
             /// 要求事項
-            public let requirements: [ActionLibraryAPIEntity.Data.Requirement]?
+            public var requirements: [Requirement] = []
             /// 画像パス
             public let imagePath: String?
             /// 概要
@@ -669,10 +669,10 @@ public struct DataManageModel {
             ///   - creator: 作成者
             ///   - updateTime: 更新日時
             ///   - updator: 更新者
-            public init(id: String, name: String, requirements: [ActionLibraryAPIEntity.Data.Requirement]?, imagePath: String?, overview: String?, remarks: String?, version: Int, createTime: Int, creator: String, updateTime: Int, updator: String) {
+            public init(id: String, name: String, requirements: [Requirement], imagePath: String?, overview: String?, remarks: String?, version: Int, createTime: Int, creator: String, updateTime: Int, updator: String) {
                 self.id = id
                 self.name = name
-                self.requirements = requirements
+                self.requirements.append(contentsOf: Array(requirements))
                 self.imagePath = imagePath
                 self.overview = overview
                 self.remarks = remarks
@@ -688,7 +688,7 @@ public struct DataManageModel {
             init(_ actionLibrary: JobOrder_Data.ActionLibraryEntity) {
                 self.id = actionLibrary.id
                 self.name = actionLibrary.name
-                self.requirements = actionLibrary.requirements
+                self.requirements.append(contentsOf: Array(requirements))
                 self.imagePath = actionLibrary.imagePath
                 self.overview = actionLibrary.overview
                 self.remarks = actionLibrary.remarks
@@ -709,7 +709,7 @@ public struct DataManageModel {
             /// タイプ
             public let type: String
             /// 要求事項
-            public let requirements: String?
+            public var requirements: [Requirement] = []
             /// 画像パス
             public let imagePath: String?
             /// 概要
@@ -741,11 +741,11 @@ public struct DataManageModel {
             ///   - creator: 作成者
             ///   - updateTime: 更新日時
             ///   - updator: 更新者
-            public init(id: String, name: String, type: String, requirements: String?, imagePath: String?, overview: String?, remarks: String?, version: Int, createTime: Int, creator: String, updateTime: Int, updator: String) {
+            public init(id: String, name: String, type: String, requirements: [Requirement], imagePath: String?, overview: String?, remarks: String?, version: Int, createTime: Int, creator: String, updateTime: Int, updator: String) {
                 self.id = id
                 self.name = name
                 self.type = type
-                self.requirements = requirements
+                self.requirements.append(contentsOf: Array(requirements))
                 self.imagePath = imagePath
                 self.overview = overview
                 self.remarks = remarks
@@ -762,7 +762,7 @@ public struct DataManageModel {
                 self.id = aiLibrary.id
                 self.name = aiLibrary.name
                 self.type = aiLibrary.type
-                self.requirements = aiLibrary.requirements
+                self.requirements.append(contentsOf: Array(requirements))
                 self.imagePath = aiLibrary.imagePath
                 self.overview = aiLibrary.overview
                 self.remarks = aiLibrary.remarks

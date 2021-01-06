@@ -20,7 +20,7 @@ public struct AILibraryAPIEntity: Codable {
         /// タイプ
         public let type: String
         /// 要求事項
-        public let requirements: String?
+        public let requirements: [Requirement]?
         /// 画像パス
         public let imagePath: String?
         /// 概要
@@ -63,5 +63,7 @@ public struct AILibraryAPIEntity: Codable {
                 lhs.updateTime == rhs.updateTime &&
                 lhs.updator == rhs.updator
         }
+        
+        public struct Requirement: Codable, Equatable {}
     }
 }

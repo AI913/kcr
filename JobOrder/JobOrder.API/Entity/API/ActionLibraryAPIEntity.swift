@@ -18,7 +18,7 @@ public struct ActionLibraryAPIEntity: Codable {
         /// 名前
         public let name: String
         /// 要求事項
-        public let requirements: [Requirement]?
+        public let requirements: [Requirement]
         /// 画像パス
         public let imagePath: String?
         /// 概要
