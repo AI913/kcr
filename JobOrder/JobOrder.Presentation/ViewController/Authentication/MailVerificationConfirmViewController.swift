@@ -17,6 +17,9 @@ protocol MailVerificationConfirmViewControllerProtocol: class {
     /// - Parameter message: メッセージ
     func showAlert(_ message: String)
     /// エラーアラート表示
+    /// - Parameter message: メッセージ
+    func showErrorAlert(_ message: String)
+    /// エラーアラート表示
     /// - Parameter error: エラー
     func showErrorAlert(_ error: Error)
     /// 処理中変更通知
@@ -133,6 +136,10 @@ extension MailVerificationConfirmViewController: MailVerificationConfirmViewCont
 
     func showAlert(_ message: String) {
         presentAlert("Info", message)
+    }
+
+    func showErrorAlert(_ message: String) {
+        presentAlert("Error", message)
     }
 
     func showErrorAlert(_ error: Error) {

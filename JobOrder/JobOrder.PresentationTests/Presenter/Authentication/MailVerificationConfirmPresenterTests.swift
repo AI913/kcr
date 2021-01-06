@@ -49,6 +49,7 @@ class MailVerificationConfirmPresenterTests: XCTestCase {
 
     func test_isEnabledUpdateButton() {
         let param = "test"
+        let valid_password = "Aa34567!"
 
         XCTContext.runActivity(named: "未設定の場合") { _ in
             XCTAssertFalse(presenter.isEnabledUpdateButton, "有効になってはいけない")
@@ -72,7 +73,7 @@ class MailVerificationConfirmPresenterTests: XCTestCase {
         XCTContext.runActivity(named: "Identifier, ConfirmationCode, Passwordが全て設定されている場合") { _ in
             presenter.data.identifier = param
             presenter.changedConfirmationCodeTextField(param)
-            presenter.changedPasswordTextField(param)
+            presenter.changedPasswordTextField(valid_password)
             XCTAssertTrue(presenter.isEnabledUpdateButton, "無効になってはいけない")
         }
     }
@@ -143,11 +144,12 @@ class MailVerificationConfirmPresenterTests: XCTestCase {
         presenter.tapResendButton()
 
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-        XCTAssertEqual(vc.showErrorAlertCallCount, 1, "ViewControllerのメソッドが呼ばれない")
+        XCTAssertEqual(vc.showErrorAlertErrorCallCount, 1, "ViewControllerのメソッドが呼ばれない")
     }
 
     func test_tapUpdateButton() {
         let param = "test"
+        let valid_password = "Aa34567!"
 
         JobOrder_Domain.AuthenticationModel.Output.ForgotPasswordResult.State.allCases.forEach { state in
             let handlerExpectation = expectation(description: "handler \(state)")
@@ -163,7 +165,7 @@ class MailVerificationConfirmPresenterTests: XCTestCase {
 
             presenter.data.identifier = param
             presenter.changedConfirmationCodeTextField(param)
-            presenter.changedPasswordTextField(param)
+            presenter.changedPasswordTextField(valid_password)
             presenter.tapUpdateButton()
 
             wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
@@ -185,6 +187,7 @@ class MailVerificationConfirmPresenterTests: XCTestCase {
             handlerExpectation.isInverted = true
             completionExpectation.isInverted = true
             let param = "test"
+            let valid_password = "Aa34567!"
 
             auth.confirmForgotPasswordHandler = { identifier, newPassword, confirmationCode in
                 return Future<JobOrder_Domain.AuthenticationModel.Output.ForgotPasswordResult, Error> { promise in
@@ -194,7 +197,7 @@ class MailVerificationConfirmPresenterTests: XCTestCase {
 
             presenter.data.identifier = nil
             presenter.changedConfirmationCodeTextField(param)
-            presenter.changedPasswordTextField(param)
+            presenter.changedPasswordTextField(valid_password)
             presenter.tapUpdateButton()
 
             wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
@@ -251,6 +254,7 @@ class MailVerificationConfirmPresenterTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
         let param = "test"
+        let valid_password = "Aa34567!"
 
         auth.confirmForgotPasswordHandler = { identifier, newPassword, confirmationCode in
             return Future<JobOrder_Domain.AuthenticationModel.Output.ForgotPasswordResult, Error> { promise in
@@ -262,11 +266,71 @@ class MailVerificationConfirmPresenterTests: XCTestCase {
 
         presenter.data.identifier = param
         presenter.changedConfirmationCodeTextField(param)
-        presenter.changedPasswordTextField(param)
+        presenter.changedPasswordTextField(valid_password)
         presenter.tapUpdateButton()
 
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-        XCTAssertEqual(vc.showErrorAlertCallCount, 1, "ViewControllerのメソッドが呼ばれない")
+        XCTAssertEqual(vc.showErrorAlertErrorCallCount, 1, "ViewControllerのメソッドが呼ばれない")
+    }
+
+    func test_tapUpdateButtonErrorPasswordErrorSpecial() {
+        let param = "test"
+        let invalid_password = "Ab345678"
+
+        presenter.data.identifier = param
+        presenter.changedConfirmationCodeTextField(param)
+        presenter.changedPasswordTextField(invalid_password)
+        presenter.tapUpdateButton()
+
+        XCTAssertEqual(vc.showErrorAlertCallCount, 1, "パスワードポリシーエラーとなること")
+    }
+
+    func test_tapUpdateButtonErrorPasswordErrorUpper() {
+        let param = "test"
+        let invalid_password = "ab3456!8"
+
+        presenter.data.identifier = param
+        presenter.changedConfirmationCodeTextField(param)
+        presenter.changedPasswordTextField(invalid_password)
+        presenter.tapUpdateButton()
+
+        XCTAssertEqual(vc.showErrorAlertCallCount, 1, "パスワードポリシーエラーとなること")
+    }
+
+    func test_tapUpdateButtonErrorPasswordErrorLower() {
+        let param = "test"
+        let invalid_password = "AB3456!8"
+
+        presenter.data.identifier = param
+        presenter.changedConfirmationCodeTextField(param)
+        presenter.changedPasswordTextField(invalid_password)
+        presenter.tapUpdateButton()
+
+        XCTAssertEqual(vc.showErrorAlertCallCount, 1, "パスワードポリシーエラーとなること")
+    }
+
+    func test_tapUpdateButtonErrorPasswordErrorDigit() {
+        let param = "test"
+        let invalid_password = "ABCDEF!H"
+
+        presenter.data.identifier = param
+        presenter.changedConfirmationCodeTextField(param)
+        presenter.changedPasswordTextField(invalid_password)
+        presenter.tapUpdateButton()
+
+        XCTAssertEqual(vc.showErrorAlertCallCount, 1, "パスワードポリシーエラーとなること")
+    }
+
+    func test_tapUpdateButtonErrorPasswordErrorLength() {
+        let param = "test"
+        let invalid_password = "Aa3456!"
+
+        presenter.data.identifier = param
+        presenter.changedConfirmationCodeTextField(param)
+        presenter.changedPasswordTextField(invalid_password)
+        presenter.tapUpdateButton()
+
+        XCTAssertEqual(vc.showErrorAlertCallCount, 1, "パスワードポリシーエラーとなること")
     }
 
     func test_subscribeUseCaseProcessing() {
@@ -323,7 +387,7 @@ class MailVerificationConfirmPresenterTests: XCTestCase {
         presenter.signOut()
 
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-        XCTAssertEqual(vc.showErrorAlertCallCount, 1, "ViewControllerのメソッドが呼ばれない")
+        XCTAssertEqual(vc.showErrorAlertErrorCallCount, 1, "ViewControllerのメソッドが呼ばれない")
     }
 
     func test_isEnabled() {

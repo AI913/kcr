@@ -90,11 +90,13 @@ class PasswordAuthenticationViewController: UIViewController {
         super.viewWillAppear(animated)
         guard let presenter = presenter else { return }
 
-        if presenter.isRestoredIdentifier, let username = presenter.username {
-            identifierTextField?.text = username
-        } else {
-            identifierTextField?.text = ""
+        if identifierTextField?.text == "" {
+            if presenter.isRestoredIdentifier, let username = presenter.username {
+                identifierTextField?.text = username
+            }
         }
+        passwordTextField?.text = ""
+
         presenter.changedIdentifierTextField(identifierTextField?.text)
         presenter.changedPasswordTextField(passwordTextField?.text)
         biometricsAuthenticationButton?.isHidden = !presenter.isEnabledBiometricsButton

@@ -12,6 +12,9 @@ import UIKit
 /// @mockable
 protocol NewPasswordRequiredViewControllerProtocol: class {
     /// エラーアラート表示
+    /// - Parameter message: メッセージ
+    func showErrorAlert(_ message: String)
+    /// エラーアラート表示
     /// - Parameter error: エラー
     func showErrorAlert(_ error: Error)
     /// 処理中変更通知
@@ -104,6 +107,10 @@ extension NewPasswordRequiredViewController {
 
 // MARK: - Interface Function
 extension NewPasswordRequiredViewController: NewPasswordRequiredViewControllerProtocol {
+
+    func showErrorAlert(_ message: String) {
+        presentAlert("Error", message)
+    }
 
     func showErrorAlert(_ error: Error) {
         presentAlert(error)

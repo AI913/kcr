@@ -63,6 +63,10 @@ extension NewPasswordRequiredPresenter: NewPasswordRequiredPresenterProtocol {
         guard let password = password, password != "" else {
             return
         }
+        if !password.checkPolicy() {
+            self.vc.showErrorAlert("パスワードは大文字、小文字、数字、特殊文字を含め、８文字以上で設定して下さい。")
+            return
+        }
 
         useCase.confirmSignIn(newPassword: password)
             .receive(on: DispatchQueue.main)

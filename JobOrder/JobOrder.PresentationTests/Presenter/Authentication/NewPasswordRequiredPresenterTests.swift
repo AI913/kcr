@@ -51,7 +51,7 @@ class NewPasswordRequiredPresenterTests: XCTestCase {
     }
 
     func test_tapUpdateButton() {
-        let param = "test"
+        let valid_password = "Aa34567!"
         var callCount = 0
 
         JobOrder_Domain.AuthenticationModel.Output.SignInResult.State.allCases.forEach { state in
@@ -66,7 +66,7 @@ class NewPasswordRequiredPresenterTests: XCTestCase {
                 }.eraseToAnyPublisher()
             }
 
-            presenter.changedPasswordTextField(param)
+            presenter.changedPasswordTextField(valid_password)
             presenter.tapUpdateButton()
 
             wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
@@ -104,7 +104,7 @@ class NewPasswordRequiredPresenterTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
-        let param = "test"
+        let valid_password = "Aa34567!"
 
         auth.confirmSignInHandler = { newPassword in
             return Future<JobOrder_Domain.AuthenticationModel.Output.SignInResult, Error> { promise in
@@ -114,11 +114,56 @@ class NewPasswordRequiredPresenterTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        presenter.changedPasswordTextField(param)
+        presenter.changedPasswordTextField(valid_password)
         presenter.tapUpdateButton()
 
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-        XCTAssertEqual(vc.showErrorAlertCallCount, 1, "ViewControllerのメソッドが呼ばれない")
+        XCTAssertEqual(vc.showErrorAlertErrorCallCount, 1, "ViewControllerのメソッドが呼ばれない")
+    }
+
+    func test_tapUpdateButtonErrorPasswordErrorSpecial() {
+        let invalid_password = "Ab345678"
+
+        presenter.changedPasswordTextField(invalid_password)
+        presenter.tapUpdateButton()
+
+        XCTAssertEqual(vc.showErrorAlertCallCount, 1, "パスワードポリシーエラーとなること")
+    }
+
+    func test_tapUpdateButtonErrorPasswordErrorUpper() {
+        let invalid_password = "ab3456!8"
+
+        presenter.changedPasswordTextField(invalid_password)
+        presenter.tapUpdateButton()
+
+        XCTAssertEqual(vc.showErrorAlertCallCount, 1, "パスワードポリシーエラーとなること")
+    }
+
+    func test_tapUpdateButtonErrorPasswordErrorLower() {
+        let invalid_password = "AB3456!8"
+
+        presenter.changedPasswordTextField(invalid_password)
+        presenter.tapUpdateButton()
+
+        XCTAssertEqual(vc.showErrorAlertCallCount, 1, "パスワードポリシーエラーとなること")
+    }
+
+    func test_tapUpdateButtonErrorPasswordErrorDigit() {
+        let invalid_password = "ABCDEF!H"
+
+        presenter.changedPasswordTextField(invalid_password)
+        presenter.tapUpdateButton()
+
+        XCTAssertEqual(vc.showErrorAlertCallCount, 1, "パスワードポリシーエラーとなること")
+    }
+
+    func test_tapUpdateButtonErrorPasswordErrorLength() {
+        let invalid_password = "Aa3456!"
+
+        presenter.changedPasswordTextField(invalid_password)
+        presenter.tapUpdateButton()
+
+        XCTAssertEqual(vc.showErrorAlertCallCount, 1, "パスワードポリシーエラーとなること")
     }
 
     func test_subscribeUseCaseProcessing() {
@@ -175,7 +220,7 @@ class NewPasswordRequiredPresenterTests: XCTestCase {
         presenter.signOut()
 
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-        XCTAssertEqual(vc.showErrorAlertCallCount, 1, "ViewControllerのメソッドが呼ばれない")
+        XCTAssertEqual(vc.showErrorAlertErrorCallCount, 1, "ViewControllerのメソッドが呼ばれない")
     }
 
     func test_isEnabled() {

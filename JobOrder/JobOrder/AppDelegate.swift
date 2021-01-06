@@ -10,7 +10,6 @@ import UIKit
 import RealmSwift
 import UserNotifications
 import JobOrder_API
-import JobOrder_Data
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -58,8 +57,7 @@ extension AppDelegate {
         let config = Realm.Configuration(
             schemaVersion: realmSchemaVersion,
             migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 1 {
-                }
+                if oldSchemaVersion < 1 {}
             })
         Realm.Configuration.defaultConfiguration = config
         _ = try! Realm()

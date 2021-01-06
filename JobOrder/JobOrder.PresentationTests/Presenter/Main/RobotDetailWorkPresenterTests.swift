@@ -30,7 +30,7 @@ class RobotDetailWorkPresenterTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {}
-    
+
     func test_getTasksAndJob() {
         let param = "test"
         let handlerExpectation = expectation(description: "handler")
@@ -349,7 +349,7 @@ class RobotDetailWorkPresenterTests: XCTestCase {
         ]))
         return mutableAttributedString
     }
-    
+
     func test_jobName() {
         presenter.task.append(stub.task)
         XCTAssertEqual(presenter.jobName(0), "test1", "正しい値が取得できていない")
