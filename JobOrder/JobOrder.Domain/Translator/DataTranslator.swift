@@ -28,13 +28,13 @@ struct DataTranslator {
             action.then = $0.then
             actions.append(action)
         }
-        
-        var requirements = [JobOrder_Data.Requirement]()
-//        _ = entity.requirements.map {
-//            let requirement = JobOrder_Data.Requirement()
-//            requirements.append(requirement)
-//        }
-       
+
+        var requirements = [JobOrder_Data.JobRequirement]()
+        //        _ = entity.requirements.map {
+        //            let requirement = JobOrder_Data.Requirement()
+        //            requirements.append(requirement)
+        //        }
+
         let job = JobOrder_Data.JobEntity(actions: actions)
         job.id = entity.id
         job.name = entity.name
@@ -85,7 +85,7 @@ struct DataTranslator {
     func toData(actionLibraryEntity: JobOrder_API.ActionLibraryAPIEntity.Data?) -> JobOrder_Data.ActionLibraryEntity? {
         guard let entity = actionLibraryEntity else { return nil }
 
-        var requirements = [JobOrder_Data.Requirement]()
+        var requirements = [JobOrder_Data.ActionLibraryRequirement]()
 
         let actionLibrary = JobOrder_Data.ActionLibraryEntity(requirements: requirements)
         actionLibrary.id = entity.id
@@ -107,7 +107,7 @@ struct DataTranslator {
     func toData(aiLibraryEntity: JobOrder_API.AILibraryAPIEntity.Data?) -> JobOrder_Data.AILibraryEntity? {
         guard let entity = aiLibraryEntity else { return nil }
 
-        var requirements = [JobOrder_Data.Requirement]()
+        var requirements = [JobOrder_Data.AILibraryRequirement]()
 
         let aiLibrary = JobOrder_Data.AILibraryEntity(requirements: requirements)
         aiLibrary.id = entity.id

@@ -709,7 +709,7 @@ public struct DataManageModel {
             /// タイプ
             public let type: String
             /// 要求事項
-            public var requirements: [Requirement] = []
+            public var requirements: [AILibraryRequirement] = []
             /// 画像パス
             public let imagePath: String?
             /// 概要
@@ -741,7 +741,7 @@ public struct DataManageModel {
             ///   - creator: 作成者
             ///   - updateTime: 更新日時
             ///   - updator: 更新者
-            public init(id: String, name: String, type: String, requirements: [Requirement], imagePath: String?, overview: String?, remarks: String?, version: Int, createTime: Int, creator: String, updateTime: Int, updator: String) {
+            public init(id: String, name: String, type: String, requirements: [AILibraryRequirement], imagePath: String?, overview: String?, remarks: String?, version: Int, createTime: Int, creator: String, updateTime: Int, updator: String) {
                 self.id = id
                 self.name = name
                 self.type = type

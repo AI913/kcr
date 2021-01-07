@@ -63,7 +63,7 @@ public struct AILibraryAPIEntity: Codable {
                 lhs.updateTime == rhs.updateTime &&
                 lhs.updator == rhs.updator
         }
-        
+
         public struct Requirement: Codable, Equatable {}
     }
 }

@@ -7,6 +7,7 @@
 //
 
 @testable import JobOrder_Data
+import RealmSwift
 
 struct DataTestsStub {
 
@@ -104,7 +105,7 @@ struct DataTestsStub {
         job.entryPoint = 1
         job.overview = "A job for flickering Raspberry Pi LEDs"
         job.remarks = "The remarks of Job 1"
-        job.requirements = nil
+        job.requirements = List<JobRequirement>()
         job.version = 1
         job.createTime = 1_592_477_367_000
         job.creator = "user@kyocera.jp"
@@ -127,7 +128,7 @@ struct DataTestsStub {
         job.entryPoint = 1
         job.overview = "A job for flickering Raspberry Pi LEDs"
         job.remarks = "The remarks of Job 2"
-        job.requirements = nil
+        job.requirements = List<JobRequirement>()
         job.version = 1
         job.createTime = 1_592_477_397_000
         job.creator = "user@kyocera.jp"
@@ -150,7 +151,7 @@ struct DataTestsStub {
         job.entryPoint = 1
         job.overview = "A job for flickering Raspberry Pi LEDs"
         job.remarks = "The remarks of Job 3"
-        job.requirements = nil
+        job.requirements = List<JobRequirement>()
         job.version = 1
         job.createTime = 1_592_477_337_000
         job.creator = "user@kyocera.jp"
@@ -167,7 +168,7 @@ struct DataTestsStub {
         let actionLibrary = ActionLibraryEntity()
         actionLibrary.id = "30cf3116-c823-4093-a62d-4fe07c81ffff"
         actionLibrary.name = "LED Flicker (RED)"
-        actionLibrary.requirements = nil
+        actionLibrary.requirements = List<ActionLibraryRequirement>()
         actionLibrary.imagePath = "30cf3116-c823-4093-a62d-4fe07c81ffff/raspberry-pi.jpg"
         actionLibrary.overview = "A library for flickering Raspberry Pi LEDs."
         actionLibrary.remarks = "LED module is required to use."
@@ -188,7 +189,7 @@ struct DataTestsStub {
         aiLibrary.id = "19ae9914-acb5-4e6e-ab11-52a20d8952f2"
         aiLibrary.name = "Gear"
         aiLibrary.type = "recognition-workbench"
-        aiLibrary.requirements = nil
+        aiLibrary.requirements = List<AILibraryRequirement>()
         aiLibrary.imagePath = "19ae9914-acb5-4e6e-ab11-52a20d8952f2/industrial.png"
         aiLibrary.overview = "This library is a recognition of 'Gear' used to detect a workobject."
         aiLibrary.remarks = "The remarks of Gear Recognize Library."
@@ -205,7 +206,7 @@ struct DataTestsStub {
         aiLibrary.id = "657BACA4-8273-45CF-8D8F-223847B38F2F"
         aiLibrary.name = "Boxes"
         aiLibrary.type = "recognition-workbench"
-        aiLibrary.requirements = nil
+        aiLibrary.requirements = List<AILibraryRequirement>()
         aiLibrary.imagePath = "657BACA4-8273-45CF-8D8F-223847B38F2F/box.svg"
         aiLibrary.overview = "This library is a recognition of 'Box' used to select a workbench."
         aiLibrary.remarks = "The remarks of Box Recognize Library."

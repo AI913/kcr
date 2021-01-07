@@ -10,13 +10,12 @@ import UIKit
 import RealmSwift
 import UserNotifications
 import JobOrder_API
-import JobOrder_Data
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: DBのプロパティを変更した場合はバージョンをインクリメントする
-    private let realmSchemaVersion: UInt64 = 3
+    private let realmSchemaVersion: UInt64 = 4
     private var analytics: JobOrder_API.AnalyticsServiceRepository?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -58,8 +57,7 @@ extension AppDelegate {
         let config = Realm.Configuration(
             schemaVersion: realmSchemaVersion,
             migrationBlock: { migration, oldSchemaVersion in
-                if (oldSchemaVersion < 1) {
-                }
+                if oldSchemaVersion < 1 {}
             })
         Realm.Configuration.defaultConfiguration = config
         _ = try! Realm()

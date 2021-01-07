@@ -427,8 +427,6 @@
 		E5BA085F256E34E1000C9BE1 /* TaskDetailRobotSelectionCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BA085E256E34E1000C9BE1 /* TaskDetailRobotSelectionCircularProgress.swift */; };
 		E5C0A4A22554CEBA00C31567 /* CommandEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C0A4A12554CEBA00C31567 /* CommandEntity.swift */; };
 		E5C0A4B12554CFAD00C31567 /* TaskAPIEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C0A4B02554CFAD00C31567 /* TaskAPIEntity.swift */; };
-		E5C528D625A442A2004AAF73 /* JobOrder_API.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D77CF301240EA6D6007A61EE /* JobOrder_API.framework */; };
-		E5C528D725A442A2004AAF73 /* JobOrder_API.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D77CF301240EA6D6007A61EE /* JobOrder_API.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E5CADCA7252C66AD000268C4 /* RobotSelectionPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CADCA2252C66AC000268C4 /* RobotSelectionPageObject.swift */; };
 		E5CADCA8252C66AD000268C4 /* RobotWorkTabPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CADCA3252C66AD000268C4 /* RobotWorkTabPageObject.swift */; };
 		E5CADCA9252C66AD000268C4 /* RobotSystemTabPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CADCA4252C66AD000268C4 /* RobotSystemTabPageObject.swift */; };
@@ -582,13 +580,6 @@
 			remoteGlobalIDString = D77CF29A240EA59F007A61EE;
 			remoteInfo = JobOrder.Domain;
 		};
-		E5C528D825A442A2004AAF73 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D77CF216240EA4DD007A61EE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D77CF300240EA6D6007A61EE;
-			remoteInfo = JobOrder.API;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -603,17 +594,6 @@
 				D78EC13924111A81003E5ECD /* JobOrder_Utility.framework in Embed Frameworks */,
 				D77CF317240EA6D6007A61EE /* JobOrder_API.framework in Embed Frameworks */,
 				D77CF2F5240EA675007A61EE /* JobOrder_Data.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E5C528DA25A442A2004AAF73 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				E5C528D725A442A2004AAF73 /* JobOrder_API.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1130,7 +1110,6 @@
 			files = (
 				A3CE646524EF70C400999753 /* Realm.framework in Frameworks */,
 				A3CE645724EF677D00999753 /* RealmSwift.framework in Frameworks */,
-				E5C528D625A442A2004AAF73 /* JobOrder_API.framework in Frameworks */,
 				A37F69CB257636380013A3F6 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2626,13 +2605,11 @@
 				D77CF2DB240EA675007A61EE /* Sources */,
 				D77CF2DC240EA675007A61EE /* Frameworks */,
 				D77CF2DD240EA675007A61EE /* Resources */,
-				E5C528DA25A442A2004AAF73 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				D78EC14E24111B3F003E5ECD /* PBXTargetDependency */,
-				E5C528D925A442A2004AAF73 /* PBXTargetDependency */,
 			);
 			name = JobOrder.Data;
 			packageProductDependencies = (
@@ -4029,11 +4006,6 @@
 			isa = PBXTargetDependency;
 			target = D77CF29A240EA59F007A61EE /* JobOrder.Domain */;
 			targetProxy = D78EC2042411CE6B003E5ECD /* PBXContainerItemProxy */;
-		};
-		E5C528D925A442A2004AAF73 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D77CF300240EA6D6007A61EE /* JobOrder.API */;
-			targetProxy = E5C528D825A442A2004AAF73 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

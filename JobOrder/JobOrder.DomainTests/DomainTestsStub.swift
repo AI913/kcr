@@ -8,6 +8,7 @@
 
 @testable import JobOrder_Domain
 @testable import JobOrder_API
+import RealmSwift
 
 struct DomainTestsStub {
     var jobs: [JobOrder_API.JobAPIEntity.Data] {
@@ -27,7 +28,7 @@ struct DomainTestsStub {
                                               entryPoint: 1,
                                               overview: "overview",
                                               remarks: "remarks",
-                                              requirements: "requirements",
+                                              requirements: [],
                                               version: 1,
                                               createTime: 1,
                                               creator: "creator",
@@ -180,7 +181,7 @@ struct DomainTestsStub {
     var actionLibrary: JobOrder_API.ActionLibraryAPIEntity.Data {
         return JobOrder_API.ActionLibraryAPIEntity.Data(id: "id",
                                                         name: "name",
-                                                        requirements: "requirements",
+                                                        requirements: [],
                                                         imagePath: "imagePath",
                                                         overview: "overview",
                                                         remarks: "remarks",
@@ -199,7 +200,7 @@ struct DomainTestsStub {
         return JobOrder_API.AILibraryAPIEntity.Data(id: "id",
                                                     name: "name",
                                                     type: "type",
-                                                    requirements: "requirements",
+                                                    requirements: [],
                                                     imagePath: "imagePath",
                                                     overview: "overview",
                                                     remarks: "remarks",

@@ -10,7 +10,7 @@ import Foundation
 
 /// JobAPIのエンティティ
 public struct JobAPIEntity: Codable {
-    
+
     /// Jobデータ
     public struct Data: Codable {
         /// ID
@@ -37,7 +37,7 @@ public struct JobAPIEntity: Codable {
         public let updateTime: Int
         /// 更新者
         public let updator: String
-        
+
         enum CodingKeys: String, CodingKey {
             case id = "jobId"
             case name = "displayName"
@@ -48,7 +48,7 @@ public struct JobAPIEntity: Codable {
             case updateTime
             case updator = "updatedBy"
         }
-        
+
         static func == (lhs: Data, rhs: Data) -> Bool {
             return lhs.id == rhs.id &&
                 lhs.name == rhs.name &&
@@ -63,9 +63,9 @@ public struct JobAPIEntity: Codable {
                 lhs.updateTime == rhs.updateTime &&
                 lhs.updator == rhs.updator
         }
-        
+
         public struct Requirement: Codable, Equatable {}
-        
+
         /// Jobで実行できるActionLibrary情報
         public struct Action: Codable, Equatable {
             /// インデックス
@@ -78,7 +78,7 @@ public struct JobAPIEntity: Codable {
             public let _catch: String?
             /// then
             public let then: String?
-            
+
             enum CodingKeys: String, CodingKey {
                 case index
                 case id = "actionLibraryId"
@@ -86,7 +86,7 @@ public struct JobAPIEntity: Codable {
                 case _catch = "catch"
                 case then
             }
-            
+
             public static func == (lhs: Action, rhs: Action) -> Bool {
                 return lhs.index == rhs.index &&
                     lhs.id == rhs.id &&
@@ -94,15 +94,15 @@ public struct JobAPIEntity: Codable {
                     lhs._catch == rhs._catch &&
                     lhs.then == rhs.then
             }
-            
+
             public struct Parameter: Codable, Equatable {
-                
+
                 public static func == (lhs: Parameter, rhs: Parameter) -> Bool {
                     return true
                 }
-                
-//                public let aiLibraryId: Int
-//                public let aiLibraryObjectId: Int
+
+                //                public let aiLibraryId: Int
+                //                public let aiLibraryObjectId: Int
             }
         }
     }

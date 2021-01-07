@@ -8,17 +8,16 @@
 
 import Foundation
 import RealmSwift
-import JobOrder_API
 
 /// ActionLibraryのエンティティ
 public class ActionLibraryEntity: Object, Codable {
-    
+
     /// ID
     @objc public dynamic var id: String = ""
     /// 名前
     @objc public dynamic var name: String = ""
     /// 要求事項
-    public var requirements = List<Requirement>()
+    public var requirements = List<ActionLibraryRequirement>()
     /// 画像パス
     @objc public dynamic var imagePath: String?
     /// 概要
@@ -35,24 +34,24 @@ public class ActionLibraryEntity: Object, Codable {
     @objc public dynamic var updateTime: Int = 0
     /// 更新者
     @objc public dynamic var updator: String = ""
-    
+
     override public static func primaryKey() -> String? {
         return "id"
     }
-    
+
     required override init() {}
-    
-    public init(requirements: [Requirement]) {
+
+    public init(requirements: [ActionLibraryRequirement]) {
         self.requirements.append(objectsIn: requirements)
     }
-    
+
     static func == (lhs: ActionLibraryEntity, rhs: ActionLibraryEntity) -> Bool {
         return lhs.id == rhs.id
     }
-    
+
     static func === (lhs: ActionLibraryEntity, rhs: ActionLibraryEntity) -> Bool {
         let isEqualRequirements = lhs.requirements.enumerated().filter { $0.element == rhs.requirements[$0.offset] }.count == rhs.requirements.count
-        
+
         return lhs.id == rhs.id &&
             lhs.name == rhs.name &&
             isEqualRequirements &&
@@ -65,16 +64,13 @@ public class ActionLibraryEntity: Object, Codable {
             lhs.updateTime == rhs.updateTime &&
             lhs.updator == rhs.updator
     }
-    
-    
-    public struct Parameter: Codable, Equatable {
-        
-        public static func == (lhs: Parameter, rhs: Parameter) -> Bool {
-            return true
-        }
-        
-        //                public let aiLibraryId: Int
-        //                public let aiLibraryObjectId: Int
-    }
 }
 
+public class ActionLibraryRequirement: Object, Codable {
+    /// ID
+    @objc public dynamic var id: String = ""
+
+    public static func == (lhs: ActionLibraryRequirement, rhs: ActionLibraryRequirement) -> Bool {
+        return lhs.id == rhs.id
+    }
+}

@@ -8,7 +8,6 @@
 
 import Foundation
 import RealmSwift
-import JobOrder_API
 /// Jobのエンティティ
 public class JobEntity: Object, Codable {
 
@@ -25,7 +24,7 @@ public class JobEntity: Object, Codable {
     /// 備考
     @objc public dynamic var remarks: String?
     /// 要求事項
-    public var requirements = List<Requirement>()
+    public var requirements = List<JobRequirement>()
     /// バージョン
     @objc public dynamic var version: Int = 0
     /// 作成日時
@@ -40,8 +39,8 @@ public class JobEntity: Object, Codable {
     public init(actions: [JobAction]) {
         self.actions.append(objectsIn: actions)
     }
-    
-    public init(requirements: [Requirement]) {
+
+    public init(requirements: [JobRequirement]) {
         self.requirements.append(objectsIn: requirements)
     }
 
@@ -57,7 +56,7 @@ public class JobEntity: Object, Codable {
 
     static func === (lhs: JobEntity, rhs: JobEntity) -> Bool {
         let isEqualActions = lhs.actions.enumerated().filter { $0.element == rhs.actions[$0.offset] }.count == rhs.actions.count
-        
+
         let isEqualRequirements = lhs.requirements.enumerated().filter { $0.element == rhs.requirements[$0.offset] }.count == rhs.requirements.count
 
         return lhs.id == rhs.id &&
@@ -72,17 +71,6 @@ public class JobEntity: Object, Codable {
             lhs.creator == rhs.creator &&
             lhs.updateTime == rhs.updateTime &&
             lhs.updator == rhs.updator
-    }
-    
-    
-    public struct Parameter: Codable, Equatable {
-        
-        public static func == (lhs: Parameter, rhs: Parameter) -> Bool {
-            return true
-        }
-        
-//                public let aiLibraryId: Int
-//                public let aiLibraryObjectId: Int
     }
 }
 
@@ -107,8 +95,14 @@ public class JobAction: Object, Codable {
     }
 }
 
-public class Requirement: Object, Codable {}
+public class JobRequirement: Object, Codable {
+    /// ID
+    @objc public dynamic var id: String = ""
 
+    public static func == (lhs: JobRequirement, rhs: JobRequirement) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
 
 // TODO: Realmでエラーが出るので中身が決まるまでコメントアウト
 //public class JobParameter: Object, Codable {

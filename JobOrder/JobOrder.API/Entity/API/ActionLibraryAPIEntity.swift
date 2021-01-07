@@ -18,7 +18,7 @@ public struct ActionLibraryAPIEntity: Codable {
         /// 名前
         public let name: String
         /// 要求事項
-        public let requirements: [Requirement]
+        public let requirements: [Requirement]?
         /// 画像パス
         public let imagePath: String?
         /// 概要
@@ -36,8 +36,6 @@ public struct ActionLibraryAPIEntity: Codable {
         /// 更新者
         public let updator: String
 
-        
-        
         enum CodingKeys: String, CodingKey {
             case id = "actionLibraryId"
             case name = "displayName"
@@ -62,17 +60,7 @@ public struct ActionLibraryAPIEntity: Codable {
                 lhs.updateTime == rhs.updateTime &&
                 lhs.updator == rhs.updator
         }
-        
-        public struct Requirement: Codable, Equatable {}
-        public struct Parameter: Codable, Equatable {
-            
-            public static func == (lhs: Parameter, rhs: Parameter) -> Bool {
-                return true
-            }
-            
-//                public let aiLibraryId: Int
-//                public let aiLibraryObjectId: Int
-        }
 
+        public struct Requirement: Codable, Equatable {}
     }
 }

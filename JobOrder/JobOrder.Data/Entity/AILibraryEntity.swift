@@ -19,7 +19,7 @@ public class AILibraryEntity: Object, Codable {
     /// タイプ
     @objc public dynamic var type: String = ""
     /// 要求事項
-    public var requirements = List<Requirement>()
+    public var requirements = List<AILibraryRequirement>()
     /// 画像パス
     @objc public dynamic var imagePath: String?
     /// 概要
@@ -37,7 +37,7 @@ public class AILibraryEntity: Object, Codable {
     /// 更新者
     @objc public dynamic var updator: String = ""
 
-    public init(requirements: [Requirement]) {
+    public init(requirements: [AILibraryRequirement]) {
         self.requirements.append(objectsIn: requirements)
     }
 
@@ -52,7 +52,7 @@ public class AILibraryEntity: Object, Codable {
     }
 
     static func === (lhs: AILibraryEntity, rhs: AILibraryEntity) -> Bool {
-        
+
         let isEqualRequirements = lhs.requirements.enumerated().filter { $0.element == rhs.requirements[$0.offset] }.count == rhs.requirements.count
 
         return lhs.id == rhs.id &&
@@ -67,5 +67,14 @@ public class AILibraryEntity: Object, Codable {
             lhs.creator == rhs.creator &&
             lhs.updateTime == rhs.updateTime &&
             lhs.updator == rhs.updator
+    }
+}
+
+public class AILibraryRequirement: Object, Codable {
+    /// ID
+    @objc public dynamic var id: String = ""
+
+    public static func == (lhs: AILibraryRequirement, rhs: AILibraryRequirement) -> Bool {
+        return lhs.id == rhs.id
     }
 }
