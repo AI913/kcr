@@ -8,6 +8,15 @@
 
 import UIKit
 
+/// JobEntryGeneralInformationFormViewControllerProtocol
+/// @mockable
+protocol JobEntryGeneralInformationFormViewControllerProtocol: class {
+    /// ConfigurationForm画面へ遷移
+    func transitionToConfigurationFormScreen()
+    /// コレクションを更新
+    func reloadCollection()
+}
+
 class JobEntryGeneralInformationFormViewController: UIViewController {
 
     // MARK: - IBOutlet
@@ -18,11 +27,23 @@ class JobEntryGeneralInformationFormViewController: UIViewController {
     @IBOutlet private weak var overviewTextView: UITextView!
     @IBOutlet private weak var cancelBarButtonItem: UIBarButtonItem!
     @IBOutlet private weak var continueButton: UIButton!
+    @IBOutlet weak var robotCollection: UICollectionView!
 
+    var viewData: OrderEntryViewData!
+    var presenter: JobEntryGeneralInformationFormPresenter!
+    private var computedCellSize: CGSize?
+
+    func inject(viewData: OrderEntryViewData) {
+        self.viewData = viewData
+        presenter = JobEntryBuilder.GeneralInformationForm().build(vc: self, viewData: viewData)
+    }
+    
     // MARK: - Override function (view controller lifecycle)
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        robotCollection?.allowsSelection = true
+        robotCollection?.allowsMultipleSelection = true
     }
 
     // MARK: - Override function (view controller event)
@@ -90,5 +111,63 @@ extension JobEntryGeneralInformationFormViewController {
         jobNameTitleLabel?.attributedText = self.toRequiredMutableAttributedString(jobNameTitleLabel.text)
         overviewTitleLabel?.text = L10n.JobEntryGeneralInformationForm.remarks
         continueButton?.setTitle(L10n.JobEntryGeneralInformationForm.bottomButton, for: .normal)
+    }
+}
+
+// MARK: - Implement UICollectionViewDataSource
+extension JobEntryGeneralInformationFormViewController: UICollectionViewDataSource {
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return presenter?.numberOfItemsInSection ?? 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let _cell = collectionView.dequeueReusableCell(withReuseIdentifier: JobEntryRobotSelectionRobotCollectionViewCell.identifier, for: indexPath)
+        guard let cell = _cell as? JobEntryRobotSelectionRobotCollectionViewCell else {
+            return _cell
+        }
+
+        cell.inject(presenter: presenter)
+        cell.setItem(indexPath)
+        if let presenter = presenter, presenter.isSelected(indexPath: indexPath) {
+            cell.isSelected = true
+            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
+        }
+        return cell
+    }
+}
+
+// MARK: - Implement UICollectionViewDelegate
+extension JobEntryGeneralInformationFormViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter?.selectItem(indexPath: indexPath)
+        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        presenter?.selectItem(indexPath: indexPath)
+        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
+    }
+}
+
+// MARK: - Implement UICollectionViewDelegateFlowLayout
+extension JobEntryGeneralInformationFormViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        guard self.computedCellSize == nil else {
+            return self.computedCellSize!
+        }
+
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: JobEntryRobotSelectionRobotCollectionViewCell.identifier, for: indexPath)
+        guard let prototypeCell = cell as? JobEntryRobotSelectionRobotCollectionViewCell,
+              let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else {
+            fatalError("CollectionViewCell is not found.")
+        }
+
+        let cellSize = prototypeCell.propotionalScaledSize(for: flowLayout, numberOfColumns: 2)
+        self.computedCellSize = cellSize
+        return cellSize
     }
 }
