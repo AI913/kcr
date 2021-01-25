@@ -28,15 +28,15 @@ class SettingsPageObject: PageObject {
         self.app = application
     }
 
-    var BackButton: XCUIElement {
+    var backButton: XCUIElement {
         return app.navigationBars.buttons.element(boundBy: 0)
     }
 
-    var RootTable: XCUIElement { return view.tables[IDs.rootTable] }
-    var Cells: XCUIElementQuery { return RootTable.cells }
+    var rootTable: XCUIElement { return view.tables[IDs.rootTable] }
+    var cells: XCUIElementQuery { return rootTable.cells }
 
     func tapBackButton() -> MainPageObject {
-        BackButton.tap()
+        backButton.tap()
         return MainPageObject(application: app)
     }
 
@@ -53,10 +53,10 @@ class SettingsPageObject: PageObject {
     }
 
     private func tapCells(index: Int) -> PageObject {
-        assert(Cells.count > 0, "識別子「setting_table」を持つテーブルにセルが格納されていない")
-        assert(index < Cells.count, "識別子「setting_table」を持つテーブルのセル数が指定されたインデックス(" + String(index) + ")より少ない")
+        //assert(Cells.count > 0, "識別子「setting_table」を持つテーブルにセルが格納されていない")
+        //assert(index < Cells.count, "識別子「setting_table」を持つテーブルのセル数が指定されたインデックス(" + String(index) + ")より少ない")
 
-        Cells.element(boundBy: index).tap()
+        cells.element(boundBy: index).tap()
         var result: PageObject?
         switch index {
         case Indexs.SignOut:

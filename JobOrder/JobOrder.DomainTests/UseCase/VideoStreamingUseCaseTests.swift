@@ -220,6 +220,7 @@ class VideoStreamingUseCaseTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         video.connectAsRoleHandler = { isMaster in
             return Future<JobOrder_API.VideoStreamingEntity.Output.Connect, Error> { promise in
@@ -234,7 +235,7 @@ class VideoStreamingUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -295,6 +296,7 @@ class VideoStreamingUseCaseTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         video.connectAsRoleHandler = { isMaster in
             return Future<JobOrder_API.VideoStreamingEntity.Output.Connect, Error> { promise in
@@ -309,7 +311,7 @@ class VideoStreamingUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in

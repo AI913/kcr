@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 /// Jobのエンティティ
-public class JobEntity: Object, Codable {
+final public class JobEntity: Object, Codable {
 
     /// ID
     @objc public dynamic var id: String = ""
@@ -36,11 +36,8 @@ public class JobEntity: Object, Codable {
     /// 更新者
     @objc public dynamic var updator: String = ""
 
-    public init(actions: [JobAction]) {
+    public init(actions: [JobAction], requirements: [JobRequirement]) {
         self.actions.append(objectsIn: actions)
-    }
-
-    public init(requirements: [JobRequirement]) {
         self.requirements.append(objectsIn: requirements)
     }
 
@@ -74,7 +71,7 @@ public class JobEntity: Object, Codable {
     }
 }
 
-public class JobAction: Object, Codable {
+final public class JobAction: Object, Codable {
     /// インデックス
     @objc public dynamic var index: Int = 0
     /// ID
@@ -95,7 +92,7 @@ public class JobAction: Object, Codable {
     }
 }
 
-public class JobRequirement: Object, Codable {
+final public class JobRequirement: Object, Codable {
     /// ID
     @objc public dynamic var id: String = ""
 

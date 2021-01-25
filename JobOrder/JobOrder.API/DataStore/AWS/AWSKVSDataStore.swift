@@ -93,33 +93,29 @@ public class AWSKVSDataStore: VideoStreamingRepository {
             self.getChannelArn(channelName) { (state, arn, error) -> Void in
 
                 if let error = error {
-                    promise(.failure(error))
+                    promise(.failure(AWSError.kvsControlFailed(reason: .awsTask(error: error))))
                     return
                 }
 
                 guard state == .completed else {
-                    let userInfo = ["__type": "Connect As Viewer", "message": "Get Channel ARN is not completed."]
-                    promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                    promise(.failure(AWSError.kvsControlFailed(reason: .getChannelARNisNotCompleted)))
                     return
                 }
 
                 guard let arn = arn else {
-                    let userInfo = ["__type": "Connect As Viewer", "message": "Get Channel ARN is not available."]
-                    promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                    promise(.failure(AWSError.kvsControlFailed(reason: .getChannelARNisNotAvailable)))
                     return
                 }
 
                 self.getSignedWSSUrl(arn, self.localSenderClientId) { (state, _result, error) -> Void in
 
                     guard state == .completed else {
-                        let userInfo = ["__type": "Connect As Viewer", "message": "Get Signed WSS URL is not completed."]
-                        promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                        promise(.failure(AWSError.kvsControlFailed(reason: .getSignedWSSURLisNotCompleted)))
                         return
                     }
 
                     guard let result = _result else {
-                        let userInfo = ["__type": "Connect As Viewer", "message": "Get Signed WSS URL, ICE Server List is not available."]
-                        promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                        promise(.failure(AWSError.kvsControlFailed(reason: .getSignedWSSURL_ICEServerListisNotAvailable)))
                         return
                     }
 
@@ -289,18 +285,14 @@ extension AWSKVSDataStore {
                   let httpResourceEndpoint = httpResourceEndpointItem.resourceEndpoint,
                   let wssResourceEndpointItem = _wssResourceEndpointItem,
                   let wssResourceEndpoint = wssResourceEndpointItem.resourceEndpoint else {
-                let userInfo = ["__type": "getSignalingChannelEndpoint", "message": "httpResourceEndpoint or wssResourceEndpoint is not available."]
-                let error = NSError(domain: "Error", code: -1, userInfo: userInfo)
-                callback?(.faulted, nil, error)
+                callback?(.faulted, nil, AWSError.kvsControlFailed(reason: .httpResourceEndpointORwssResourceEndpointIsNotAvailable))
                 return
             }
 
             guard let wssUrl = URL(string: wssResourceEndpoint),
                   let httpUrl = URL(string: httpResourceEndpoint),
                   var wssUrlComponents = URLComponents(url: wssUrl, resolvingAgainstBaseURL: nil != wssUrl.baseURL) else {
-                let userInfo = ["__type": "getSignalingChannelEndpoint", "message": "wssUrl or httpUrl is not available."]
-                let error = NSError(domain: "Error", code: -1, userInfo: userInfo)
-                callback?(.faulted, nil, error)
+                callback?(.faulted, nil, AWSError.kvsControlFailed(reason: .wssUrlORhttpUrlIsNotAvailable))
                 return
             }
 
@@ -330,9 +322,7 @@ extension AWSKVSDataStore {
                                                        region: AWSConstants.KVS.region.stringValue)
 
                 guard let wssUrl = _wssUrl else {
-                    let userInfo = ["__type": "getSignalingChannelEndpoint", "message": "wssUrl is not available."]
-                    let error = NSError(domain: "Error", code: -1, userInfo: userInfo)
-                    callback?(.faulted, nil, error)
+                    callback?(.faulted, nil, AWSError.kvsControlFailed(reason: .wssUrlIsNotAvailable))
                     return
                 }
 

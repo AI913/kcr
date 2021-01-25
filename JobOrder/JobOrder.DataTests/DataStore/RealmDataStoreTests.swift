@@ -21,13 +21,14 @@ class RealmDataStoreTests: TestCaseBase {
     func test_add() {
 
         XCTContext.runActivity(named: "Robotを設定した場合") { _ in
-            dataStore.add(entities: DataTestsStub().robots)
+            let robots = RobotEntity.arbitrary.sample.sorted(by: { $0.id < $1.id })
+            dataStore.add(entities: robots)
 
             let realm = try! Realm()
             let entities: [RobotEntity]? = realm.objects(RobotEntity.self).map({ $0 })
 
-            entities?.enumerated().forEach {
-                XCTAssert(DataTestsStub().robots[$0.offset] == $0.element, "Robotが設定されていない: \($0.element)")
+            entities?.sorted(by: { $0.id < $1.id }).enumerated().forEach {
+                XCTAssert(robots[$0.offset] == $0.element, "Robotが設定されていない: \($0.element)")
             }
         }
     }
@@ -40,14 +41,16 @@ class RealmDataStoreTests: TestCaseBase {
         }
 
         XCTContext.runActivity(named: "Robotが設定済みの場合") { _ in
+            let robots = RobotEntity.arbitrary.sample.sorted(by: { $0.id < $1.id })
+
             let realm = try! Realm()
             try! realm.write {
-                realm.add(DataTestsStub().robots, update: .modified)
+                realm.add(robots, update: .modified)
             }
 
             let entities = dataStore.read(type: RobotEntity.self)
-            entities?.enumerated().forEach {
-                XCTAssert(DataTestsStub().robots[$0.offset] == $0.element, "Robotが設定されていない: \($0.element)")
+            entities?.sorted(by: { $0.id < $1.id }).enumerated().forEach {
+                XCTAssert(robots[$0.offset] == $0.element, "Robotが設定されていない: \($0.element)")
             }
         }
     }
@@ -58,20 +61,24 @@ class RealmDataStoreTests: TestCaseBase {
             let completionExpectation = expectation(description: "completion")
             completionExpectation.isInverted = true
 
-            dataStore.update(type: RobotEntity.self, key: DataTestsStub().robot1.id) { _ in }
+            dataStore.update(type: RobotEntity.self, key: RobotEntity.arbitrary.generate.id) { _ in }
             wait(for: [completionExpectation], timeout: ms1000)
         }
 
         XCTContext.runActivity(named: "Robotが設定済みの場合") { _ in
             let completionExpectation = expectation(description: "completion")
+            let robots = RobotEntity.arbitrary.sample.sorted(by: { $0.id < $1.id })
+            let obj = robots.randomElement()!
 
             let realm = try! Realm()
             try! realm.write {
-                realm.add(DataTestsStub().robots, update: .modified)
+                realm.add(robots, update: .modified)
             }
+            let expectedRef = ThreadSafeReference(to: obj)
 
-            dataStore.update(type: RobotEntity.self, key: DataTestsStub().robot1.id) {
-                XCTAssert($0 == DataTestsStub().robot1, "Robotが設定されていない: \($0)")
+            dataStore.update(type: RobotEntity.self, key: obj.id) {
+                let realm = try! Realm()
+                XCTAssert($0 == realm.resolve(expectedRef), "Robotが設定されていない: \($0)")
                 completionExpectation.fulfill()
             }
             wait(for: [completionExpectation], timeout: ms1000)
@@ -82,7 +89,7 @@ class RealmDataStoreTests: TestCaseBase {
         let param = "test"
 
         try XCTContext.runActivity(named: "未設定の場合") { _ in
-            dataStore.delete(type: RobotEntity.self, key: DataTestsStub().robot1.id)
+            dataStore.delete(type: RobotEntity.self, key: param)
 
             let realm = try! Realm()
             let entities = try XCTUnwrap(realm.objects(RobotEntity.self).map({ $0 }), "Unwrap失敗")
@@ -90,31 +97,36 @@ class RealmDataStoreTests: TestCaseBase {
         }
 
         XCTContext.runActivity(named: "存在しないRobotを指定した場合") { _ in
+            let robots = RobotEntity.arbitrary.sample.sorted(by: { $0.id < $1.id })
+
             var realm = try! Realm()
             try! realm.write {
-                realm.add(DataTestsStub().robots, update: .modified)
+                realm.add(robots, update: .modified)
             }
 
             dataStore.delete(type: RobotEntity.self, key: param)
 
             realm = try! Realm()
             let entities: [RobotEntity]? = realm.objects(RobotEntity.self).map({ $0 })
-            entities?.enumerated().forEach {
-                XCTAssert(DataTestsStub().robots[$0.offset] == $0.element, "Robotが設定されていない: \($0.element)")
+            entities?.sorted(by: { $0.id < $1.id }).enumerated().forEach {
+                XCTAssert(robots[$0.offset] == $0.element, "Robotが設定されていない: \($0.element)")
             }
         }
 
         try XCTContext.runActivity(named: "設定済みのRobotを指定した場合") { _ in
+            let robots = RobotEntity.arbitrary.sample.sorted(by: { $0.id < $1.id })
+            let obj = robots.randomElement()!
+
             var realm = try! Realm()
             try! realm.write {
-                realm.add(DataTestsStub().robots, update: .modified)
+                realm.add(robots, update: .modified)
             }
 
-            dataStore.delete(type: RobotEntity.self, key: DataTestsStub().robot1.id)
+            dataStore.delete(type: RobotEntity.self, key: obj.id)
 
             realm = try! Realm()
             let entities = try XCTUnwrap(realm.objects(RobotEntity.self).map({ $0 }), "Unwrap失敗")
-            XCTAssertFalse(entities.contains(DataTestsStub().robot1), "削除したデータが含まれてはいけない")
+            XCTAssertFalse(entities.contains(obj), "削除したデータが含まれてはいけない")
         }
     }
 
@@ -129,16 +141,19 @@ class RealmDataStoreTests: TestCaseBase {
         }
 
         try XCTContext.runActivity(named: "設定済みの場合") { _ in
+            let robots = RobotEntity.arbitrary.sample.sorted(by: { $0.id < $1.id })
+            let obj = robots.randomElement()!
+
             var realm = try! Realm()
             try! realm.write {
-                realm.add(DataTestsStub().robots, update: .modified)
+                realm.add(robots, update: .modified)
             }
 
             dataStore.deleteAll(type: RobotEntity.self)
 
             realm = try! Realm()
             let entities = try XCTUnwrap(realm.objects(RobotEntity.self).map({ $0 }), "Unwrap失敗")
-            XCTAssertFalse(entities.contains(DataTestsStub().robot1), "削除したデータが含まれてはいけない")
+            XCTAssertFalse(entities.contains(obj), "削除したデータが含まれてはいけない")
         }
     }
 
@@ -157,17 +172,18 @@ class RealmDataStoreTests: TestCaseBase {
         XCTContext.runActivity(named: "データに変化があった場合") { _ in
             let completionExpectation = expectation(description: "completion")
             let realm = try! Realm()
+            let robots = RobotEntity.arbitrary.sample.sorted(by: { $0.id < $1.id })
 
             dataStore.observe(type: RobotEntity.self) { _ in
                 let entities: [RobotEntity]? = realm.objects(RobotEntity.self).map({ $0 })
-                entities?.enumerated().forEach {
-                    XCTAssert(DataTestsStub().robots[$0.offset] == $0.element, "Robotが設定されていない: \($0.element)")
+                entities?.sorted(by: { $0.id < $1.id }).enumerated().forEach {
+                    XCTAssert(robots[$0.offset] == $0.element, "Robotが設定されていない: \($0.element)")
                 }
                 completionExpectation.fulfill()
             }
 
             try! realm.write {
-                realm.add(DataTestsStub().robots, update: .modified)
+                realm.add(robots, update: .modified)
             }
 
             wait(for: [completionExpectation], timeout: ms1000)

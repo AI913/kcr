@@ -14,7 +14,6 @@ import Combine
 class OrderEntryJobSelectionPresenterTests: XCTestCase {
 
     private let ms1000 = 1.0
-    private let stub = PresentationTestsStub()
     private let vc = OrderEntryJobSelectionViewControllerProtocolMock()
     private let useCase = JobOrder_Domain.DataManageUseCaseProtocolMock()
     private let viewData = OrderEntryViewData(nil, nil)
@@ -38,8 +37,9 @@ class OrderEntryJobSelectionPresenterTests: XCTestCase {
         }
 
         XCTContext.runActivity(named: "Jobが存在する場合") { _ in
-            presenter.cacheJobs(stub.jobs)
-            XCTAssertEqual(presenter.numberOfItemsInSection, stub.jobs.count, "正常に値が設定されていない")
+            let jobs = DataManageModel.Output.Job.arbitrary.sample
+            presenter.cacheJobs(jobs)
+            XCTAssertEqual(presenter.numberOfItemsInSection, jobs.count, "正常に値が設定されていない")
         }
     }
 
@@ -70,60 +70,60 @@ class OrderEntryJobSelectionPresenterTests: XCTestCase {
     }
 
     func test_displayName() {
-
+        let jobs = DataManageModel.Output.Job.arbitrary.sample
         XCTContext.runActivity(named: "未設定の場合") { _ in
             presenter.cacheJobs(nil)
-            stub.jobs.enumerated().forEach {
+            jobs.enumerated().forEach {
                 XCTAssertNil(presenter.displayName($0.offset), "値を取得できてはいけない")
             }
         }
 
         XCTContext.runActivity(named: "Jobが存在する場合") { _ in
-            presenter.cacheJobs(stub.jobs)
-            stub.jobs.enumerated().forEach {
+            presenter.cacheJobs(jobs)
+            jobs.sorted(by: { $0.name < $1.name }).enumerated().forEach {
                 XCTAssertEqual(presenter.displayName($0.offset), $0.element.name, "正しい値が取得できていない: \($0.offset)")
             }
         }
     }
 
     func test_requirementText() {
-
+        let jobs = DataManageModel.Output.Job.arbitrary.sample
         XCTContext.runActivity(named: "未設定の場合") { _ in
             presenter.cacheJobs(nil)
-            stub.jobs.enumerated().forEach {
+            jobs.enumerated().forEach {
                 XCTAssertNil(presenter.requirementText($0.offset), "値を取得できてはいけない")
             }
         }
 
         XCTContext.runActivity(named: "Jobが存在する場合") { _ in
-            presenter.cacheJobs(stub.jobs)
-            stub.jobs.enumerated().forEach {
+            presenter.cacheJobs(jobs)
+            jobs.sorted(by: { $0.name < $1.name }).enumerated().forEach {
                 XCTAssertEqual(presenter.requirementText($0.offset), $0.element.overview, "正しい値が取得できていない: \($0.offset)")
             }
         }
     }
 
     func test_isSelected() {
-
+        let jobs = DataManageModel.Output.Job.arbitrary.sample
         XCTContext.runActivity(named: "未設定の場合") { _ in
             presenter.cacheJobs(nil)
-            stub.jobs.enumerated().forEach {
+            jobs.enumerated().forEach {
                 presenter.data.form.jobId = $0.element.id
                 XCTAssertFalse(presenter.isSelected(indexPath: IndexPath(row: $0.offset, section: 0)), "有効になってはいけない")
             }
         }
 
         XCTContext.runActivity(named: "JobIdが存在する場合") { _ in
-            presenter.cacheJobs(stub.jobs)
-            stub.jobs.enumerated().forEach {
+            presenter.cacheJobs(jobs)
+            jobs.sorted(by: { $0.name < $1.name }).enumerated().forEach {
                 presenter.data.form.jobId = $0.element.id
                 XCTAssertTrue(presenter.isSelected(indexPath: IndexPath(row: $0.offset, section: 0)), "無効になってはいけない")
             }
         }
 
         XCTContext.runActivity(named: "JobIdが存在しない場合") { _ in
-            presenter.cacheJobs(stub.jobs)
-            stub.jobs.enumerated().forEach {
+            presenter.cacheJobs(jobs)
+            jobs.sorted(by: { $0.name < $1.name }).enumerated().forEach {
                 presenter.data.form.jobId = nil
                 XCTAssertFalse(presenter.isSelected(indexPath: IndexPath(row: $0.offset, section: 0)), "有効になってはいけない")
             }
@@ -131,18 +131,18 @@ class OrderEntryJobSelectionPresenterTests: XCTestCase {
     }
 
     func test_selectItem() {
-
+        let jobs = DataManageModel.Output.Job.arbitrary.sample
         XCTContext.runActivity(named: "未設定の場合") { _ in
             presenter.cacheJobs(nil)
-            stub.jobs.enumerated().forEach {
+            jobs.enumerated().forEach {
                 presenter.selectItem(indexPath: IndexPath(row: $0.offset, section: 0))
                 XCTAssertNil(presenter.data.form.jobId, "値を取得できてはいけない")
             }
         }
 
         XCTContext.runActivity(named: "Jobが存在する場合") { _ in
-            presenter.cacheJobs(stub.jobs)
-            stub.jobs.enumerated().forEach {
+            presenter.cacheJobs(jobs)
+            jobs.sorted(by: { $0.name < $1.name }).enumerated().forEach {
                 presenter.selectItem(indexPath: IndexPath(row: $0.offset, section: 0))
                 XCTAssertEqual(presenter.data.form.jobId, $0.element.id, "正しい値が取得できていない: \($0.offset)")
             }
@@ -181,7 +181,7 @@ class OrderEntryJobSelectionPresenterTests: XCTestCase {
 
         useCase.observeJobDataHandler = {
             return Future<[JobOrder_Domain.DataManageModel.Output.Job]?, Never> { promise in
-                promise(.success(self.stub.jobs))
+                promise(.success(DataManageModel.Output.Job.arbitrary.sample))
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
@@ -203,7 +203,7 @@ class OrderEntryJobSelectionPresenterTests: XCTestCase {
         }
 
         XCTContext.runActivity(named: "Jobが存在する場合") { _ in
-            presenter.cacheJobs(stub.jobs)
+            presenter.cacheJobs(DataManageModel.Output.Job.arbitrary.sample)
             XCTAssertEqual(vc.reloadCollectionCallCount, 1, "ViewControllerのメソッドが呼ばれない")
         }
     }

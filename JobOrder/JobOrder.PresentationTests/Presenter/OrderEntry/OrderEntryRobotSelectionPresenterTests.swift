@@ -14,7 +14,6 @@ import Combine
 class OrderEntryRobotSelectionPresenterTests: XCTestCase {
 
     private let ms1000 = 1.0
-    private let stub = PresentationTestsStub()
     private let vc = OrderEntryRobotSelectionViewControllerProtocolMock()
     private let useCase = JobOrder_Domain.DataManageUseCaseProtocolMock()
     private let viewData = OrderEntryViewData(nil, nil)
@@ -38,8 +37,9 @@ class OrderEntryRobotSelectionPresenterTests: XCTestCase {
         }
 
         XCTContext.runActivity(named: "Robotが存在する場合") { _ in
-            presenter.cacheRobots(stub.robots)
-            XCTAssertEqual(presenter.numberOfItemsInSection, stub.robots.count, "正常に値が設定されていない")
+            let robots = DataManageModel.Output.Robot.arbitrary.sample
+            presenter.cacheRobots(robots)
+            XCTAssertEqual(presenter.numberOfItemsInSection, robots.count, "正常に値が設定されていない")
         }
     }
 
@@ -56,60 +56,61 @@ class OrderEntryRobotSelectionPresenterTests: XCTestCase {
     }
 
     func test_displayName() {
-
+        let robots = DataManageModel.Output.Robot.arbitrary.sample
         XCTContext.runActivity(named: "未設定の場合") { _ in
             presenter.cacheRobots(nil)
-            stub.robots.enumerated().forEach {
+            robots.enumerated().forEach {
                 XCTAssertNil(presenter.displayName($0.offset), "値を取得できてはいけない")
             }
         }
 
         XCTContext.runActivity(named: "Robotが存在する場合") { _ in
-            presenter.cacheRobots(stub.robots)
-            stub.robots.enumerated().forEach {
-                XCTAssertEqual(presenter.displayName($0.offset), $0.element.name, "正しい値が取得できていない: \($0.offset)")
+            presenter.cacheRobots(robots)
+            robots.enumerated().forEach {
+                let displayName = presenter.displayName($0.offset)
+                XCTAssertTrue( robots.contains { $0.name == displayName }, "正しい値が取得できていない: \($0.offset)")
             }
         }
     }
 
     func test_type() {
-
+        let robots = DataManageModel.Output.Robot.arbitrary.sample
         XCTContext.runActivity(named: "未設定の場合") { _ in
             presenter.cacheRobots(nil)
-            stub.robots.enumerated().forEach {
+            robots.sorted(by: { $0.name ?? "N/A" < $1.name ?? "N/A" }).enumerated().forEach {
                 XCTAssertNil(presenter.type($0.offset), "値を取得できてはいけない")
             }
         }
 
         XCTContext.runActivity(named: "Robotが存在する場合") { _ in
-            presenter.cacheRobots(stub.robots)
-            stub.robots.enumerated().forEach {
+            presenter.cacheRobots(robots)
+            robots.sorted(by: { $0.name ?? "N/A" < $1.name ?? "N/A" }).enumerated().forEach {
                 XCTAssertEqual(presenter.type($0.offset), $0.element.type, "正しい値が取得できていない: \($0.offset)")
             }
         }
     }
 
     func test_isSelected() {
-
+        let robots = DataManageModel.Output.Robot.arbitrary.sample
         XCTContext.runActivity(named: "未設定の場合") { _ in
             presenter.cacheRobots(nil)
-            stub.robots.enumerated().forEach {
+            robots.sorted(by: { $0.name ?? "N/A" < $1.name ?? "N/A" }).enumerated().forEach {
                 presenter.data.form.robotIds = [$0.element.id]
                 XCTAssertFalse(presenter.isSelected(indexPath: IndexPath(row: $0.offset, section: 0)), "有効になってはいけない")
             }
         }
 
         XCTContext.runActivity(named: "RobotIdが存在する場合") { _ in
-            presenter.cacheRobots(stub.robots)
-            stub.robots.enumerated().forEach {
+            presenter.cacheRobots(robots)
+            robots.sorted(by: { $0.name ?? "N/A" < $1.name ?? "N/A" }).enumerated().forEach {
                 presenter.data.form.robotIds = [$0.element.id]
                 XCTAssertTrue(presenter.isSelected(indexPath: IndexPath(row: $0.offset, section: 0)), "無効になってはいけない")
             }
         }
 
         XCTContext.runActivity(named: "RobotIdが存在しない場合") { _ in
-            presenter.cacheRobots(stub.robots)
-            stub.robots.enumerated().forEach {
+            presenter.cacheRobots(robots)
+            robots.sorted(by: { $0.name ?? "N/A" < $1.name ?? "N/A" }).enumerated().forEach {
                 presenter.data.form.robotIds = nil
                 XCTAssertFalse(presenter.isSelected(indexPath: IndexPath(row: $0.offset, section: 0)), "有効になってはいけない")
             }
@@ -117,19 +118,19 @@ class OrderEntryRobotSelectionPresenterTests: XCTestCase {
     }
 
     func test_selectItem() {
-
+        let robots = DataManageModel.Output.Robot.arbitrary.sample
         XCTContext.runActivity(named: "未設定の場合") { _ in
             presenter.data.form.robotIds = nil
             presenter.cacheRobots(nil)
-            stub.robots.enumerated().forEach {
+            robots.enumerated().forEach {
                 presenter.selectItem(indexPath: IndexPath(row: $0.offset, section: 0))
                 XCTAssertNil(presenter.data.form.robotIds, "値を取得できてはいけない")
             }
         }
 
         XCTContext.runActivity(named: "Robotを選択した場合") { _ in
-            presenter.cacheRobots(stub.robots)
-            stub.robots.enumerated().forEach {
+            presenter.cacheRobots(robots)
+            robots.sorted(by: { $0.name ?? "N/A" < $1.name ?? "N/A" }).enumerated().forEach {
                 presenter.selectItem(indexPath: IndexPath(row: $0.offset, section: 0))
                 do {
                     let robotIds = try XCTUnwrap(presenter.data.form.robotIds, "Unwrap失敗")
@@ -139,8 +140,8 @@ class OrderEntryRobotSelectionPresenterTests: XCTestCase {
         }
 
         XCTContext.runActivity(named: "選択済みのRobotを解除した場合") { _ in
-            presenter.cacheRobots(stub.robots)
-            stub.robots.enumerated().forEach {
+            presenter.cacheRobots(robots)
+            robots.sorted(by: { $0.name ?? "N/A" < $1.name ?? "N/A" }).enumerated().forEach {
                 presenter.selectItem(indexPath: IndexPath(row: $0.offset, section: 0))
                 do {
                     let robotIds = try XCTUnwrap(presenter.data.form.robotIds, "Unwrap失敗")
@@ -182,7 +183,7 @@ class OrderEntryRobotSelectionPresenterTests: XCTestCase {
 
         useCase.observeRobotDataHandler = {
             return Future<[JobOrder_Domain.DataManageModel.Output.Robot]?, Never> { promise in
-                promise(.success(self.stub.robots))
+                promise(.success(DataManageModel.Output.Robot.arbitrary.sample))
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
@@ -204,7 +205,7 @@ class OrderEntryRobotSelectionPresenterTests: XCTestCase {
         }
 
         XCTContext.runActivity(named: "Robotが存在する場合") { _ in
-            presenter.cacheRobots(stub.robots)
+            presenter.cacheRobots(DataManageModel.Output.Robot.arbitrary.sample)
             XCTAssertEqual(vc.reloadCollectionCallCount, 1, "ViewControllerのメソッドが呼ばれない")
         }
     }

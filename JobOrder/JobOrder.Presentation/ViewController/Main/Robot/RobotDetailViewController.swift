@@ -109,7 +109,8 @@ extension RobotDetailViewController {
 extension RobotDetailViewController: RobotDetailViewControllerProtocol {
 
     func showActionSheet(_ button: UIBarButtonItem) {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        // NOTE: iPad で ActionSheet を指定するとクラッシュするので Alert で回避する
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIDevice.current.userInterfaceIdiom == .pad ? .alert : .actionSheet)
 
         alertController.addAction(UIAlertAction(title: L10n.cancel, style: .cancel))
         alertController.addAction(UIAlertAction(title: L10n.calibrateToRobot, style: .default) { (_: UIAlertAction!) -> Void in
@@ -117,9 +118,6 @@ extension RobotDetailViewController: RobotDetailViewControllerProtocol {
             self.presentAlert("Not yet implemented", "Comming Soon...")
         })
 
-        if let popoverController = alertController.popoverPresentationController {
-            popoverController.barButtonItem = button
-        }
         self.present(alertController, animated: true, completion: nil)
     }
 

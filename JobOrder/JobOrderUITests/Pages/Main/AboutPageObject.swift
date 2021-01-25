@@ -13,11 +13,11 @@ class AboutPageObject: PageObject {
     required init(application: XCUIApplication) {
         self.app = application
     }
-    var BackButton: XCUIElement {
+    var backButton: XCUIElement {
         return app.navigationBars.buttons.element(boundBy: 0)
     }
     func tapBackButton() -> SettingsPageObject {
-        BackButton.tap()
+        backButton.tap()
         return SettingsPageObject(application: app)
     }
 }

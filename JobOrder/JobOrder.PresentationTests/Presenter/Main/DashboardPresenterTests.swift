@@ -14,7 +14,6 @@ import Combine
 class DashboardPresenterTests: XCTestCase {
 
     private let ms1000 = 1.0
-    private let stub = PresentationTestsStub()
     private let vc = DashboardViewControllerProtocolMock()
     private let mqtt = JobOrder_Domain.MQTTUseCaseProtocolMock()
     private let data = JobOrder_Domain.DataManageUseCaseProtocolMock()
@@ -88,7 +87,7 @@ class DashboardPresenterTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
-        data.robots = stub.robots
+        data.robots = DataManageModel.Output.Robot.arbitrary.sample
 
         data.observeRobotDataHandler = {
             return Future<[JobOrder_Domain.DataManageModel.Output.Robot]?, Never> { promise in
@@ -109,11 +108,12 @@ class DashboardPresenterTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
-        data.robots = stub.robots
+        let robots = DataManageModel.Output.Robot.arbitrary.sample
+        data.robots = robots
 
         data.observeRobotDataHandler = {
             return Future<[JobOrder_Domain.DataManageModel.Output.Robot]?, Never> { promise in
-                promise(.success(self.stub.robots))
+                promise(.success(robots))
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }

@@ -100,9 +100,6 @@ public struct JobAPIEntity: Codable {
                 public static func == (lhs: Parameter, rhs: Parameter) -> Bool {
                     return true
                 }
-
-                //                public let aiLibraryId: Int
-                //                public let aiLibraryObjectId: Int
             }
         }
     }

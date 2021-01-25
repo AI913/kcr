@@ -19,45 +19,45 @@ class RobotDetailPageObject: PageObject {
     required init(application: XCUIApplication) {
         app = application
     }
-    var BackButton: XCUIElement {
+    var backButton: XCUIElement {
         return app.navigationBars.buttons.element(boundBy: 2)
     }
 
-    var OrderButton: XCUIElement { return view.buttons[IDs.orderbutton] }
-    var SystemTab: XCUIElement {
+    var orderButton: XCUIElement { return view.buttons[IDs.orderbutton] }
+    var systemTab: XCUIElement {
         return app.segmentedControls.buttons.element(boundBy: 1)
     }
-    var RemarksTab: XCUIElement {
+    var remarksTab: XCUIElement {
         return app.segmentedControls.buttons.element(boundBy: 2)
     }
 
-    var WorkTab: XCUIElement {
+    var workTab: XCUIElement {
         return app.segmentedControls.buttons.element(boundBy: 0)
     }
 
     func tapBackButton() -> RobotListPageObject {
-        BackButton.tap()
+        backButton.tap()
         return RobotListPageObject(application: app)
     }
 
     func tapSystemTab() -> RobotSystemTabPageObject {
         print("Robot tab count: -> " + String(app.segmentedControls.buttons.count))
-        SystemTab.tap()
+        systemTab.tap()
         return RobotSystemTabPageObject(application: app)
     }
 
     func tapRemarksTab() -> RobotRemarksTabPageObject {
-        RemarksTab.tap()
+        remarksTab.tap()
         return RobotRemarksTabPageObject(application: app)
     }
 
     func tapWorkTab() -> RobotWorkTabPageObject {
-        WorkTab.tap()
+        workTab.tap()
         return RobotWorkTabPageObject(application: app)
     }
 
     func tapOrderButton() -> JobSelectionPageObject {
-        OrderButton.tap()
+        orderButton.tap()
         return JobSelectionPageObject(application: app)
     }
 }

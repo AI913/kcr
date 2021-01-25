@@ -189,10 +189,7 @@ extension Publisher where Output == (data: Data, response: URLResponse) {
 
     func validate(statusCode isValid: @escaping (Int) -> Bool) -> AnyPublisher<Output, APIError> {
         return self
-            .mapError {
-                guard let error = $0 as? APIError else { return .exception($0) }
-                return error
-            }
+            .mapError { $0 as! APIError }
             .flatMap { (result) -> AnyPublisher<(data: Data, response: URLResponse), APIError> in
                 let (data, response) = result
                 switch (response as? HTTPURLResponse)?.statusCode {
@@ -212,10 +209,7 @@ extension Publisher where Output == (data: Data, response: URLResponse) {
 
     func validate(contentType isValid: @escaping (String) -> Bool) -> AnyPublisher<Output, APIError> {
         return self
-            .mapError {
-                guard let error = $0 as? APIError else { return .exception($0) }
-                return error
-            }
+            .mapError { $0 as! APIError }
             .flatMap { (result) -> AnyPublisher<(data: Data, response: URLResponse), APIError> in
                 let (_, response) = result
                 guard let type = (response as? HTTPURLResponse)?.mimeType else {
@@ -235,10 +229,7 @@ extension Publisher where Output == (data: Data, response: URLResponse) {
 
     func validate(responseData isValid: @escaping (Data) -> Bool) -> AnyPublisher<Output, APIError> {
         return self
-            .mapError {
-                guard let error = $0 as? APIError else { return .exception($0) }
-                return error
-            }
+            .mapError { $0 as! APIError }
             .flatMap { (result) -> AnyPublisher<(data: Data, response: URLResponse), APIError> in
                 let (data, _) = result
                 if isValid(data) {
@@ -252,15 +243,4 @@ extension Publisher where Output == (data: Data, response: URLResponse) {
             }.eraseToAnyPublisher()
     }
 
-}
-
-enum APIError: Error {
-    case exception(Error)
-    case networkError(String?)
-    case invalidStatus(Int, String?)
-    case noDataInResponse
-    case parseError(Error)
-    case missingContentType
-    case unacceptableContentType(String)
-    case unsupportedMediaFormat
 }

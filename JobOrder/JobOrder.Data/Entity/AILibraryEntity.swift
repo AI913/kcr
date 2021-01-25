@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 /// AILibraryのエンティティ
-public class AILibraryEntity: Object, Codable {
+final public class AILibraryEntity: Object, Codable {
 
     /// ID
     @objc public dynamic var id: String = ""
@@ -70,7 +70,7 @@ public class AILibraryEntity: Object, Codable {
     }
 }
 
-public class AILibraryRequirement: Object, Codable {
+final public class AILibraryRequirement: Object, Codable {
     /// ID
     @objc public dynamic var id: String = ""
 

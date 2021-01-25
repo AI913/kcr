@@ -48,7 +48,7 @@ class ActionLibraryDataStoreTests: XCTestCase {
     func test_add() {
 
         XCTContext.runActivity(named: "ActionLibraryを設定した場合") { _ in
-            dataStore.add(entities: DataTestsStub().actionLibraries)
+            dataStore.add(entities: ActionLibraryEntity.arbitrary.sample)
             XCTAssertEqual(realm.addCallCount, 1, "RealmDataStoreのメソッドが呼ばれない")
         }
     }
@@ -60,8 +60,10 @@ class ActionLibraryDataStoreTests: XCTestCase {
         }
 
         XCTContext.runActivity(named: "ActionLibrary設定済みの場合") { _ in
+            let actionLibraries = ActionLibraryEntity.arbitrary.sample
+
             realm.readHandler = { type in
-                return DataTestsStub().actionLibraries
+                return actionLibraries
             }
 
             guard let output = dataStore.read() else {
@@ -69,7 +71,7 @@ class ActionLibraryDataStoreTests: XCTestCase {
                 return
             }
 
-            DataTestsStub().actionLibraries.enumerated().forEach {
+            actionLibraries.enumerated().forEach {
                 XCTAssert(output[$0.offset] === $0.element, "ActionLibraryが設定されていない: \($0.element)")
             }
         }
@@ -78,7 +80,7 @@ class ActionLibraryDataStoreTests: XCTestCase {
     func test_delete() {
 
         XCTContext.runActivity(named: "ActionLibrary設定済みの場合") { _ in
-            dataStore.delete(entity: DataTestsStub().actionLibrary1)
+            dataStore.delete(entity: ActionLibraryEntity.arbitrary.generate)
             XCTAssertEqual(realm.deleteCallCount, 1, "RealmDataStoreのメソッドが呼ばれない")
         }
     }
@@ -96,16 +98,17 @@ class ActionLibraryDataStoreTests: XCTestCase {
 
         XCTContext.runActivity(named: "通知が来た場合") { _ in
             let completionExpectation = expectation(description: "completion")
+            let actionLibraries = ActionLibraryEntity.arbitrary.sample
 
             dataStore.observe()
                 .sink { response in
                     response?.enumerated().forEach {
-                        XCTAssert(DataTestsStub().actionLibraries[$0.offset] === $0.element, "ActionLibraryが設定されていない: \($0.element)")
+                        XCTAssert(actionLibraries[$0.offset] === $0.element, "ActionLibraryが設定されていない: \($0.element)")
                     }
                     completionExpectation.fulfill()
                 }.store(in: &cancellables)
 
-            dataStore.publisher.send(DataTestsStub().actionLibraries)
+            dataStore.publisher.send(actionLibraries)
             wait(for: [completionExpectation], timeout: ms1000)
         }
 

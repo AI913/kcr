@@ -148,7 +148,8 @@ class AWSAuthenticationDataStoreTests: XCTestCase {
     func test_signInError() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
-        let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let error = AWSMobileClientError.internalError(message: "")
+        let expected = AWSError.authenticationFailed(reason: .init(error)) as NSError
         let param = "test"
 
         mock.signInHandler = { username, password, completionHandler in
@@ -162,7 +163,7 @@ class AWSAuthenticationDataStoreTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -254,7 +255,8 @@ class AWSAuthenticationDataStoreTests: XCTestCase {
     func test_confirmSignInError() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
-        let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let error = AWSMobileClientError.internalError(message: "")
+        let expected = AWSError.authenticationFailed(reason: .init(error)) as NSError
         let param = "test"
 
         mock.confirmSignInHandler = { challengeResponse, completionHandler in
@@ -268,7 +270,7 @@ class AWSAuthenticationDataStoreTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -354,7 +356,8 @@ class AWSAuthenticationDataStoreTests: XCTestCase {
     func test_signOutError() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
-        let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let error = AWSMobileClientError.internalError(message: "")
+        let expected = AWSError.authenticationFailed(reason: .init(error)) as NSError
 
         mock.signOutCompletionHandlerHandler = { completionHandler in
             completionHandler(error)
@@ -367,7 +370,7 @@ class AWSAuthenticationDataStoreTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -434,7 +437,8 @@ class AWSAuthenticationDataStoreTests: XCTestCase {
     func test_getTokensError() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
-        let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let error = AWSMobileClientError.internalError(message: "")
+        let expected = AWSError.authenticationFailed(reason: .init(error)) as NSError
 
         mock.getTokensHandler = { completionHandler in
             completionHandler(nil, error)
@@ -447,7 +451,7 @@ class AWSAuthenticationDataStoreTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -535,7 +539,8 @@ class AWSAuthenticationDataStoreTests: XCTestCase {
     func test_getAttrlibutesError() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
-        let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let error = AWSMobileClientError.internalError(message: "")
+        let expected = AWSError.authenticationFailed(reason: .init(error)) as NSError
 
         mock.getUserAttributesHandler = { completionHandler in
             completionHandler(nil, error)
@@ -548,7 +553,7 @@ class AWSAuthenticationDataStoreTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -638,7 +643,8 @@ class AWSAuthenticationDataStoreTests: XCTestCase {
     func test_forgotPasswordError() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
-        let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let error = AWSMobileClientError.internalError(message: "")
+        let expected = AWSError.authenticationFailed(reason: .init(error)) as NSError
         let param = "test"
 
         mock.forgotPasswordHandler = { username, completionHandler in
@@ -652,7 +658,7 @@ class AWSAuthenticationDataStoreTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -744,7 +750,8 @@ class AWSAuthenticationDataStoreTests: XCTestCase {
     func test_confirmForgotPasswordError() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
-        let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let error = AWSMobileClientError.internalError(message: "")
+        let expected = AWSError.authenticationFailed(reason: .init(error)) as NSError
         let param = "test"
 
         mock.confirmForgotPasswordHandler = { username, newPassword, confirmationCode, completionHandler in
@@ -758,7 +765,7 @@ class AWSAuthenticationDataStoreTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -850,7 +857,8 @@ class AWSAuthenticationDataStoreTests: XCTestCase {
     func test_resendConfirmationCodeError() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
-        let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let error = AWSMobileClientError.internalError(message: "")
+        let expected = AWSError.authenticationFailed(reason: .init(error)) as NSError
         let param = "test"
 
         mock.resendSignUpCodeHandler = { username, completionHandler in
@@ -864,7 +872,7 @@ class AWSAuthenticationDataStoreTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in

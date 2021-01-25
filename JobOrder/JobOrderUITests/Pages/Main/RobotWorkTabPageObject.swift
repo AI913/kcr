@@ -14,12 +14,12 @@ class RobotWorkTabPageObject: PageObject {
     required init(application: XCUIApplication) {
         app = application
     }
-    func tapCells(index: Int) -> TaskDetailPageObject {
-        assert(Cells.count > 0, "識別子「robotwork_table」を持つテーブルにセルが格納されていない")
-        assert(index < Cells.count, "識別子「setting_table」を持つテーブルのセル数が指定されたインデックス(" + String(index) + ")より少ない")
+    func tapCells(index: Int) -> TaskDetailTaskInformationPageObject {
+        //assert(Cells.count > 0, "識別子「robotwork_table」を持つテーブルにセルが格納されていない")
+        //assert(index < Cells.count, "識別子「setting_table」を持つテーブルのセル数が指定されたインデックス(" + String(index) + ")より少ない")
 
         Cells.element(boundBy: index).tap()
-        return TaskDetailPageObject(application: app)
+        return TaskDetailTaskInformationPageObject(application: app)
     }
 }
 // MARK: - Assertion

@@ -1,0 +1,51 @@
+
+/* Class = "UILabel"; text = "Pick And Place"; ObjectID = "5MJ-69-T3T"; */
+"5MJ-69-T3T.text" = "Pick And Place";
+
+/* Class = "UITextField"; placeholder = "Enter name"; ObjectID = "66c-b7-8sS"; */
+"66c-b7-8sS.placeholder" = "Enter name";
+
+/* Class = "UITextField"; text = "ジョブ1"; ObjectID = "66c-b7-8sS"; */
+"66c-b7-8sS.text" = "ジョブ1";
+
+/* Class = "UILabel"; text = "基本情報を入力"; ObjectID = "6DM-Od-v3t"; */
+"6DM-Od-v3t.text" = "基本情報を入力";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "7ms-VY-vtb"; */
+"7ms-VY-vtb.title" = "Cancel";
+
+/* Class = "UILabel"; text = "ジョブ1"; ObjectID = "99m-b4-Jga"; */
+"99m-b4-Jga.text" = "ジョブ1";
+
+/* Class = "UIButton"; normalTitle = "次へ"; ObjectID = "BKp-7h-Qm9"; */
+"BKp-7h-Qm9.normalTitle" = "次へ";
+
+/* Class = "UILabel"; text = "Tray"; ObjectID = "DBm-Op-edD"; */
+"DBm-Op-edD.text" = "Tray";
+
+/* Class = "UILabel"; text = "備考"; ObjectID = "IOt-z7-PpC"; */
+"IOt-z7-PpC.text" = "備考";
+
+/* Class = "UINavigationItem"; title = "Confirm"; ObjectID = "NYN-tF-KJt"; */
+"NYN-tF-KJt.title" = "Confirm";
+
+/* Class = "UIButton"; normalTitle = "作成"; ObjectID = "O5o-4g-MUk"; */
+"O5o-4g-MUk.normalTitle" = "作成";
+
+/* Class = "UILabel"; text = "ワーク"; ObjectID = "O7v-I3-Mcc"; */
+"O7v-I3-Mcc.text" = "ワーク";
+
+/* Class = "UILabel"; text = "ジョブ名"; ObjectID = "Ql1-IE-Ich"; */
+"Ql1-IE-Ich.text" = "ジョブ名";
+
+/* Class = "UILabel"; text = "工業部品"; ObjectID = "WFC-xa-hEB"; */
+"WFC-xa-hEB.text" = "工業部品";
+
+/* Class = "UILabel"; text = "ワークベンチ"; ObjectID = "iaH-cz-zDT"; */
+"iaH-cz-zDT.text" = "ワークベンチ";
+
+/* Class = "UILabel"; text = "ジョブ名 *"; ObjectID = "n2H-xe-Jgi"; */
+"n2H-xe-Jgi.text" = "ジョブ名 *";
+
+/* Class = "UILabel"; text = "アクションライブラリ"; ObjectID = "ru8-cH-gOV"; */
+"ru8-cH-gOV.text" = "アクションライブラリ";

@@ -14,7 +14,6 @@ import Combine
 class TaskDetailExecutionLogPresenterTests: XCTestCase {
 
     private let ms1000 = 1.0
-    private let stub = PresentationTestsStub()
     private let vc = TaskDetailExecutionLogViewControllerProtocolMock()
     private let data = JobOrder_Domain.DataManageUseCaseProtocolMock()
     private let viewData = TaskDetailViewData()
@@ -36,13 +35,17 @@ class TaskDetailExecutionLogPresenterTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
 
+        let command = DataManageModel.Output.Command.arbitrary.generate
+        let task = DataManageModel.Output.Task.arbitrary.generate
+        let executionLogs = DataManageModel.Output.ExecutionLog.arbitrary.sample
+
         presenter.viewData = TaskDetailViewData(taskId: param1, robotId: param2)
 
         data.commandFromTaskHandler = { taskId, robotId in
             XCTAssertEqual(taskId, param1, "正しい値が指定されていない")
             XCTAssertEqual(robotId, param2, "正しい値が指定されていない")
             return Future<JobOrder_Domain.DataManageModel.Output.Command, Error> { promise in
-                promise(.success(self.stub.command))
+                promise(.success(command))
                 commandHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
@@ -50,7 +53,7 @@ class TaskDetailExecutionLogPresenterTests: XCTestCase {
         data.taskHandler = { taskId in
             XCTAssertEqual(taskId, param1, "正しい値が指定されていない")
             return Future<JobOrder_Domain.DataManageModel.Output.Task, Error> { promise in
-                promise(.success(self.stub.task))
+                promise(.success(task))
                 taksHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
@@ -60,24 +63,24 @@ class TaskDetailExecutionLogPresenterTests: XCTestCase {
             XCTAssertEqual(robotId, param2, "正しい値が指定されていない")
             XCTAssertEqual(cursor, PagingModel.Cursor(offset: 0, limit: 10), "先頭10件取得指定になっていない")
             return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.ExecutionLog]>, Error> { promise in
-                promise(.success(.init(data: self.stub.executionLogs, cursor: expectedCursor, total: expectedTotal)))
+                promise(.success(.init(data: executionLogs, cursor: expectedCursor, total: expectedTotal)))
                 executionLogHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
 
         vc.setJobHandler = { name in
-            XCTAssertEqual(name, self.stub.task.job.name, "正しい値が取得できていない")
+            XCTAssertEqual(name, task.job.name, "正しい値が取得できていない")
         }
 
         vc.setRobotHandler = { name in
-            XCTAssertEqual(name, self.stub.command.robot?.name, "正しい値が取得できていない")
+            XCTAssertEqual(name, command.robot?.name, "正しい値が取得できていない")
         }
 
         presenter.viewWillAppear()
         wait(for: [taksHandlerExpectation, commandHandlerExpectation, executionLogHandlerExpectation, completionExpectation], timeout: ms1000)
 
-        XCTAssertEqual(presenter.executionLogs.count, 10, "正しい値が取得できていない")
-        XCTAssertTrue(presenter.executionLogs.elementsEqual(self.stub.executionLogs), "正しい値が取得できていない")
+        XCTAssertEqual(presenter.executionLogs.count, executionLogs.count, "正しい値が取得できていない")
+        XCTAssertTrue(presenter.executionLogs.elementsEqual(executionLogs), "正しい値が取得できていない")
         XCTAssertEqual(presenter.cursor, expectedCursor, "正しい値が取得できていない")
         XCTAssertEqual(presenter.totalItems, expectedTotal, "正しい値が取得できていない")
         XCTAssertEqual(vc.reloadTableCallCount, 1, "画面が更新されない")
@@ -97,6 +100,8 @@ class TaskDetailExecutionLogPresenterTests: XCTestCase {
         let executionLogHandlerExpectation = expectation(description: "execution log handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
+        let task = DataManageModel.Output.Task.arbitrary.generate
+        let executionLogs = DataManageModel.Output.ExecutionLog.arbitrary.sample
 
         presenter.viewData = TaskDetailViewData(taskId: param1, robotId: param2)
 
@@ -113,7 +118,7 @@ class TaskDetailExecutionLogPresenterTests: XCTestCase {
         data.taskHandler = { taskId in
             XCTAssertEqual(taskId, param1, "正しい値が指定されていない")
             return Future<JobOrder_Domain.DataManageModel.Output.Task, Error> { promise in
-                promise(.success(self.stub.task))
+                promise(.success(task))
                 taksHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
@@ -123,20 +128,20 @@ class TaskDetailExecutionLogPresenterTests: XCTestCase {
             XCTAssertEqual(robotId, param2, "正しい値が指定されていない")
             XCTAssertEqual(cursor, PagingModel.Cursor(offset: 0, limit: 10), "先頭10件取得指定になっていない")
             return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.ExecutionLog]>, Error> { promise in
-                promise(.success(.init(data: self.stub.executionLogs, cursor: expectedCursor, total: expectedTotal)))
+                promise(.success(.init(data: executionLogs, cursor: expectedCursor, total: expectedTotal)))
                 executionLogHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
 
         vc.setJobHandler = { name in
-            XCTAssertEqual(name, self.stub.task.job.name, "正しい値が取得できていない")
+            XCTAssertEqual(name, task.job.name, "正しい値が取得できていない")
         }
 
         presenter.viewWillAppear()
         wait(for: [taksHandlerExpectation, commandHandlerExpectation, executionLogHandlerExpectation, completionExpectation], timeout: ms1000)
 
-        XCTAssertEqual(presenter.executionLogs.count, 10, "正しい値が取得できていない")
-        XCTAssertTrue(presenter.executionLogs.elementsEqual(self.stub.executionLogs), "正しい値が取得できていない")
+        XCTAssertEqual(presenter.executionLogs.count, executionLogs.count, "正しい値が取得できていない")
+        XCTAssertTrue(presenter.executionLogs.elementsEqual(executionLogs), "正しい値が取得できていない")
         XCTAssertEqual(presenter.cursor, expectedCursor, "正しい値が取得できていない")
         XCTAssertEqual(presenter.totalItems, expectedTotal, "正しい値が取得できていない")
         XCTAssertEqual(vc.reloadTableCallCount, 1, "画面が更新されない")
@@ -157,13 +162,16 @@ class TaskDetailExecutionLogPresenterTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
 
+        let command = DataManageModel.Output.Command.arbitrary.generate
+        let executionLogs = DataManageModel.Output.ExecutionLog.arbitrary.sample
+
         presenter.viewData = TaskDetailViewData(taskId: param1, robotId: param2)
 
         data.commandFromTaskHandler = { taskId, robotId in
             XCTAssertEqual(taskId, param1, "正しい値が指定されていない")
             XCTAssertEqual(robotId, param2, "正しい値が指定されていない")
             return Future<JobOrder_Domain.DataManageModel.Output.Command, Error> { promise in
-                promise(.success(self.stub.command))
+                promise(.success(command))
                 commandHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
@@ -182,20 +190,20 @@ class TaskDetailExecutionLogPresenterTests: XCTestCase {
             XCTAssertEqual(robotId, param2, "正しい値が指定されていない")
             XCTAssertEqual(cursor, PagingModel.Cursor(offset: 0, limit: 10), "先頭10件取得指定になっていない")
             return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.ExecutionLog]>, Error> { promise in
-                promise(.success(.init(data: self.stub.executionLogs, cursor: expectedCursor, total: expectedTotal)))
+                promise(.success(.init(data: executionLogs, cursor: expectedCursor, total: expectedTotal)))
                 executionLogHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
 
         vc.setRobotHandler = { name in
-            XCTAssertEqual(name, self.stub.command.robot?.name, "正しい値が取得できていない")
+            XCTAssertEqual(name, command.robot?.name, "正しい値が取得できていない")
         }
 
         presenter.viewWillAppear()
         wait(for: [taksHandlerExpectation, commandHandlerExpectation, executionLogHandlerExpectation, completionExpectation], timeout: ms1000)
 
-        XCTAssertEqual(presenter.executionLogs.count, 10, "正しい値が取得できていない")
-        XCTAssertTrue(presenter.executionLogs.elementsEqual(self.stub.executionLogs), "正しい値が取得できていない")
+        XCTAssertEqual(presenter.executionLogs.count, executionLogs.count, "正しい値が取得できていない")
+        XCTAssertTrue(presenter.executionLogs.elementsEqual(executionLogs), "正しい値が取得できていない")
         XCTAssertEqual(presenter.cursor, expectedCursor, "正しい値が取得できていない")
         XCTAssertEqual(presenter.totalItems, expectedTotal, "正しい値が取得できていない")
         XCTAssertEqual(vc.reloadTableCallCount, 1, "画面が更新されない")
@@ -213,13 +221,16 @@ class TaskDetailExecutionLogPresenterTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
 
+        let command = DataManageModel.Output.Command.arbitrary.generate
+        let task = DataManageModel.Output.Task.arbitrary.generate
+
         presenter.viewData = TaskDetailViewData(taskId: param1, robotId: param2)
 
         data.commandFromTaskHandler = { taskId, robotId in
             XCTAssertEqual(taskId, param1, "正しい値が指定されていない")
             XCTAssertEqual(robotId, param2, "正しい値が指定されていない")
             return Future<JobOrder_Domain.DataManageModel.Output.Command, Error> { promise in
-                promise(.success(self.stub.command))
+                promise(.success(command))
                 commandHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
@@ -227,7 +238,7 @@ class TaskDetailExecutionLogPresenterTests: XCTestCase {
         data.taskHandler = { taskId in
             XCTAssertEqual(taskId, param1, "正しい値が指定されていない")
             return Future<JobOrder_Domain.DataManageModel.Output.Task, Error> { promise in
-                promise(.success(self.stub.task))
+                promise(.success(task))
                 taksHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
@@ -244,11 +255,11 @@ class TaskDetailExecutionLogPresenterTests: XCTestCase {
         }
 
         vc.setJobHandler = { name in
-            XCTAssertEqual(name, self.stub.task.job.name, "正しい値が取得できていない")
+            XCTAssertEqual(name, task.job.name, "正しい値が取得できていない")
         }
 
         vc.setRobotHandler = { name in
-            XCTAssertEqual(name, self.stub.command.robot?.name, "正しい値が取得できていない")
+            XCTAssertEqual(name, command.robot?.name, "正しい値が取得できていない")
         }
 
         presenter.viewWillAppear()
@@ -269,23 +280,30 @@ class TaskDetailExecutionLogPresenterTests: XCTestCase {
         }
 
         XCTContext.runActivity(named: "Tasksが存在する場合") { _ in
-            presenter.executionLogs = stub.executionLogs
-            XCTAssertEqual(presenter.numberOfSections(), stub.executionLogs.count, "正しい値が取得できていない")
+            let executionLogs = DataManageModel.Output.ExecutionLog.arbitrary.sample
+            presenter.executionLogs = executionLogs
+            XCTAssertEqual(presenter.numberOfSections(), executionLogs.count, "正しい値が取得できていない")
         }
     }
 
     func test_result() {
         let index = 0
-        presenter.executionLogs = self.stub.executionLogs
+        let executionLog = DataManageModel.Output.ExecutionLog.arbitrary.generate
+        var executionLogs = DataManageModel.Output.ExecutionLog.arbitrary.sample
+        executionLogs.insert(executionLog, at: index)
+        presenter.executionLogs = executionLogs
 
-        XCTAssertEqual(presenter.result(index: index), "success", "正しい値が取得できていない")
+        XCTAssertEqual(presenter.result(index: index), executionLog.result, "正しい値が取得できていない")
     }
 
     func test_executedAt() {
         let index = 0
-        presenter.executionLogs = self.stub.executionLogs
+        let executionLog = DataManageModel.Output.ExecutionLog.arbitrary.generate
+        var executionLogs = DataManageModel.Output.ExecutionLog.arbitrary.sample
+        executionLogs.insert(executionLog, at: index)
+        presenter.executionLogs = executionLogs
 
-        XCTAssertEqual(presenter.executedAt(index: index), "June 20, 2020 09:53:55 JST", "正しい値が取得できていない")
+        XCTAssertEqual(presenter.executedAt(index: index), executionLog.executedAt.toEpocTime.toMediumDateTimeString, "正しい値が取得できていない")
     }
 
     func test_canGoPrev() {
@@ -387,6 +405,7 @@ class TaskDetailExecutionLogPresenterTests: XCTestCase {
         let executionLogHandlerExpectation = expectation(description: "execution log handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
+        let executionLogs = DataManageModel.Output.ExecutionLog.arbitrary.sample
 
         presenter.viewData = TaskDetailViewData(taskId: param, robotId: param)
         presenter.cursor = currentCursor
@@ -394,7 +413,7 @@ class TaskDetailExecutionLogPresenterTests: XCTestCase {
 
         data.executionLogsFromTaskHandler = { _, _, cursor in
             return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.ExecutionLog]>, Error> { promise in
-                promise(.success(.init(data: self.stub.executionLogs, cursor: nil, total: nil)))
+                promise(.success(.init(data: executionLogs, cursor: nil, total: nil)))
                 executionLogHandlerExpectation.fulfill()
                 XCTAssertEqual(cursor, expectedCursor, "前ページ取得指定になっていない")
             }.eraseToAnyPublisher()
@@ -416,6 +435,7 @@ class TaskDetailExecutionLogPresenterTests: XCTestCase {
         let executionLogHandlerExpectation = expectation(description: "execution log handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
+        let executionLogs = DataManageModel.Output.ExecutionLog.arbitrary.sample
 
         presenter.viewData = TaskDetailViewData(taskId: param, robotId: param)
         presenter.cursor = currentCursor
@@ -423,7 +443,7 @@ class TaskDetailExecutionLogPresenterTests: XCTestCase {
 
         data.executionLogsFromTaskHandler = { _, _, cursor in
             return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.ExecutionLog]>, Error> { promise in
-                promise(.success(.init(data: self.stub.executionLogs, cursor: nil, total: nil)))
+                promise(.success(.init(data: executionLogs, cursor: nil, total: nil)))
                 executionLogHandlerExpectation.fulfill()
                 XCTAssertEqual(cursor, expectedCursor, "次ページ取得指定になっていない")
             }.eraseToAnyPublisher()

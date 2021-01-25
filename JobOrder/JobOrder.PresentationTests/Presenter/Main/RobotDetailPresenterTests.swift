@@ -14,7 +14,6 @@ import Combine
 class RobotDetailPresenterTests: XCTestCase {
 
     private let ms1000 = 1.0
-    private let stub = PresentationTestsStub()
     private let vc = RobotDetailViewControllerProtocolMock()
     private let data = JobOrder_Domain.DataManageUseCaseProtocolMock()
     private let viewData = MainViewData.Robot()
@@ -25,11 +24,12 @@ class RobotDetailPresenterTests: XCTestCase {
     override func tearDownWithError() throws {}
 
     func test_displayName() {
-        let param = "test1"
-
+        let robots = DataManageModel.Output.Robot.arbitrary.sample
+        let obj = robots.randomElement()!
+        let param = obj.id
         XCTContext.runActivity(named: "Dataが未設定の場合") { _ in
             presenter.data.id = nil
-            data.robots = stub.robots
+            data.robots = robots
             XCTAssertNil(presenter.displayName, "値を取得できてはいけない")
         }
 
@@ -41,17 +41,18 @@ class RobotDetailPresenterTests: XCTestCase {
 
         XCTContext.runActivity(named: "Robotが存在する場合") { _ in
             presenter.data.id = param
-            data.robots = stub.robots
-            XCTAssertEqual(presenter.displayName, stub.robot1().name, "正しい値が取得できていない: \(stub.robot1())")
+            data.robots = robots
+            XCTAssertEqual(presenter.displayName, obj.name, "正しい値が取得できていない: \(obj)")
         }
     }
 
     func test_overview() {
-        let param = "test1"
-
+        let robots = DataManageModel.Output.Robot.arbitrary.sample
+        let obj = robots.randomElement()!
+        let param = obj.id
         XCTContext.runActivity(named: "Dataが未設定の場合") { _ in
             presenter.data.id = nil
-            data.robots = stub.robots
+            data.robots = robots
             XCTAssertNil(presenter.overview, "値を取得できてはいけない")
         }
 
@@ -63,17 +64,18 @@ class RobotDetailPresenterTests: XCTestCase {
 
         XCTContext.runActivity(named: "Robotが存在する場合") { _ in
             presenter.data.id = param
-            data.robots = stub.robots
-            XCTAssertEqual(presenter.overview, stub.robot1().overview, "正しい値が取得できていない: \(stub.robot1())")
+            data.robots = robots
+            XCTAssertEqual(presenter.overview, obj.overview, "正しい値が取得できていない: \(obj)")
         }
     }
 
     func test_stateName() {
-        let param = "test1"
-
+        let robots = DataManageModel.Output.Robot.arbitrary.suchThat({ $0.state != .unknown }).sample
+        let obj = robots.randomElement()!
+        let param = obj.id
         XCTContext.runActivity(named: "Dataが未設定の場合") { _ in
             presenter.data.id = nil
-            data.robots = stub.robots
+            data.robots = robots
             let state = MainViewData.RobotState(.unknown)
             XCTAssertEqual(presenter.stateName, state.displayName, "デフォルト値が取得できていない: \(state.displayName)")
         }
@@ -87,18 +89,19 @@ class RobotDetailPresenterTests: XCTestCase {
 
         XCTContext.runActivity(named: "Robotが存在する場合") { _ in
             presenter.data.id = param
-            data.robots = stub.robots
-            let state = MainViewData.RobotState(stub.robot1().state)
-            XCTAssertEqual(presenter.stateName, state.displayName, "正しい値が取得できていない: \(stub.robot1())")
+            data.robots = robots
+            let state = MainViewData.RobotState(obj.state)
+            XCTAssertEqual(presenter.stateName, state.displayName, "正しい値が取得できていない: \(obj)")
         }
     }
 
     func test_stateImageName() {
-        let param = "test1"
-
+        let robots = DataManageModel.Output.Robot.arbitrary.suchThat({ $0.state != .unknown }).sample
+        let obj = robots.randomElement()!
+        let param = obj.id
         XCTContext.runActivity(named: "Dataが未設定の場合") { _ in
             presenter.data.id = nil
-            data.robots = stub.robots
+            data.robots = robots
             let state = MainViewData.RobotState(.unknown)
             XCTAssertEqual(presenter.stateImageName, state.iconSystemName, "デフォルト値が取得できていない: \(state.iconSystemName)")
         }
@@ -112,18 +115,19 @@ class RobotDetailPresenterTests: XCTestCase {
 
         XCTContext.runActivity(named: "Robotが存在する場合") { _ in
             presenter.data.id = param
-            data.robots = stub.robots
-            let state = MainViewData.RobotState(stub.robot1().state)
-            XCTAssertEqual(presenter.stateImageName, state.iconSystemName, "正しい値が取得できていない: \(stub.robot1())")
+            data.robots = robots
+            let state = MainViewData.RobotState(obj.state)
+            XCTAssertEqual(presenter.stateImageName, state.iconSystemName, "正しい値が取得できていない: \(obj)")
         }
     }
 
     func test_stateTintColor() {
-        let param = "test1"
-
+        let robots = DataManageModel.Output.Robot.arbitrary.suchThat({ $0.state != .unknown }).sample
+        let obj = robots.randomElement()!
+        let param = obj.id
         XCTContext.runActivity(named: "Dataが未設定の場合") { _ in
             presenter.data.id = nil
-            data.robots = stub.robots
+            data.robots = robots
             let state = MainViewData.RobotState(.unknown)
             XCTAssertEqual(presenter.stateTintColor, state.color, "デフォルト値が取得できていない: \(state.color)")
         }
@@ -137,18 +141,19 @@ class RobotDetailPresenterTests: XCTestCase {
 
         XCTContext.runActivity(named: "Robotが存在する場合") { _ in
             presenter.data.id = param
-            data.robots = stub.robots
-            let state = MainViewData.RobotState(stub.robot1().state)
-            XCTAssertEqual(presenter.stateTintColor, state.color, "正しい値が取得できていない: \(stub.robot1())")
+            data.robots = robots
+            let state = MainViewData.RobotState(obj.state)
+            XCTAssertEqual(presenter.stateTintColor, state.color, "正しい値が取得できていない: \(obj)")
         }
     }
 
     func test_typeName() {
-        let param = "test1"
-
+        let robots = DataManageModel.Output.Robot.arbitrary.sample
+        let obj = robots.randomElement()!
+        let param = obj.id
         XCTContext.runActivity(named: "Dataが未設定の場合") { _ in
             presenter.data.id = nil
-            data.robots = stub.robots
+            data.robots = robots
             XCTAssertNil(presenter.typeName, "値を取得できてはいけない")
         }
 
@@ -160,17 +165,18 @@ class RobotDetailPresenterTests: XCTestCase {
 
         XCTContext.runActivity(named: "Robotが存在する場合") { _ in
             presenter.data.id = param
-            data.robots = stub.robots
-            XCTAssertEqual(presenter.typeName, stub.robot1().type, "正しい値が取得できていない: \(stub.robot1())")
+            data.robots = robots
+            XCTAssertEqual(presenter.typeName, obj.type, "正しい値が取得できていない: \(obj)")
         }
     }
 
     func test_serialName() {
-        let param = "test1"
-
+        let robots = DataManageModel.Output.Robot.arbitrary.sample
+        let obj = robots.randomElement()!
+        let param = obj.id
         XCTContext.runActivity(named: "Dataが未設定の場合") { _ in
             presenter.data.id = nil
-            data.robots = stub.robots
+            data.robots = robots
             XCTAssertNil(presenter.serialName, "値を取得できてはいけない")
         }
 
@@ -182,17 +188,18 @@ class RobotDetailPresenterTests: XCTestCase {
 
         XCTContext.runActivity(named: "Robotが存在する場合") { _ in
             presenter.data.id = param
-            data.robots = stub.robots
-            XCTAssertEqual(presenter.serialName, stub.robot1().serial, "正しい値が取得できていない: \(stub.robot1())")
+            data.robots = robots
+            XCTAssertEqual(presenter.serialName, obj.serial, "正しい値が取得できていない: \(obj)")
         }
     }
 
     func test_remarks() {
-        let param = "test1"
-
+        let robots = DataManageModel.Output.Robot.arbitrary.sample
+        let obj = robots.randomElement()!
+        let param = obj.id
         XCTContext.runActivity(named: "Dataが未設定の場合") { _ in
             presenter.data.id = nil
-            data.robots = stub.robots
+            data.robots = robots
             XCTAssertNil(presenter.remarks, "値を取得できてはいけない")
         }
 
@@ -204,8 +211,8 @@ class RobotDetailPresenterTests: XCTestCase {
 
         XCTContext.runActivity(named: "Robotが存在する場合") { _ in
             presenter.data.id = param
-            data.robots = stub.robots
-            XCTAssertEqual(presenter.remarks, stub.robot1().remarks, "正しい値が取得できていない: \(stub.robot1())")
+            data.robots = robots
+            XCTAssertEqual(presenter.remarks, obj.remarks, "正しい値が取得できていない: \(obj)")
         }
     }
 

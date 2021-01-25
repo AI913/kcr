@@ -14,7 +14,7 @@ import JobOrder_Utility
 
 // MARK: - Interface
 /// @mockable
-public protocol TaskDetailPresenterProtocol {
+public protocol TaskDetailTaskInformationPresenterProtocol {
     /// 起動時
     /// - Parameters:
     ///   - taskId: TaskID
@@ -89,15 +89,14 @@ class TaskDetailTaskInformationPresenter {
 }
 
 // MARK: - Protocol Function
-extension TaskDetailTaskInformationPresenter: TaskDetailPresenterProtocol {
+extension TaskDetailTaskInformationPresenter: TaskDetailTaskInformationPresenterProtocol {
     /// 起動時
     /// - Parameters:
     ///   - taskId: TaskID
     ///   - robotId: RobotID
     func viewWillAppear(taskId: String, robotId: String) {
         vc.changedProcessing(true)
-        getCommand(taskId: taskId, robotId: robotId)
-        getTask(taskId: taskId)
+        getCommandAndTask(taskId: taskId, robotId: robotId)
     }
     /// Job名取得
     /// - Returns: Job名
@@ -223,7 +222,7 @@ extension TaskDetailTaskInformationPresenter {
             }.store(in: &cancellables)
     }
 
-    func getCommand(taskId: String, robotId: String) {
+    func getCommandAndTask(taskId: String, robotId: String) {
         dataUseCase.commandFromTask(taskId: taskId, robotId: robotId)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
@@ -235,26 +234,21 @@ extension TaskDetailTaskInformationPresenter {
             }, receiveValue: { response in
                 Logger.debug(target: self, "\(String(describing: response))")
                 self.command = response
+                self.dataUseCase.task(taskId: taskId)
+                    .receive(on: DispatchQueue.main)
+                    .sink(receiveCompletion: { completion in
+                        switch completion {
+                        case .finished: break
+                        case .failure(let error):
+                            self.vc.showErrorAlert(error)
+                        }
+                    }, receiveValue: { response in
+                        Logger.debug(target: self, "\(String(describing: response))")
+                        self.task = response
+                        self.vc.viewReload()
+                    }).store(in: &self.cancellables)
             }).store(in: &cancellables)
     }
-
-    func getTask(taskId: String) {
-        dataUseCase.task(taskId: taskId)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished: break
-                case .failure(let error):
-                    self.vc.showErrorAlert(error)
-                }
-            }, receiveValue: { response in
-                Logger.debug(target: self, "\(String(describing: response))")
-                self.task = response
-                self.vc.viewReload()
-            }).store(in: &cancellables)
-    }
-
-    private func getRunHistories(id: String) {}
 
     func string(date: Date?, label: String, textColor: UIColor, font: UIFont) -> NSAttributedString? {
         let mutableAttributedString = NSMutableAttributedString()

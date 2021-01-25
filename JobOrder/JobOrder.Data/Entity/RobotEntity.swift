@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 /// RobotAPIのエンティティ
-public class RobotEntity: Object, Codable {
+final public class RobotEntity: Object, Codable {
 
     /// ID
     @objc public dynamic var id: String = ""

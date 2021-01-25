@@ -48,7 +48,7 @@ class JobDataStoreTests: XCTestCase {
     func test_add() {
 
         XCTContext.runActivity(named: "Jobを設定した場合") { _ in
-            dataStore.add(entities: DataTestsStub().jobs)
+            dataStore.add(entities: JobEntity.arbitrary.sample)
             XCTAssertEqual(realm.addCallCount, 1, "RealmDataStoreのメソッドが呼ばれない")
         }
     }
@@ -60,8 +60,10 @@ class JobDataStoreTests: XCTestCase {
         }
 
         XCTContext.runActivity(named: "Job設定済みの場合") { _ in
+            let jobs = JobEntity.arbitrary.sample
+
             realm.readHandler = { type in
-                return DataTestsStub().jobs
+                return jobs
             }
 
             guard let output = dataStore.read() else {
@@ -69,7 +71,7 @@ class JobDataStoreTests: XCTestCase {
                 return
             }
 
-            DataTestsStub().jobs.enumerated().forEach {
+            jobs.enumerated().forEach {
                 XCTAssert(output[$0.offset] === $0.element, "Jobが設定されていない: \($0.element)")
             }
         }
@@ -78,7 +80,7 @@ class JobDataStoreTests: XCTestCase {
     func test_delete() {
 
         XCTContext.runActivity(named: "Job設定済みの場合") { _ in
-            dataStore.delete(entity: DataTestsStub().job1)
+            dataStore.delete(entity: JobEntity.arbitrary.generate)
             XCTAssertEqual(realm.deleteCallCount, 1, "RealmDataStoreのメソッドが呼ばれない")
         }
     }
@@ -96,16 +98,17 @@ class JobDataStoreTests: XCTestCase {
 
         XCTContext.runActivity(named: "通知が来た場合") { _ in
             let completionExpectation = expectation(description: "completion")
+            let jobs = JobEntity.arbitrary.sample
 
             dataStore.observe()
                 .sink { response in
                     response?.enumerated().forEach {
-                        XCTAssert(DataTestsStub().jobs[$0.offset] === $0.element, "Jobが設定されていない: \($0.element)")
+                        XCTAssert(jobs[$0.offset] === $0.element, "Jobが設定されていない: \($0.element)")
                     }
                     completionExpectation.fulfill()
                 }.store(in: &cancellables)
 
-            dataStore.publisher.send(DataTestsStub().jobs)
+            dataStore.publisher.send(jobs)
             wait(for: [completionExpectation], timeout: ms1000)
         }
 

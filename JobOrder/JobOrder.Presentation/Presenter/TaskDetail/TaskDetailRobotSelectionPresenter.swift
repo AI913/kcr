@@ -85,8 +85,7 @@ class TaskDetailRobotSelectionPresenter {
 extension TaskDetailRobotSelectionPresenter: TaskDetailRobotSelectionPresenterProtocol {
     func viewWillAppear(taskId: String) {
         vc.changedProcessing(true)
-        getCommands(taskId: taskId)
-        getTask(taskId: taskId)
+        getCommandsAndTask(taskId: taskId)
     }
 
     /// リストの行数
@@ -120,8 +119,8 @@ extension TaskDetailRobotSelectionPresenter: TaskDetailRobotSelectionPresenterPr
     /// セルの選択
     /// - Parameter indexPath: インデックスパス
     func selectCell(indexPath: IndexPath) {
-        data.taskId = commands?[indexPath.section].taskId
-        data.robotId = commands?[indexPath.section].robotId
+        data.taskId = commands?[indexPath.row].taskId
+        data.robotId = commands?[indexPath.row].robotId
         vc.launchTaskDetail()
     }
 
@@ -213,11 +212,10 @@ extension TaskDetailRobotSelectionPresenter {
         dataUseCase.observeRobotData()
             .receive(on: DispatchQueue.main)
             .sink { response in
-                // Logger.debug(target: self, "\(String(describing: response))")
             }.store(in: &cancellables)
     }
 
-    func getCommands(taskId: String) {
+    func getCommandsAndTask(taskId: String) {
         dataUseCase.commandsFromTask(taskId: taskId)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
@@ -229,23 +227,20 @@ extension TaskDetailRobotSelectionPresenter {
             }, receiveValue: { response in
                 Logger.debug(target: self, "\(String(describing: response))")
                 self.commands = response
-            }).store(in: &cancellables)
-    }
-
-    func getTask(taskId: String) {
-        dataUseCase.task(taskId: taskId)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished: break
-                case .failure(let error):
-                    self.vc.showErrorAlert(error)
-                }
-            }, receiveValue: { response in
-                Logger.debug(target: self, "\(String(describing: response))")
-                self.task = response
-                self.vc.viewReload()
-                self.vc.reloadCollection()
+                self.dataUseCase.task(taskId: taskId)
+                    .receive(on: DispatchQueue.main)
+                    .sink(receiveCompletion: { completion in
+                        switch completion {
+                        case .finished: break
+                        case .failure(let error):
+                            self.vc.showErrorAlert(error)
+                        }
+                    }, receiveValue: { response in
+                        Logger.debug(target: self, "\(String(describing: response))")
+                        self.task = response
+                        self.vc.viewReload()
+                        self.vc.reloadCollection()
+                    }).store(in: &self.cancellables)
             }).store(in: &cancellables)
     }
 

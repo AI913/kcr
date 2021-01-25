@@ -42,7 +42,7 @@ class TaskDetailTaskInformationViewController: UIViewController {
     // MARK: - Variable
     var taskId: String!
     var robotId: String!
-    var presenter: TaskDetailPresenterProtocol!
+    var presenter: TaskDetailTaskInformationPresenterProtocol!
     private var processing: Bool! {
         didSet {
             self.cancelTaskButton.isEnabled = !self.processing

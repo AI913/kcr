@@ -83,7 +83,7 @@ public class AWSIoTDataStore: MQTTRepository {
                 Logger.debug(target: self, "\(state)")
                 guard state == .completed else {
                     if let error = error {
-                        promise(.failure(error))
+                        promise(.failure(AWSError.ioTControlFailed(reason: .awsIoTClientFailed(error: error))))
                     }
                     return
                 }
@@ -91,7 +91,7 @@ public class AWSIoTDataStore: MQTTRepository {
                 self.connect(clientId: id) { (state, error) -> Void in
                     Logger.debug(target: self, "\(state)")
                     if let error = error {
-                        promise(.failure(error))
+                        promise(.failure(AWSError.ioTControlFailed(reason: .awsIoTClientFailed(error: error))))
                     } else {
                         // Logger.debug(target: self, "\(entity)")
                         promise(.success(.init(result: state == .completed)))
@@ -115,7 +115,7 @@ public class AWSIoTDataStore: MQTTRepository {
                 self.detachPolicy { state, error in
                     Logger.debug(target: self, "\(state)")
                     if let error = error {
-                        promise(.failure(error))
+                        promise(.failure(AWSError.ioTControlFailed(reason: .awsIoTClientFailed(error: error))))
                     } else {
                         // Logger.debug(target: self, "\(entity)")
                         promise(.success(.init(result: state == .completed)))
@@ -180,7 +180,7 @@ public class AWSIoTDataStore: MQTTRepository {
                 let data = try JSONEncoder().encode(document)
                 documentJson = String(data: data, encoding: .utf8)!
             } catch let error {
-                promise(.failure(error))
+                promise(.failure(AWSError.ioTControlFailed(reason: .awsIoTClientFailed(error: error))))
                 return
             }
 
@@ -197,7 +197,7 @@ public class AWSIoTDataStore: MQTTRepository {
 
             self.awsIot.createJob(createJobRequest).continueWith { (task) -> AnyObject? in
                 if let error = task.error {
-                    promise(.failure(error))
+                    promise(.failure(AWSError.ioTControlFailed(reason: .awsIoTClientFailed(error: error))))
                 } else {
                     let entity = MQTTEntity.Output.CreateJob(state: APITaskEntity.State(task), id: task.result?.jobId, arn: task.result?.jobArn)
                     // Logger.debug(target: self, "\(entity)")
@@ -302,8 +302,7 @@ extension AWSIoTDataStore {
         Logger.info(target: self)
 
         guard let clientId = clientId else {
-            let userInfo = ["__type": "Connect", "message": "Client ID is not available."]
-            callback(.faulted, NSError(domain: "Error", code: -1, userInfo: userInfo))
+            callback(.faulted, AWSError.ioTControlFailed(reason: .connectionFailed(reason: .clientIDisNotAvailable)))
             return
         }
 
@@ -318,8 +317,7 @@ extension AWSIoTDataStore {
             if result {
                 callback(.completed, nil)
             } else {
-                let userInfo = ["__type": "Connect", "message": "Connect failed."]
-                callback(.faulted, NSError(domain: "Error", code: -1, userInfo: userInfo))
+                callback(.faulted, AWSError.ioTControlFailed(reason: .connectionFailed(reason: .connectFailed)))
             }
         }
     }

@@ -7,7 +7,7 @@ class TaskDetailPageObject: PageObject {
     }
     var app: XCUIApplication
     var view: XCUIElement { return app.otherElements[IDs.rootElement] }
-    var CancelButton: XCUIElement {
+    var cancelButton: XCUIElement {
         return app.navigationBars.buttons[IDs.cancelbutton]
     }
 
@@ -16,7 +16,7 @@ class TaskDetailPageObject: PageObject {
     }
 
     func tapCancelButton() -> RobotWorkTabPageObject {
-        CancelButton.tap()
+        cancelButton.tap()
         return RobotWorkTabPageObject(application: app)
     }
 }

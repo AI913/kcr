@@ -10,6 +10,7 @@ import Foundation
 
 /// RobotAPIのエンティティ
 public struct RobotAPIEntity: Codable {
+
     /// Robotデータ
     public struct Data: Codable {
         /// ID
@@ -99,7 +100,7 @@ public struct RobotAPIEntity: Codable {
         }
     }
 
-    public struct Swconf: Codable {
+    public struct Swconf: Codable, Equatable {
         public let robotId: String
         public let operatingSystem: OperatingSystem?
         public let softwares: [Software]?
@@ -119,19 +120,25 @@ public struct RobotAPIEntity: Codable {
             case updator = "updatedBy"
         }
 
-        static func == (lhs: Swconf, rhs: Swconf) -> Bool {
+        public static func == (lhs: Swconf, rhs: Swconf) -> Bool {
             let operatingSystem: Bool = { () -> Bool in
-                if let lhsOperatingSystem = lhs.operatingSystem, let rhsOperatingSystem = rhs.operatingSystem, lhsOperatingSystem == rhsOperatingSystem {
+                switch (lhs.operatingSystem, rhs.operatingSystem) {
+                case let (lhsOperatingSystem?, rhsOperatingSystem?):
+                    return lhsOperatingSystem == rhsOperatingSystem
+                case (.none, .none):
                     return true
-                } else {
+                default:
                     return false
                 }
             }()
 
             let softwares: Bool = { () -> Bool in
-                if let lhsSoftwares = lhs.softwares, let rhsSoftwares = rhs.softwares {
+                switch (lhs.softwares, rhs.softwares) {
+                case let (lhsSoftwares?, rhsSoftwares?):
                     return lhsSoftwares.elementsEqual(rhsSoftwares, by: { $0 == $1 })
-                } else {
+                case (.none, .none):
+                    return true
+                default:
                     return false
                 }
             }()
@@ -188,7 +195,7 @@ public struct RobotAPIEntity: Codable {
         }
     }
 
-    public struct Asset: Codable {
+    public struct Asset: Codable, Equatable {
         public let robotId: String
         public let assetId: String
         public let type: String
@@ -212,7 +219,7 @@ public struct RobotAPIEntity: Codable {
             case updator = "updatedBy"
         }
 
-        static func == (lhs: Asset, rhs: Asset) -> Bool {
+        public static func == (lhs: Asset, rhs: Asset) -> Bool {
             return lhs.robotId == rhs.robotId &&
                 lhs.assetId == rhs.assetId &&
                 lhs.type == rhs.type &&

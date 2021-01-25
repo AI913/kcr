@@ -48,7 +48,7 @@ class AILibraryDataStoreTests: XCTestCase {
     func test_add() {
 
         XCTContext.runActivity(named: "AILibraryを設定した場合") { _ in
-            dataStore.add(entities: DataTestsStub().aiLibraries)
+            dataStore.add(entities: AILibraryEntity.arbitrary.sample)
             XCTAssertEqual(realm.addCallCount, 1, "RealmDataStoreのメソッドが呼ばれない")
         }
     }
@@ -60,8 +60,10 @@ class AILibraryDataStoreTests: XCTestCase {
         }
 
         XCTContext.runActivity(named: "AILibrary設定済みの場合") { _ in
+            let aiLibraries = AILibraryEntity.arbitrary.sample
+
             realm.readHandler = { type in
-                return DataTestsStub().aiLibraries
+                return aiLibraries
             }
 
             guard let output = dataStore.read() else {
@@ -69,7 +71,7 @@ class AILibraryDataStoreTests: XCTestCase {
                 return
             }
 
-            DataTestsStub().aiLibraries.enumerated().forEach {
+            aiLibraries.enumerated().forEach {
                 XCTAssert(output[$0.offset] === $0.element, "AILibraryが設定されていない: \($0.element)")
             }
         }
@@ -78,7 +80,7 @@ class AILibraryDataStoreTests: XCTestCase {
     func test_delete() {
 
         XCTContext.runActivity(named: "AILibrary設定済みの場合") { _ in
-            dataStore.delete(entity: DataTestsStub().aiLibrary1)
+            dataStore.delete(entity: AILibraryEntity.arbitrary.generate)
             XCTAssertEqual(realm.deleteCallCount, 1, "RealmDataStoreのメソッドが呼ばれない")
         }
     }
@@ -96,16 +98,17 @@ class AILibraryDataStoreTests: XCTestCase {
 
         XCTContext.runActivity(named: "通知が来た場合") { _ in
             let completionExpectation = expectation(description: "completion")
+            let aiLibraries = AILibraryEntity.arbitrary.sample
 
             dataStore.observe()
                 .sink { response in
                     response?.enumerated().forEach {
-                        XCTAssert(DataTestsStub().aiLibraries[$0.offset] === $0.element, "AILibraryが設定されていない: \($0.element)")
+                        XCTAssert(aiLibraries[$0.offset] === $0.element, "AILibraryが設定されていない: \($0.element)")
                     }
                     completionExpectation.fulfill()
                 }.store(in: &cancellables)
 
-            dataStore.publisher.send(DataTestsStub().aiLibraries)
+            dataStore.publisher.send(aiLibraries)
             wait(for: [completionExpectation], timeout: ms1000)
         }
 

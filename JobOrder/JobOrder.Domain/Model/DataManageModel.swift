@@ -183,7 +183,7 @@ public struct DataManageModel {
                     }
                 }
             }
-            
+
             public struct Requirement: Codable, Equatable {}
 
         }
@@ -652,7 +652,6 @@ public struct DataManageModel {
             /// 更新者
             public let updator: String
 
-            
             public struct Requirement: Codable, Equatable {}
 
             /// イニシャライザ

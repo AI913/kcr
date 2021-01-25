@@ -4,6 +4,7 @@ class JobListPageObject: PageObject {
     private enum IDs {
         static let rootElement: String = "joblist_view"
         static let cells: String = "joblist_cell"
+        static let plusButton: String = "plus_button"
     }
     var app: XCUIApplication
     var view: XCUIElement { return app.tables[IDs.rootElement] }
@@ -13,11 +14,11 @@ class JobListPageObject: PageObject {
     }
 
     var cells: XCUIElementQuery { return view.cells.matching(identifier: IDs.cells) }
-    var addButton: XCUIElement { return app.navigationBars.buttons.element(boundBy: 2) }
+    var addButton: XCUIElement { return app.navigationBars.buttons[IDs.plusButton] }
 
     func tapCell(index: Int) -> JobDetailPageObject {
-        assert(cells.count > 0, "識別子「joblist_cell」を持つTableCellが格納されていない")
-        assert(index < cells.count, "識別子「joblist_cell」を持つセルの数が指定されたインデックス(" + String(index) + ")より少ない")
+        //assert(cells.count > 0, "識別子「joblist_cell」を持つTableCellが格納されていない")
+        //assert(index < cells.count, "識別子「joblist_cell」を持つセルの数が指定されたインデックス(" + String(index) + ")より少ない")
         cells.element(boundBy: index).tap()
 
         return JobDetailPageObject(application: app)

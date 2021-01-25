@@ -35,7 +35,7 @@ class PasswordAuthenticationPageObject: PageObject {
     private var signInButton: XCUIElement { return view.buttons[IDs.signInButton] }
     private var forgotYourPasswordButton: XCUIElement { return view.buttons[IDs.forgotYourPasswordButton] }
 
-    var invalidAlert: XCUIElement { return app.alerts.element.staticTexts["Error"] }
+    var invalidAlert: XCUIElement { return app.alerts.element.staticTexts["Error:認証エラー"] }
 
     func tapSettings() -> ConnectionSettingsPageObject {
         settingsButton.tap()

@@ -48,7 +48,7 @@ class RobotDataStoreTests: XCTestCase {
     func test_add() {
 
         XCTContext.runActivity(named: "Robotを設定した場合") { _ in
-            dataStore.add(entities: DataTestsStub().robots)
+            dataStore.add(entities: RobotEntity.arbitrary.sample)
             XCTAssertEqual(realm.addCallCount, 1, "RealmRepositoryのメソッドが呼ばれない")
         }
     }
@@ -60,8 +60,10 @@ class RobotDataStoreTests: XCTestCase {
         }
 
         XCTContext.runActivity(named: "Robot設定済みの場合") { _ in
+            let robots = RobotEntity.arbitrary.sample
+
             realm.readHandler = { type in
-                return DataTestsStub().robots
+                return robots
             }
 
             guard let output = dataStore.read() else {
@@ -69,7 +71,7 @@ class RobotDataStoreTests: XCTestCase {
                 return
             }
 
-            DataTestsStub().robots.enumerated().forEach {
+            robots.enumerated().forEach {
                 XCTAssert(output[$0.offset] === $0.element, "Robotが設定されていない: \($0.element)")
             }
         }
@@ -78,7 +80,7 @@ class RobotDataStoreTests: XCTestCase {
     func test_update() {
         let param = "test"
         XCTContext.runActivity(named: "Robotが設定済みの場合") { _ in
-            dataStore.update(state: param, entity: DataTestsStub().robot1)
+            dataStore.update(state: param, entity: RobotEntity.arbitrary.generate)
             XCTAssertEqual(realm.updateCallCount, 1, "RealmDataStoreのメソッドが呼ばれない")
         }
     }
@@ -86,7 +88,7 @@ class RobotDataStoreTests: XCTestCase {
     func test_delete() {
 
         XCTContext.runActivity(named: "Robot設定済みの場合") { _ in
-            dataStore.delete(entity: DataTestsStub().robot1)
+            dataStore.delete(entity: RobotEntity.arbitrary.generate)
             XCTAssertEqual(realm.deleteCallCount, 1, "RealmDataStoreのメソッドが呼ばれない")
         }
     }
@@ -104,16 +106,17 @@ class RobotDataStoreTests: XCTestCase {
 
         XCTContext.runActivity(named: "通知が来た場合") { _ in
             let completionExpectation = expectation(description: "completion")
+            let robots = RobotEntity.arbitrary.sample
 
             dataStore.observe()
                 .sink { response in
                     response?.enumerated().forEach {
-                        XCTAssert(DataTestsStub().robots[$0.offset] === $0.element, "Robotが設定されていない: \($0.element)")
+                        XCTAssert(robots[$0.offset] === $0.element, "Robotが設定されていない: \($0.element)")
                     }
                     completionExpectation.fulfill()
                 }.store(in: &cancellables)
 
-            dataStore.publisher.send(DataTestsStub().robots)
+            dataStore.publisher.send(robots)
             wait(for: [completionExpectation], timeout: ms1000)
         }
 

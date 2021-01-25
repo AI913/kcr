@@ -23,20 +23,21 @@ class ActionLibraryAPIDataStoreTests: XCTestCase {
     func test_fetch() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
+        let actionLibrariesResult: APIResult<[ActionLibraryAPIEntity.Data]> = APIResult.arbitrary.generate
 
         mock.getHandler = { url, token, _ in
             return Future<APIResult<[ActionLibraryAPIEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
-                promise(.success(APITestsStub().actionLibrariesResult))
+                promise(.success(actionLibrariesResult))
             }.eraseToAnyPublisher()
         }
 
         fetch(
             [handlerExpectation, completionExpectation],
             onSuccess: { data in
-                XCTAssert(data == APITestsStub().actionLibrariesResult, "正しい値が取得できていない: \(data)")
+                XCTAssert(data == actionLibrariesResult, "正しい値が取得できていない: \(data)")
 
-                guard let resultData = APITestsStub().actionLibrariesResult.data else {
+                guard let resultData = actionLibrariesResult.data else {
                     XCTFail("読み込みエラー")
                     return
                 }

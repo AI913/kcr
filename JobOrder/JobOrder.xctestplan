@@ -51,14 +51,6 @@
   },
   "testTargets" : [
     {
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:JobOrder.xcodeproj",
-        "identifier" : "D78EC1DE2411CAA6003E5ECD",
-        "name" : "JobOrder.PresentationTests"
-      }
-    },
-    {
       "enabled" : false,
       "parallelizable" : true,
       "skippedTests" : [
@@ -74,37 +66,10 @@
     },
     {
       "parallelizable" : true,
-      "skippedTests" : [
-        "TestCaseBase"
-      ],
       "target" : {
         "containerPath" : "container:JobOrder.xcodeproj",
-        "identifier" : "D77CF2E6240EA675007A61EE",
-        "name" : "JobOrder.DataTests"
-      }
-    },
-    {
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:JobOrder.xcodeproj",
-        "identifier" : "D77CF308240EA6D6007A61EE",
-        "name" : "JobOrder.APITests"
-      }
-    },
-    {
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:JobOrder.xcodeproj",
-        "identifier" : "D77CF2A2240EA59F007A61EE",
-        "name" : "JobOrder.DomainTests"
-      }
-    },
-    {
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:JobOrder.xcodeproj",
-        "identifier" : "D78EC12A24111A81003E5ECD",
-        "name" : "JobOrder.UtilityTests"
+        "identifier" : "D77CF233240EA4DF007A61EE",
+        "name" : "JobOrderTests"
       }
     }
   ],

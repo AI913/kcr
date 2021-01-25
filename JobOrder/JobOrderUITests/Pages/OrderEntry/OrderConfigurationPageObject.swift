@@ -52,6 +52,7 @@ class OrderConfigurationPageObject: PageObject {
         let deleteString = String(repeating: XCUIKeyboardKey.delete.rawValue, count: 1)
         field.typeText(deleteString)
         field.typeText(text)
+        view.tap()
     }
 
     func enterNumOfRun(_ numOfRun: Int) -> Self {
@@ -65,7 +66,7 @@ class OrderConfigurationPageObject: PageObject {
     }
 
     func tapContinueButton() -> OrderConfirmPageObject {
-        continueButton.tap()
+        continueButton.forceTapElement()
         return OrderConfirmPageObject(application: app)
     }
 }

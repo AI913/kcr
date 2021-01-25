@@ -17,7 +17,7 @@ class DataTranslatorTests: XCTestCase {
 
     func test_toDataWithJob() {
         let translator = DataTranslator()
-        let entity = DomainTestsStub().job
+        let entity = JobAPIEntity.Data.arbitrary.generate
         let data = translator.toData(jobEntity: entity)
 
         XCTAssertEqual(data?.id, entity.id, "値が取得できていない: \(entity)")
@@ -25,7 +25,7 @@ class DataTranslatorTests: XCTestCase {
         XCTAssertEqual(data?.entryPoint, entity.entryPoint, "値が取得できていない: \(entity)")
         XCTAssertEqual(data?.overview, entity.overview, "値が取得できていない: \(entity)")
         XCTAssertEqual(data?.remarks, entity.remarks, "値が取得できていない: \(entity)")
-        //        XCTAssertEqual(data?.requirements, entity.requirements, "値が取得できていない: \(entity)")
+        // XCTAssertEqual(data?.requirements, entity.requirements, "値が取得できていない: \(entity)")
         XCTAssertEqual(data?.version, entity.version, "値が取得できていない: \(entity)")
         XCTAssertEqual(data?.createTime, entity.createTime, "値が取得できていない: \(entity)")
         XCTAssertEqual(data?.creator, entity.creator, "値が取得できていない: \(entity)")
@@ -42,7 +42,7 @@ class DataTranslatorTests: XCTestCase {
 
     func test_toDataWithRobot() {
         let translator = DataTranslator()
-        let entity = DomainTestsStub().robot
+        let entity = RobotAPIEntity.Data.arbitrary.generate
         let data = translator.toData(robotEntity: entity, state: "state")
 
         XCTAssertEqual(data?.id, entity.id, "値が取得できていない: \(entity)")
@@ -75,12 +75,12 @@ class DataTranslatorTests: XCTestCase {
 
     func test_toDataWithActionLibrary() {
         let translator = DataTranslator()
-        let entity = DomainTestsStub().actionLibrary
+        let entity = ActionLibraryAPIEntity.Data.arbitrary.generate
         let data = translator.toData(actionLibraryEntity: entity)
 
         XCTAssertEqual(data?.id, entity.id, "値が取得できていない: \(entity)")
         XCTAssertEqual(data?.name, entity.name, "値が取得できていない: \(entity)")
-        //        XCTAssertEqual(data?.requirements, entity.requirements, "値が取得できていない: \(entity)")
+        // XCTAssertEqual(data?.requirements, entity.requirements, "値が取得できていない: \(entity)")
         XCTAssertEqual(data?.imagePath, entity.imagePath, "値が取得できていない: \(entity)")
         XCTAssertEqual(data?.overview, entity.overview, "値が取得できていない: \(entity)")
         XCTAssertEqual(data?.remarks, entity.remarks, "値が取得できていない: \(entity)")
@@ -100,13 +100,13 @@ class DataTranslatorTests: XCTestCase {
 
     func test_toDataWithAILibrary() {
         let translator = DataTranslator()
-        let entity = DomainTestsStub().aiLibrary
+        let entity = AILibraryAPIEntity.Data.arbitrary.generate
         let data = translator.toData(aiLibraryEntity: entity)
 
         XCTAssertEqual(data?.id, entity.id, "値が取得できていない: \(entity)")
         XCTAssertEqual(data?.name, entity.name, "値が取得できていない: \(entity)")
         XCTAssertEqual(data?.type, entity.type, "値が取得できていない: \(entity)")
-        //        XCTAssertEqual(data?.requirements, entity.requirements, "値が取得できていない: \(entity)")
+        // XCTAssertEqual(data?.requirements, entity.requirements, "値が取得できていない: \(entity)")
         XCTAssertEqual(data?.imagePath, entity.imagePath, "値が取得できていない: \(entity)")
         XCTAssertEqual(data?.overview, entity.overview, "値が取得できていない: \(entity)")
         XCTAssertEqual(data?.remarks, entity.remarks, "値が取得できていない: \(entity)")

@@ -12,7 +12,6 @@ import XCTest
 
 class JobDetailRemarksPresenterTests: XCTestCase {
 
-    private let stub = PresentationTestsStub()
     private let vc = JobDetailRemarksViewControllerProtocolMock()
     private let data = JobOrder_Domain.DataManageUseCaseProtocolMock()
     private let viewData = MainViewData.Job()
@@ -22,11 +21,13 @@ class JobDetailRemarksPresenterTests: XCTestCase {
     override func tearDownWithError() throws {}
 
     func test_remarks() {
-        let param = "test1"
+        let jobs = DataManageModel.Output.Job.arbitrary.sample
+        let obj = jobs.randomElement()!
+        let param = obj.id
 
         XCTContext.runActivity(named: "Dataが未設定の場合") { _ in
             presenter.data.id = nil
-            data.jobs = stub.jobs
+            data.jobs = jobs
             XCTAssertNil(presenter.remarks, "値を取得できてはいけない")
         }
 
@@ -38,8 +39,8 @@ class JobDetailRemarksPresenterTests: XCTestCase {
 
         XCTContext.runActivity(named: "Jobsが存在する場合") { _ in
             presenter.data.id = param
-            data.jobs = stub.jobs
-            XCTAssertEqual(presenter.remarks, stub.job1().remarks, "正しい値が取得できていない: \(stub.job1())")
+            data.jobs = jobs
+            XCTAssertEqual(presenter.remarks, obj.remarks, "正しい値が取得できていない: \(obj)")
         }
     }
 }

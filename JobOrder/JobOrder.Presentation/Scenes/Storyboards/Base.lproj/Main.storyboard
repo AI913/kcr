@@ -445,6 +445,9 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="H1J-nH-wJJ">
                         <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="xHt-Sn-plB">
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="plus_button"/>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="selectorAddBarButtonItem:" destination="jgg-y0-L4v" id="VEI-qC-QQL"/>
                             </connections>
@@ -1339,7 +1342,7 @@
                                 <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PLd-eB-v1K" id="mjQ-Et-a5S">
-                                    <rect key="frame" x="0.0" y="0.0" width="383" height="80"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="395" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="5OF-71-Ulb">
@@ -1784,6 +1787,9 @@
                                                         </connections>
                                                     </tableViewCell>
                                                 </prototypes>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="jobdetail_work_assignedtask_table"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <outlet property="dataSource" destination="usT-JE-SLa" id="Sga-7P-0S4"/>
                                                     <outlet property="delegate" destination="usT-JE-SLa" id="uQJ-VT-CzX"/>
@@ -1886,6 +1892,9 @@
                                                         </connections>
                                                     </tableViewCell>
                                                 </prototypes>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="jobdetail_work_historytask_table"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <outlet property="dataSource" destination="usT-JE-SLa" id="nkb-D9-Sxx"/>
                                                     <outlet property="delegate" destination="usT-JE-SLa" id="KfO-k2-26M"/>
@@ -1903,6 +1912,9 @@
                             <constraint firstItem="RH1-rs-faA" firstAttribute="leading" secondItem="lZj-jE-27d" secondAttribute="leading" id="ORC-CU-81G"/>
                             <constraint firstItem="RH1-rs-faA" firstAttribute="top" secondItem="lZj-jE-27d" secondAttribute="top" id="WMI-w3-tRH"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="jobdetail_worktab_view"/>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
                         <outlet property="historyTableView" destination="tzC-G5-AtA" id="V2P-Az-PNu"/>
@@ -1946,6 +1958,9 @@
                             <constraint firstItem="a4I-cP-RlT" firstAttribute="leading" secondItem="vt1-B0-PeT" secondAttribute="leading" id="GvI-8q-W69"/>
                             <constraint firstItem="a4I-cP-RlT" firstAttribute="top" secondItem="vt1-B0-PeT" secondAttribute="top" id="UI5-YJ-6uC"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="jobdetail_flowtab_view"/>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VRf-MJ-mYp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1991,6 +2006,9 @@
                             <constraint firstItem="Mpd-E4-XD9" firstAttribute="trailing" secondItem="FOh-9g-nhe" secondAttribute="trailing" id="KPx-QG-6qO"/>
                             <constraint firstItem="FOh-9g-nhe" firstAttribute="leading" secondItem="Mpd-E4-XD9" secondAttribute="leading" id="WaA-17-FgM"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="jobdetail_remarkstab_view"/>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
                         <outlet property="remarksValueLabel" destination="DDg-Ya-v9i" id="B19-Q0-GqY"/>

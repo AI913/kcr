@@ -23,20 +23,21 @@ class JobAPIDataStoreTests: XCTestCase {
     func test_fetch() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
+        let jobsResult: APIResult<[JobAPIEntity.Data]> = APIResult.arbitrary.generate
 
         mock.getHandler = { url, token, _ in
             return Future<APIResult<[JobAPIEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
-                promise(.success(APITestsStub().jobsResult))
+                promise(.success(jobsResult))
             }.eraseToAnyPublisher()
         }
 
         fetch(
             [handlerExpectation, completionExpectation],
             onSuccess: { data in
-                XCTAssert(data == APITestsStub().jobsResult, "正しい値が取得できていない: \(data)")
+                XCTAssert(data == jobsResult, "正しい値が取得できていない: \(data)")
 
-                guard let resultData = APITestsStub().jobsResult.data else {
+                guard let resultData = jobsResult.data else {
                     XCTFail("読み込みエラー")
                     return
                 }
@@ -98,6 +99,7 @@ class JobAPIDataStoreTests: XCTestCase {
     func test_getTasks() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
+        let tasksFromJobResult: APIResult<[TaskAPIEntity.Data]> = APIResult.arbitrary.generate
 
         let paging: APIPaging.Input = APIPaging.Input(page: 5, size: 10)
 
@@ -109,7 +111,7 @@ class JobAPIDataStoreTests: XCTestCase {
         mock.getResUrlHandler = { url, token, dataId, query in
             return Future<APIResult<[TaskAPIEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
-                promise(.success(APITestsStub().tasksFromJobResult))
+                promise(.success(tasksFromJobResult))
                 if let query = query {
                     let canonicalizedQuery = self.canonicalized(queryitems: query)
                     let canonicalizedExpected = self.canonicalized(queryitems: expectedQuery)
@@ -123,9 +125,9 @@ class JobAPIDataStoreTests: XCTestCase {
         getTasks(
             [handlerExpectation, completionExpectation],
             onSuccess: { data in
-                XCTAssert(data == APITestsStub().tasksFromJobResult, "正しい値が取得できていない: \(data)")
+                XCTAssert(data == tasksFromJobResult, "正しい値が取得できていない: \(data)")
 
-                guard let resultData = APITestsStub().tasksFromJobResult.data else {
+                guard let resultData = tasksFromJobResult.data else {
                     XCTFail("読み込みエラー")
                     return
                 }

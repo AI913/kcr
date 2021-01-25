@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 /// ActionLibraryのエンティティ
-public class ActionLibraryEntity: Object, Codable {
+final public class ActionLibraryEntity: Object, Codable {
 
     /// ID
     @objc public dynamic var id: String = ""
@@ -66,7 +66,7 @@ public class ActionLibraryEntity: Object, Codable {
     }
 }
 
-public class ActionLibraryRequirement: Object, Codable {
+final public class ActionLibraryRequirement: Object, Codable {
     /// ID
     @objc public dynamic var id: String = ""
 

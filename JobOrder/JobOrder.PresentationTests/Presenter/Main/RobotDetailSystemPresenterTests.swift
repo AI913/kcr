@@ -14,7 +14,6 @@ import Combine
 class RobotDetailSystemPresenterTests: XCTestCase {
 
     private let ms1000 = 1.0
-    private let stub = PresentationTestsStub()
     private let vc = RobotDetailSystemViewControllerProtocolMock()
     private let mqtt = JobOrder_Domain.MQTTUseCaseProtocolMock()
     private let data = JobOrder_Domain.DataManageUseCaseProtocolMock()
@@ -31,17 +30,18 @@ class RobotDetailSystemPresenterTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
+        let system = DataManageModel.Output.System.arbitrary.generate
         presenter.data.id = param
 
         data.robotSystemHandler = { id in
             return Future<DataManageModel.Output.System, Error> { promise in
-                promise(.success(self.stub.system))
+                promise(.success(system))
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
         presenter.viewWillAppear()
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-        XCTAssert(presenter.detailSystem! == self.stub.system, "正しい値が取得できていない")
+        XCTAssert(presenter.detailSystem! == system, "正しい値が取得できていない")
     }
 
     func test_viewWillAppearError() {
@@ -70,9 +70,10 @@ class RobotDetailSystemPresenterTests: XCTestCase {
             XCTAssertEqual(presenter.numberOfSections(in: .hardware), 0, "正しい値が取得できていない")
         }
         XCTContext.runActivity(named: "detailSystemが存在する場合") { _ in
-            presenter.detailSystem = self.stub.system
+            let system = DataManageModel.Output.System.arbitrary.generate
+            presenter.detailSystem = system
             XCTAssertEqual(presenter.numberOfSections(in: .software), 3, "正しい値が取得できていない")
-            XCTAssertEqual(presenter.numberOfSections(in: .hardware), self.stub.system.hardwareConfigurations.count, "正しい値が取得できていない")
+            XCTAssertEqual(presenter.numberOfSections(in: .hardware), system.hardwareConfigurations.count, "正しい値が取得できていない")
         }
     }
 
@@ -85,9 +86,10 @@ class RobotDetailSystemPresenterTests: XCTestCase {
             XCTAssertEqual(presenter.numberOfRowsInSection(in: .hardware, section: firstHardwareSection), 0, "正しい値が取得できていない")
         }
         XCTContext.runActivity(named: "detailSystemが存在する場合") { _ in
-            presenter.detailSystem = self.stub.system
-            XCTAssertEqual(presenter.numberOfRowsInSection(in: .software, section: installedSoftwareSection), self.stub.system.softwareConfiguration.installs.count, "正しい値が取得できていない")
-            XCTAssertEqual(presenter.numberOfRowsInSection(in: .hardware, section: firstHardwareSection), self.stub.system.hardwareConfigurations.count, "正しい値が取得できていない")
+            let system = DataManageModel.Output.System.arbitrary.generate
+            presenter.detailSystem = system
+            XCTAssertEqual(presenter.numberOfRowsInSection(in: .software, section: installedSoftwareSection), system.softwareConfiguration.installs.count, "正しい値が取得できていない")
+            XCTAssertEqual(presenter.numberOfRowsInSection(in: .hardware, section: firstHardwareSection), 2, "正しい値が取得できていない")
         }
     }
 
@@ -102,10 +104,11 @@ class RobotDetailSystemPresenterTests: XCTestCase {
             XCTAssertTrue(presenter.title(in: .hardware, section: firstHardwareSection) == ("", nil), "正しい値が取得できていない")
         }
         XCTContext.runActivity(named: "detailSystemが存在する場合") { _ in
-            presenter.detailSystem = self.stub.system
-            XCTAssertTrue(presenter.title(in: .software, section: firstSoftwareSection) == (viewData.detailSystem.softwareSystemTitle, self.stub.system.softwareConfiguration.system), "正しい値が取得できていない")
+            let system = DataManageModel.Output.System.arbitrary.generate
+            presenter.detailSystem = system
+            XCTAssertTrue(presenter.title(in: .software, section: firstSoftwareSection) == (viewData.detailSystem.softwareSystemTitle, system.softwareConfiguration.system), "正しい値が取得できていない")
             XCTAssertTrue(presenter.title(in: .software, section: installedSoftwareSection) == (viewData.detailSystem.softwareInstalledsoftwareTitle, nil), "正しい値が取得できていない")
-            XCTAssertTrue(presenter.title(in: .hardware, section: firstHardwareSection) == (self.stub.system.hardwareConfigurations[firstHardwareSection].type, self.stub.system.hardwareConfigurations[firstHardwareSection].model), "正しい値が取得できていない")
+            XCTAssertTrue(presenter.title(in: .hardware, section: firstHardwareSection) == (system.hardwareConfigurations[firstHardwareSection].type, system.hardwareConfigurations[firstHardwareSection].model), "正しい値が取得できていない")
         }
     }
 
@@ -120,9 +123,10 @@ class RobotDetailSystemPresenterTests: XCTestCase {
             XCTAssertTrue(presenter.detail(in: .hardware, indexPath: IndexPath(row: firstHardwareRow, section: firstHardwareSection)) == ("", ""), "正しい値が取得できていない")
         }
         XCTContext.runActivity(named: "detailSystemが存在する場合") { _ in
-            presenter.detailSystem = self.stub.system
-            XCTAssertTrue(presenter.detail(in: .software, indexPath: IndexPath(row: firstSoftwareInstalledRow, section: installedSoftwareSection)) == (self.stub.system.softwareConfiguration.installs[firstSoftwareInstalledRow].name, self.stub.system.softwareConfiguration.installs[firstSoftwareInstalledRow].version), "正しい値が取得できていない")
-            XCTAssertTrue(presenter.detail(in: .hardware, indexPath: IndexPath(row: firstHardwareRow, section: firstHardwareSection)) == (viewData.detailSystem.hardwareMakerTitle, self.stub.system.hardwareConfigurations[firstHardwareRow].maker), "正しい値が取得できていない")
+            let system = DataManageModel.Output.System.arbitrary.generate
+            presenter.detailSystem = system
+            XCTAssertTrue(presenter.detail(in: .software, indexPath: IndexPath(row: firstSoftwareInstalledRow, section: installedSoftwareSection)) == (system.softwareConfiguration.installs[firstSoftwareInstalledRow].name, system.softwareConfiguration.installs[firstSoftwareInstalledRow].version), "正しい値が取得できていない")
+            XCTAssertTrue(presenter.detail(in: .hardware, indexPath: IndexPath(row: firstHardwareRow, section: firstHardwareSection)) == (viewData.detailSystem.hardwareMakerTitle, system.hardwareConfigurations[firstHardwareRow].maker), "正しい値が取得できていない")
         }
     }
 

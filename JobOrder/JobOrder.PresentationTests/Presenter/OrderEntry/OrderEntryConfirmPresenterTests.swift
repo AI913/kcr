@@ -14,7 +14,6 @@ import Combine
 class OrderEntryConfirmPresenterTests: XCTestCase {
 
     private let ms1000 = 1.0
-    private let stub = PresentationTestsStub()
     @Published private var processing: Bool = false
     private let vc = OrderEntryConfirmViewControllerProtocolMock()
     private let mqtt = JobOrder_Domain.MQTTUseCaseProtocolMock()
@@ -31,7 +30,9 @@ class OrderEntryConfirmPresenterTests: XCTestCase {
     override func tearDownWithError() throws {}
 
     func test_job() {
-        let param = "test1"
+        let jobs = DataManageModel.Output.Job.arbitrary.sample
+        let obj = jobs.randomElement()!
+        let param = obj.id
         XCTContext.runActivity(named: "指定のJobが見つからなかった場合") { _ in
             presenter.data.form.jobId = param
             XCTAssertNil(presenter.job, "値を取得できてはいけない")
@@ -39,8 +40,8 @@ class OrderEntryConfirmPresenterTests: XCTestCase {
 
         XCTContext.runActivity(named: "指定のJobが見つかった場合") { _ in
             presenter.data.form.jobId = param
-            data.jobs = stub.jobs
-            XCTAssertEqual(presenter.job, param, "正常に値が設定されていない")
+            data.jobs = jobs
+            XCTAssertEqual(presenter.job, obj.name, "正常に値が設定されていない")
         }
     }
 
@@ -53,8 +54,11 @@ class OrderEntryConfirmPresenterTests: XCTestCase {
 
         XCTContext.runActivity(named: "指定のJobが見つかった場合") { _ in
             presenter.data.form.robotIds = ["test1", "test2"]
-            data.robots = stub.robots
-            XCTAssertEqual(presenter.robots, "test1\ntest2", "正常に値が設定されていない")
+            data.robots = [
+                DataManageModel.Output.Robot.pattern(id: "test1", name: "name1").generate,
+                DataManageModel.Output.Robot.pattern(id: "test2", name: "name2").generate
+            ]
+            XCTAssertEqual(presenter.robots, "name1\nname2", "正常に値が設定されていない")
         }
     }
 
@@ -125,21 +129,22 @@ class OrderEntryConfirmPresenterTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
+        let task = DataManageModel.Output.Task.arbitrary.generate
 
         data.postTaskHandler = { postData in
             return Future<DataManageModel.Output.Task, Error> { promise in
-                promise(.success(self.stub.task))
+                promise(.success(task))
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
 
-        presenter.data.form.jobId = stub.task.jobId
-        presenter.data.form.robotIds = stub.task.robotIds
+        presenter.data.form.jobId = task.jobId
+        presenter.data.form.robotIds = task.robotIds
         presenter.data.form.startCondition = OrderEntryViewData.Form.StartCondition.immediately
         presenter.data.form.exitCondition = OrderEntryViewData.Form.ExitCondition.specifiedNumberOfTimes
         presenter.data.form.numberOfRuns = 1
 
-        data.robots = stub.robots
+        data.robots = DataManageModel.Output.Robot.arbitrary.sample
         presenter.tapSendButton()
 
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
@@ -151,10 +156,11 @@ class OrderEntryConfirmPresenterTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         handlerExpectation.isInverted = true
         completionExpectation.isInverted = true
+        let task = DataManageModel.Output.Task.arbitrary.generate
 
         data.postTaskHandler = { postData in
             return Future<DataManageModel.Output.Task, Error> { promise in
-                promise(.success(self.stub.task))
+                promise(.success(task))
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
@@ -176,6 +182,7 @@ class OrderEntryConfirmPresenterTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
+        let task = DataManageModel.Output.Task.arbitrary.generate
 
         data.postTaskHandler = { postData in
             return Future<DataManageModel.Output.Task, Error> { promise in
@@ -185,13 +192,13 @@ class OrderEntryConfirmPresenterTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        presenter.data.form.jobId = stub.task.jobId
-        presenter.data.form.robotIds = stub.task.robotIds
+        presenter.data.form.jobId = task.jobId
+        presenter.data.form.robotIds = task.robotIds
         presenter.data.form.startCondition = OrderEntryViewData.Form.StartCondition.immediately
         presenter.data.form.exitCondition = OrderEntryViewData.Form.ExitCondition.specifiedNumberOfTimes
         presenter.data.form.numberOfRuns = 1
 
-        data.robots = stub.robots
+        data.robots = DataManageModel.Output.Robot.arbitrary.sample
         presenter.tapSendButton()
 
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)

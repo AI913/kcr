@@ -20,7 +20,6 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
 
     private let ms1000 = 1.0
     private let ms3000 = 3.0
-    private let stub = PresentationTestsStub()
     private let vc = TaskDetailRobotSelectionViewControllerProtocolMock()
     private let data = JobOrder_Domain.DataManageUseCaseProtocolMock()
     private lazy var presenter = TaskDetailRobotSelectionPresenter(dataUseCase: data,
@@ -33,25 +32,35 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
         data.observeRobotDataHandler = {
             return Future<[JobOrder_Domain.DataManageModel.Output.Robot]?, Never> { promise in }.eraseToAnyPublisher()
         }
+        presenter.commands = nil
+        presenter.task = nil
     }
 
     func test_getCommands() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
-        let taskId = "taskId"
+        let param = "test"
+        let task = DataManageModel.Output.Task.arbitrary.generate
+        let commands = DataManageModel.Output.Command.arbitrary.sample
 
         data.commandsFromTaskHandler = { taskId in
             return Future<[JobOrder_Domain.DataManageModel.Output.Command], Error> { promise in
-                promise(.success(self.stub.commands))
+                promise(.success(commands))
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
 
-        presenter.getCommands(taskId: taskId)
+        data.taskHandler = { _ in
+            return Future<JobOrder_Domain.DataManageModel.Output.Task, Error> { promise in
+                promise(.success(task))
+            }.eraseToAnyPublisher()
+        }
+
+        presenter.getCommandsAndTask(taskId: param)
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
 
-        XCTAssert(presenter.commands == stub.commands, "正しい値が取得できていない")
+        XCTAssert(presenter.commands == commands, "正しい値が取得できていない")
         XCTAssertEqual(vc.showErrorAlertCallCount, 0, "エラーが起こってはいけない")
     }
 
@@ -59,7 +68,8 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
-        let param = ""
+        let param = "test"
+        let task = DataManageModel.Output.Task.arbitrary.generate
 
         data.commandsFromTaskHandler = { taskId in
             return Future<[JobOrder_Domain.DataManageModel.Output.Command], Error> { promise in
@@ -69,7 +79,13 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        presenter.getCommands(taskId: param)
+        data.taskHandler = { _ in
+            return Future<JobOrder_Domain.DataManageModel.Output.Task, Error> { promise in
+                promise(.success(task))
+            }.eraseToAnyPublisher()
+        }
+
+        presenter.getCommandsAndTask(taskId: param)
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
 
         XCTAssertNil(presenter.commands, "値が取得できてはいけない")
@@ -80,7 +96,8 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
-        let param = ""
+        let param = "test"
+        let task = DataManageModel.Output.Task.arbitrary.generate
 
         data.commandsFromTaskHandler = { taskId in
             return Future<[JobOrder_Domain.DataManageModel.Output.Command], Error> { promise in
@@ -88,7 +105,13 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        presenter.getCommands(taskId: param)
+        data.taskHandler = { _ in
+            return Future<JobOrder_Domain.DataManageModel.Output.Task, Error> { promise in
+                promise(.success(task))
+            }.eraseToAnyPublisher()
+        }
+
+        presenter.getCommandsAndTask(taskId: param)
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
 
         XCTAssertNil(presenter.commands, "値が取得できてはいけない")
@@ -99,19 +122,27 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
         let param = "test"
-        data.robots = stub.robots
-        data.jobs = stub.jobs
+        let task = DataManageModel.Output.Task.arbitrary.generate
+        let commands = DataManageModel.Output.Command.arbitrary.sample
+        data.robots = DataManageModel.Output.Robot.arbitrary.sample
+        data.jobs = DataManageModel.Output.Job.arbitrary.sample
+
+        data.commandsFromTaskHandler = { taskId in
+            return Future<[JobOrder_Domain.DataManageModel.Output.Command], Error> { promise in
+                promise(.success(commands))
+            }.eraseToAnyPublisher()
+        }
 
         data.taskHandler = { _ in
             return Future<JobOrder_Domain.DataManageModel.Output.Task, Error> { promise in
-                promise(.success(self.stub.task))
+                promise(.success(task))
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
 
-        presenter.getTask(taskId: param)
+        presenter.getCommandsAndTask(taskId: param)
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-        XCTAssert(presenter.task == stub.task, "正しい値が取得できていない")
+        XCTAssert(presenter.task == task, "正しい値が取得できていない")
         XCTAssertEqual(vc.showErrorAlertCallCount, 0, "エラーが起こってはいけない")
     }
 
@@ -119,9 +150,16 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
-        let param = ""
-        data.robots = stub.robots
-        data.jobs = stub.jobs
+        let param = "test"
+        let commands = DataManageModel.Output.Command.arbitrary.sample
+        data.robots = DataManageModel.Output.Robot.arbitrary.sample
+        data.jobs = DataManageModel.Output.Job.arbitrary.sample
+
+        data.commandsFromTaskHandler = { taskId in
+            return Future<[JobOrder_Domain.DataManageModel.Output.Command], Error> { promise in
+                promise(.success(commands))
+            }.eraseToAnyPublisher()
+        }
 
         data.taskHandler = { _ in
             return Future<JobOrder_Domain.DataManageModel.Output.Task, Error> { promise in
@@ -131,7 +169,7 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        presenter.getTask(taskId: param)
+        presenter.getCommandsAndTask(taskId: param)
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
         XCTAssertNil(presenter.task, "値が取得できてはいけない")
         XCTAssertEqual(vc.showErrorAlertCallCount, 1, "ViewControllerのメソッドが呼ばれない")
@@ -141,9 +179,16 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
-        let param = ""
-        data.robots = stub.robots
-        data.jobs = stub.jobs
+        let param = "test"
+        let commands = DataManageModel.Output.Command.arbitrary.sample
+        data.robots = DataManageModel.Output.Robot.arbitrary.sample
+        data.jobs = DataManageModel.Output.Job.arbitrary.sample
+
+        data.commandsFromTaskHandler = { taskId in
+            return Future<[JobOrder_Domain.DataManageModel.Output.Command], Error> { promise in
+                promise(.success(commands))
+            }.eraseToAnyPublisher()
+        }
 
         data.taskHandler = { _ in
             return Future<JobOrder_Domain.DataManageModel.Output.Task, Error> { promise in
@@ -151,7 +196,7 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        presenter.getTask(taskId: param)
+        presenter.getCommandsAndTask(taskId: param)
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
         XCTAssertNil(presenter.task, "値が取得できてはいけない")
     }
@@ -159,7 +204,7 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
     func test_image() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
-        presenter.commands = stub.commands
+        presenter.commands = DataManageModel.Output.Command.arbitrary.sample
 
         data.robotImageHandler = { id in
             return Future<JobOrder_Domain.DataManageModel.Output.RobotImage, Error> { promise in
@@ -180,7 +225,7 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion error")
         completionExpectation.isInverted = true
-        presenter.commands = stub.commands
+        presenter.commands = DataManageModel.Output.Command.arbitrary.sample
 
         data.robotImageHandler = { id in
             return Future<JobOrder_Domain.DataManageModel.Output.RobotImage, Error> { promise in
@@ -220,8 +265,9 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
     }
 
     func test_jobName() {
-        presenter.task = stub.task
-        XCTAssertEqual(presenter.jobName(), stub.task.job.name, "正しい値が取得できていない")
+        let task = DataManageModel.Output.Task.arbitrary.generate
+        presenter.task = task
+        XCTAssertEqual(presenter.jobName(), task.job.name, "正しい値が取得できていない")
     }
 
     func test_jobNameWithoutTask() {
@@ -229,9 +275,19 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
     }
 
     func test_displayName() {
-        let robotId = stub.commands[0].robotId
-        let name = stub.robots.first(where: { $0.id == robotId })?.name
-        XCTAssertEqual(presenter.displayName(0), name, "正しい値が取得できていない")
+        let index = 0
+        let name = "param"
+        let commands = DataManageModel.Output.Command.arbitrary.sample
+        var robots = DataManageModel.Output.Robot.arbitrary.sample
+
+        let obj = commands[index]
+        let robotId = obj.robotId
+        robots.append(DataManageModel.Output.Robot.pattern(id: robotId, name: name).generate)
+
+        presenter.commands = commands
+        data.robots = robots
+
+        XCTAssertEqual(presenter.displayName(index), name, "正しい値が取得できていない")
     }
 
     func test_displayNameWithoutRobot() {
@@ -239,9 +295,20 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
     }
 
     func test_type() {
-        let robotId = stub.commands[0].robotId
-        let overview = stub.robots.first(where: { $0.id == robotId })?.type
-        XCTAssertEqual(presenter.type(0), overview, "正しい値が取得できていない")
+        let index = 0
+        let name = "param"
+        let commands = DataManageModel.Output.Command.arbitrary.sample
+        var robots = DataManageModel.Output.Robot.arbitrary.sample
+
+        let obj = commands[index]
+        let robotId = obj.robotId
+        let robot = DataManageModel.Output.Robot.pattern(id: robotId, name: name).generate
+        robots.append(robot)
+
+        presenter.commands = commands
+        data.robots = robots
+
+        XCTAssertEqual(presenter.type(index), robot.type, "正しい値が取得できていない")
     }
 
     func test_typeWithoutRobot() {
@@ -249,12 +316,13 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
     }
 
     func test_updatedAt() {
-        presenter.task = stub.task()
+        let task = DataManageModel.Output.Task.arbitrary.generate
+        presenter.task = task
 
         let textColor = UIColor.clear
         let font = UIFont.systemFont(ofSize: 12)
 
-        let dateStr = presenter.string(date: stub.task().updateTime.toEpocTime, label: "", textColor: textColor, font: font)
+        let dateStr = presenter.string(date: task.updateTime.toEpocTime, label: "", textColor: textColor, font: font)
         XCTAssertEqual(presenter.updatedAt(textColor: textColor, font: font), dateStr)
     }
 
@@ -267,12 +335,13 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
     }
 
     func test_createdAt() {
-        presenter.task = stub.task()
+        let task = DataManageModel.Output.Task.arbitrary.generate
+        presenter.task = task
 
         let textColor = UIColor.clear
         let font = UIFont.systemFont(ofSize: 12)
 
-        let dateStr = presenter.string(date: stub.task().createTime.toEpocTime, label: "", textColor: textColor, font: font)
+        let dateStr = presenter.string(date: task.createTime.toEpocTime, label: "", textColor: textColor, font: font)
         XCTAssertEqual(presenter.createdAt(textColor: textColor, font: font), dateStr)
     }
 
@@ -285,8 +354,9 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
     }
 
     func test_success() {
-        presenter.commands = stub.commands
-        XCTAssertEqual(presenter.success(1), stub.commands[1].success, "正しい値が取得できていない")
+        let commands = DataManageModel.Output.Command.arbitrary.sample
+        presenter.commands = commands
+        XCTAssertEqual(presenter.success(1), commands[1].success, "正しい値が取得できていない")
     }
 
     func test_successWithoutTask() {
@@ -294,8 +364,9 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
     }
 
     func test_failure() {
-        presenter.commands = stub.commands
-        XCTAssertEqual(presenter.failure(1), stub.commands[1].fail, "正しい値が取得できていない")
+        let commands = DataManageModel.Output.Command.arbitrary.sample
+        presenter.commands = commands
+        XCTAssertEqual(presenter.failure(1), commands[1].fail, "正しい値が取得できていない")
     }
 
     func test_failureWithoutTask() {
@@ -303,8 +374,9 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
     }
 
     func test_error() {
-        presenter.commands = stub.commands
-        XCTAssertEqual(presenter.error(1), stub.commands[1].error, "正しい値が取得できていない")
+        let commands = DataManageModel.Output.Command.arbitrary.sample
+        presenter.commands = commands
+        XCTAssertEqual(presenter.error(1), commands[1].error, "正しい値が取得できていない")
     }
 
     func test_errorWithoutTask() {
@@ -312,8 +384,9 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
     }
 
     func test_status() {
-        presenter.commands = stub.commands
-        XCTAssertEqual(presenter.status(1), stub.commands[1].status, "正しい値が取得できていない")
+        let commands = DataManageModel.Output.Command.arbitrary.sample
+        presenter.commands = commands
+        XCTAssertEqual(presenter.status(1), commands[1].status, "正しい値が取得できていない")
     }
 
     func test_statusWithoutTask() {
@@ -322,9 +395,11 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
 
     // Command, Taskともに存在する場合
     func test_na() {
-        presenter.commands = stub.commands
-        presenter.task = stub.task
-        XCTAssert(presenter.na(0) == calcNA(command: stub.command, task: stub.task), "正しい値が取得できていない")
+        let commands = DataManageModel.Output.Command.arbitrary.sample
+        let task = DataManageModel.Output.Task.arbitrary.generate
+        presenter.commands = commands
+        presenter.task = task
+        XCTAssert(presenter.na(0) == calcNA(command: commands[0], task: task), "正しい値が取得できていない")
     }
 
     // Command, Taskともに存在しない場合
@@ -334,13 +409,13 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
 
     // Commandが存在する, Taskが存在しない場合
     func test_naWithoutTask() {
-        presenter.commands = stub.commands
+        presenter.commands = DataManageModel.Output.Command.arbitrary.sample
         XCTAssertEqual(presenter.na(1), 0, "正しい値が取得できていない")
     }
 
     // Commandが存在しない, Taskが存在する場合
     func test_naWithoutCommand() {
-        presenter.task = stub.task
+        presenter.task = DataManageModel.Output.Task.pattern(numberOfRuns: 5).generate
         XCTAssertEqual(presenter.na(1), presenter.task?.exit.option.numberOfRuns, "正しい値が取得できていない")
     }
 

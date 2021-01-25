@@ -178,7 +178,7 @@ public class AuthenticationUseCase: AuthenticationUseCaseProtocol {
             let reason = "Sign in"
             self.context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { (success, evaluateError) in
                 if let error = evaluateError {
-                    promise(.failure(error))
+                    promise(.failure(JobOrderError(from: error)))
                 } else {
                     // 生体認証時はログアウトしないのでRobot稼働状態をクリアする
                     self.robotData.read()?.forEach {
@@ -209,7 +209,7 @@ public class AuthenticationUseCase: AuthenticationUseCaseProtocol {
                     switch completion {
                     case .finished: break
                     case .failure(let error):
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     // Logger.debug(target: self, "\(response)")
@@ -234,7 +234,7 @@ public class AuthenticationUseCase: AuthenticationUseCaseProtocol {
                     switch completion {
                     case .finished: break
                     case .failure(let error):
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     // Logger.debug(target: self, "\(response)")
@@ -255,8 +255,7 @@ public class AuthenticationUseCase: AuthenticationUseCaseProtocol {
                 .flatMap { value -> AnyPublisher<AuthenticationModel.Output.SignOutResult, Error> in
                     guard value.result else {
                         return Future<AuthenticationModel.Output.SignOutResult, Error> { promise in
-                            let userInfo = ["__type": "disconnectWithCleanUp", "message": "Fail to Disconnect."]
-                            promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                            promise(.failure(JobOrderError.connectionFailed(reason: .failToDisconnect(error: nil))))
                         }.eraseToAnyPublisher()
                     }
                     // UserDefaults, キーチェーンは明示的にサインアウトした場合のみ削除する
@@ -272,7 +271,7 @@ public class AuthenticationUseCase: AuthenticationUseCaseProtocol {
                     switch completion {
                     case .finished: break
                     case .failure(let error):
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     // Logger.debug(target: self, "\(response)")
@@ -297,7 +296,7 @@ public class AuthenticationUseCase: AuthenticationUseCaseProtocol {
                     switch completion {
                     case .finished: break
                     case .failure(let error):
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     // Logger.debug(target: self, "\(response)")
@@ -325,7 +324,7 @@ public class AuthenticationUseCase: AuthenticationUseCaseProtocol {
                     switch completion {
                     case .finished: break
                     case .failure(let error):
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     // Logger.debug(target: self, "\(response)")
@@ -350,7 +349,7 @@ public class AuthenticationUseCase: AuthenticationUseCaseProtocol {
                     switch completion {
                     case .finished: break
                     case .failure(let error):
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     // Logger.debug(target: self, "\(response)")
@@ -374,7 +373,7 @@ public class AuthenticationUseCase: AuthenticationUseCaseProtocol {
                     switch completion {
                     case .finished: break
                     case .failure(let error):
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     // Logger.debug(target: self, "\(response)")

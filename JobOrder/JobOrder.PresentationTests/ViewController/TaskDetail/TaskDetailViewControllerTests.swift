@@ -11,7 +11,7 @@ import XCTest
 
 class TaskDetailViewControllerTests: XCTestCase {
 
-    private let mock = TaskDetailPresenterProtocolMock()
+    private let mock = TaskDetailTaskInformationPresenterProtocolMock()
     private let vc = StoryboardScene.TaskDetail.taskDetail.instantiate()
 
     override func setUpWithError() throws {

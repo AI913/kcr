@@ -12,7 +12,6 @@ import XCTest
 
 class RobotDetailRemarksPresenterTests: XCTestCase {
 
-    private let stub = PresentationTestsStub()
     private let vc = RobotDetailRemarksViewControllerProtocolMock()
     private let data = JobOrder_Domain.DataManageUseCaseProtocolMock()
     private let viewData = MainViewData.Robot()
@@ -23,11 +22,12 @@ class RobotDetailRemarksPresenterTests: XCTestCase {
     override func tearDownWithError() throws {}
 
     func test_remarks() {
-        let param = "test1"
-
+        let robots = DataManageModel.Output.Robot.arbitrary.sample
+        let obj = robots.randomElement()!
+        let param = obj.id
         XCTContext.runActivity(named: "Dataが未設定の場合") { _ in
             presenter.data.id = nil
-            data.robots = stub.robots
+            data.robots = robots
             XCTAssertNil(presenter.remarks, "値を取得できてはいけない")
         }
 
@@ -39,8 +39,8 @@ class RobotDetailRemarksPresenterTests: XCTestCase {
 
         XCTContext.runActivity(named: "Robotが存在する場合") { _ in
             presenter.data.id = param
-            data.robots = stub.robots
-            XCTAssertEqual(presenter.remarks, stub.robot1().remarks, "正しい値が取得できていない: \(stub.robot1())")
+            data.robots = robots
+            XCTAssertEqual(presenter.remarks, obj.remarks, "正しい値が取得できていない: \(obj)")
         }
     }
 }

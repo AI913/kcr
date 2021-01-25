@@ -23,18 +23,19 @@ class TaskAPIDataStoreTests: XCTestCase {
     func test_getCommandFromTask() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
+        let commandFromTaskResult: APIResult<CommandEntity.Data> = APIResult.arbitrary.generate
 
         mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<CommandEntity.Data>, Error> { promise in
                 handlerExpectation.fulfill()
-                promise(.success(APITestsStub().commandFromTaskResult))
+                promise(.success(commandFromTaskResult))
             }.eraseToAnyPublisher()
         }
 
         getCommandFromTask(
             [handlerExpectation, completionExpectation],
             onSuccess: { data in
-                XCTAssert(data == APITestsStub().commandFromTaskResult, "正しい値が取得できていない: \(data)")
+                XCTAssert(data == commandFromTaskResult, "正しい値が取得できていない: \(data)")
             },
             onError: { error in
                 XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
@@ -89,18 +90,19 @@ class TaskAPIDataStoreTests: XCTestCase {
     func test_getCommandsFromTask() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
+        let commandsFromTaskResult: APIResult<[CommandEntity.Data]> = APIResult.arbitrary.generate
 
         mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
-                promise(.success(APITestsStub().commandsFromTaskResult))
+                promise(.success(commandsFromTaskResult))
             }.eraseToAnyPublisher()
         }
 
         getCommandsFromTask(
             [handlerExpectation, completionExpectation],
             onSuccess: { data in
-                XCTAssert(data == APITestsStub().commandsFromTaskResult, "正しい値が取得できていない: \(data)")
+                XCTAssert(data == commandsFromTaskResult, "正しい値が取得できていない: \(data)")
             },
             onError: { error in
                 XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
@@ -155,6 +157,7 @@ class TaskAPIDataStoreTests: XCTestCase {
     func test_getExecutionsFromTask() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
+        let executionsFromTaskResult: APIResult<[ExecutionEntity.LogData]> = APIResult.arbitrary.generate
 
         let paging: APIPaging.Input = APIPaging.Input(page: 5, size: 10)
 
@@ -166,7 +169,7 @@ class TaskAPIDataStoreTests: XCTestCase {
         mock.getResUrlHandler = { url, token, dataId, query in
             return Future<APIResult<[ExecutionEntity.LogData]>, Error> { promise in
                 handlerExpectation.fulfill()
-                promise(.success(APITestsStub().executionsFromTaskResult))
+                promise(.success(executionsFromTaskResult))
                 if let query = query {
                     let canonicalizedQuery = self.canonicalized(queryitems: query)
                     let canonicalizedExpected = self.canonicalized(queryitems: expectedQuery)
@@ -180,7 +183,17 @@ class TaskAPIDataStoreTests: XCTestCase {
         getExecutionLogsFromTask(
             [handlerExpectation, completionExpectation],
             onSuccess: { data in
-                XCTAssert(data == APITestsStub().executionsFromTaskResult, "正しい値が取得できていない: \(data)")
+                XCTAssert(data == executionsFromTaskResult, "正しい値が取得できていない: \(data)")
+                guard let expectedData = executionsFromTaskResult.data, let actualData = data.data else {
+                    XCTFail("読み込みエラー")
+                    return
+                }
+                guard let expectedPaging = executionsFromTaskResult.paging, let actualPaging = data.paging else {
+                    XCTFail("読み込みエラー")
+                    return
+                }
+                XCTAssert(actualData.elementsEqual(expectedData), "正しい値が取得できていない: \(actualData)")
+                XCTAssertEqual(actualPaging, expectedPaging, "正しい値が取得できていない: \(actualPaging)")
             },
             onError: { error in
                 XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
@@ -236,18 +249,19 @@ class TaskAPIDataStoreTests: XCTestCase {
     func test_postTask() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
+        let postTaskResult: APIResult<TaskAPIEntity.Data> = APIResult.arbitrary.generate
 
         mock.postHandler = { url, token, _ in
             return Future<APIResult<TaskAPIEntity.Data>, Error> { promise in
                 handlerExpectation.fulfill()
-                promise(.success(APITestsStub().postTaskResult))
+                promise(.success(postTaskResult))
             }.eraseToAnyPublisher()
         }
 
         postTask(
             [handlerExpectation, completionExpectation],
             onSuccess: { data in
-                XCTAssert(data == APITestsStub().postTaskResult, "正しい値が取得できていない: \(data)")
+                XCTAssert(data == postTaskResult, "正しい値が取得できていない: \(data)")
             },
             onError: { error in
                 XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")

@@ -14,7 +14,6 @@ import Combine
 class TaskDetailRunHistoryPresenterTest: XCTestCase {
 
     private let ms1000 = 1.0
-    private let stub = PresentationTestsStub()
     private let vc = TaskDetailRunHistoryViewControllerProtocolMock()
     private let data = JobOrder_Domain.DataManageUseCaseProtocolMock()
     private let viewData = MainViewData.Job()
@@ -33,11 +32,13 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
         let commandHandlerExpectation = expectation(description: "command handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
+        let tasks = DataManageModel.Output.Task.arbitrary.suchThat({ !$0.robotIds.isEmpty }).sample
+        let commands = (0..<tasks.count).map({ _ in DataManageModel.Output.Command.arbitrary.generate })
         presenter.jobData = MainViewData.Job(id: param)
 
         data.tasksFromJobHandler = { id, cursor in
             return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Task]>, Error> { promise in
-                promise(.success(.init(data: self.stub.tasks5, cursor: expectedCursor, total: expectedTotal)))
+                promise(.success(.init(data: tasks, cursor: expectedCursor, total: expectedTotal)))
                 taksHandlerExpectation.fulfill()
                 XCTAssertEqual(cursor, PagingModel.Cursor(offset: 0, limit: 10), "先頭10件取得指定になっていない")
             }.eraseToAnyPublisher()
@@ -45,13 +46,10 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
 
         data.commandFromTaskHandler = { _, _ in
             return Future<JobOrder_Domain.DataManageModel.Output.Command, Error> { promise in
-                switch self.data.commandFromTaskCallCount {
-                case 1:
-                    promise(.success(self.stub.command1()))
-                case 2:
-                    promise(.success(self.stub.command2()))
-                default:
-                    promise(.success(self.stub.command3()))
+                let index = self.data.commandFromTaskCallCount - 1
+                let command = commands[index]
+                promise(.success(command))
+                if index >= commands.endIndex - 1 {
                     commandHandlerExpectation.fulfill()
                 }
             }.eraseToAnyPublisher()
@@ -60,9 +58,9 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
         presenter.viewWillAppear()
         wait(for: [taksHandlerExpectation, commandHandlerExpectation, completionExpectation], timeout: ms1000)
 
-        XCTAssertEqual(presenter.commands.count, 3, "正しい値が取得できていない")
-        XCTAssertTrue(stub.tasks5.elementsEqual(presenter.tasks), "正しい値が取得できていない")
-        XCTAssertTrue([stub.command1(), stub.command2(), stub.command3()].elementsEqual(presenter.commands), "正しい値が取得できていない")
+        XCTAssertEqual(presenter.commands.count, commands.count, "正しい値が取得できていない")
+        XCTAssertTrue(tasks.elementsEqual(presenter.tasks), "正しい値が取得できていない")
+        XCTAssertTrue(commands.elementsEqual(presenter.commands), "正しい値が取得できていない")
         XCTAssertEqual(presenter.cursor, expectedCursor, "正しい値が取得できていない")
         XCTAssertEqual(presenter.totalItems, expectedTotal, "正しい値が取得できていない")
         XCTAssertEqual(vc.reloadTableCallCount, 1, "画面が更新されない")
@@ -87,7 +85,7 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
 
         data.commandFromTaskHandler = { _, _ in
             return Future<JobOrder_Domain.DataManageModel.Output.Command, Error> { promise in
-                promise(.success(self.stub.command1()))
+                promise(.success(DataManageModel.Output.Command.arbitrary.generate))
                 commandHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
@@ -106,11 +104,12 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
         let commandHandlerExpectation = expectation(description: "command handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
+        let task = DataManageModel.Output.Task.arbitrary.generate
         presenter.jobData = MainViewData.Job(id: param)
 
         data.tasksFromJobHandler = { id, _ in
             return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Task]>, Error> { promise in
-                promise(.success(.init(data: self.stub.tasks, cursor: nil, total: nil)))
+                promise(.success(.init(data: [task], cursor: nil, total: nil)))
                 taksHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
@@ -144,11 +143,13 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
         let commandHandlerExpectation = expectation(description: "command handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
+        let commands = DataManageModel.Output.Command.arbitrary.sample
+        let tasks = (0..<commands.count).map({ _ in DataManageModel.Output.Task.arbitrary.generate })
         presenter.robotData = robotData
 
         data.commandFromRobotHandler = { _, _, cursor in
             return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Command]>, Error> { promise in
-                promise(.success(.init(data: self.stub.commands6, cursor: expectedCursor, total: expectedTotal)))
+                promise(.success(.init(data: commands, cursor: expectedCursor, total: expectedTotal)))
                 commandHandlerExpectation.fulfill()
                 XCTAssertEqual(cursor, PagingModel.Cursor(offset: 0, limit: 10), "先頭10件取得指定になっていない")
             }.eraseToAnyPublisher()
@@ -156,13 +157,10 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
 
         data.taskHandler = { _ in
             return Future<JobOrder_Domain.DataManageModel.Output.Task, Error> { promise in
-                switch self.data.taskCallCount {
-                case 1:
-                    promise(.success(self.stub.task(id: "test1")))
-                case 2:
-                    promise(.success(self.stub.task(id: "test2")))
-                default:
-                    promise(.success(self.stub.task(id: "test3")))
+                let index = self.data.taskCallCount - 1
+                let task = tasks[index]
+                promise(.success(task))
+                if index >= tasks.endIndex - 1 {
                     taksHandlerExpectation.fulfill()
                 }
             }.eraseToAnyPublisher()
@@ -171,9 +169,9 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
         presenter.viewWillAppear()
         wait(for: [taksHandlerExpectation, commandHandlerExpectation, completionExpectation], timeout: ms1000)
 
-        XCTAssertEqual(presenter.commands.count, 3, "正しい値が取得できていない")
-        XCTAssertTrue(stub.tasks5.elementsEqual(presenter.tasks), "正しい値が取得できていない")
-        XCTAssertTrue([stub.command1(), stub.command2(), stub.command3()].elementsEqual(presenter.commands), "正しい値が取得できていない")
+        XCTAssertEqual(presenter.commands.count, commands.count, "正しい値が取得できていない")
+        XCTAssertTrue(tasks.elementsEqual(presenter.tasks), "正しい値が取得できていない")
+        XCTAssertTrue(commands.elementsEqual(presenter.commands), "正しい値が取得できていない")
         XCTAssertEqual(presenter.cursor, expectedCursor, "正しい値が取得できていない")
         XCTAssertEqual(presenter.totalItems, expectedTotal, "正しい値が取得できていない")
         XCTAssertEqual(vc.reloadTableCallCount, 1, "画面が更新されない")
@@ -190,6 +188,7 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
         taksHandlerExpectation.isInverted = true
+        let tasks = DataManageModel.Output.Task.arbitrary.sample
         presenter.robotData = robotData
 
         data.commandFromRobotHandler = { _, _, _ in
@@ -202,13 +201,10 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
 
         data.taskHandler = { _ in
             return Future<JobOrder_Domain.DataManageModel.Output.Task, Error> { promise in
-                switch self.data.taskCallCount {
-                case 1:
-                    promise(.success(self.stub.task(id: "test1")))
-                case 2:
-                    promise(.success(self.stub.task(id: "test2")))
-                default:
-                    promise(.success(self.stub.task(id: "test3")))
+                let index = self.data.taskCallCount
+                let task = tasks[index]
+                promise(.success(task))
+                if index >= tasks.endIndex - 1 {
                     taksHandlerExpectation.fulfill()
                 }
             }.eraseToAnyPublisher()
@@ -236,7 +232,7 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
 
         data.commandFromRobotHandler = { _, _, _ in
             return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Command]>, Error> { promise in
-                promise(.success(.init(data: self.stub.commands3, cursor: nil, total: nil)))
+                promise(.success(.init(data: [DataManageModel.Output.Command.arbitrary.generate], cursor: nil, total: nil)))
                 commandHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
@@ -334,8 +330,9 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
             }
 
             XCTContext.runActivity(named: "Tasksが存在する場合") { _ in
-                presenter.tasks = stub.tasks
-                XCTAssertEqual(presenter.numberOfSections(), stub.tasks.count, "正しい値が取得できていない")
+                let tasks = DataManageModel.Output.Task.arbitrary.sample
+                presenter.tasks = tasks
+                XCTAssertEqual(presenter.numberOfSections(), tasks.count, "正しい値が取得できていない")
             }
         }
 
@@ -347,114 +344,140 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
             }
 
             XCTContext.runActivity(named: "Tasksが存在する場合") { _ in
-                presenter.commands = stub.commands
-                XCTAssertEqual(presenter.numberOfSections(), stub.commands.count, "正しい値が取得できていない")
+                let commands = DataManageModel.Output.Command.arbitrary.sample
+                presenter.commands = commands
+                XCTAssertEqual(presenter.numberOfSections(), commands.count, "正しい値が取得できていない")
             }
         }
 
     }
 
     func test_selectRow() {
-
+        let task0 = DataManageModel.Output.Task.pattern(robotIds: ["test1", "test2"]).generate
+        let task1 = DataManageModel.Output.Task.pattern(robotIds: ["test3"]).generate
+        let tasks = [task0, task1]
         XCTContext.runActivity(named: "Task一覧の場合") { _ in
-            presenter.tasks = stub.tasks6
+            presenter.tasks = tasks
             presenter.browsing = .tasks
 
             XCTContext.runActivity(named: "TaskInformation画面に遷移する場合") { _ in
                 let index = 1
                 let indexPath = IndexPath(row: 0, section: index)
+                let completionExpectation = expectation(description: "completion")
 
                 vc.launchTaskDetailTaskInformationHandler = { jobId, robotId in
-                    XCTAssertEqual(jobId, self.stub.tasks6[index].jobId, "引数に正しい値が設定されていない")
-                    XCTAssertEqual(robotId, self.stub.tasks6[index].robotIds.first, "引数に正しい値が設定されていない")
+                    XCTAssertEqual(jobId, task1.jobId, "引数に正しい値が設定されていない")
+                    XCTAssertEqual(robotId, "test3", "引数に正しい値が設定されていない")
+                    completionExpectation.fulfill()
                 }
 
                 presenter.selectRow(indexPath: indexPath)
-
-                XCTAssertEqual(vc.launchTaskDetailTaskInformationCallCount, 1, "ViewControllerのメソッドが呼ばれない")
+                wait(for: [completionExpectation], timeout: ms1000)
             }
 
             XCTContext.runActivity(named: "RobotSelection画面に遷移する場合") { _ in
                 let index = 0
                 let indexPath = IndexPath(row: 0, section: index)
+                let completionExpectation = expectation(description: "completion")
 
                 vc.launchTaskDetailRobotSelectionHandler = { taskId in
-                    XCTAssertEqual(taskId, self.stub.tasks6[index].id, "引数に正しい値が設定されていない")
+                    XCTAssertEqual(taskId, task0.id, "引数に正しい値が設定されていない")
+                    completionExpectation.fulfill()
                 }
 
                 presenter.selectRow(indexPath: indexPath)
-
-                XCTAssertEqual(vc.launchTaskDetailRobotSelectionCallCount, 1, "ViewControllerのメソッドが呼ばれない")
+                wait(for: [completionExpectation], timeout: ms1000)
             }
         }
 
         XCTContext.runActivity(named: "Command一覧の場合") { _ in
             let index = 0
             let indexPath = IndexPath(row: 0, section: index)
-
-            presenter.commands = stub.commands3
-            presenter.tasks = stub.tasks
-            presenter.browsing = .tasks
+            let completionExpectation = expectation(description: "completion")
+            let command = DataManageModel.Output.Command.pattern(taskId: task0.id).generate
+            var commands = DataManageModel.Output.Command.arbitrary.sample
+            commands.insert(command, at: index)
+            presenter.commands = commands
+            presenter.browsing = .commands
 
             vc.launchTaskDetailTaskInformationHandler = { jobId, robotId in
-                XCTAssertEqual(jobId, self.stub.tasks[index].jobId, "引数に正しい値が設定されていない")
-                XCTAssertEqual(robotId, self.stub.commands[index].robotId, "引数に正しい値が設定されていない")
+                XCTAssertEqual(jobId, task0.jobId, "引数に正しい値が設定されていない")
+                XCTAssertEqual(robotId, command.robotId, "引数に正しい値が設定されていない")
+                completionExpectation.fulfill()
             }
 
             presenter.selectRow(indexPath: indexPath)
-
-            XCTAssertEqual(vc.launchTaskDetailTaskInformationCallCount, 1, "ViewControllerのメソッドが呼ばれない")
+            wait(for: [completionExpectation], timeout: ms1000)
         }
 
     }
 
     func test_orderName() {
         let index = 0
+        let task = DataManageModel.Output.Task.arbitrary.generate
+        var tasks = DataManageModel.Output.Task.arbitrary.sample
+        tasks.insert(task, at: index)
 
-        presenter.tasks = stub.tasks
-        XCTAssertEqual(presenter.orderName(index: index), "Sep 27, 2020のオーダー", "正しい値が取得できていない")
+        presenter.tasks = tasks
+        XCTAssertEqual(presenter.orderName(index: index), "\(task.createTime.toEpocTime.toMediumDateString)のオーダー", "正しい値が取得できていない")
     }
 
     func test_assignName() {
         let index = 0
-        data.robots = stub.robots
+        let robots = DataManageModel.Output.Robot.arbitrary.sample
+        let robotIds = robots.map { $0.id }
+        let name = robots[index].name!
+        data.robots = robots
 
         XCTContext.runActivity(named: "Robotsが空の場合") { _ in
-            presenter.tasks = stub.tasks2
+            presenter.tasks = DataManageModel.Output.Task.pattern(robotIds: []).sample
             XCTAssertNil(presenter.assignName(index: index), "正しい値が取得できていない")
         }
         XCTContext.runActivity(named: "Robotsが1つだけ存在する場合") { _ in
-            presenter.tasks = stub.tasks3
-            XCTAssertEqual(presenter.assignName(index: index), "test1", "正しい値が取得できていない")
+            presenter.tasks = DataManageModel.Output.Task.pattern(robotIds: Array(robotIds.prefix(1))).sample
+            XCTAssertEqual(presenter.assignName(index: index), name, "正しい値が取得できていない")
         }
         XCTContext.runActivity(named: "Robotsが複数存在する場合") { _ in
-            presenter.tasks = stub.tasks4
-            XCTAssertEqual(presenter.assignName(index: index), "test1 他2台にアサイン", "正しい値が取得できていない")
+            presenter.tasks = DataManageModel.Output.Task.pattern(robotIds: robotIds).sample
+            let expected = "\(name) 他\(robotIds.count - 1)台にアサイン"
+            XCTAssertEqual(presenter.assignName(index: index), expected, "正しい値が取得できていない")
         }
     }
 
     func test_taskStatus() {
         let index = 0
-        presenter.tasks = stub.tasks4
+        let task = DataManageModel.Output.Task.arbitrary.generate
+        var tasks = DataManageModel.Output.Task.arbitrary.sample
+        tasks.insert(task, at: index)
+        presenter.tasks = tasks
         XCTContext.runActivity(named: "Commandsに該当タスクが存在しない場合") { _ in
-            presenter.commands = stub.commands
+            presenter.commands = DataManageModel.Output.Command.arbitrary.sample
             XCTAssertNil(presenter.taskStatus(index: index), "正しい値が取得できていない")
         }
         XCTContext.runActivity(named: "Commandsが空の場合") { _ in
-            presenter.commands = stub.commands2
+            presenter.commands = []
             XCTAssertNil(presenter.taskStatus(index: index), "正しい値が取得できていない")
         }
         XCTContext.runActivity(named: "Commandsが存在する場合") { _ in
-            presenter.commands = stub.commands3
-            XCTAssertEqual(presenter.taskStatus(index: index), "queued", "正しい値が取得できていない")
+            let command = DataManageModel.Output.Command.pattern(taskId: task.id).generate
+            var commands = DataManageModel.Output.Command.arbitrary.sample
+            commands.insert(command, at: index)
+            presenter.commands = commands
+            XCTAssertEqual(presenter.taskStatus(index: index), command.status, "正しい値が取得できていない")
         }
     }
 
     func test_jobName() {
         let index = 0
-        presenter.commands = stub.commands3
+        let task = DataManageModel.Output.Task.arbitrary.generate
+        var tasks = DataManageModel.Output.Task.arbitrary.sample
+        tasks.insert(task, at: index)
+        let command = DataManageModel.Output.Command.pattern(taskId: task.id).generate
+        var commands = DataManageModel.Output.Command.arbitrary.sample
+        commands.insert(command, at: index)
+        presenter.commands = commands
         XCTContext.runActivity(named: "Tasksに当該コマンドが存在しない場合") { _ in
-            presenter.tasks = stub.tasks5
+            presenter.tasks = DataManageModel.Output.Task.arbitrary.sample
             XCTAssertEqual(presenter.jobName(index: index), "N/A", "正しい値が取得できていない")
         }
         XCTContext.runActivity(named: "Tasksが空の場合") { _ in
@@ -462,30 +485,36 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
             XCTAssertEqual(presenter.jobName(index: index), "N/A", "正しい値が取得できていない")
         }
         XCTContext.runActivity(named: "Tasksに当該コマンドが存在する場合") { _ in
-            presenter.tasks = stub.tasks
-            XCTAssertEqual(presenter.jobName(index: index), "test1", "正しい値が取得できていない")
+            presenter.tasks = tasks
+            XCTAssertEqual(presenter.jobName(index: index), task.job.name, "正しい値が取得できていない")
         }
     }
 
     func test_createdAt() {
         let index = 0
-        presenter.commands = stub.commands
+        let commands = DataManageModel.Output.Command.arbitrary.sample
+        let obj = commands[index]
+        presenter.commands = commands
 
-        XCTAssertEqual(presenter.createdAt(index: index), "Created at: " + stub.command5().createTime.toEpocTime.toDateString, "正しい値が取得できていない")
+        XCTAssertEqual(presenter.createdAt(index: index), "Created at: " + obj.createTime.toEpocTime.toDateString, "正しい値が取得できていない")
     }
 
     func test_result() {
         let index = 0
-        presenter.commands = stub.commands
+        let commands = DataManageModel.Output.Command.arbitrary.sample
+        let obj = commands[index]
+        presenter.commands = commands
 
-        XCTAssertEqual(presenter.result(index: index), "Success \(stub.command5().success) / Fail \(stub.command5().fail) / Error \(stub.command5().error)", "正しい値が取得できていない")
+        XCTAssertEqual(presenter.result(index: index), "Success \(obj.success) / Fail \(obj.fail) / Error \(obj.error)", "正しい値が取得できていない")
     }
 
     func test_commandStatus() {
         let index = 0
-        presenter.commands = stub.commands
+        let commands = DataManageModel.Output.Command.arbitrary.sample
+        let obj = commands[0]
+        presenter.commands = commands
 
-        XCTAssertEqual(presenter.commandStatus(index: index), "failed", "正しい値が取得できていない")
+        XCTAssertEqual(presenter.commandStatus(index: index), obj.status, "正しい値が取得できていない")
     }
 
     func test_canGoPrev() {
@@ -595,7 +624,7 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
 
         data.tasksFromJobHandler = { _, cursor in
             return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Task]>, Error> { promise in
-                promise(.success(.init(data: self.stub.tasks, cursor: nil, total: nil)))
+                promise(.success(.init(data: [DataManageModel.Output.Task.arbitrary.generate], cursor: nil, total: nil)))
                 taksHandlerExpectation.fulfill()
                 XCTAssertEqual(cursor, expectedCursor, "前ページ取得指定になっていない")
             }.eraseToAnyPublisher()
@@ -603,7 +632,7 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
 
         data.commandFromTaskHandler = { _, _ in
             return Future<JobOrder_Domain.DataManageModel.Output.Command, Error> { promise in
-                promise(.success(self.stub.command1()))
+                promise(.success(DataManageModel.Output.Command.arbitrary.generate))
                 commandHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }
@@ -632,7 +661,7 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
 
         data.tasksFromJobHandler = { _, cursor in
             return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Task]>, Error> { promise in
-                promise(.success(.init(data: self.stub.tasks, cursor: nil, total: nil)))
+                promise(.success(.init(data: [DataManageModel.Output.Task.arbitrary.generate], cursor: nil, total: nil)))
                 taksHandlerExpectation.fulfill()
                 XCTAssertEqual(cursor, expectedCursor, "次ページ取得指定になっていない")
             }.eraseToAnyPublisher()
@@ -640,7 +669,7 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
 
         data.commandFromTaskHandler = { _, _ in
             return Future<JobOrder_Domain.DataManageModel.Output.Command, Error> { promise in
-                promise(.success(self.stub.command1()))
+                promise(.success(DataManageModel.Output.Command.arbitrary.generate))
                 commandHandlerExpectation.fulfill()
             }.eraseToAnyPublisher()
         }

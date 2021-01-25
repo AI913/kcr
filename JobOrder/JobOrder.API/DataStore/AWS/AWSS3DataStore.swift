@@ -24,7 +24,7 @@ public class AWSS3DataStore: CloudStorageRepository {
                 let data = try JSONEncoder().encode(document)
                 body = String(data: data, encoding: .utf8)!
             } catch let error {
-                promise(.failure(error))
+                promise(.failure(AWSError.s3ControlFailed(error: error)))
                 return
             }
 
@@ -35,7 +35,7 @@ public class AWSS3DataStore: CloudStorageRepository {
                                                       expression: nil,
                                                       completionHandler: { (_, error) -> Void in
                                                         if let error = error {
-                                                            promise(.failure(error))
+                                                            promise(.failure(AWSError.s3ControlFailed(error: error)))
                                                         } else {
                                                             promise(.success(true))
                                                         }
@@ -52,7 +52,7 @@ public class AWSS3DataStore: CloudStorageRepository {
             let bucket = CloudStorageEntity.Bucket(bucketType)
             AWSS3TransferUtility.default().downloadData(fromBucket: bucket.name, key: key, expression: nil, completionHandler: { (task, location, data, error) -> Void in
                 if let error = error {
-                    promise(.failure(error))
+                    promise(.failure(AWSError.s3ControlFailed(error: error)))
                 } else {
                     promise(.success(true))
                 }
@@ -70,7 +70,7 @@ public class AWSS3DataStore: CloudStorageRepository {
             let bucket = CloudStorageEntity.Bucket(bucketType)
             AWSS3TransferUtility.default().downloadData(fromBucket: bucket.name, key: key, expression: nil, completionHandler: { (task, location, data, error) -> Void in
                 if let error = error {
-                    promise(.failure(error))
+                    promise(.failure(AWSError.s3ControlFailed(error: error)))
                 } else {
                     promise(.success(true))
                 }

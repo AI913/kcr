@@ -16,11 +16,11 @@
             <objects>
                 <viewController storyboardIdentifier="TaskDetail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aIc-7j-N0J" customClass="TaskDetailTaskInformationViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ase-zu-XU7">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gCh-58-JGB" customClass="CustomScrollView" customModule="JobOrder_Presentation" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="414" height="730"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vON-6N-dCd" userLabel="Container View">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="724"/>
@@ -82,6 +82,7 @@
                                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="azW-bw-ALS" userLabel="Cancel Button">
                                                         <rect key="frame" x="0.0" y="88.5" width="374" height="44"/>
                                                         <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="cancel_task_button"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="44" id="e3r-1h-CWO"/>
                                                         </constraints>
@@ -239,6 +240,7 @@
                                                                     </label>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Te7-Eb-V8n">
                                                                         <rect key="frame" x="46.5" y="0.0" width="327.5" height="30"/>
+                                                                        <accessibility key="accessibilityConfiguration" identifier="show_detail_button"/>
                                                                         <state key="normal" title="Show Detail"/>
                                                                         <connections>
                                                                             <action selector="touchUpInsideShowDetailButton:" destination="aIc-7j-N0J" eventType="touchUpInside" id="oOJ-yu-7MK"/>
@@ -349,11 +351,11 @@
             <objects>
                 <viewController storyboardIdentifier="TaskDetailExecutionLog" id="mHR-st-0s6" customClass="TaskDetailExecutionLogViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ayr-QA-sNp">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="v02-TT-pZN">
-                                <rect key="frame" x="20" y="64" width="374" height="690"/>
+                                <rect key="frame" x="20" y="108" width="374" height="734"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="TKY-tt-KvQ">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="37.5"/>
@@ -390,7 +392,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="JkZ-hy-iSb">
-                                        <rect key="frame" x="0.0" y="95" width="374" height="555"/>
+                                        <rect key="frame" x="0.0" y="95" width="374" height="599"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zOj-w0-HqI" userLabel="Log Label">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="17"/>
@@ -399,7 +401,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2IS-Ki-mIb">
-                                                <rect key="frame" x="0.0" y="22" width="374" height="533"/>
+                                                <rect key="frame" x="0.0" y="22" width="374" height="577"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TaskDetailExecutionLogTableViewCell" id="D1g-qy-9JZ" customClass="TaskDetailExecutionLogTableViewCell" customModule="JobOrder_Presentation" customModuleProvider="target">
@@ -455,7 +457,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XHh-nt-7Di">
-                                        <rect key="frame" x="0.0" y="660" width="374" height="30"/>
+                                        <rect key="frame" x="0.0" y="704" width="374" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OHy-za-9Nj" userLabel="Previous Button">
                                                 <rect key="frame" x="0.0" y="0.0" width="136.5" height="30"/>
@@ -492,6 +494,9 @@
                             <constraint firstItem="bCD-zt-TT2" firstAttribute="width" secondItem="Ayr-QA-sNp" secondAttribute="width" multiplier="0.33" id="abn-p1-OKj"/>
                             <constraint firstItem="5FY-gU-cTu" firstAttribute="bottom" secondItem="v02-TT-pZN" secondAttribute="bottom" constant="20" id="sO6-l5-c90"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="taskdetail_view"/>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <navigationItem key="navigationItem" title="Execution log" id="bXF-W8-zds"/>
                     <connections>
@@ -594,6 +599,7 @@
                                                     <button opaque="NO" contentMode="top" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1cA-bw-FUx" userLabel="Cance All Tasksl Button">
                                                         <rect key="frame" x="0.0" y="88.5" width="374" height="44"/>
                                                         <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="cancel_tasks_button"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="44" id="2zf-ds-QBM"/>
                                                         </constraints>
@@ -965,6 +971,9 @@
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="history_table"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="dataSource" destination="YjF-SP-BJj" id="f0t-dv-TD7"/>
                                             <outlet property="delegate" destination="YjF-SP-BJj" id="ddb-cq-BTW"/>
@@ -1000,6 +1009,9 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Ngj-YQ-VsG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <accessibility key="accessibilityConfiguration" identifier="run_history_view">
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
                         <constraints>
                             <constraint firstItem="Ngj-YQ-VsG" firstAttribute="trailing" secondItem="3If-yr-6C4" secondAttribute="trailing" constant="20" id="85S-3a-Ee2"/>
                             <constraint firstItem="gkW-cm-epZ" firstAttribute="width" secondItem="ZZl-vj-03b" secondAttribute="width" multiplier="0.33" id="Xlf-16-Uwe"/>
@@ -1012,6 +1024,9 @@
                     <navigationItem key="navigationItem" title="Run history" id="ZUK-DI-efr">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="Y6H-4s-zCt">
                             <color key="tintColor" systemColor="systemRedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="cancel_button"/>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="selectorCancelBarButtonItem:" destination="YjF-SP-BJj" id="PUN-yM-dbg"/>
                             </connections>
@@ -1050,7 +1065,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="zEa-19-B8z"/>
-        <segue reference="LVC-QR-O8g"/>
+        <segue reference="IuY-6f-qpf"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="checkmark.circle.fill" catalog="system" width="128" height="121"/>

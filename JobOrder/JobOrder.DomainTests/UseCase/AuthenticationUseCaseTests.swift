@@ -225,6 +225,7 @@ class AuthenticationUseCaseTests: XCTestCase {
         let evaluatePolicyHandlerExpectation = expectation(description: "EvaluatePolicy handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         context.evaluatePolicyHandler = { policy, localizedReason, callback in
             evaluatePolicyHandlerExpectation.fulfill()
@@ -237,7 +238,7 @@ class AuthenticationUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -304,6 +305,7 @@ class AuthenticationUseCaseTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.signInHandler = { identifier, password in
             return Future<JobOrder_API.AuthenticationEntity.Output.SignInResult, Error> { promise in
@@ -318,7 +320,7 @@ class AuthenticationUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -385,6 +387,7 @@ class AuthenticationUseCaseTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.confirmSignInHandler = { newPassword in
             return Future<JobOrder_API.AuthenticationEntity.Output.SignInResult, Error> { promise in
@@ -399,7 +402,7 @@ class AuthenticationUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -533,9 +536,8 @@ class AuthenticationUseCaseTests: XCTestCase {
                     case .finished:
                         XCTFail("値を取得できてはいけない")
                     case .failure(let e):
-                        let userInfo = ["__type": "disconnectWithCleanUp", "message": "Fail to Disconnect."]
-                        let error = NSError(domain: "Error", code: -1, userInfo: userInfo)
-                        XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                        let expected = JobOrderError.connectionFailed(reason: .failToDisconnect(error: nil)) as NSError
+                        XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                     }
                     completionExpectation.fulfill()
                 }, receiveValue: { _ in
@@ -548,6 +550,7 @@ class AuthenticationUseCaseTests: XCTestCase {
             let handlerExpectation = expectation(description: "handler")
             let completionExpectation = expectation(description: "completion")
             let error = NSError(domain: "Error", code: -1, userInfo: nil)
+            let expected = JobOrderError.internalError(error: error) as NSError
 
             mqtt.disconnectWithCleanUpHandler = {
                 return Future<JobOrder_API.MQTTEntity.Output.DisconnectWithCleanup, Error> { promise in
@@ -562,7 +565,7 @@ class AuthenticationUseCaseTests: XCTestCase {
                     case .finished:
                         XCTFail("値を取得できてはいけない")
                     case .failure(let e):
-                        XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                        XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                     }
                     completionExpectation.fulfill()
                 }, receiveValue: { _ in
@@ -576,6 +579,7 @@ class AuthenticationUseCaseTests: XCTestCase {
             let signOutHandlerExpectation = expectation(description: "SignOut handler")
             let completionExpectation = expectation(description: "completion")
             let error = NSError(domain: "Error", code: -1, userInfo: nil)
+            let expected = JobOrderError.internalError(error: error) as NSError
 
             mqtt.disconnectWithCleanUpHandler = {
                 return Future<JobOrder_API.MQTTEntity.Output.DisconnectWithCleanup, Error> { promise in
@@ -597,7 +601,7 @@ class AuthenticationUseCaseTests: XCTestCase {
                     case .finished:
                         XCTFail("値を取得できてはいけない")
                     case .failure(let e):
-                        XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                        XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                     }
                     completionExpectation.fulfill()
                 }, receiveValue: { _ in
@@ -671,6 +675,7 @@ class AuthenticationUseCaseTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.forgotPasswordHandler = { identifier in
             return Future<JobOrder_API.AuthenticationEntity.Output.ForgotPasswordResult, Error> { promise in
@@ -685,7 +690,7 @@ class AuthenticationUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -758,6 +763,7 @@ class AuthenticationUseCaseTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.confirmForgotPasswordHandler = { identifier, newPassword, confirmationCode in
             return Future<JobOrder_API.AuthenticationEntity.Output.ForgotPasswordResult, Error> { promise in
@@ -772,7 +778,7 @@ class AuthenticationUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -845,6 +851,7 @@ class AuthenticationUseCaseTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.resendConfirmationCodeHandler = { identifier in
             return Future<JobOrder_API.AuthenticationEntity.Output.SignUpResult, Error> { promise in
@@ -859,7 +866,7 @@ class AuthenticationUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -926,6 +933,7 @@ class AuthenticationUseCaseTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.getAttrlibutesHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Attributes, Error> { promise in
@@ -940,7 +948,7 @@ class AuthenticationUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in

@@ -221,8 +221,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                 .flatMap { value -> AnyPublisher<APIResults, Error> in
                     guard let token = value.idToken else {
                         return Future<APIResults, Error> { promise in
-                            let userInfo = ["__type": "getTokens", "message": "idToken is null."]
-                            promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                            promise(.failure(JobOrderError.authenticationFailed(reason: .idTokenIsNull)))
                         }.eraseToAnyPublisher()
                     }
                     return self.jobAPI.fetch(token)
@@ -238,7 +237,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     case .finished: break
                     case .failure(let error):
                         Logger.error(target: self, error.localizedDescription)
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     // データベースへ保存
@@ -276,8 +275,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                 .flatMap { value -> AnyPublisher<APIResult<JobOrder_API.RobotAPIEntity.Data>, Error> in
                     guard let token = value.idToken else {
                         return Future<APIResult<JobOrder_API.RobotAPIEntity.Data>, Error> { promise in
-                            let userInfo = ["__type": "getTokens", "message": "idToken is null."]
-                            promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                            promise(.failure(JobOrderError.authenticationFailed(reason: .idTokenIsNull)))
                         }.eraseToAnyPublisher()
                     }
                     return self.robotAPI.getRobot(token, id: id).eraseToAnyPublisher()
@@ -287,7 +285,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     case .finished: break
                     case .failure(let error):
                         Logger.error(target: self, error.localizedDescription)
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     self.saveRobot(result: response)
@@ -312,8 +310,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                 .flatMap { value -> AnyPublisher<Data, Error> in
                     guard let token = value.idToken else {
                         return Future<Data, Error> { promise in
-                            let userInfo = ["__type": "getTokens", "message": "idToken is null."]
-                            promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                            promise(.failure(JobOrderError.authenticationFailed(reason: .idTokenIsNull)))
                         }.eraseToAnyPublisher()
                     }
                     return self.robotAPI.getImage(token, id: id).eraseToAnyPublisher()
@@ -323,7 +320,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     case .finished: break
                     case .failure(let error):
                         Logger.error(target: self, error.localizedDescription)
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     promise(.success(.init(data: response)))
@@ -342,8 +339,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                 .flatMap { value -> AnyPublisher<APIResult<[JobOrder_API.CommandEntity.Data]>, Error> in
                     guard let token = value.idToken else {
                         return Future<APIResult<[JobOrder_API.CommandEntity.Data]>, Error> { promise in
-                            let userInfo = ["__type": "getTokens", "message": "idToken is null."]
-                            promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                            promise(.failure(JobOrderError.authenticationFailed(reason: .idTokenIsNull)))
                         }.eraseToAnyPublisher()
                     }
                     return self.robotAPI.getCommands(token, id: id, status: status?.map({ $0.queryString }), paging: cursor?.toPaging()).eraseToAnyPublisher()
@@ -353,14 +349,13 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     case .finished: break
                     case .failure(let error):
                         Logger.error(target: self, error.localizedDescription)
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     if let output = response.data?.compactMap({ DataManageModel.Output.Command($0) }) {
                         promise(.success(.init(data: output, paging: response.paging)))
                     } else {
-                        let userInfo = ["__type": "commandFromRobot", "message": "API Resuponse is null"]
-                        promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                        promise(.failure(JobOrderError.connectionFailed(reason: .apiResuponseIsNull)))
                     }
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
@@ -378,8 +373,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                 .flatMap { value -> AnyPublisher<APIResult<JobOrder_API.CommandEntity.Data>, Error> in
                     guard let token = value.idToken else {
                         return Future<APIResult<JobOrder_API.CommandEntity.Data>, Error> { promise in
-                            let userInfo = ["__type": "getTokens", "message": "idToken is null."]
-                            promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                            promise(.failure(JobOrderError.authenticationFailed(reason: .idTokenIsNull)))
                         }.eraseToAnyPublisher()
                     }
                     return self.taskAPI.getCommand(token, taskId: taskId, robotId: robotId).eraseToAnyPublisher()
@@ -389,14 +383,13 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     case .finished: break
                     case .failure(let error):
                         Logger.error(target: self, error.localizedDescription)
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     if let output = response.data {
                         promise(.success(.init(output)))
                     } else {
-                        let userInfo = ["__type": "commandFromTask", "message": "API Resuponse is null"]
-                        promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                        promise(.failure(JobOrderError.connectionFailed(reason: .apiResuponseIsNull)))
                     }
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
@@ -414,8 +407,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                 .flatMap { value -> AnyPublisher<APIResult<[JobOrder_API.CommandEntity.Data]>, Error> in
                     guard let token = value.idToken else {
                         return Future<APIResult<[JobOrder_API.CommandEntity.Data]>, Error> { promise in
-                            let userInfo = ["__type": "getTokens", "message": "idToken is null."]
-                            promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                            promise(.failure(JobOrderError.authenticationFailed(reason: .idTokenIsNull)))
                         }.eraseToAnyPublisher()
                     }
                     return self.taskAPI.getCommands(token, taskId: taskId).eraseToAnyPublisher()
@@ -425,14 +417,13 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     case .finished: break
                     case .failure(let error):
                         Logger.error(target: self, error.localizedDescription)
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     if let output = response.data?.compactMap({ DataManageModel.Output.Command($0) }) {
                         promise(.success(.init(output)))
                     } else {
-                        let userInfo = ["__type": "commandsFromTask", "message": "API Response is null"]
-                        promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                        promise(.failure(JobOrderError.connectionFailed(reason: .apiResuponseIsNull)))
                     }
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
@@ -447,8 +438,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                 .flatMap { value -> AnyPublisher<APIResult<JobOrder_API.TaskAPIEntity.Data>, Error> in
                     guard let token = value.idToken else {
                         return Future<APIResult<JobOrder_API.TaskAPIEntity.Data>, Error> { promise in
-                            let userInfo = ["__type": "getTokens", "message": "idToken is null."]
-                            promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                            promise(.failure(JobOrderError.authenticationFailed(reason: .idTokenIsNull)))
                         }.eraseToAnyPublisher()
                     }
                     return self.taskAPI.getTask(token, taskId: taskId).eraseToAnyPublisher()
@@ -458,14 +448,13 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     case .finished: break
                     case .failure(let error):
                         Logger.error(target: self, error.localizedDescription)
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     if let output = response.data {
                         promise(.success(.init(output)))
                     } else {
-                        let userInfo = ["__type": "task", "message": "API Resuponse is null"]
-                        promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                        promise(.failure(JobOrderError.connectionFailed(reason: .apiResuponseIsNull)))
                     }
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
@@ -479,16 +468,14 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
         self.processing = true
         return Future<DataManageModel.Output.Task, Error> { promise in
             guard let data = self.translator.toData(model: postData) else {
-                let userInfo = ["__type": "RobotCommand", "message": "PostData is Nil"]
-                promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                promise(.failure(JobOrderError.inputValidationFailed(reason: .postDataIsNil)))
                 return
             }
             self.auth.getTokens()
                 .flatMap { value -> AnyPublisher<APIResult<JobOrder_API.TaskAPIEntity.Data>, Error> in
                     guard let token = value.idToken else {
                         return Future<APIResult<JobOrder_API.TaskAPIEntity.Data>, Error> { promise in
-                            let userInfo = ["__type": "getTokens", "message": "idToken is null."]
-                            promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                            promise(.failure(JobOrderError.authenticationFailed(reason: .idTokenIsNull)))
                         }.eraseToAnyPublisher()
                     }
                     return self.taskAPI.postTask(token, task: data).eraseToAnyPublisher()
@@ -498,14 +485,13 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     case .finished: break
                     case .failure(let error):
                         Logger.error(target: self, error.localizedDescription)
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     if let output = response.data {
                         promise(.success(.init(output)))
                     } else {
-                        let userInfo = ["__type": "task", "message": "API Resuponse is null"]
-                        promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                        promise(.failure(JobOrderError.connectionFailed(reason: .apiResuponseIsNull)))
                     }
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
@@ -525,8 +511,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                 .flatMap { value -> AnyPublisher<SystemAPIResults, Error> in
                     guard let token = value.idToken else {
                         return Future<SystemAPIResults, Error> { promise in
-                            let userInfo = ["__type": "getTokens", "message": "idToken is null."]
-                            promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                            promise(.failure(JobOrderError.authenticationFailed(reason: .idTokenIsNull)))
                         }.eraseToAnyPublisher()
                     }
                     return self.robotAPI.getRobotSwconf(token, id: id)
@@ -540,14 +525,13 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     case .finished: break
                     case .failure(let error):
                         Logger.error(target: self, error.localizedDescription)
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     if let robotSwconf = response.0.data, let robotAssets = response.1.data {
                         promise(.success(.init(robotSwconf: robotSwconf, robotAssets: robotAssets)))
                     } else {
-                        let userInfo = ["__type": "RobotCommand", "message": "API Resuponse is null"]
-                        promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                        promise(.failure(JobOrderError.connectionFailed(reason: .apiResuponseIsNull)))
                     }
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
@@ -564,8 +548,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                 .flatMap { value -> AnyPublisher<APIResult<[JobOrder_API.TaskAPIEntity.Data]>, Error> in
                     guard let token = value.idToken else {
                         return Future<APIResult<[JobOrder_API.TaskAPIEntity.Data]>, Error> { promise in
-                            let userInfo = ["__type": "getTokens", "message": "idToken is null."]
-                            promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                            promise(.failure(JobOrderError.authenticationFailed(reason: .idTokenIsNull)))
                         }.eraseToAnyPublisher()
                     }
                     return self.jobAPI.getTasks(token, id: id, paging: cursor?.toPaging()).eraseToAnyPublisher()
@@ -575,14 +558,13 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     case .finished: break
                     case .failure(let error):
                         Logger.error(target: self, error.localizedDescription)
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     if let output = response.data?.compactMap({ DataManageModel.Output.Task($0) }) {
                         promise(.success(.init(data: output, paging: response.paging)))
                     } else {
-                        let userInfo = ["__type": "task", "message": "API Resuponse is null"]
-                        promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                        promise(.failure(JobOrderError.connectionFailed(reason: .apiResuponseIsNull)))
                     }
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
@@ -602,8 +584,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                 .flatMap { value -> AnyPublisher<APIResult<[JobOrder_API.ExecutionEntity.LogData]>, Error> in
                     guard let token = value.idToken else {
                         return Future<APIResult<[JobOrder_API.ExecutionEntity.LogData]>, Error> { promise in
-                            let userInfo = ["__type": "getTokens", "message": "idToken is null."]
-                            promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                            promise(.failure(JobOrderError.authenticationFailed(reason: .idTokenIsNull)))
                         }.eraseToAnyPublisher()
                     }
                     return self.taskAPI.getExecutionLogs(token, taskId: taskId, robotId: robotId, paging: cursor?.toPaging()).eraseToAnyPublisher()
@@ -613,14 +594,13 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     case .finished: break
                     case .failure(let error):
                         Logger.error(target: self, error.localizedDescription)
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     if let output = response.data?.compactMap({ DataManageModel.Output.ExecutionLog($0) }) {
                         promise(.success(.init(data: output, paging: response.paging)))
                     } else {
-                        let userInfo = ["__type": "task", "message": "API Resuponse is null"]
-                        promise(.failure(NSError(domain: "Error", code: -1, userInfo: userInfo)))
+                        promise(.failure(JobOrderError.connectionFailed(reason: .apiResuponseIsNull)))
                     }
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()

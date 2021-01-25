@@ -74,7 +74,7 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
         return Future<AuthenticationEntity.Output.SignInResult, Error> { promise in
             self.awsMobileClient.signIn(username: username, password: password) { result, error in
                 if let error = error {
-                    promise(.failure(error))
+                    promise(.failure(AWSError.authenticationFailed(reason: .init(error))))
                 } else {
                     let entity = AuthenticationEntity.Output.SignInResult(result)
                     // Logger.debug(target: self, "\(entity)")
@@ -93,7 +93,7 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
         return Future<AuthenticationEntity.Output.SignInResult, Error> { promise in
             self.awsMobileClient.confirmSignIn(challengeResponse: newPassword) { result, error in
                 if let error = error {
-                    promise(.failure(error))
+                    promise(.failure(AWSError.authenticationFailed(reason: .init(error))))
                 } else {
                     let entity = AuthenticationEntity.Output.SignInResult(result)
                     // Logger.debug(target: self, "\(entity)")
@@ -111,7 +111,7 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
         return Future<AuthenticationEntity.Output.SignOutResult, Error> { promise in
             self.awsMobileClient.signOut { error in
                 if let error = error {
-                    promise(.failure(error))
+                    promise(.failure(AWSError.authenticationFailed(reason: .init(error))))
                 } else {
                     let entity = AuthenticationEntity.Output.SignOutResult(state: .success)
                     // Logger.debug(target: self, "\(entity)")
@@ -129,7 +129,7 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
         return Future<AuthenticationEntity.Output.Tokens, Error> { promise in
             self.awsMobileClient.getTokens { result, error in
                 if let error = error {
-                    promise(.failure(error))
+                    promise(.failure(AWSError.authenticationFailed(reason: .init(error))))
                 } else {
                     let entity = AuthenticationEntity.Output.Tokens(result)
                     // Logger.debug(target: self, "\(entity)")
@@ -147,7 +147,7 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
         return Future<AuthenticationEntity.Output.Attributes, Error> { promise in
             self.awsMobileClient.getUserAttributes { result, error in
                 if let error = error {
-                    promise(.failure(error))
+                    promise(.failure(AWSError.authenticationFailed(reason: .init(error))))
                 } else {
                     let entity = AuthenticationEntity.Output.Attributes(result)
                     // Logger.debug(target: self, "\(entity)")
@@ -166,7 +166,7 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
         return Future<AuthenticationEntity.Output.ForgotPasswordResult, Error> { promise in
             self.awsMobileClient.forgotPassword(username: username) { result, error in
                 if let error = error {
-                    promise(.failure(error))
+                    promise(.failure(AWSError.authenticationFailed(reason: .init(error))))
                 } else {
                     let entity = AuthenticationEntity.Output.ForgotPasswordResult(result)
                     // Logger.debug(target: self, "\(entity)")
@@ -188,7 +188,7 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
         return Future<AuthenticationEntity.Output.ForgotPasswordResult, Error> { promise in
             self.awsMobileClient.confirmForgotPassword(username: username, newPassword: newPassword, confirmationCode: confirmationCode) { result, error in
                 if let error = error {
-                    promise(.failure(error))
+                    promise(.failure(AWSError.authenticationFailed(reason: .init(error))))
                 } else {
                     let entity = AuthenticationEntity.Output.ForgotPasswordResult(result)
                     // Logger.debug(target: self, "\(entity)")
@@ -207,7 +207,7 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
         return Future<AuthenticationEntity.Output.SignUpResult, Error> { promise in
             self.awsMobileClient.resendSignUpCode(username: username) { result, error in
                 if let error = error {
-                    promise(.failure(error))
+                    promise(.failure(AWSError.authenticationFailed(reason: .init(error))))
                 } else {
                     let entity = AuthenticationEntity.Output.SignUpResult(result)
                     // Logger.debug(target: self, "\(entity)")

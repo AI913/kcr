@@ -12,7 +12,6 @@ import XCTest
 
 class JobDetailPresenterTests: XCTestCase {
 
-    private let stub = PresentationTestsStub()
     private let vc = JobDetailViewControllerProtocolMock()
     private let data = JobOrder_Domain.DataManageUseCaseProtocolMock()
     private let viewData = MainViewData.Job()
@@ -23,11 +22,13 @@ class JobDetailPresenterTests: XCTestCase {
     override func tearDownWithError() throws {}
 
     func test_displayName() {
-        let param = "test1"
+        let jobs = DataManageModel.Output.Job.arbitrary.sample
+        let obj = jobs.randomElement()!
+        let param = obj.id
 
         XCTContext.runActivity(named: "Dataが未設定の場合") { _ in
             presenter.data.id = nil
-            data.jobs = stub.jobs
+            data.jobs = jobs
             XCTAssertNil(presenter.displayName, "値を取得できてはいけない")
         }
 
@@ -39,17 +40,19 @@ class JobDetailPresenterTests: XCTestCase {
 
         XCTContext.runActivity(named: "Jobが存在する場合") { _ in
             presenter.data.id = param
-            data.jobs = stub.jobs
-            XCTAssertEqual(presenter.displayName, stub.job1().name, "正しい値が取得できていない: \(stub.job1())")
+            data.jobs = jobs
+            XCTAssertEqual(presenter.displayName, obj.name, "正しい値が取得できていない: \(obj)")
         }
     }
 
     func test_overview() {
-        let param = "test1"
+        let jobs = DataManageModel.Output.Job.arbitrary.sample
+        let obj = jobs.randomElement()!
+        let param = obj.id
 
         XCTContext.runActivity(named: "Dataが未設定の場合") { _ in
             presenter.data.id = nil
-            data.jobs = stub.jobs
+            data.jobs = jobs
             XCTAssertNil(presenter.overview, "値を取得できてはいけない")
         }
 
@@ -61,17 +64,19 @@ class JobDetailPresenterTests: XCTestCase {
 
         XCTContext.runActivity(named: "Jobが存在する場合") { _ in
             presenter.data.id = param
-            data.jobs = stub.jobs
-            XCTAssertEqual(presenter.overview, stub.job1().overview, "正しい値が取得できていない: \(stub.job1())")
+            data.jobs = jobs
+            XCTAssertEqual(presenter.overview, obj.overview, "正しい値が取得できていない: \(obj)")
         }
     }
 
     func test_remarks() {
-        let param = "test1"
+        let jobs = DataManageModel.Output.Job.arbitrary.sample
+        let obj = jobs.randomElement()!
+        let param = obj.id
 
         XCTContext.runActivity(named: "Dataが未設定の場合") { _ in
             presenter.data.id = nil
-            data.jobs = stub.jobs
+            data.jobs = jobs
             XCTAssertNil(presenter.remarks, "値を取得できてはいけない")
         }
 
@@ -83,8 +88,8 @@ class JobDetailPresenterTests: XCTestCase {
 
         XCTContext.runActivity(named: "Jobが存在する場合") { _ in
             presenter.data.id = param
-            data.jobs = stub.jobs
-            XCTAssertEqual(presenter.remarks, stub.job1().remarks, "正しい値が取得できていない: \(stub.job1())")
+            data.jobs = jobs
+            XCTAssertEqual(presenter.remarks, obj.remarks, "正しい値が取得できていない: \(obj)")
         }
     }
 

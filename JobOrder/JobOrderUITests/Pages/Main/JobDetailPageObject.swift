@@ -12,17 +12,41 @@ class JobDetailPageObject: PageObject {
     required init(application: XCUIApplication) {
         app = application
     }
-    var OrderButton: XCUIElement { return view.buttons[IDs.orderbutton] }
-    var BackButton: XCUIElement { return app.navigationBars.buttons.element(boundBy: 2) }
+    var orderButton: XCUIElement { return view.buttons[IDs.orderbutton] }
+    var backButton: XCUIElement { return app.navigationBars.buttons.element(boundBy: 2) }
+    var flowTab: XCUIElement {
+        return app.segmentedControls.buttons.element(boundBy: 1)
+    }
+    var remarksTab: XCUIElement {
+        return app.segmentedControls.buttons.element(boundBy: 2)
+    }
+    var workTab: XCUIElement {
+        return app.segmentedControls.buttons.element(boundBy: 0)
+    }
 
     func tapOrderButton() -> RobotSelectionPageObject {
-        OrderButton.tap()
+        orderButton.tap()
         return RobotSelectionPageObject(application: app)
     }
 
     func tapBackButton() -> JobListPageObject {
-        BackButton.tap()
+        backButton.tap()
         return JobListPageObject(application: app)
+    }
+
+    func tapFlowTab() -> JobFlowTabPageObject {
+        flowTab.tap()
+        return JobFlowTabPageObject(application: app)
+    }
+
+    func tapRemarksTab() -> JobRemarksTabPageObject {
+        remarksTab.tap()
+        return JobRemarksTabPageObject(application: app)
+    }
+
+    func tapWorkTab() -> JobWorkTabPageObject {
+        workTab.tap()
+        return JobWorkTabPageObject(application: app)
     }
 }
 // MARK: - Assertion

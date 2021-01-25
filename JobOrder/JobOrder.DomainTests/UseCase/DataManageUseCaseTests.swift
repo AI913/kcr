@@ -277,7 +277,7 @@ class DataManageUseCaseTests: XCTestCase {
         jobAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.JobAPIEntity.Data]>, Error> { promise in
                 jobFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1, paging: nil)
+                let entity: APIResult<[JobAPIEntity.Data]> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -285,7 +285,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.RobotAPIEntity.Data]>, Error> { promise in
                 robotFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[RobotAPIEntity.Data]>(time: 1, data: DomainTestsStub().robots, count: 1, paging: nil)
+                let entity: APIResult<[RobotAPIEntity.Data]> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -293,7 +293,7 @@ class DataManageUseCaseTests: XCTestCase {
         actionLibraryAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.ActionLibraryAPIEntity.Data]>, Error> { promise in
                 actionLibraryFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[ActionLibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().actionLibraries, count: 1, paging: nil)
+                let entity: APIResult<[ActionLibraryAPIEntity.Data]> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -301,7 +301,7 @@ class DataManageUseCaseTests: XCTestCase {
         aiLibraryAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.AILibraryAPIEntity.Data]>, Error> { promise in
                 aiLibraryFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[AILibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().aiLibraries, count: 1, paging: nil)
+                let entity: APIResult<[AILibraryAPIEntity.Data]> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -352,6 +352,7 @@ class DataManageUseCaseTests: XCTestCase {
         actionLibraryFetchHandlerExpectation.isInverted = true
         aiLibraryFetchHandlerExpectation.isInverted = true
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.getTokensHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
@@ -366,7 +367,7 @@ class DataManageUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -381,6 +382,7 @@ class DataManageUseCaseTests: XCTestCase {
         let jobFetchHandlerExpectation = expectation(description: "Job fetch handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.getTokensHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
@@ -406,7 +408,7 @@ class DataManageUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -422,6 +424,7 @@ class DataManageUseCaseTests: XCTestCase {
         let robotFetchHandlerExpectation = expectation(description: "Robot fetch handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.getTokensHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
@@ -437,7 +440,7 @@ class DataManageUseCaseTests: XCTestCase {
         jobAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.JobAPIEntity.Data]>, Error> { promise in
                 jobFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1, paging: nil)
+                let entity: APIResult<[JobAPIEntity.Data]> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -455,7 +458,7 @@ class DataManageUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -472,6 +475,7 @@ class DataManageUseCaseTests: XCTestCase {
         let actionLibraryFetchHandlerExpectation = expectation(description: "ActionLibrary fetch handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.getTokensHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
@@ -487,7 +491,7 @@ class DataManageUseCaseTests: XCTestCase {
         jobAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.JobAPIEntity.Data]>, Error> { promise in
                 jobFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1, paging: nil)
+                let entity: APIResult<[JobAPIEntity.Data]> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -495,7 +499,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.RobotAPIEntity.Data]>, Error> { promise in
                 robotFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[RobotAPIEntity.Data]>(time: 1, data: DomainTestsStub().robots, count: 1, paging: nil)
+                let entity: APIResult<[RobotAPIEntity.Data]> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -513,7 +517,7 @@ class DataManageUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -531,6 +535,7 @@ class DataManageUseCaseTests: XCTestCase {
         let aiLibraryFetchHandlerExpectation = expectation(description: "AILibrary fetch handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.getTokensHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
@@ -546,7 +551,7 @@ class DataManageUseCaseTests: XCTestCase {
         jobAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.JobAPIEntity.Data]>, Error> { promise in
                 jobFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1, paging: nil)
+                let entity: APIResult<[JobAPIEntity.Data]> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -554,7 +559,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.RobotAPIEntity.Data]>, Error> { promise in
                 robotFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[RobotAPIEntity.Data]>(time: 1, data: DomainTestsStub().robots, count: 1, paging: nil)
+                let entity: APIResult<[RobotAPIEntity.Data]> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -562,7 +567,7 @@ class DataManageUseCaseTests: XCTestCase {
         actionLibraryAPI.fetchHandler = { token in
             return Future<APIResult<[JobOrder_API.ActionLibraryAPIEntity.Data]>, Error> { promise in
                 actionLibraryFetchHandlerExpectation.fulfill()
-                let entity = APIResult<[ActionLibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().actionLibraries, count: 1, paging: nil)
+                let entity: APIResult<[ActionLibraryAPIEntity.Data]> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -580,7 +585,7 @@ class DataManageUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -652,6 +657,7 @@ class DataManageUseCaseTests: XCTestCase {
         let tokenHandlerExpectation = expectation(description: "Token handler")
         let getRobotHandlerExpectation = expectation(description: "Get robot handler")
         let completionExpectation = expectation(description: "completion")
+        let robotEntity: APIResult<RobotAPIEntity.Data> = APIResult.arbitrary.generate
 
         auth.getTokensHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
@@ -667,14 +673,13 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.getRobotHandler = { token, id in
             return Future<APIResult<JobOrder_API.RobotAPIEntity.Data>, Error> { promise in
                 getRobotHandlerExpectation.fulfill()
-                let entity = APIResult<RobotAPIEntity.Data>(time: 1, data: DomainTestsStub().robot, count: 1, paging: nil)
-                promise(.success(entity))
+                promise(.success(robotEntity))
             }.eraseToAnyPublisher()
         }
 
         robot.readHandler = {
             let entity = JobOrder_Data.RobotEntity()
-            entity.id = "id"
+            entity.id = robotEntity.data!.id
             return [entity]
         }
 
@@ -732,6 +737,7 @@ class DataManageUseCaseTests: XCTestCase {
         let getRobotHandlerExpectation = expectation(description: "Get robot handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.getTokensHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
@@ -757,7 +763,7 @@ class DataManageUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -800,7 +806,8 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.getCommandsHandler = { token, id, status, paging in
             return Future<APIResult<[JobOrder_API.CommandEntity.Data]>, Error> { promise in
                 getRobotCommandsHandlerExpectation.fulfill()
-                let entity = APIResult<[CommandEntity.Data]>(time: 1, data: DomainTestsStub().commandsFromRobot, count: 1, paging: pagingOutput)
+                let data = CommandEntity.Data.arbitrary.sample
+                let entity = APIResult<[CommandEntity.Data]>(time: 1, data: data, count: data.count, paging: pagingOutput)
                 promise(.success(entity))
                 XCTAssertEqual(status?.sorted(), ["open", "close"].sorted(), "正しい値が設定されていない")
                 XCTAssertEqual(paging, APIPaging.Input(page: expectedPage, size: expectedSize), "正しい値が設定されていない")
@@ -863,6 +870,7 @@ class DataManageUseCaseTests: XCTestCase {
         let getRobotCommandsHandlerExpectation = expectation(description: "Get image handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.getTokensHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
@@ -888,7 +896,7 @@ class DataManageUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -918,7 +926,7 @@ class DataManageUseCaseTests: XCTestCase {
         taskAPI.getCommandHandler = { token, taskId, robotId in
             return Future<APIResult<CommandEntity.Data>, Error> { promise in
                 getTaskCommandsHandlerExpectation.fulfill()
-                let entity = APIResult<CommandEntity.Data>(time: 1, data: DomainTestsStub().commandFromTask, count: 1, paging: nil)
+                let entity: APIResult<CommandEntity.Data> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -977,6 +985,7 @@ class DataManageUseCaseTests: XCTestCase {
         let getTaskCommandsHandlerExpectation = expectation(description: "Get Task image handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.getTokensHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
@@ -1002,7 +1011,7 @@ class DataManageUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -1032,7 +1041,7 @@ class DataManageUseCaseTests: XCTestCase {
         taskAPI.getCommandsHandler = { token, taskId in
             return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
                 getTaskCommandsHandlerExpectation.fulfill()
-                let entity = APIResult<[CommandEntity.Data]>(time: 1, data: DomainTestsStub().commandsFromTask, count: 2, paging: nil)
+                let entity: APIResult<[CommandEntity.Data]> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -1091,6 +1100,7 @@ class DataManageUseCaseTests: XCTestCase {
         let getTaskCommandsHandlerExpectation = expectation(description: "Get Task commands handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.getTokensHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
@@ -1116,7 +1126,7 @@ class DataManageUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -1204,6 +1214,7 @@ class DataManageUseCaseTests: XCTestCase {
         let getImageHandlerExpectation = expectation(description: "Get image handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.getTokensHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
@@ -1229,7 +1240,7 @@ class DataManageUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -1259,7 +1270,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.getRobotSwconfHandler = { token, id in
             return Future<APIResult<JobOrder_API.RobotAPIEntity.Swconf>, Error> { promise in
                 getRobotSwconfHandlerExpectation.fulfill()
-                let entity = APIResult<RobotAPIEntity.Swconf>(time: 1, data: DomainTestsStub().swconf, count: nil, paging: nil)
+                let entity: APIResult<RobotAPIEntity.Swconf> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -1267,7 +1278,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.getRobotAssetsHandler = { token, id in
             return Future<APIResult<[JobOrder_API.RobotAPIEntity.Asset]>, Error> { promise in
                 getRobotAssetsHandlerExpectation.fulfill()
-                let entity = APIResult<[RobotAPIEntity.Asset]>(time: 1, data: DomainTestsStub().assets, count: 1, paging: nil)
+                let entity: APIResult<[RobotAPIEntity.Asset]> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -1355,7 +1366,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.getRobotAssetsHandler = { token, id in
             return Future<APIResult<[JobOrder_API.RobotAPIEntity.Asset]>, Error> { promise in
                 getRobotAssetsHandlerExpectation.fulfill()
-                let entity = APIResult<[RobotAPIEntity.Asset]>(time: 1, data: DomainTestsStub().assets, count: 1, paging: nil)
+                let entity: APIResult<[RobotAPIEntity.Asset]> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -1391,7 +1402,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.getRobotSwconfHandler = { token, id in
             return Future<APIResult<JobOrder_API.RobotAPIEntity.Swconf>, Error> { promise in
                 getRobotSwconfHandlerExpectation.fulfill()
-                let entity = APIResult<RobotAPIEntity.Swconf>(time: 1, data: DomainTestsStub().swconf, count: nil, paging: nil)
+                let entity: APIResult<RobotAPIEntity.Swconf> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -1418,6 +1429,7 @@ class DataManageUseCaseTests: XCTestCase {
         let getRobotAssetsHandlerExpectation = expectation(description: "Get assets handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.getTokensHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
@@ -1450,7 +1462,7 @@ class DataManageUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -1466,6 +1478,7 @@ class DataManageUseCaseTests: XCTestCase {
         let getRobotAssetsHandlerExpectation = expectation(description: "Get assets handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.getTokensHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
@@ -1488,7 +1501,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.getRobotAssetsHandler = { token, id in
             return Future<APIResult<[JobOrder_API.RobotAPIEntity.Asset]>, Error> { promise in
                 getRobotAssetsHandlerExpectation.fulfill()
-                let entity = APIResult<[RobotAPIEntity.Asset]>(time: 1, data: DomainTestsStub().assets, count: 1, paging: nil)
+                let entity: APIResult<[RobotAPIEntity.Asset]> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -1499,7 +1512,7 @@ class DataManageUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -1515,6 +1528,7 @@ class DataManageUseCaseTests: XCTestCase {
         let getRobotAssetsHandlerExpectation = expectation(description: "Get assets handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.getTokensHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
@@ -1530,7 +1544,7 @@ class DataManageUseCaseTests: XCTestCase {
         robotAPI.getRobotSwconfHandler = { token, id in
             return Future<APIResult<JobOrder_API.RobotAPIEntity.Swconf>, Error> { promise in
                 getRobotSwconfHandlerExpectation.fulfill()
-                let entity = APIResult<RobotAPIEntity.Swconf>(time: 1, data: DomainTestsStub().swconf, count: nil, paging: nil)
+                let entity: APIResult<RobotAPIEntity.Swconf> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -1548,7 +1562,7 @@ class DataManageUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -1579,7 +1593,7 @@ class DataManageUseCaseTests: XCTestCase {
         jobAPI.getTasksHandler = { token, id, paging in
             return Future<APIResult<[TaskAPIEntity.Data]>, Error> { promise in
                 getTasksFromJobHandlerExpectation.fulfill()
-                let entity = APIResult<[TaskAPIEntity.Data]>(time: 1, data: DomainTestsStub().tasksFromJob, count: 1, paging: nil)
+                let entity: APIResult<[TaskAPIEntity.Data]> = APIResult.arbitrary.generate
                 promise(.success(entity))
                 XCTAssertEqual(paging, APIPaging.Input(page: 1, size: 10))
             }.eraseToAnyPublisher()
@@ -1639,6 +1653,7 @@ class DataManageUseCaseTests: XCTestCase {
         let getTasksFromJobHandlerExpectation = expectation(description: "Get Tasks from job handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.getTokensHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
@@ -1664,7 +1679,7 @@ class DataManageUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -1693,7 +1708,7 @@ class DataManageUseCaseTests: XCTestCase {
         taskAPI.postTaskHandler = {token, task  in
             return Future<APIResult<TaskAPIEntity.Data>, Error> { promise in
                 postTaskHandlerExpectation.fulfill()
-                let entity = APIResult<TaskAPIEntity.Data>(time: 1, data: DomainTestsStub().task, count: 1, paging: nil)
+                let entity: APIResult<TaskAPIEntity.Data> = APIResult.arbitrary.generate
                 promise(.success(entity))
             }.eraseToAnyPublisher()
         }
@@ -1752,6 +1767,7 @@ class DataManageUseCaseTests: XCTestCase {
         let postTaskHandlerExpectation = expectation(description: "Post task handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.getTokensHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
@@ -1777,7 +1793,7 @@ class DataManageUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -1787,14 +1803,15 @@ class DataManageUseCaseTests: XCTestCase {
     }
 
     func test_saveData() {
-        let jobsResult = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1, paging: nil)
-        let robotsResult = APIResult<[RobotAPIEntity.Data]>(time: 1, data: DomainTestsStub().robots, count: 1, paging: nil)
-        let actionLibrariesResult = APIResult<[ActionLibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().actionLibraries, count: 1, paging: nil)
-        let aiLibrariesResult = APIResult<[AILibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().aiLibraries, count: 1, paging: nil)
-        job.timestamp = 0
-        robot.timestamp = 0
-        actionLibrary.timestamp = 0
-        aiLibrary.timestamp = 0
+        let timestamp = FakeFactory.shared.epochTimeGen.generate
+        let jobsResult: APIResult<[JobAPIEntity.Data]> = APIResult.arbitrary.suchThat({ $0.time > timestamp }).generate
+        let robotsResult: APIResult<[RobotAPIEntity.Data]> = APIResult.arbitrary.suchThat({ $0.time > timestamp }).generate
+        let actionLibrariesResult: APIResult<[ActionLibraryAPIEntity.Data]> = APIResult.arbitrary.suchThat({ $0.time > timestamp }).generate
+        let aiLibrariesResult: APIResult<[AILibraryAPIEntity.Data]> = APIResult.arbitrary.suchThat({ $0.time > timestamp }).generate
+        job.timestamp = timestamp
+        robot.timestamp = timestamp
+        actionLibrary.timestamp = timestamp
+        aiLibrary.timestamp = timestamp
 
         useCase.saveData(results: (jobsResult,
                                    robotsResult,
@@ -1804,7 +1821,7 @@ class DataManageUseCaseTests: XCTestCase {
         XCTAssertEqual(job.timestampSetCallCount, 2, "JobRepositoryのメソッドが呼ばれない")
         XCTAssertEqual(job.addCallCount, 1, "JobRepositoryのメソッドが呼ばれない")
         XCTAssertEqual(robot.timestampSetCallCount, 2, "RobotRepositoryのメソッドが呼ばれない")
-        XCTAssertEqual(robot.readCallCount, 1, "RobotRepositoryのメソッドが呼ばれない")
+        XCTAssertEqual(robot.readCallCount, robotsResult.count, "RobotRepositoryのメソッドが呼ばれない")
         XCTAssertEqual(robot.addCallCount, 1, "RobotRepositoryのメソッドが呼ばれない")
         XCTAssertEqual(actionLibrary.timestampSetCallCount, 2, "ActionLibraryRepositoryのメソッドが呼ばれない")
         XCTAssertEqual(actionLibrary.addCallCount, 1, "ActionLibraryRepositoryのメソッドが呼ばれない")
@@ -1813,14 +1830,15 @@ class DataManageUseCaseTests: XCTestCase {
     }
 
     func test_saveDataOldJobTimestamp() {
-        let jobsResult = APIResult<[JobAPIEntity.Data]>(time: 1, data: DomainTestsStub().jobs, count: 1, paging: nil)
-        let robotsResult = APIResult<[RobotAPIEntity.Data]>(time: 1, data: DomainTestsStub().robots, count: 1, paging: nil)
-        let actionLibrariesResult = APIResult<[ActionLibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().actionLibraries, count: 1, paging: nil)
-        let aiLibrariesResult = APIResult<[AILibraryAPIEntity.Data]>(time: 1, data: DomainTestsStub().aiLibraries, count: 1, paging: nil)
-        job.timestamp = 1
-        robot.timestamp = 1
-        actionLibrary.timestamp = 1
-        aiLibrary.timestamp = 1
+        let timestamp = FakeFactory.shared.epochTimeGen.generate
+        let jobsResult: APIResult<[JobAPIEntity.Data]> = APIResult.arbitrary.suchThat({ $0.time <= timestamp }).generate
+        let robotsResult: APIResult<[RobotAPIEntity.Data]> = APIResult.arbitrary.suchThat({ $0.time <= timestamp }).generate
+        let actionLibrariesResult: APIResult<[ActionLibraryAPIEntity.Data]> = APIResult.arbitrary.suchThat({ $0.time <= timestamp }).generate
+        let aiLibrariesResult: APIResult<[AILibraryAPIEntity.Data]> = APIResult.arbitrary.suchThat({ $0.time <= timestamp }).generate
+        job.timestamp = timestamp
+        robot.timestamp = timestamp
+        actionLibrary.timestamp = timestamp
+        aiLibrary.timestamp = timestamp
 
         useCase.saveData(results: (jobsResult,
                                    robotsResult,
@@ -1882,7 +1900,7 @@ class DataManageUseCaseTests: XCTestCase {
         taskAPI.getExecutionLogsHandler = { _, _, _, paging in
             return Future<APIResult<[ExecutionEntity.LogData]>, Error> { promise in
                 getExecutionsFromTaskHandlerExpectation.fulfill()
-                let entity = APIResult<[ExecutionEntity.LogData]>(time: 1, data: DomainTestsStub().executionLogsFromTask, count: 1, paging: nil)
+                let entity: APIResult<[ExecutionEntity.LogData]> = APIResult.arbitrary.generate
                 promise(.success(entity))
                 XCTAssertEqual(paging, APIPaging.Input(page: 1, size: 10))
             }.eraseToAnyPublisher()
@@ -1909,6 +1927,7 @@ class DataManageUseCaseTests: XCTestCase {
         let getExecutionsFromTaskHandlerExpectation = expectation(description: "Get Executions from task handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         auth.getTokensHandler = {
             return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
@@ -1934,7 +1953,7 @@ class DataManageUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in

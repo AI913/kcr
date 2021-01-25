@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6Mf-Bf-afd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6Mf-Bf-afd">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -54,7 +56,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="基本情報を入力" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6DM-Od-v3t" userLabel="Description Label">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                        <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="textColor" systemColor="secondaryLabelColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="w3x-fk-ynV">
@@ -63,12 +65,12 @@
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ジョブ名 *" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n2H-xe-Jgi" userLabel="Job Name Label">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="19.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="ジョブ1" borderStyle="roundedRect" placeholder="Enter name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="66c-b7-8sS" userLabel="Job Name Text Field">
                                                                 <rect key="frame" x="0.0" y="22.5" width="374" height="40"/>
-                                                                <color key="backgroundColor" systemColor="quaternarySystemFillColor" red="0.4549019608" green="0.4549019608" blue="0.50196078430000002" alpha="0.080000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="40" id="pjU-3u-x5k"/>
                                                                 </constraints>
@@ -87,16 +89,16 @@
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="備考" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IOt-z7-PpC" userLabel="Overview Label">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="19.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="GXa-L4-wbE" userLabel="Overview Text View">
                                                                 <rect key="frame" x="0.0" y="22.5" width="374" height="200"/>
-                                                                <color key="backgroundColor" systemColor="quaternarySystemFillColor" red="0.4549019608" green="0.4549019608" blue="0.50196078430000002" alpha="0.080000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="200" id="A2r-i8-ohv"/>
                                                                 </constraints>
-                                                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                 <userDefinedRuntimeAttributes>
@@ -107,7 +109,7 @@
                                                                         <integer key="value" value="1"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                     <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
-                                                                        <color key="value" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                        <color key="value" systemColor="labelColor"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                                 <connections>
@@ -119,7 +121,7 @@
                                                 </subviews>
                                             </stackView>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="59q-3q-tD5" firstAttribute="top" secondItem="Q9R-11-yzm" secondAttribute="top" constant="20" id="Aa4-Xr-U5R"/>
                                             <constraint firstItem="59q-3q-tD5" firstAttribute="leading" secondItem="Q9R-11-yzm" secondAttribute="leading" constant="20" id="bdD-sX-c1d"/>
@@ -128,19 +130,20 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <viewLayoutGuide key="safeArea" id="I41-OG-vzq"/>
                                 <constraints>
                                     <constraint firstItem="Q9R-11-yzm" firstAttribute="top" secondItem="MpI-BU-b6H" secondAttribute="top" id="Ozu-DX-Dq2"/>
                                     <constraint firstItem="Q9R-11-yzm" firstAttribute="bottom" secondItem="MpI-BU-b6H" secondAttribute="bottom" id="ZVb-NN-A4y"/>
                                     <constraint firstItem="Q9R-11-yzm" firstAttribute="leading" secondItem="MpI-BU-b6H" secondAttribute="leading" id="dSF-93-ST4"/>
                                     <constraint firstItem="Q9R-11-yzm" firstAttribute="trailing" secondItem="MpI-BU-b6H" secondAttribute="trailing" id="qfx-5X-XSW"/>
                                 </constraints>
-                                <viewLayoutGuide key="safeArea" id="I41-OG-vzq"/>
                                 <viewLayoutGuide key="contentLayoutGuide" id="2zg-Rt-Stm"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="Nks-Rd-Uk2"/>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BKp-7h-Qm9" userLabel="Next Button">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BKp-7h-Qm9" userLabel="Next Button">
                                 <rect key="frame" x="20" y="798" width="374" height="44"/>
-                                <color key="backgroundColor" systemColor="quaternarySystemFillColor" red="0.4549019608" green="0.4549019608" blue="0.50196078430000002" alpha="0.080000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
+                                <accessibility key="accessibilityConfiguration" identifier="next_button"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="IKV-Qh-vFo"/>
                                 </constraints>
@@ -157,8 +160,11 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <accessibility key="accessibilityConfiguration" identifier="jobentry_view"/>
+                        <viewLayoutGuide key="safeArea" id="qyA-uL-dBE"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <accessibility key="accessibilityConfiguration" identifier="jobentry_view">
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
                         <constraints>
                             <constraint firstItem="AiM-47-HXz" firstAttribute="top" secondItem="qyA-uL-dBE" secondAttribute="top" constant="10" id="HXC-8P-mZa"/>
                             <constraint firstItem="BKp-7h-Qm9" firstAttribute="top" secondItem="MpI-BU-b6H" secondAttribute="bottom" constant="10" id="IOl-PH-2I1"/>
@@ -172,12 +178,11 @@
                             <constraint firstItem="AiM-47-HXz" firstAttribute="leading" secondItem="qyA-uL-dBE" secondAttribute="leading" constant="20" id="srC-t4-iFh"/>
                             <constraint firstItem="qyA-uL-dBE" firstAttribute="trailing" secondItem="AiM-47-HXz" secondAttribute="trailing" constant="20" id="xpw-OI-TK6"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="qyA-uL-dBE"/>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="p2p-zk-1Yb">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="7ms-VY-vtb">
-                            <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" systemColor="systemRedColor"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="cancel_button"/>
                             </userDefinedRuntimeAttributes>
@@ -213,10 +218,10 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KNc-BU-ZoH" customClass="JobEntryStepView" customModule="JobOrder_Presentation" customModuleProvider="target">
                                 <rect key="frame" x="20" y="108" width="374" height="60"/>
+                                <viewLayoutGuide key="safeArea" id="a7Z-mZ-tfn"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="b2l-WU-tOQ"/>
                                 </constraints>
-                                <viewLayoutGuide key="safeArea" id="a7Z-mZ-tfn"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="stepValue">
                                         <integer key="value" value="3"/>
@@ -238,7 +243,7 @@
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ジョブ名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ql1-IE-Ich" userLabel="Job Name Label">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="19.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ジョブ1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="99m-b4-Jga" userLabel="Job Name Value Label">
@@ -248,7 +253,7 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z7c-Nr-1Qv">
                                                                 <rect key="frame" x="0.0" y="49.5" width="374" height="0.5"/>
-                                                                <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" systemColor="secondarySystemFillColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="0.5" id="1w6-4w-Hwe"/>
                                                                 </constraints>
@@ -261,7 +266,7 @@
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="アクションライブラリ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ru8-cH-gOV" userLabel="Robot Name Label">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="19.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pick And Place" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5MJ-69-T3T" userLabel="Robot Name Value Label">
@@ -271,7 +276,7 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s2h-jZ-8j9">
                                                                 <rect key="frame" x="0.0" y="49.5" width="374" height="0.5"/>
-                                                                <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" systemColor="secondarySystemFillColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="0.5" id="4xO-Df-bdV"/>
                                                                 </constraints>
@@ -284,7 +289,7 @@
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ワークベンチ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iaH-cz-zDT" userLabel="Start Condition Label">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="19.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tray" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DBm-Op-edD" userLabel="Start Condition Value Label">
@@ -294,7 +299,7 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NBl-TA-KeY">
                                                                 <rect key="frame" x="0.0" y="49.5" width="374" height="0.5"/>
-                                                                <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" systemColor="secondarySystemFillColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="0.5" id="uMH-0F-ah8"/>
                                                                 </constraints>
@@ -307,7 +312,7 @@
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ワーク" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O7v-I3-Mcc" userLabel="Exit Condition Label">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="19.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="工業部品" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WFC-xa-hEB" userLabel="Exit Condition Value Label">
@@ -317,7 +322,7 @@
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aeA-eF-R4g">
                                                                 <rect key="frame" x="0.0" y="53.5" width="374" height="0.5"/>
-                                                                <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" systemColor="secondarySystemFillColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="0.5" id="hOW-WU-hYx"/>
                                                                 </constraints>
@@ -327,7 +332,7 @@
                                                 </subviews>
                                             </stackView>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="WNl-Sx-Ab7" secondAttribute="trailing" constant="20" id="7Hq-HQ-inm"/>
                                             <constraint firstItem="WNl-Sx-Ab7" firstAttribute="top" secondItem="1mp-dD-jPh" secondAttribute="top" constant="20" id="F6H-YF-dgh"/>
@@ -336,19 +341,20 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <viewLayoutGuide key="safeArea" id="Flv-Ev-8FS"/>
                                 <constraints>
                                     <constraint firstItem="1mp-dD-jPh" firstAttribute="bottom" secondItem="4TZ-9i-7Cv" secondAttribute="bottom" id="2Mw-ys-pPS"/>
                                     <constraint firstItem="1mp-dD-jPh" firstAttribute="top" secondItem="4TZ-9i-7Cv" secondAttribute="top" id="RDE-LW-Lgf"/>
                                     <constraint firstItem="1mp-dD-jPh" firstAttribute="trailing" secondItem="4TZ-9i-7Cv" secondAttribute="trailing" id="gg5-s3-yh3"/>
                                     <constraint firstItem="1mp-dD-jPh" firstAttribute="leading" secondItem="4TZ-9i-7Cv" secondAttribute="leading" id="kdO-hC-KNc"/>
                                 </constraints>
-                                <viewLayoutGuide key="safeArea" id="Flv-Ev-8FS"/>
                                 <viewLayoutGuide key="contentLayoutGuide" id="lGw-7A-5Eb"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="cxT-ox-jkN"/>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O5o-4g-MUk" userLabel="Send Button">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O5o-4g-MUk" userLabel="Send Button">
                                 <rect key="frame" x="20" y="749" width="374" height="44"/>
-                                <color key="backgroundColor" systemColor="quaternarySystemFillColor" red="0.4549019608" green="0.4549019608" blue="0.50196078430000002" alpha="0.080000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
+                                <accessibility key="accessibilityConfiguration" identifier="create_button"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="n4N-Iy-7lL"/>
                                 </constraints>
@@ -364,7 +370,11 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="RgX-x2-bzm"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <accessibility key="accessibilityConfiguration" identifier="confirm_view">
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
                         <constraints>
                             <constraint firstItem="1mp-dD-jPh" firstAttribute="width" secondItem="RgX-x2-bzm" secondAttribute="width" id="7VE-I1-ZyK"/>
                             <constraint firstItem="RgX-x2-bzm" firstAttribute="trailing" secondItem="O5o-4g-MUk" secondAttribute="trailing" constant="20" id="7d6-s9-dtH"/>
@@ -378,7 +388,6 @@
                             <constraint firstItem="4TZ-9i-7Cv" firstAttribute="leading" secondItem="RgX-x2-bzm" secondAttribute="leading" id="qry-20-vRD"/>
                             <constraint firstItem="O5o-4g-MUk" firstAttribute="leading" secondItem="RgX-x2-bzm" secondAttribute="leading" constant="20" id="xhv-3f-PZp"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="RgX-x2-bzm"/>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Confirm" id="NYN-tF-KJt" customClass="Confirm"/>
@@ -416,13 +425,13 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Y1o-Vo-8TR"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="k46-Pp-mNi" firstAttribute="top" secondItem="Y1o-Vo-8TR" secondAttribute="top" constant="20" id="J1A-QL-D85"/>
                             <constraint firstItem="Y1o-Vo-8TR" firstAttribute="trailing" secondItem="k46-Pp-mNi" secondAttribute="trailing" constant="20" id="LL3-Zc-myU"/>
                             <constraint firstItem="k46-Pp-mNi" firstAttribute="leading" secondItem="Y1o-Vo-8TR" secondAttribute="leading" constant="20" id="e0o-B8-Pg6"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Y1o-Vo-8TR"/>
                     </view>
                     <navigationItem key="navigationItem" id="TzJ-Ei-OqM"/>
                     <connections>
@@ -434,4 +443,24 @@
             <point key="canvasLocation" x="2493" y="55"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="quaternarySystemFillColor">
+            <color red="0.45490196078431372" green="0.45490196078431372" blue="0.50196078431372548" alpha="0.080000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemFillColor">
+            <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

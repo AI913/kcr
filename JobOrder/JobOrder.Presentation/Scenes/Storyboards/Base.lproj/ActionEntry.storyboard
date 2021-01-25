@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fqQ-cv-eqH">
-    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fqQ-cv-eqH">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -15,7 +15,7 @@
             <objects>
                 <navigationController id="fqQ-cv-eqH" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BrQ-h8-4Ms">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -31,11 +31,11 @@
             <objects>
                 <viewController id="2Ly-Nr-B0v" customClass="ActionEntryActionLibrarySelectionViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hEl-th-VBb">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a3M-5z-rRq" userLabel="Action Entry Step View" customClass="ActionEntryStepView" customModule="JobOrder_Presentation" customModuleProvider="target">
-                                <rect key="frame" x="20" y="60" width="728" height="60"/>
+                                <rect key="frame" x="20" y="98" width="374" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="BT2-4a-dgn"/>
                                 </constraints>
@@ -46,13 +46,13 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="使用するアクションライブラリを選択してください" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yTY-qm-fXC">
-                                <rect key="frame" x="20" y="140" width="728" height="20.5"/>
+                                <rect key="frame" x="20" y="178" width="374" height="41"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4ML-MO-jxX">
-                                <rect key="frame" x="20" y="180.5" width="728" height="759.5"/>
+                                <rect key="frame" x="20" y="239" width="374" height="539"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="oOV-7L-ldJ">
                                     <size key="itemSize" width="143" height="213"/>
@@ -139,8 +139,9 @@
                                 </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iWJ-vb-QTi">
-                                <rect key="frame" x="20" y="960" width="728" height="44"/>
+                                <rect key="frame" x="20" y="798" width="374" height="44"/>
                                 <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
+                                <accessibility key="accessibilityConfiguration" identifier="next_button"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="ms3-Mv-vKn"/>
                                 </constraints>
@@ -158,6 +159,9 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="SeI-wJ-ObP"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <accessibility key="accessibilityConfiguration" identifier="actionentry_actionlibrary_view">
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
                         <constraints>
                             <constraint firstItem="SeI-wJ-ObP" firstAttribute="trailing" secondItem="yTY-qm-fXC" secondAttribute="trailing" constant="20" id="437-FW-WVl"/>
                             <constraint firstItem="yTY-qm-fXC" firstAttribute="leading" secondItem="SeI-wJ-ObP" secondAttribute="leading" constant="20" id="HjQ-a5-v4C"/>
@@ -177,6 +181,9 @@
                     <navigationItem key="navigationItem" id="sY4-Yl-wzw">
                         <barButtonItem key="leftBarButtonItem" title="キャンセル" id="qI5-8s-urd">
                             <color key="tintColor" systemColor="systemRedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="cancel_button"/>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="selectorCancelBarButtonItem:" destination="2Ly-Nr-B0v" id="FRR-Cw-9Uo"/>
                             </connections>
@@ -198,11 +205,11 @@
             <objects>
                 <viewController id="wDh-BL-Rur" customClass="WorkBenchEntryViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Djv-7O-1CX">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QfL-Wk-tAN" userLabel="Action Entry Step View" customClass="ActionEntryStepView" customModule="JobOrder_Presentation" customModuleProvider="target">
-                                <rect key="frame" x="20" y="60" width="728" height="60"/>
+                                <rect key="frame" x="20" y="98" width="374" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="Po1-gF-KUp"/>
                                 </constraints>
@@ -213,7 +220,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ワークベンチライブラリを選択します" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6o5-gH-Zh0">
-                                <rect key="frame" x="20" y="130" width="728" height="20"/>
+                                <rect key="frame" x="20" y="168" width="374" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="G1W-ex-gWi"/>
                                 </constraints>
@@ -222,25 +229,25 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jS9-Fw-0fx" userLabel="Container View">
-                                <rect key="frame" x="0.0" y="155" width="768" height="800"/>
+                                <rect key="frame" x="0.0" y="193" width="414" height="600"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="SWG-S8-Cgl">
-                                        <rect key="frame" x="20" y="10" width="728" height="780"/>
+                                        <rect key="frame" x="20" y="10" width="374" height="580"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eBb-bi-4YO" customClass="SelectableView" customModule="JobOrder_Presentation" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="728" height="44"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="kat-Pd-xg3">
-                                                        <rect key="frame" x="20" y="5" width="688" height="34"/>
+                                                        <rect key="frame" x="20" y="5" width="334" height="34"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ライブラリ: Tray" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OcT-mZ-4gH" userLabel="Library Label">
-                                                                <rect key="frame" x="0.0" y="6.5" width="672" height="21.5"/>
+                                                                <rect key="frame" x="0.0" y="6.5" width="318" height="21.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="a0J-bj-HuP" userLabel="Sign Image">
-                                                                <rect key="frame" x="672" y="11" width="16" height="12.5"/>
+                                                                <rect key="frame" x="318" y="11" width="16" height="12.5"/>
                                                                 <color key="tintColor" systemColor="secondaryLabelColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="16" id="OL7-jH-tdv"/>
@@ -250,7 +257,8 @@
                                                         </subviews>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CeJ-AE-TJr">
-                                                        <rect key="frame" x="0.0" y="0.0" width="728" height="44"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="library_button"/>
                                                         <connections>
                                                             <segue destination="kdy-M2-UWK" kind="show" identifier="toWorkbenchLibrarySelection" id="sb6-Aq-VBl"/>
                                                         </connections>
@@ -275,10 +283,10 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tq2-C2-UAB">
-                                                <rect key="frame" x="0.0" y="49" width="728" height="561"/>
+                                                <rect key="frame" x="0.0" y="49" width="374" height="361"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Thh-l1-4K2" userLabel="Workbench Image">
-                                                        <rect key="frame" x="20" y="20" width="688" height="521"/>
+                                                        <rect key="frame" x="20" y="20" width="334" height="321"/>
                                                         <color key="backgroundColor" systemColor="secondarySystemFillColor"/>
                                                     </imageView>
                                                 </subviews>
@@ -291,7 +299,7 @@
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="移動元のワークベンチを選択します" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hBT-dn-teD">
-                                                <rect key="frame" x="0.0" y="615" width="728" height="20"/>
+                                                <rect key="frame" x="0.0" y="415" width="374" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="VTo-Iu-gi9"/>
                                                 </constraints>
@@ -300,20 +308,20 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="E8Y-nv-OnV">
-                                                <rect key="frame" x="0.0" y="640" width="728" height="140"/>
+                                                <rect key="frame" x="0.0" y="440" width="374" height="140"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="140" id="L6t-Vw-hci"/>
                                                 </constraints>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="WorkBenchEntryTableViewCell" id="J8k-lZ-uNx" customClass="WorkBenchEntryTableViewCell" customModule="JobOrder_Presentation" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="28" width="728" height="21"/>
+                                                        <rect key="frame" x="0.0" y="28" width="374" height="21"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="J8k-lZ-uNx" id="KXw-gd-IML">
-                                                            <rect key="frame" x="0.0" y="0.0" width="728" height="21"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="21"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="qUo-Ml-IYp">
-                                                                    <rect key="frame" x="20" y="0.0" width="708" height="21"/>
+                                                                    <rect key="frame" x="20" y="0.0" width="354" height="21"/>
                                                                     <subviews>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="lRw-ck-0Rq">
                                                                             <rect key="frame" x="0.0" y="0.5" width="20" height="20"/>
@@ -323,7 +331,7 @@
                                                                             </constraints>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LJ0-5o-ji5">
-                                                                            <rect key="frame" x="30" y="0.0" width="678" height="21"/>
+                                                                            <rect key="frame" x="30" y="0.0" width="324" height="21"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -361,11 +369,12 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="S0T-7b-I2W">
-                                <rect key="frame" x="20" y="960" width="728" height="44"/>
+                                <rect key="frame" x="20" y="798" width="374" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7XW-25-Xij">
-                                        <rect key="frame" x="0.0" y="0.0" width="728" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
                                         <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="next_button"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="FEb-aC-9FX"/>
                                         </constraints>
@@ -385,6 +394,9 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="AN7-rM-qBJ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <accessibility key="accessibilityConfiguration" identifier="workbench_entry_view">
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
                         <constraints>
                             <constraint firstItem="jS9-Fw-0fx" firstAttribute="top" secondItem="6o5-gH-Zh0" secondAttribute="bottom" constant="5" id="2Oy-oA-HaY"/>
                             <constraint firstItem="AN7-rM-qBJ" firstAttribute="bottom" secondItem="S0T-7b-I2W" secondAttribute="bottom" constant="20" id="3Xn-8G-YNc"/>
@@ -402,7 +414,11 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="XYG-ge-cnA"/>
+                    <navigationItem key="navigationItem" id="XYG-ge-cnA">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="back_button"/>
+                        </userDefinedRuntimeAttributes>
+                    </navigationItem>
                     <connections>
                         <outlet property="bottomButton" destination="7XW-25-Xij" id="UIk-Fb-T3u"/>
                         <outlet property="previewImageView" destination="Thh-l1-4K2" id="DL8-Zl-hh5"/>
@@ -422,11 +438,11 @@
             <objects>
                 <viewController id="kdy-M2-UWK" customClass="WorkbenchLibrarySelectionViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dQV-OJ-gH5">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Rw-G0-jJx" userLabel="Action Entry Step View" customClass="ActionEntryStepView" customModule="JobOrder_Presentation" customModuleProvider="target">
-                                <rect key="frame" x="20" y="70" width="728" height="60"/>
+                                <rect key="frame" x="20" y="108" width="374" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="wGI-Nc-PKP"/>
                                 </constraints>
@@ -437,13 +453,13 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="使用するワークベンチライブラリを選択してください" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCN-9e-LtN">
-                                <rect key="frame" x="20" y="150" width="728" height="20.5"/>
+                                <rect key="frame" x="20" y="188" width="374" height="41"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="paJ-Cu-5Ad" userLabel="Workbench Library Collection">
-                                <rect key="frame" x="20" y="190.5" width="728" height="749.5"/>
+                                <rect key="frame" x="20" y="249" width="374" height="529"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="H4Z-uM-r8V">
                                     <size key="itemSize" width="50" height="50"/>
@@ -531,10 +547,10 @@
                                 </connections>
                             </collectionView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="k97-2p-RQf">
-                                <rect key="frame" x="20" y="960" width="728" height="44"/>
+                                <rect key="frame" x="20" y="798" width="374" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aoe-vk-YJd">
-                                        <rect key="frame" x="0.0" y="0.0" width="728" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
                                         <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="drb-88-sL3"/>
@@ -556,6 +572,9 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ADz-Sr-dZN"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <accessibility key="accessibilityConfiguration" identifier="workbench_library_selection_view">
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
                         <constraints>
                             <constraint firstItem="paJ-Cu-5Ad" firstAttribute="top" secondItem="BCN-9e-LtN" secondAttribute="bottom" constant="20" id="5pq-Ru-8Sr"/>
                             <constraint firstItem="BCN-9e-LtN" firstAttribute="leading" secondItem="ADz-Sr-dZN" secondAttribute="leading" constant="20" id="Ep2-GA-qh8"/>
@@ -588,11 +607,11 @@
             <objects>
                 <viewController id="cCL-YX-aTN" customClass="WorkObjectLibrarySelectionViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kH9-uA-5fW">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="coQ-yP-IIM" userLabel="Action Entry Step View" customClass="ActionEntryStepView" customModule="JobOrder_Presentation" customModuleProvider="target">
-                                <rect key="frame" x="20" y="70" width="728" height="60"/>
+                                <rect key="frame" x="20" y="108" width="374" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="kgX-7m-qFe"/>
                                 </constraints>
@@ -603,13 +622,13 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ワークを認識するためのライブラリを選択してください" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jng-g1-toZ">
-                                <rect key="frame" x="20" y="150" width="728" height="20.5"/>
+                                <rect key="frame" x="20" y="188" width="374" height="41"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0TO-YE-E5Z" userLabel="Work Object Library Collection">
-                                <rect key="frame" x="20" y="190.5" width="728" height="749.5"/>
+                                <rect key="frame" x="20" y="249" width="374" height="529"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="6TG-U3-2oi">
                                     <size key="itemSize" width="50" height="50"/>
@@ -709,17 +728,21 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="workobject_collection"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="dataSource" destination="cCL-YX-aTN" id="oAK-fP-VcE"/>
                                     <outlet property="delegate" destination="cCL-YX-aTN" id="sUh-nJ-VKe"/>
                                 </connections>
                             </collectionView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="UPV-EU-JS7">
-                                <rect key="frame" x="20" y="960" width="728" height="44"/>
+                                <rect key="frame" x="20" y="798" width="374" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NX7-bM-Nrh">
-                                        <rect key="frame" x="0.0" y="0.0" width="728" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
                                         <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="next_button"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="Qet-um-Nn9"/>
                                         </constraints>
@@ -740,6 +763,9 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="dZg-i9-9mn"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <accessibility key="accessibilityConfiguration" identifier="workobject_library_selection_view">
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
                         <constraints>
                             <constraint firstItem="dZg-i9-9mn" firstAttribute="trailing" secondItem="UPV-EU-JS7" secondAttribute="trailing" constant="20" id="3Wk-Ap-WnD"/>
                             <constraint firstItem="Jng-g1-toZ" firstAttribute="leading" secondItem="kH9-uA-5fW" secondAttribute="leading" constant="20" id="7bC-Ml-rYK"/>
@@ -775,11 +801,11 @@
             <objects>
                 <viewController id="vxD-yC-YqR" customClass="WorkBenchSelectionViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Yqu-78-iW9">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9hB-5g-V0q" userLabel="Action Entry Step View" customClass="ActionEntryStepView" customModule="JobOrder_Presentation" customModuleProvider="target">
-                                <rect key="frame" x="20" y="70" width="728" height="60"/>
+                                <rect key="frame" x="20" y="108" width="374" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="J58-ga-Mpr"/>
                                 </constraints>
@@ -790,7 +816,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="移動先のワークベンチを選択してください" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CAU-2h-ICj">
-                                <rect key="frame" x="20" y="150" width="728" height="20.5"/>
+                                <rect key="frame" x="20" y="188" width="374" height="20.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20.5" id="aPx-o9-edN"/>
                                 </constraints>
@@ -799,28 +825,28 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wby-IT-xOL">
-                                <rect key="frame" x="20" y="190.5" width="728" height="579.5"/>
+                                <rect key="frame" x="20" y="228.5" width="374" height="379.5"/>
                                 <color key="backgroundColor" systemColor="secondarySystemFillColor"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="b7P-rc-gu7">
-                                <rect key="frame" x="20" y="790" width="728" height="150"/>
+                                <rect key="frame" x="20" y="628" width="374" height="150"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="Kfp-Da-c00"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WorkBenchSelectionTableViewCell" id="T3H-DH-xO7" customClass="WorkBenchSelectionTableViewCell" customModule="JobOrder_Presentation" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="728" height="30.5"/>
+                                        <rect key="frame" x="0.0" y="28" width="374" height="30.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="T3H-DH-xO7" id="MaA-7v-5e2">
-                                            <rect key="frame" x="0.0" y="0.0" width="728" height="30.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="30.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ve0-OI-iSc">
-                                                    <rect key="frame" x="20" y="5" width="688" height="20.5"/>
+                                                    <rect key="frame" x="20" y="5" width="334" height="20.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bda-r5-hcu">
-                                                            <rect key="frame" x="0.0" y="0.0" width="688" height="20.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="334" height="20.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="tzd-Ez-bbj"/>
                                                             </constraints>
@@ -851,6 +877,9 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="21M-8o-O6v"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <accessibility key="accessibilityConfiguration" identifier="workbench_selection_view">
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
                         <constraints>
                             <constraint firstItem="21M-8o-O6v" firstAttribute="trailing" secondItem="9hB-5g-V0q" secondAttribute="trailing" constant="20" id="0Gd-Ti-jDE"/>
                             <constraint firstItem="21M-8o-O6v" firstAttribute="trailing" secondItem="CAU-2h-ICj" secondAttribute="trailing" constant="20" id="35s-cA-e60"/>
@@ -886,7 +915,7 @@
                 <navigationController id="GvD-7E-IkV" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="baT-rw-hfo"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DEq-yM-oNR">
-                        <rect key="frame" x="0.0" y="0.0" width="704" height="56"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -902,7 +931,7 @@
             <objects>
                 <viewController id="aSF-uI-a4s" customClass="WorkObjectLibraryTestViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Xd0-0H-G1l">
-                        <rect key="frame" x="0.0" y="0.0" width="704" height="984"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="工業部品" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pyp-nz-Umz">
@@ -915,15 +944,16 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nx6-aL-ZoU">
-                                <rect key="frame" x="20" y="116" width="664" height="614"/>
+                                <rect key="frame" x="20" y="116" width="374" height="438"/>
                                 <color key="backgroundColor" systemColor="secondarySystemFillColor"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Oc9-nw-zlR">
-                                <rect key="frame" x="20" y="920" width="664" height="44"/>
+                                <rect key="frame" x="20" y="744" width="374" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vau-QR-tu0">
-                                        <rect key="frame" x="0.0" y="0.0" width="664" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
                                         <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="recapture_button"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="LLR-4A-DHN"/>
                                         </constraints>
@@ -944,30 +974,30 @@
                                 </constraints>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="N0A-GL-JqN">
-                                <rect key="frame" x="20" y="750" width="664" height="150"/>
+                                <rect key="frame" x="20" y="574" width="374" height="150"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="izE-XE-wKO"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="WorkObjectLibraryTestTableViewCell" rowHeight="60" id="Pnz-nc-Cxl" customClass="WorkObjectLibraryTestTableViewCell" customModule="JobOrder_Presentation" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="664" height="60"/>
+                                        <rect key="frame" x="0.0" y="28" width="374" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Pnz-nc-Cxl" id="WlT-Yj-k0D">
-                                            <rect key="frame" x="0.0" y="0.0" width="664" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="bVm-Mx-OYu">
-                                                    <rect key="frame" x="20" y="5" width="624" height="50"/>
+                                                    <rect key="frame" x="20" y="5" width="334" height="50"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5UB-Ol-ebw">
-                                                            <rect key="frame" x="0.0" y="0.0" width="624" height="23.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="334" height="23.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ErA-kE-S9o">
-                                                            <rect key="frame" x="0.0" y="28.5" width="624" height="21.5"/>
+                                                            <rect key="frame" x="0.0" y="28.5" width="334" height="21.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" systemColor="secondaryLabelColor"/>
                                                             <nil key="highlightedColor"/>
@@ -996,6 +1026,9 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ZSY-LV-VNq"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <accessibility key="accessibilityConfiguration" identifier="workpiece_recognition_view">
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
                         <constraints>
                             <constraint firstItem="pyp-nz-Umz" firstAttribute="leading" secondItem="ZSY-LV-VNq" secondAttribute="leading" constant="20" id="8Uz-mQ-Hoe"/>
                             <constraint firstItem="nx6-aL-ZoU" firstAttribute="top" secondItem="pyp-nz-Umz" secondAttribute="bottom" constant="20" id="DaO-uY-aD1"/>
@@ -1015,6 +1048,9 @@
                     <navigationItem key="navigationItem" title="ワークの認識テスト結果" id="un2-Kt-dqc">
                         <barButtonItem key="leftBarButtonItem" title="閉じる" id="wap-it-Qcx">
                             <color key="tintColor" systemColor="systemBlueColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="cancel_button"/>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="selectorCancelBarButtonItem:" destination="cCL-YX-aTN" id="wwe-41-SHL"/>
                                 <segue destination="s3D-ak-wd0" kind="unwind" identifier="unwindToWorkObjectLibrarySelection" unwindAction="returnActionForSegue:" id="Y3S-Ks-cS1"/>
@@ -1037,11 +1073,11 @@
             <objects>
                 <viewController id="IhP-36-Stn" customClass="WorkObjectSelectionViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uDW-qR-oxF">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ic7-mU-hOE" userLabel="Action Entry Step View" customClass="ActionEntryStepView" customModule="JobOrder_Presentation" customModuleProvider="target">
-                                <rect key="frame" x="20" y="70" width="728" height="60"/>
+                                <rect key="frame" x="20" y="108" width="374" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="0Bj-AJ-O4Y"/>
                                 </constraints>
@@ -1052,7 +1088,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="移動するワークを選択してください" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bGx-Ib-agK">
-                                <rect key="frame" x="20" y="150" width="728" height="20.5"/>
+                                <rect key="frame" x="20" y="188" width="374" height="20.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20.5" id="AkH-gw-07a"/>
                                 </constraints>
@@ -1061,34 +1097,34 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3Ij-Gy-Pw2">
-                                <rect key="frame" x="20" y="190.5" width="728" height="549.5"/>
+                                <rect key="frame" x="20" y="228.5" width="374" height="349.5"/>
                                 <color key="backgroundColor" systemColor="secondarySystemFillColor"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tlB-cc-A2f">
-                                <rect key="frame" x="20" y="760" width="728" height="180"/>
+                                <rect key="frame" x="20" y="598" width="374" height="180"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="180" id="sQo-hs-KBF"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WorkObjectSelectionTableViewCell" rowHeight="60" id="hyf-kr-CB8" customClass="WorkObjectSelectionTableViewCell" customModule="JobOrder_Presentation" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="728" height="60"/>
+                                        <rect key="frame" x="0.0" y="28" width="374" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hyf-kr-CB8" id="5Pl-OW-qTp">
-                                            <rect key="frame" x="0.0" y="0.0" width="728" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="a5l-IT-edB">
-                                                    <rect key="frame" x="36" y="11" width="696" height="38"/>
+                                                    <rect key="frame" x="40" y="11" width="334" height="38"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwO-LE-FQJ">
-                                                            <rect key="frame" x="0.0" y="0.0" width="696" height="18"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="334" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4XH-pX-bmt">
-                                                            <rect key="frame" x="0.0" y="23" width="696" height="15"/>
+                                                            <rect key="frame" x="0.0" y="23" width="334" height="15"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" systemColor="secondaryLabelColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1115,11 +1151,12 @@
                                 </connections>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="hxT-xy-TNQ">
-                                <rect key="frame" x="20" y="960" width="728" height="44"/>
+                                <rect key="frame" x="20" y="798" width="374" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S7Z-I6-EOw">
-                                        <rect key="frame" x="0.0" y="0.0" width="728" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
                                         <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="done_button"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="vOf-N3-Qil"/>
                                         </constraints>
@@ -1139,6 +1176,9 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="WPb-uQ-KwS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <accessibility key="accessibilityConfiguration" identifier="workobject_selection_view">
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
                         <constraints>
                             <constraint firstItem="bGx-Ib-agK" firstAttribute="leading" secondItem="WPb-uQ-KwS" secondAttribute="leading" constant="20" id="5iL-Ny-SXM"/>
                             <constraint firstItem="WPb-uQ-KwS" firstAttribute="trailing" secondItem="ic7-mU-hOE" secondAttribute="trailing" constant="20" id="8ep-dv-QR1"/>

@@ -158,6 +158,7 @@ class MQTTUseCaseTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         mqtt.connectWithSetupHandler = {
             return Future<JobOrder_API.MQTTEntity.Output.ConnectWithSetup, Error> { promise in
@@ -172,7 +173,7 @@ class MQTTUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in
@@ -258,6 +259,7 @@ class MQTTUseCaseTests: XCTestCase {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
         let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
 
         mqtt.disconnectWithCleanUpHandler = {
             return Future<JobOrder_API.MQTTEntity.Output.DisconnectWithCleanup, Error> { promise in
@@ -272,7 +274,7 @@ class MQTTUseCaseTests: XCTestCase {
                 case .finished:
                     XCTFail("値を取得できてはいけない")
                 case .failure(let e):
-                    XCTAssertEqual(error, e as NSError, "正しい値が取得できていない: \(e)")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                 }
                 completionExpectation.fulfill()
             }, receiveValue: { _ in

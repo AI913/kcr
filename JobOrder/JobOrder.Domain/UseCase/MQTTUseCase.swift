@@ -112,7 +112,7 @@ public class MQTTUseCase: MQTTUseCaseProtocol {
                     switch completion {
                     case .finished: break
                     case .failure(let error):
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     // Logger.debug(target: self, "\(response)")
@@ -136,7 +136,7 @@ public class MQTTUseCase: MQTTUseCaseProtocol {
                     switch completion {
                     case .finished: break
                     case .failure(let error):
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     // Logger.debug(target: self, "\(response)")
@@ -180,7 +180,7 @@ public class MQTTUseCase: MQTTUseCaseProtocol {
                     switch completion {
                     case .finished: break
                     case .failure(let error):
-                        promise(.failure(error))
+                        promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
                     // FIXME: responseの形式

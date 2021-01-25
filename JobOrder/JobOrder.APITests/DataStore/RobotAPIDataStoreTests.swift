@@ -23,20 +23,21 @@ class RobotAPIDataStoreTests: XCTestCase {
     func test_fetch() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
+        let robotsResult: APIResult<[RobotAPIEntity.Data]> = APIResult.arbitrary.generate
 
         mock.getHandler = { url, token, _ in
             return Future<APIResult<[RobotAPIEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
-                promise(.success(APITestsStub().robotsResult))
+                promise(.success(robotsResult))
             }.eraseToAnyPublisher()
         }
 
         fetch(
             [handlerExpectation, completionExpectation],
             onSuccess: { data in
-                XCTAssert(data == APITestsStub().robotsResult, "正しい値が取得できていない: \(data)")
+                XCTAssert(data == robotsResult, "正しい値が取得できていない: \(data)")
 
-                guard let resultData = APITestsStub().robotsResult.data else {
+                guard let resultData = robotsResult.data else {
                     XCTFail("読み込みエラー")
                     return
                 }
@@ -98,20 +99,21 @@ class RobotAPIDataStoreTests: XCTestCase {
     func test_getRobot() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
+        let robotResult: APIResult<RobotAPIEntity.Data> = APIResult.arbitrary.generate
 
         mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<RobotAPIEntity.Data>, Error> { promise in
                 handlerExpectation.fulfill()
-                promise(.success(APITestsStub().robotResult))
+                promise(.success(robotResult))
             }.eraseToAnyPublisher()
         }
 
         getRobot(
             [handlerExpectation, completionExpectation],
             onSuccess: { data in
-                XCTAssert(data == APITestsStub().robotResult, "正しい値が取得できていない: \(data)")
+                XCTAssert(data == robotResult, "正しい値が取得できていない: \(data)")
 
-                guard let data = data.data, let resultData = APITestsStub().robotResult.data else {
+                guard let data = data.data, let resultData = robotResult.data else {
                     XCTFail("読み込みエラー")
                     return
                 }
@@ -171,6 +173,7 @@ class RobotAPIDataStoreTests: XCTestCase {
     func test_getCommand() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
+        let commandsFromRobotResult: APIResult<[CommandEntity.Data]> = APIResult.arbitrary.generate
 
         let status: [String] = ["Unissued", "Queued", "Processing", "Suspended"]
         let paging: APIPaging.Input = APIPaging.Input(page: 5, size: 10)
@@ -187,7 +190,7 @@ class RobotAPIDataStoreTests: XCTestCase {
         mock.getResUrlHandler = { url, token, dataId, query in
             return Future<APIResult<[CommandEntity.Data]>, Error> { promise in
                 handlerExpectation.fulfill()
-                promise(.success(APITestsStub().commandsFromRobotResult))
+                promise(.success(commandsFromRobotResult))
                 if let query = query {
                     let canonicalizedQuery = self.canonicalized(queryitems: query)
                     let canonicalizedExpected = self.canonicalized(queryitems: expectedQuery)
@@ -200,9 +203,9 @@ class RobotAPIDataStoreTests: XCTestCase {
         getCommand(
             [handlerExpectation, completionExpectation],
             onSuccess: { data in
-                XCTAssert(data == APITestsStub().commandsFromRobotResult, "正しい値が取得できていない: \(data)")
+                XCTAssert(data == commandsFromRobotResult, "正しい値が取得できていない: \(data)")
 
-                guard let resultData = APITestsStub().commandsFromRobotResult.data else {
+                guard let resultData = commandsFromRobotResult.data else {
                     XCTFail("読み込みエラー")
                     return
                 }
@@ -333,28 +336,25 @@ class RobotAPIDataStoreTests: XCTestCase {
     func test_getSwconf() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
+        let swconfResult: APIResult<RobotAPIEntity.Swconf> = APIResult.arbitrary.generate
 
         mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<RobotAPIEntity.Swconf>, Error> { promise in
                 handlerExpectation.fulfill()
-                promise(.success(APITestsStub().swconfResult))
+                promise(.success(swconfResult))
             }.eraseToAnyPublisher()
         }
         getSwconf(
             [handlerExpectation, completionExpectation],
             onSuccess: { data in
-                XCTAssert(data == APITestsStub().swconfResult, "正しい値が取得できていない: \(data)")
+                XCTAssert(data == swconfResult, "正しい値が取得できていない: \(data)")
 
-                guard let resultData = APITestsStub().swconfResult.data else {
+                guard let expected = swconfResult.data, let actual = data.data else {
                     XCTFail("読み込みエラー")
                     return
                 }
 
-                guard let actualData = data.data else {
-                    XCTFail("読み込みエラー")
-                    return
-                }
-                XCTAssert(resultData == actualData, "正しい値が取得できていない: \(resultData)")
+                XCTAssertEqual(actual, expected, "正しい値が取得できていない: \(actual)")
             },
             onError: { error in
                 XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
@@ -409,26 +409,25 @@ class RobotAPIDataStoreTests: XCTestCase {
     func test_getAssets() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")
+        let assetsResult: APIResult<[RobotAPIEntity.Asset]> = APIResult.arbitrary.generate
 
         mock.getResUrlHandler = { url, token, dataId, _ in
             return Future<APIResult<[RobotAPIEntity.Asset]>, Error> { promise in
                 handlerExpectation.fulfill()
-                promise(.success(APITestsStub().assetsResult))
+                promise(.success(assetsResult))
             }.eraseToAnyPublisher()
         }
         getAssets(
             [handlerExpectation, completionExpectation],
             onSuccess: { data in
-                XCTAssert(data == APITestsStub().assetsResult, "正しい値が取得できていない: \(data)")
+                XCTAssert(data == assetsResult, "正しい値が取得できていない: \(data)")
 
-                guard let resultData = APITestsStub().assetsResult.data else {
+                guard let expected = assetsResult.data, let actual = data.data else {
                     XCTFail("読み込みエラー")
                     return
                 }
 
-                data.data?.enumerated().forEach {
-                    XCTAssert(resultData[$0.offset] == $0.element, "正しい値が取得できていない: \($0.offset)")
-                }
+                XCTAssertTrue(actual.elementsEqual(expected), "正しい値が取得できていない: \(actual)")
             },
             onError: { error in
                 XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
