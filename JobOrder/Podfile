@@ -51,26 +51,26 @@ abstract_target 'All' do
     data
   end
   
-  target 'JobOrder.PresentationTests' do
-    inherit! :search_paths
-    presentation
-  end
+#  target 'JobOrder.PresentationTests' do
+#    inherit! :search_paths
+#    presentation
+#  end
 
-  target 'JobOrder.DomainTests' do
-    inherit! :search_paths
-    domain
-  end
+#  target 'JobOrder.DomainTests' do
+#    inherit! :search_paths
+#    domain
+#  end
 
 #  target 'JobOrder.DataTests' do
 #    inherit! :search_paths
 #    data
 #  end
 
-  target 'JobOrder.APITests' do
-    inherit! :search_paths
-    api
-    pod 'Mockingjay', '3.0.0-alpha.1'
-  end
+#  target 'JobOrder.APITests' do
+#    inherit! :search_paths
+#    api
+#    pod 'Mockingjay', '3.0.0-alpha.1'
+#  end
 
 #  target 'JobOrder.UtilityTests' do
 #    inherit! :search_paths
