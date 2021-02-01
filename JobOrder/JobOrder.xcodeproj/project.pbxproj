@@ -472,6 +472,8 @@
 		FC8F7FC725BEAAE200C5780A /* JobEntryGeneralInformationFormPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8F7FC625BEAAE200C5780A /* JobEntryGeneralInformationFormPresenter.swift */; };
 		FC8F7FD125BEAB7700C5780A /* JobEntryRobotSelectionRobotCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8F7FD025BEAB7700C5780A /* JobEntryRobotSelectionRobotCollectionViewCell.swift */; };
 		FCB06BF025C28610007AC492 /* JobEntryViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB06BEF25C28610007AC492 /* JobEntryViewData.swift */; };
+		FCB06C4B25C7808B007AC492 /* JobEntryCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB06C4A25C7808A007AC492 /* JobEntryCompleteViewController.swift */; };
+		FCB06C5525C7B8CF007AC492 /* JobEntryConfirmPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB06C5425C7B8CF007AC492 /* JobEntryConfirmPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1059,6 +1061,8 @@
 		FC8F7FC625BEAAE200C5780A /* JobEntryGeneralInformationFormPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryGeneralInformationFormPresenter.swift; sourceTree = "<group>"; };
 		FC8F7FD025BEAB7700C5780A /* JobEntryRobotSelectionRobotCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryRobotSelectionRobotCollectionViewCell.swift; sourceTree = "<group>"; };
 		FCB06BEF25C28610007AC492 /* JobEntryViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryViewData.swift; sourceTree = "<group>"; };
+		FCB06C4A25C7808A007AC492 /* JobEntryCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryCompleteViewController.swift; sourceTree = "<group>"; };
+		FCB06C5425C7B8CF007AC492 /* JobEntryConfirmPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryConfirmPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1860,6 +1864,7 @@
 				A3DCD5CD251AF15B004BC808 /* JobEntryStepView.swift */,
 				A3DCD5CE251AF15B004BC808 /* JobEntryStepView.xib */,
 				FC8F7FD025BEAB7700C5780A /* JobEntryRobotSelectionRobotCollectionViewCell.swift */,
+				FCB06C4A25C7808A007AC492 /* JobEntryCompleteViewController.swift */,
 			);
 			path = JobEntry;
 			sourceTree = "<group>";
@@ -2455,6 +2460,7 @@
 			isa = PBXGroup;
 			children = (
 				FC8F7FC625BEAAE200C5780A /* JobEntryGeneralInformationFormPresenter.swift */,
+				FCB06C5425C7B8CF007AC492 /* JobEntryConfirmPresenter.swift */,
 			);
 			path = JobEntry;
 			sourceTree = "<group>";
@@ -3613,6 +3619,7 @@
 				FC4B8508259318340063B617 /* String.swift in Sources */,
 				A3141F6E252191C200992F45 /* WorkObjectLibraryCollectionViewCell.swift in Sources */,
 				A32BCA822468E99F000287D2 /* TaskDetailTaskInformationViewController.swift in Sources */,
+				FCB06C4B25C7808B007AC492 /* JobEntryCompleteViewController.swift in Sources */,
 				B798D48A257F018500030FE0 /* TaskDetailRunHistoryPresenter.swift in Sources */,
 				A38C2AFB244FE4FA0089A70E /* RobotDetailWorkViewController.swift in Sources */,
 				A3148331242B49BF00AFADC1 /* MainBuilder.swift in Sources */,
@@ -3626,6 +3633,7 @@
 				D78EC1FE2411CB59003E5ECD /* PasswordAuthenticationViewController.swift in Sources */,
 				A305FA1024ADC8C400E99D3C /* DashboardViewController.swift in Sources */,
 				B7E60E6F25998FFC00479CF6 /* JobOrderError+CustomNSError.swift in Sources */,
+				FCB06C5525C7B8CF007AC492 /* JobEntryConfirmPresenter.swift in Sources */,
 				B76F39E92564B5AD000ECBDE /* JobDetailWorkTableViewCell.swift in Sources */,
 				A3171F362420C7E300612501 /* PasswordAuthenticationPresenter.swift in Sources */,
 				B7D029982558DE76007D65C8 /* RobotDetailSystemDetailTableViewCell.swift in Sources */,

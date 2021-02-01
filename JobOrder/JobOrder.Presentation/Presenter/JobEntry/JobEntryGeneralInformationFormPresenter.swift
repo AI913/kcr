@@ -15,12 +15,12 @@ import JobOrder_Utility
 /// JobEntryGeneralInformationFormPresenterProtocol
 /// @mockable
 protocol JobEntryGeneralInformationFormPresenterProtocol {
-    /// JobEntryのViewData
-    var data: JobEntryViewData { get }
+//    /// JobEntryのViewData
+//    var data: JobEntryViewData { get }
     /// リストの行数
     var numberOfItemsInSection: Int { get }
-    /// Continueボタンの有効無効
-    var isEnabledContinueButton: Bool { get }
+//    /// Continueボタンの有効無効
+//    var isEnabledContinueButton: Bool { get }
     /// Robotの表示名取得
     /// - Parameter index: 配列のIndex
     func displayName(_ index: Int) -> String?
@@ -29,10 +29,10 @@ protocol JobEntryGeneralInformationFormPresenterProtocol {
     func type(_ index: Int) -> String?
     /// セルの選択可否
     /// - Parameter indexPath: インデックスパス
-    func isSelected(indexPath: IndexPath) -> Bool
-    /// セルの選択
-    /// - Parameter indexPath: インデックスパス
-    func selectItem(indexPath: IndexPath)
+//    func isSelected(indexPath: IndexPath) -> Bool
+//    /// セルの選択
+//    /// - Parameter indexPath: インデックスパス
+//    func selectItem(indexPath: IndexPath)
     /// Continueボタンをタップ
     func tapContinueButton()
 }
@@ -47,8 +47,8 @@ class JobEntryGeneralInformationFormPresenter {
     private let dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol
     /// OrderEntryRobotSelectionViewControllerProtocol
     private let vc: JobEntryGeneralInformationFormViewControllerProtocol
-    /// OrderEntryのViewData
-    var data: MainViewData.Job
+//    /// OrderEntryのViewData
+//    var data: JobEntryViewData
     /// A type-erasing cancellable objects that executes a provided closure when canceled.
     private var cancellables: Set<AnyCancellable> = []
     /// リストに表示するRobotのデータ配列
@@ -65,12 +65,11 @@ class JobEntryGeneralInformationFormPresenter {
     ///   - viewData: OrderEntryViewData
     required init(useCase: JobOrder_Domain.DataManageUseCaseProtocol,
                   dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol,
-                  vc: JobEntryGeneralInformationFormViewControllerProtocol,
-                  viewData: MainViewData.Job) {
+                  vc: JobEntryGeneralInformationFormViewControllerProtocol) {
         self.useCase = useCase
         self.dataUseCase = dataUseCase
         self.vc = vc
-        self.data = viewData
+//        self.data = viewData
         observeRobots()
         cacheRobots(useCase.robots)
     }
@@ -84,10 +83,10 @@ extension JobEntryGeneralInformationFormPresenter: JobEntryGeneralInformationFor
         displayRobots?.count ?? 0
     }
 
-    /// Continueボタンの有効無効
-    var isEnabledContinueButton: Bool {
-        data.form.robotIds?.count ?? 0 > 0
-    }
+//    /// Continueボタンの有効無効
+//    var isEnabledContinueButton: Bool {
+//        data.form.robotIds?.count ?? 0 > 0
+//    }
 
     /// Robotの表示名取得
     /// - Parameter index: 配列のIndex
@@ -106,27 +105,27 @@ extension JobEntryGeneralInformationFormPresenter: JobEntryGeneralInformationFor
     /// セルの選択可否
     /// - Parameter indexPath: インデックスパス
     /// - Returns: 選択中かどうか
-    func isSelected(indexPath: IndexPath) -> Bool {
-        guard let id = displayRobots?[indexPath.row].id else { return false }
-        return data.form.robotIds?.contains(id) ?? false
-    }
+//    func isSelected(indexPath: IndexPath) -> Bool {
+//        guard let id = displayRobots?[indexPath.row].id else { return false }
+//        return data.form.robotIds?.contains(id) ?? false
+//    }
 
     /// セルの選択
     /// - Parameter indexPath: インデックスパス
-    func selectItem(indexPath: IndexPath) {
-        guard let id = displayRobots?[indexPath.row].id else { return }
-        if let index = data.form.robotIds?.firstIndex(of: id) {
-            data.form.robotIds?.remove(at: index)
-        } else if data.form.robotIds == nil {
-            data.form.robotIds = [id]
-        } else {
-            data.form.robotIds?.append(id)
-        }
-    }
+//    func selectItem(indexPath: IndexPath) {
+//        guard let id = displayRobots?[indexPath.row].id else { return }
+//        if let index = data.form.robotIds?.firstIndex(of: id) {
+//            data.form.robotIds?.remove(at: index)
+//        } else if data.form.robotIds == nil {
+//            data.form.robotIds = [id]
+//        } else {
+//            data.form.robotIds?.append(id)
+//        }
+//    }
 
     /// Continueボタンをタップ
     func tapContinueButton() {
-        vc.transitionToConfigurationFormScreen()
+        vc.transitionToActionScreen()
     }
 }
 

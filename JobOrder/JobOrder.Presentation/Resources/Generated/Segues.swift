@@ -24,6 +24,7 @@ internal enum StoryboardSegue {
     case unwindToWorkbenchEntry
   }
   internal enum JobEntry: String, SegueType {
+    case showAction
     case showConfirm
   }
   internal enum Main: String, SegueType {

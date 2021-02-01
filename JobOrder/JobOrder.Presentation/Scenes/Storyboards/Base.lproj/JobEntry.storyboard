@@ -244,7 +244,7 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="touchUpInsideContinueButton:" destination="Sdb-JC-f3O" eventType="touchUpInside" id="rNv-5R-ZaO"/>
-                                    <segue destination="olw-G1-an2" kind="show" id="ovC-6V-zc7"/>
+                                    <segue destination="olw-G1-an2" kind="show" identifier="showAction" id="ovC-6V-zc7"/>
                                 </connections>
                             </button>
                         </subviews>

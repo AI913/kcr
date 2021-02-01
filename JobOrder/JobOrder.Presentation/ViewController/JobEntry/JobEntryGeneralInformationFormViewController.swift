@@ -12,7 +12,7 @@ import UIKit
 /// @mockable
 protocol JobEntryGeneralInformationFormViewControllerProtocol: class {
     /// ConfigurationForm画面へ遷移
-    func transitionToConfigurationFormScreen()
+    func transitionToActionScreen()
     /// コレクションを更新
     func reloadCollection()
 }
@@ -39,9 +39,9 @@ class JobEntryGeneralInformationFormViewController: UIViewController {
 //        presenter = JobEntryBuilder.GeneralInformationForm().build(vc: self, viewData: viewData)
 //    }
     
-    func inject(viewData: MainViewData.Job) {
-        self.viewData = JobEntryViewData
-        presenter = JobEntryBuilder.GeneralInformationForm().build(vc: self, viewData: self.viewData)
+    func inject() {
+//        self.viewData = JobEntryViewData
+        presenter = JobEntryBuilder.GeneralInformationForm().build(vc: self)
     }
     
     // MARK: - Override function (view controller lifecycle)
@@ -136,10 +136,10 @@ extension JobEntryGeneralInformationFormViewController: UICollectionViewDataSour
 
         cell.inject(presenter: presenter)
         cell.setItem(indexPath)
-        if let presenter = presenter, presenter.isSelected(indexPath: indexPath) {
-            cell.isSelected = true
-            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
-        }
+//        if let presenter = presenter, presenter.isSelected(indexPath: indexPath) {
+//            cell.isSelected = true
+//            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
+//        }
         return cell
     }
 }
@@ -147,15 +147,15 @@ extension JobEntryGeneralInformationFormViewController: UICollectionViewDataSour
 // MARK: - Implement UICollectionViewDelegate
 extension JobEntryGeneralInformationFormViewController: UICollectionViewDelegate {
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        presenter?.selectItem(indexPath: indexPath)
-        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        presenter?.selectItem(indexPath: indexPath)
-        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
-    }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        presenter?.selectItem(indexPath: indexPath)
+//        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+//        presenter?.selectItem(indexPath: indexPath)
+//        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
+//    }
 }
 
 // MARK: - Implement UICollectionViewDelegateFlowLayout
@@ -176,5 +176,17 @@ extension JobEntryGeneralInformationFormViewController: UICollectionViewDelegate
         let cellSize = prototypeCell.propotionalScaledSize(for: flowLayout, numberOfColumns: 2)
         self.computedCellSize = cellSize
         return cellSize
+    }
+}
+
+// MARK: - Protocol Function
+extension JobEntryGeneralInformationFormViewController: JobEntryGeneralInformationFormViewControllerProtocol {
+
+    func transitionToActionScreen() {
+        self.perform(segue: StoryboardSegue.JobEntry.showAction)
+    }
+
+    func reloadCollection() {
+        robotCollection?.reloadData()
     }
 }

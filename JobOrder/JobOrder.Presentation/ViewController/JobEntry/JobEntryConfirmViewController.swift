@@ -8,6 +8,19 @@
 
 import UIKit
 
+/// JobEntryConfirmViewControllerProtocol
+/// @mockable
+protocol JobEntryConfirmViewControllerProtocol: class {
+    /// エラーアラート表示
+    /// - Parameter error: エラー
+    func showErrorAlert(_ error: Error)
+    /// 処理中変更通知
+    /// - Parameter isProcessing: 処理状態
+    func changedProcessing(_ isProcessing: Bool)
+    /// Complete画面へ遷移
+    func transitionToCompleteScreen()
+}
+
 class JobEntryConfirmViewController: UIViewController {
 
     // MARK: - IBOutlet
@@ -16,6 +29,9 @@ class JobEntryConfirmViewController: UIViewController {
     @IBOutlet private weak var workbenchLibrary: UILabel!
     @IBOutlet private weak var workLibrary: UILabel!
     @IBOutlet private weak var bottomButton: UIButton!
+
+    // MARK: - Variable
+    var presenter: JobEntryConfirmPresenterProtocol!
 
     // MARK: - Override function (view controller lifecycle)
     override func viewDidLoad() {
@@ -29,6 +45,7 @@ extension JobEntryConfirmViewController {
 
     @IBAction private func touchUpInsideSubmitButton(_ sender: UIButton) {
         self.dismiss(animated: true)
+        presenter?.tapSendButton()
     }
 }
 
