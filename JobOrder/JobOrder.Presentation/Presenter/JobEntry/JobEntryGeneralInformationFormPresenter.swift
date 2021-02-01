@@ -11,9 +11,12 @@ import Combine
 import JobOrder_Domain
 import JobOrder_Utility
 
+// MARK: - Interface
+/// JobEntryGeneralInformationFormPresenterProtocol
+/// @mockable
 protocol JobEntryGeneralInformationFormPresenterProtocol {
-    /// OrderEntryのViewData
-    var data: OrderEntryViewData { get }
+    /// JobEntryのViewData
+    var data: JobEntryViewData { get }
     /// リストの行数
     var numberOfItemsInSection: Int { get }
     /// Continueボタンの有効無効
@@ -34,6 +37,8 @@ protocol JobEntryGeneralInformationFormPresenterProtocol {
     func tapContinueButton()
 }
 
+// MARK: - Implementation
+/// JobEntryRobotGeneralInformationFormPresenter
 class JobEntryGeneralInformationFormPresenter {
     private var searchKeyString: String = ""
     /// DataManageUseCaseProtocol
@@ -43,7 +48,7 @@ class JobEntryGeneralInformationFormPresenter {
     /// OrderEntryRobotSelectionViewControllerProtocol
     private let vc: JobEntryGeneralInformationFormViewControllerProtocol
     /// OrderEntryのViewData
-    var data: OrderEntryViewData
+    var data: MainViewData.Job
     /// A type-erasing cancellable objects that executes a provided closure when canceled.
     private var cancellables: Set<AnyCancellable> = []
     /// リストに表示するRobotのデータ配列
@@ -56,18 +61,18 @@ class JobEntryGeneralInformationFormPresenter {
     /// イニシャライザ
     /// - Parameters:
     ///   - useCase: DataManageUseCaseProtocol
-    ///   - vc: OrderEntryRobotSelectionViewControllerProtocol
+    ///   - vc: JobEntryGeneralInformationFormViewControllerProtocol
     ///   - viewData: OrderEntryViewData
     required init(useCase: JobOrder_Domain.DataManageUseCaseProtocol,
                   dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol,
                   vc: JobEntryGeneralInformationFormViewControllerProtocol,
-                  viewData: OrderEntryViewData) {
+                  viewData: MainViewData.Job) {
         self.useCase = useCase
         self.dataUseCase = dataUseCase
         self.vc = vc
         self.data = viewData
         observeRobots()
-//        cacheRobots(useCase.robots)
+        cacheRobots(useCase.robots)
     }
 }
 
@@ -128,74 +133,76 @@ extension JobEntryGeneralInformationFormPresenter: JobEntryGeneralInformationFor
 // MARK: - Private Function
 extension JobEntryGeneralInformationFormPresenter {
 
-//    func observeRobots() {
-//        useCase.observeRobotData()
-//            .receive(on: DispatchQueue.main)
-//            .sink { response in
-//                // Logger.debug(target: self, "\(String(describing: response))")
-//                self.cacheRobots(response)
-//            }.store(in: &cancellables)
-//    }
-//
-//    func cacheRobots(_ robots: [DataManageModel.Output.Robot]?) {
-//        guard let robots = robots else { return }
-//        cachedRobots = robots.reduce(into: [String: DataManageModel.Output.Robot]()) { $0[$1.id] = $1 }
-//        filterAndSort()
-//    }
-
-//    func filterAndSort() {
-//        guard let robots = cachedRobots else { return }
-//
-//        var display = robots.values.sorted {
-//            $0.name ?? "N/A" < $1.name ?? "N/A"
-//        }
-//
-//        if let jobs = useCase.jobs, !jobs.isEmpty {
-//            // TODO: 将来的にRobotに適合しないJobは除外するなどのケースが考えられる
-//            //            display = display.filter { $0.available(jobs) }
-//            display = display.filter { _ in true }
-//        }
-//        displayRobots = display
-//        vc.reloadCollection()
-//    }
-    private func observeRobots() {
-        dataUseCase.observeRobotData()
+    func observeRobots() {
+        useCase.observeRobotData()
             .receive(on: DispatchQueue.main)
             .sink { response in
                 // Logger.debug(target: self, "\(String(describing: response))")
-                self.filterAndSort(robots: response, keywordChanged: false)
+                self.cacheRobots(response)
             }.store(in: &cancellables)
     }
 
-    
-    func filterAndSort(keyword: String? = nil, robots: [JobOrder_Domain.DataManageModel.Output.Robot]?, keywordChanged: Bool) {
-        guard var robots = robots else { return }
+    func cacheRobots(_ robots: [DataManageModel.Output.Robot]?) {
+        guard let robots = robots else { return }
+        cachedRobots = robots.reduce(into: [String: DataManageModel.Output.Robot]()) { $0[$1.id] = $1 }
+        print(cachedRobots)
+        filterAndSort()
+    }
 
-        var searchKeyWord: String? = keyword
-        if keywordChanged {
-            searchKeyString = searchKeyWord!
-            robots = originalRobots!
-        } else {
-            searchKeyWord = searchKeyString
-            originalRobots = robots
+    func filterAndSort() {
+        guard let robots = cachedRobots else { return }
+
+        var display = robots.values.sorted {
+            $0.name ?? "N/A" < $1.name ?? "N/A"
         }
 
-        // TODO: - Sort by user settings.
-        var display = robots.sorted {
-            if let name0 = $0.name, let name1 = $1.name, name0 != name1 {
-                return name0 < name1
-            } else {
-                return $0.id < $1.id
-            }
-        }
-
-        if let searchKeyWord = searchKeyWord, !searchKeyWord.isEmpty {
-            display = display.filter {
-                guard let name = $0.name else { return false }
-                return name.uppercased().contains(searchKeyWord.uppercased())
-            }
+        if let jobs = useCase.jobs, !jobs.isEmpty {
+            // TODO: 将来的にRobotに適合しないJobは除外するなどのケースが考えられる
+            //            display = display.filter { $0.available(jobs) }
+            display = display.filter { _ in true }
         }
         displayRobots = display
         vc.reloadCollection()
     }
+//
+//    private func observeRobots() {
+//        useCase.observeRobotData()
+//            .receive(on: DispatchQueue.main)
+//            .sink { response in
+//                // Logger.debug(target: self, "\(String(describing: response))")
+//                self.filterAndSort(robots: response, keywordChanged: false)
+//            }.store(in: &cancellables)
+//    }
+//
+//
+//    func filterAndSort(keyword: String? = nil, robots: [JobOrder_Domain.DataManageModel.Output.Robot]?, keywordChanged: Bool) {
+//        guard var robots = robots else { return }
+//
+//        var searchKeyWord: String? = keyword
+//        if keywordChanged {
+//            searchKeyString = searchKeyWord!
+//            robots = originalRobots!
+//        } else {
+//            searchKeyWord = searchKeyString
+//            originalRobots = robots
+//        }
+//
+//        // TODO: - Sort by user settings.
+//        var display = robots.sorted {
+//            if let name0 = $0.name, let name1 = $1.name, name0 != name1 {
+//                return name0 < name1
+//            } else {
+//                return $0.id < $1.id
+//            }
+//        }
+//
+//        if let searchKeyWord = searchKeyWord, !searchKeyWord.isEmpty {
+//            display = display.filter {
+//                guard let name = $0.name else { return false }
+//                return name.uppercased().contains(searchKeyWord.uppercased())
+//            }
+//        }
+//        displayRobots = display
+//        vc.reloadCollection()
+//    }
 }

@@ -31,9 +31,10 @@ struct AWSConstants {
     }
 
     struct APIGateway {
+        
         // static let endPoint: String = "https://k77q3ycfi1.execute-api.ap-northeast-1.amazonaws.com/DEV"
-        //         static let endPoint: String = "https://e5yhmtp0ib.execute-api.ap-northeast-1.amazonaws.com/dev"
-        static let endPoint: String = "https://uw1j4xtk1h.execute-api.ap-northeast-1.amazonaws.com/joa_phase1"
+                 static let endPoint: String = "https://e5yhmtp0ib.execute-api.ap-northeast-1.amazonaws.com/dev"
+//        static let endPoint: String = "https://uw1j4xtk1h.execute-api.ap-northeast-1.amazonaws.com/joa_phase1"
     }
 
     struct S3 {

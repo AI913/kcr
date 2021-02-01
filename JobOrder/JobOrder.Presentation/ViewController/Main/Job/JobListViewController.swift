@@ -26,6 +26,7 @@ class JobListViewController: UITableViewController {
 
     // MARK: - Variable
     var presenter: JobListPresenterProtocol!
+    var viewData: JobEntryViewData!
     private let searchController = UISearchController()
 
     // MARK: - Initializer
@@ -33,6 +34,11 @@ class JobListViewController: UITableViewController {
         super.init(coder: aDecoder)
         presenter = MainBuilder.JobList().build(vc: self)
     }
+    
+//    func inject(jobId: String?, robotId: String?) {
+//        self.viewData = JobEntryViewData(jobId, robotId)
+//        presenter = MainBuilder.JobList().build(vc: self)
+//    }
 
     // MARK: - Override function (view controller lifecycle)
     override func viewDidLoad() {
@@ -112,8 +118,11 @@ extension JobListViewController: JobListViewControllerProtocol {
     }
 
     func launchJobEntry() {
-        let vc = StoryboardScene.JobEntry.initialScene.instantiate()
-        self.present(vc, animated: true, completion: nil)
+        let navigationController = StoryboardScene.JobEntry.initialScene.instantiate()
+        if let vc = navigationController.topViewController as? JobEntryGeneralInformationFormViewController {
+            vc.inject(viewData: MainViewData.Job)
+            self.present(navigationController, animated: true, completion: nil)
+        }
     }
 
     func reloadTable() {

@@ -19,9 +19,9 @@ class JobEntryRobotSelectionRobotCollectionViewCell: UICollectionViewCell, UICol
     static let identifier: String = "JobEntryRobotSelectionRobotCollectionViewCell"
 
     // MARK: - Variable
-    private var presenter: JobEntryGeneralInformationFormPresenter!
+    private var presenter: JobEntryGeneralInformationFormPresenterProtocol!
 
-    func inject(presenter: JobEntryGeneralInformationFormPresenter) {
+    func inject(presenter: JobEntryGeneralInformationFormPresenterProtocol) {
         self.presenter = presenter
     }
 

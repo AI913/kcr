@@ -28,14 +28,20 @@ class JobEntryGeneralInformationFormViewController: UIViewController {
     @IBOutlet private weak var cancelBarButtonItem: UIBarButtonItem!
     @IBOutlet private weak var continueButton: UIButton!
     @IBOutlet weak var robotCollection: UICollectionView!
-
-    var viewData: OrderEntryViewData!
-    var presenter: JobEntryGeneralInformationFormPresenter!
+    
+    // MARK: - Variable
+    var viewData: JobEntryViewData!
+    var presenter: JobEntryGeneralInformationFormPresenterProtocol!
     private var computedCellSize: CGSize?
 
-    func inject(viewData: OrderEntryViewData) {
-        self.viewData = viewData
-        presenter = JobEntryBuilder.GeneralInformationForm().build(vc: self, viewData: viewData)
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//        presenter = JobEntryBuilder.GeneralInformationForm().build(vc: self, viewData: viewData)
+//    }
+    
+    func inject(viewData: MainViewData.Job) {
+        self.viewData = JobEntryViewData
+        presenter = JobEntryBuilder.GeneralInformationForm().build(vc: self, viewData: self.viewData)
     }
     
     // MARK: - Override function (view controller lifecycle)
@@ -118,6 +124,7 @@ extension JobEntryGeneralInformationFormViewController {
 extension JobEntryGeneralInformationFormViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print(presenter)
         return presenter?.numberOfItemsInSection ?? 0
     }
 
