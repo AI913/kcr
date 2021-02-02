@@ -507,23 +507,23 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zhw-fV-Han">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q2c-aX-PA8">
                                 <rect key="frame" x="0.0" y="168" width="414" height="728"/>
                                 <connections>
-                                    <segue destination="PrO-We-syv" kind="embed" id="unt-JE-7AA"/>
+                                    <segue destination="Uaw-4z-U01" kind="embed" id="iA7-Dr-Fr1"/>
                                 </connections>
                             </containerView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Y1o-Vo-8TR"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="zhw-fV-Han" firstAttribute="leading" secondItem="Y1o-Vo-8TR" secondAttribute="leading" id="2fw-W7-YG4"/>
+                            <constraint firstItem="Q2c-aX-PA8" firstAttribute="leading" secondItem="Y1o-Vo-8TR" secondAttribute="leading" id="Fwm-tX-qaY"/>
+                            <constraint firstAttribute="bottom" secondItem="Q2c-aX-PA8" secondAttribute="bottom" id="H6p-bg-FcK"/>
                             <constraint firstItem="k46-Pp-mNi" firstAttribute="top" secondItem="Y1o-Vo-8TR" secondAttribute="top" constant="20" id="J1A-QL-D85"/>
-                            <constraint firstAttribute="bottom" secondItem="zhw-fV-Han" secondAttribute="bottom" id="Jrb-TZ-ZHl"/>
                             <constraint firstItem="Y1o-Vo-8TR" firstAttribute="trailing" secondItem="k46-Pp-mNi" secondAttribute="trailing" constant="20" id="LL3-Zc-myU"/>
                             <constraint firstItem="k46-Pp-mNi" firstAttribute="leading" secondItem="Y1o-Vo-8TR" secondAttribute="leading" constant="20" id="e0o-B8-Pg6"/>
-                            <constraint firstItem="zhw-fV-Han" firstAttribute="trailing" secondItem="Y1o-Vo-8TR" secondAttribute="trailing" id="wRT-mt-8Zo"/>
-                            <constraint firstItem="zhw-fV-Han" firstAttribute="top" secondItem="k46-Pp-mNi" secondAttribute="bottom" id="ymW-IC-1Az"/>
+                            <constraint firstItem="Q2c-aX-PA8" firstAttribute="top" secondItem="k46-Pp-mNi" secondAttribute="bottom" id="eJn-yq-RgU"/>
+                            <constraint firstItem="Q2c-aX-PA8" firstAttribute="trailing" secondItem="Y1o-Vo-8TR" secondAttribute="trailing" id="oMw-tg-52W"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="TzJ-Ei-OqM"/>
@@ -536,85 +536,68 @@
             <point key="canvasLocation" x="2492.753623188406" y="54.910714285714285"/>
         </scene>
         <!--View Controller-->
-        <scene sceneID="of8-pY-oCN">
+        <scene sceneID="hU0-ah-ObT">
             <objects>
-                <viewController id="tRv-bH-MdX" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="r7s-P7-Wuu">
+                <viewController id="pnu-Vu-XtZ" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6hY-QN-O0K">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="728"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="92x-VI-03D">
-                                <rect key="frame" x="0.0" y="88" width="414" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="o11-jS-k4k"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem title="Title" id="gj9-m5-agA">
-                                        <barButtonItem key="leftBarButtonItem" title="Item" image="line.horizontal.3" catalog="system" id="bch-0M-qM4">
-                                            <connections>
-                                                <segue destination="r5s-Ea-SR0" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="sYj-C4-jTA"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="GNr-YF-86a"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="92x-VI-03D" firstAttribute="top" secondItem="r7s-P7-Wuu" secondAttribute="top" constant="88" id="F1k-pf-k8B"/>
-                            <constraint firstAttribute="trailing" secondItem="92x-VI-03D" secondAttribute="trailing" id="N2d-ix-tuA"/>
-                            <constraint firstItem="92x-VI-03D" firstAttribute="leading" secondItem="r7s-P7-Wuu" secondAttribute="leading" id="UDZ-vT-Zy3"/>
-                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="rZK-MM-0Ch"/>
+                    <navigationItem key="navigationItem" id="BVc-XM-lKF">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="line.horizontal.3" catalog="system" id="2Py-fi-5ZF">
+                            <connections>
+                                <segue destination="q7O-Px-7a8" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="0g5-HL-6QU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qL5-t5-6Bj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6mI-Q9-ZYf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3397.1014492753625" y="803.57142857142856"/>
+            <point key="canvasLocation" x="3400.0000000000005" y="764.73214285714278"/>
         </scene>
         <!--Job Entry Menu View Controller-->
-        <scene sceneID="Bg1-At-bw6">
+        <scene sceneID="yCx-Fz-8VK">
             <objects>
-                <viewController modalPresentationStyle="overCurrentContext" id="r5s-Ea-SR0" customClass="JobEntryMenuViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" tag="1" contentMode="scaleToFill" id="Z7c-lT-gfe">
+                <viewController id="q7O-Px-7a8" customClass="JobEntryMenuViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" tag="1" contentMode="scaleToFill" id="gUp-x1-7xj">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="728"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4wM-P1-k18">
-                                <rect key="frame" x="0.0" y="133" width="278" height="595"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gAP-Ve-Tl8">
+                                <rect key="frame" x="0.0" y="89" width="260" height="639"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
                             </view>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="4zb-sI-oN9"/>
-                        <color key="backgroundColor" systemColor="systemGray5Color"/>
+                        <viewLayoutGuide key="safeArea" id="KNW-oh-PnC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
-                        <outlet property="menuView" destination="4wM-P1-k18" id="LsL-kC-Vmh"/>
+                        <outlet property="menuView" destination="gAP-Ve-Tl8" id="BhG-Vi-cbn"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qsJ-au-zrx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yx8-SJ-Zbk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4202.898550724638" y="803.57142857142856"/>
+            <point key="canvasLocation" x="4273.913043478261" y="765.40178571428567"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="Rw7-AI-kDT">
+        <scene sceneID="qeG-nJ-f7M">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="PrO-We-syv" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Uaw-4z-U01" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="LZO-Xm-9Xu">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fJi-mF-Eqz">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="tRv-bH-MdX" kind="relationship" relationship="rootViewController" id="6EK-7d-Wle"/>
+                        <segue destination="pnu-Vu-XtZ" kind="relationship" relationship="rootViewController" id="2SX-Nc-uxB"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aPO-JS-r6T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J2K-p7-BJu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2489.8550724637685" y="803.57142857142856"/>
+            <point key="canvasLocation" x="2492.753623188406" y="764.73214285714278"/>
         </scene>
     </scenes>
     <resources>
@@ -634,8 +617,8 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
