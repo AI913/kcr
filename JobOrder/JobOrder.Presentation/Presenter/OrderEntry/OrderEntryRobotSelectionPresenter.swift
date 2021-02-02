@@ -139,6 +139,7 @@ extension OrderEntryRobotSelectionPresenter {
     func cacheRobots(_ robots: [DataManageModel.Output.Robot]?) {
         guard let robots = robots else { return }
         cachedRobots = robots.reduce(into: [String: DataManageModel.Output.Robot]()) { $0[$1.id] = $1 }
+        print(cachedRobots)
         filterAndSort()
     }
 

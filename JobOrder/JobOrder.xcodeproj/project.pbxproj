@@ -1860,13 +1860,13 @@
 		A3DCD5C8251AEE55004BC808 /* JobEntry */ = {
 			isa = PBXGroup;
 			children = (
+				FC369E4C25C7DD4400B70B03 /* CollectionViewCell */,
 				A3DCD5C9251AEE55004BC808 /* JobEntryGeneralInformationFormViewController.swift */,
 				A3B26D3C251C7979008DFEC5 /* JobEntryActionViewController.swift */,
 				FCB357FD25C91BBF004C8DE1 /* JobEntryMenuViewController.swift */,
 				A3B26D40251C8FEE008DFEC5 /* JobEntryConfirmViewController.swift */,
 				A3DCD5CD251AF15B004BC808 /* JobEntryStepView.swift */,
 				A3DCD5CE251AF15B004BC808 /* JobEntryStepView.xib */,
-				FC8F7FD025BEAB7700C5780A /* JobEntryRobotSelectionRobotCollectionViewCell.swift */,
 				FCB06C4A25C7808A007AC492 /* JobEntryCompleteViewController.swift */,
 			);
 			path = JobEntry;
@@ -2457,6 +2457,14 @@
 				B7DFC196258875C70011E8EE /* TaskDetailExecutionLogPresenter.swift */,
 			);
 			path = TaskDetail;
+			sourceTree = "<group>";
+		};
+		FC369E4C25C7DD4400B70B03 /* CollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				FC8F7FD025BEAB7700C5780A /* JobEntryRobotSelectionRobotCollectionViewCell.swift */,
+			);
+			path = CollectionViewCell;
 			sourceTree = "<group>";
 		};
 		FC8F7FC525BEAAB600C5780A /* JobEntry */ = {

@@ -39,9 +39,9 @@ class JobEntryGeneralInformationFormViewController: UIViewController {
 //        presenter = JobEntryBuilder.GeneralInformationForm().build(vc: self, viewData: viewData)
 //    }
     
-    func inject() {
-//        self.viewData = JobEntryViewData
-        presenter = JobEntryBuilder.GeneralInformationForm().build(vc: self)
+    func inject(jobId: String?, robotId: String?) {
+        self.viewData = JobEntryViewData(jobId, robotId)
+        presenter = JobEntryBuilder.GeneralInformationForm().build(vc: self, viewData: self.viewData)
     }
     
     // MARK: - Override function (view controller lifecycle)
@@ -124,7 +124,7 @@ extension JobEntryGeneralInformationFormViewController {
 extension JobEntryGeneralInformationFormViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(presenter)
+        print(presenter?.numberOfItemsInSection)
         return presenter?.numberOfItemsInSection ?? 0
     }
 
@@ -136,10 +136,10 @@ extension JobEntryGeneralInformationFormViewController: UICollectionViewDataSour
 
         cell.inject(presenter: presenter)
         cell.setItem(indexPath)
-//        if let presenter = presenter, presenter.isSelected(indexPath: indexPath) {
-//            cell.isSelected = true
-//            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
-//        }
+        if let presenter = presenter, presenter.isSelected(indexPath: indexPath) {
+            cell.isSelected = true
+            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
+        }
         return cell
     }
 }
@@ -147,15 +147,15 @@ extension JobEntryGeneralInformationFormViewController: UICollectionViewDataSour
 // MARK: - Implement UICollectionViewDelegate
 extension JobEntryGeneralInformationFormViewController: UICollectionViewDelegate {
 
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        presenter?.selectItem(indexPath: indexPath)
-//        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-//        presenter?.selectItem(indexPath: indexPath)
-//        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
-//    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter?.selectItem(indexPath: indexPath)
+        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        presenter?.selectItem(indexPath: indexPath)
+        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
+    }
 }
 
 // MARK: - Implement UICollectionViewDelegateFlowLayout

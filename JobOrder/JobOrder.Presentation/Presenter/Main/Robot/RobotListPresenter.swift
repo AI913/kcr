@@ -198,14 +198,16 @@ extension RobotListPresenter {
                 return $0.id < $1.id
             }
         }
-
+        
         if let searchKeyWord = searchKeyWord, !searchKeyWord.isEmpty {
             display = display.filter {
                 guard let name = $0.name else { return false }
                 return name.uppercased().contains(searchKeyWord.uppercased())
             }
         }
+        
         displayRobots = display
+        print(displayRobots)
         vc.reloadTable()
     }
 

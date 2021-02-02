@@ -61,3 +61,19 @@ extension JobEntryConfirmViewController {
         bottomButton?.setTitle(L10n.JobEntryComfirm.bottomButton, for: .normal)
     }
 }
+
+// MARK: - Protocol Function
+//extension JobEntryConfirmViewController: JobEntryConfirmViewControllerProtocol {
+//
+//    func showErrorAlert(_ error: Error) {
+//        presentAlert(error)
+//    }
+
+//    func changedProcessing(_ isProcessing: Bool) {
+//        processing = isProcessing
+//    }
+//
+//    func transitionToCompleteScreen() {
+//        self.perform(segue: StoryboardSegue.JobEntry.showComplete)
+//    }
+//}

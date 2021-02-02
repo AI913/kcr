@@ -120,7 +120,7 @@ extension JobListViewController: JobListViewControllerProtocol {
     func launchJobEntry() {
         let navigationController = StoryboardScene.JobEntry.initialScene.instantiate()
         if let vc = navigationController.topViewController as? JobEntryGeneralInformationFormViewController {
-            vc.inject()
+            vc.inject(jobId: nil, robotId: nil)
             self.present(navigationController, animated: true, completion: nil)
         }
     }
