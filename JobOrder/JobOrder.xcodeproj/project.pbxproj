@@ -474,6 +474,7 @@
 		FCB06BF025C28610007AC492 /* JobEntryViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB06BEF25C28610007AC492 /* JobEntryViewData.swift */; };
 		FCB06C4B25C7808B007AC492 /* JobEntryCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB06C4A25C7808A007AC492 /* JobEntryCompleteViewController.swift */; };
 		FCB06C5525C7B8CF007AC492 /* JobEntryConfirmPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB06C5425C7B8CF007AC492 /* JobEntryConfirmPresenter.swift */; };
+		FCB357FE25C91BBF004C8DE1 /* JobEntryMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB357FD25C91BBF004C8DE1 /* JobEntryMenuViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1063,6 +1064,7 @@
 		FCB06BEF25C28610007AC492 /* JobEntryViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryViewData.swift; sourceTree = "<group>"; };
 		FCB06C4A25C7808A007AC492 /* JobEntryCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryCompleteViewController.swift; sourceTree = "<group>"; };
 		FCB06C5425C7B8CF007AC492 /* JobEntryConfirmPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryConfirmPresenter.swift; sourceTree = "<group>"; };
+		FCB357FD25C91BBF004C8DE1 /* JobEntryMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryMenuViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1860,6 +1862,7 @@
 			children = (
 				A3DCD5C9251AEE55004BC808 /* JobEntryGeneralInformationFormViewController.swift */,
 				A3B26D3C251C7979008DFEC5 /* JobEntryActionViewController.swift */,
+				FCB357FD25C91BBF004C8DE1 /* JobEntryMenuViewController.swift */,
 				A3B26D40251C8FEE008DFEC5 /* JobEntryConfirmViewController.swift */,
 				A3DCD5CD251AF15B004BC808 /* JobEntryStepView.swift */,
 				A3DCD5CE251AF15B004BC808 /* JobEntryStepView.xib */,
@@ -3526,6 +3529,7 @@
 				A33DAD432499BF5A000135C3 /* UIView.swift in Sources */,
 				A33DAD442499BF5A000135C3 /* UIViewController.swift in Sources */,
 				A35DFA2E24B80E4E00284271 /* RobotVideoPresenter.swift in Sources */,
+				FCB357FE25C91BBF004C8DE1 /* JobEntryMenuViewController.swift in Sources */,
 				B76F39F82564B5E8000ECBDE /* JobDetailWorkTaskTableViewCell.swift in Sources */,
 				B7FD40AD2562608B00643AAE /* JobDetailContainerViewController.swift in Sources */,
 				A3B26D41251C8FEE008DFEC5 /* JobEntryConfirmViewController.swift in Sources */,
