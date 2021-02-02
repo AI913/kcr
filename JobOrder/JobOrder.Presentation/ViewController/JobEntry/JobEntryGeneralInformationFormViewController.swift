@@ -101,8 +101,8 @@ extension JobEntryGeneralInformationFormViewController {
     }
 
     @IBAction private func touchUpInsideContinueButton(_ sender: UIButton) {
-        let vc = StoryboardScene.ActionEntry.initialScene.instantiate()
-        self.present(vc, animated: true, completion: nil)
+//        let vc = StoryboardScene.ActionEntry.initialScene.instantiate()
+//        self.present(vc, animated: true, completion: nil)
     }
 }
 

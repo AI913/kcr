@@ -16,6 +16,6 @@ class JobEntryActionViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.perform(segue: StoryboardSegue.JobEntry.showConfirm)
+//        self.perform(segue: StoryboardSegue.JobEntry.showConfirm)
     }
 }
