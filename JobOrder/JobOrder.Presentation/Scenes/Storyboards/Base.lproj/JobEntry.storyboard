@@ -559,13 +559,13 @@
         <!--Job Entry Menu View Controller-->
         <scene sceneID="yCx-Fz-8VK">
             <objects>
-                <viewController id="q7O-Px-7a8" customClass="JobEntryMenuViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="overCurrentContext" id="q7O-Px-7a8" customClass="JobEntryMenuViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" tag="1" contentMode="scaleToFill" id="gUp-x1-7xj">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="728"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gAP-Ve-Tl8">
-                                <rect key="frame" x="0.0" y="89" width="260" height="639"/>
+                                <rect key="frame" x="0.0" y="44" width="260" height="684"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
                             </view>
