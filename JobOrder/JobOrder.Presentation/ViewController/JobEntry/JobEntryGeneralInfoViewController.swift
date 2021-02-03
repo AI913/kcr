@@ -151,27 +151,27 @@ extension JobEntryGeneralInfoViewController: UICollectionViewDelegate {
     //    }
 }
 
-// MARK: - Implement UICollectionViewDelegateFlowLayout
-extension JobEntryGeneralInfoViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        guard self.computedCellSize == nil else {
-            return self.computedCellSize!
-        }
-
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: JobEntryRobotSelectionRobotCollectionViewCell.identifier, for: indexPath)
-
-        guard let prototypeCell = cell as? JobEntryRobotSelectionRobotCollectionViewCell,
-              let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else {
-            fatalError("CollectionViewCell is not found.")
-        }
-
-        let cellSize = prototypeCell.propotionalScaledSize(for: flowLayout, numberOfColumns: 2)
-        self.computedCellSize = cellSize
-        return cellSize
-    }
-}
+//// MARK: - Implement UICollectionViewDelegateFlowLayout
+//extension JobEntryGeneralInfoViewController: UICollectionViewDelegateFlowLayout {
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//
+//        guard self.computedCellSize == nil else {
+//            return self.computedCellSize!
+//        }
+//
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: JobEntryRobotSelectionRobotCollectionViewCell.identifier, for: indexPath)
+//
+//        guard let prototypeCell = cell as? JobEntryRobotSelectionRobotCollectionViewCell,
+//              let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else {
+//            fatalError("CollectionViewCell is not found.")
+//        }
+//
+//        let cellSize = prototypeCell.propotionalScaledSize(for: flowLayout, numberOfColumns: 2)
+//        self.computedCellSize = cellSize
+//        return cellSize
+//    }
+//}
 
 // MARK: - Protocol Function
 extension JobEntryGeneralInfoViewController: JobEntryGeneralInfoViewControllerProtocol {
