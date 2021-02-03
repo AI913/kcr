@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6Mf-Bf-afd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6Mf-Bf-afd">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -26,10 +26,10 @@
             </objects>
             <point key="canvasLocation" x="816" y="55"/>
         </scene>
-        <!--Job Entry General Information Form View Controller-->
+        <!--Job Entry General Info View Controller-->
         <scene sceneID="UHz-v8-YSG">
             <objects>
-                <viewController storyboardIdentifier="Form" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Sdb-JC-f3O" userLabel="Job Entry General Information Form View Controller" customClass="JobEntryGeneralInformationFormViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Form" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Sdb-JC-f3O" userLabel="Job Entry General Info View Controller" customClass="JobEntryGeneralInfoViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eRz-NN-vBl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -298,7 +298,7 @@
         <!--Confirm View Controller-->
         <scene sceneID="avZ-eW-v8r">
             <objects>
-                <viewController storyboardIdentifier="Confirm" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5AZ-SV-Ksy" userLabel="Confirm View Controller" customClass="JobEntryConfirmViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="5AZ-SV-Ksy" userLabel="Confirm View Controller" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Gaa-eR-01j">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -453,6 +453,7 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="touchUpInsideSubmitButton:" destination="5AZ-SV-Ksy" eventType="touchUpInside" id="BYl-NH-eiw"/>
+                                    <segue destination="FYU-VO-XE1" kind="show" identifier="shwoComplete" id="uAu-B3-H4X"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -485,7 +486,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IeH-dU-ZsD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3278" y="55"/>
+            <point key="canvasLocation" x="3276.811594202899" y="54.910714285714285"/>
         </scene>
         <!--Job Entry Action View Controller-->
         <scene sceneID="FHf-Pl-PPj">
@@ -542,6 +543,7 @@
                     <view key="view" contentMode="scaleToFill" id="6hY-QN-O0K">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="728"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="CBs-qj-12f"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="BVc-XM-lKF">
@@ -599,8 +601,76 @@
             </objects>
             <point key="canvasLocation" x="2492.753623188406" y="764.73214285714278"/>
         </scene>
+        <!--Complete View Controller-->
+        <scene sceneID="6Fa-X3-AnH">
+            <objects>
+                <viewController storyboardIdentifier="Complete" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FYU-VO-XE1" userLabel="Complete View Controller" customClass="JobEntryCompleteViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ori-xj-DeS">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="49" translatesAutoresizingMaskIntoConstraints="NO" id="k86-Nz-SJI">
+                                <rect key="frame" x="20" y="307" width="374" height="282.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="KGE-GS-W20">
+                                        <rect key="frame" x="87" y="0.5" width="200" height="199"/>
+                                        <color key="tintColor" systemColor="systemGreenColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="200" id="7fO-Dj-onx"/>
+                                            <constraint firstAttribute="width" constant="200" id="wUp-Y8-ODW"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Complete!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hqz-w3-wBu">
+                                        <rect key="frame" x="124.5" y="249" width="125.5" height="33.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jB-Lc-Wfg" userLabel="Close Button">
+                                <rect key="frame" x="20" y="749" width="374" height="44"/>
+                                <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
+                                <accessibility key="accessibilityConfiguration" identifier="close_button"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="gvG-tE-C2K"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Close"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="touchUpInsideCloseButton:" destination="FYU-VO-XE1" eventType="touchUpInside" id="JL4-Mz-Yqc"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="nmc-V0-0sq"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <accessibility key="accessibilityConfiguration" identifier="ordercomplete_view"/>
+                        <constraints>
+                            <constraint firstItem="4jB-Lc-Wfg" firstAttribute="leading" secondItem="nmc-V0-0sq" secondAttribute="leading" constant="20" id="1tb-u9-gty"/>
+                            <constraint firstItem="k86-Nz-SJI" firstAttribute="leading" secondItem="nmc-V0-0sq" secondAttribute="leading" constant="20" id="5u8-oc-h74"/>
+                            <constraint firstItem="nmc-V0-0sq" firstAttribute="trailing" secondItem="4jB-Lc-Wfg" secondAttribute="trailing" constant="20" id="HxA-Dm-Bg2"/>
+                            <constraint firstItem="nmc-V0-0sq" firstAttribute="bottom" secondItem="4jB-Lc-Wfg" secondAttribute="bottom" constant="20" id="QgA-Z6-96d"/>
+                            <constraint firstItem="nmc-V0-0sq" firstAttribute="trailing" secondItem="k86-Nz-SJI" secondAttribute="trailing" constant="20" id="ePY-5R-0jL"/>
+                            <constraint firstItem="k86-Nz-SJI" firstAttribute="centerY" secondItem="Ori-xj-DeS" secondAttribute="centerY" id="nvL-rV-LmV"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="X1f-tl-fXq"/>
+                    <connections>
+                        <outlet property="closeButton" destination="4jB-Lc-Wfg" id="4Nn-ba-eg3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iSd-Rt-Ewy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4109" y="55"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="checkmark.circle" catalog="system" width="128" height="121"/>
         <image name="line.horizontal.3" catalog="system" width="128" height="64"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -616,6 +686,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

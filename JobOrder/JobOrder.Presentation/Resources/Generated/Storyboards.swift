@@ -22,9 +22,9 @@ internal enum StoryboardScene {
 
     internal static let initialScene = InitialSceneType<UIKit.UINavigationController>(storyboard: JobEntry.self)
 
-    internal static let confirm = SceneType<JobOrder_Presentation.JobEntryConfirmViewController>(storyboard: JobEntry.self, identifier: "Confirm")
+    internal static let complete = SceneType<JobOrder_Presentation.JobEntryCompleteViewController>(storyboard: JobEntry.self, identifier: "Complete")
 
-    internal static let form = SceneType<JobOrder_Presentation.JobEntryGeneralInformationFormViewController>(storyboard: JobEntry.self, identifier: "Form")
+    internal static let form = SceneType<JobOrder_Presentation.JobEntryGeneralInfoViewController>(storyboard: JobEntry.self, identifier: "Form")
   }
   internal enum Main: StoryboardType {
     internal static let storyboardName = "Main"

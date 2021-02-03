@@ -10,10 +10,10 @@ import Foundation
 
 struct JobEntryBuilder {
 
-    struct GeneralInformationForm {
-        func build(vc: JobEntryGeneralInformationFormViewController, viewData: JobEntryViewData) -> JobEntryGeneralInformationFormPresenter {
-            return JobEntryGeneralInformationFormPresenter(useCase: Builder().dataUseCase,
-                                                           vc: vc, viewData: viewData)
+    struct GeneralInfo {
+        func build(vc: JobEntryGeneralInfoViewController) -> JobEntryGeneralInfoPresenter {
+            return JobEntryGeneralInfoPresenter(useCase: Builder().dataUseCase,
+                                                vc: vc)
         }
     }
 

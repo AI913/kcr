@@ -26,6 +26,7 @@ internal enum StoryboardSegue {
   internal enum JobEntry: String, SegueType {
     case showAction
     case showConfirm
+    case shwoComplete
   }
   internal enum Main: String, SegueType {
     case containerPage

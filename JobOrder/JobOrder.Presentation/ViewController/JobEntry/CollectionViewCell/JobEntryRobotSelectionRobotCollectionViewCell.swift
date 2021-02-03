@@ -14,14 +14,14 @@ class JobEntryRobotSelectionRobotCollectionViewCell: UICollectionViewCell, UICol
     @IBOutlet weak var displayNameLabel: UILabel!
     @IBOutlet weak var typeAndClassificationLabel: UILabel!
     @IBOutlet weak var checkmarkImage: UIImageView!
-    
+
     // MARK: - Constant
     static let identifier: String = "JobEntryRobotSelectionRobotCollectionViewCell"
 
     // MARK: - Variable
-    private var presenter: JobEntryGeneralInformationFormPresenterProtocol!
+    private var presenter: JobEntryGeneralInfoPresenterProtocol!
 
-    func inject(presenter: JobEntryGeneralInformationFormPresenterProtocol) {
+    func inject(presenter: JobEntryGeneralInfoPresenterProtocol) {
         self.presenter = presenter
     }
 

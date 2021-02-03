@@ -34,11 +34,11 @@ class JobListViewController: UITableViewController {
         super.init(coder: aDecoder)
         presenter = MainBuilder.JobList().build(vc: self)
     }
-    
-//    func inject(jobId: String?, robotId: String?) {
-//        self.viewData = JobEntryViewData(jobId, robotId)
-//        presenter = MainBuilder.JobList().build(vc: self)
-//    }
+
+    //    func inject(jobId: String?, robotId: String?) {
+    //        self.viewData = JobEntryViewData(jobId, robotId)
+    //        presenter = MainBuilder.JobList().build(vc: self)
+    //    }
 
     // MARK: - Override function (view controller lifecycle)
     override func viewDidLoad() {
@@ -119,8 +119,7 @@ extension JobListViewController: JobListViewControllerProtocol {
 
     func launchJobEntry() {
         let navigationController = StoryboardScene.JobEntry.initialScene.instantiate()
-        if let vc = navigationController.topViewController as? JobEntryGeneralInformationFormViewController {
-            vc.inject(jobId: nil, robotId: nil)
+        if let vc = navigationController.topViewController as? JobEntryGeneralInfoViewController {
             self.present(navigationController, animated: true, completion: nil)
         }
     }
