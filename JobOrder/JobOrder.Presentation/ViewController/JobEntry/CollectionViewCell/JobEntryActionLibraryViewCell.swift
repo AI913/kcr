@@ -1,13 +1,13 @@
 //
-//  CustomCollectionViewCell.swift
-//  CollectionViewSample2
+//  JobEntryActionLibraryViewCell.swift
+//  JobOrder.Presentation
 //
 //  Created by Frontarc on 2021/02/02.
 //
 
 import UIKit
 
-class CustumCollectionViewCell: UICollectionViewCell {
+class JobEntryActionLibraryViewCell: UICollectionViewCell {
 
     var thumbnailImageView: UIImageView?
     var textLabel: UILabel?
@@ -22,7 +22,7 @@ class CustumCollectionViewCell: UICollectionViewCell {
         let width: CGFloat = self.frame.width
         let height: CGFloat = self.frame.height
         let margin: CGFloat = 8
-        
+
         self.backgroundColor = .white
 
         thumbnailImageView = UIImageView()

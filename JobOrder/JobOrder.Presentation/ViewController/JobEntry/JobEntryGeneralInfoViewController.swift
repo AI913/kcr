@@ -151,7 +151,7 @@ extension JobEntryGeneralInfoViewController: UICollectionViewDelegate {
     //    }
 }
 
-//// MARK: - Implement UICollectionViewDelegateFlowLayout
+// MARK: - Implement UICollectionViewDelegateFlowLayout
 //extension JobEntryGeneralInfoViewController: UICollectionViewDelegateFlowLayout {
 //
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

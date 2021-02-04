@@ -14,7 +14,7 @@ class JobEntryRobotSelectionRobotCollectionViewCell: UICollectionViewCell, UICol
     @IBOutlet weak var displayNameLabel: UILabel!
     @IBOutlet weak var typeAndClassificationLabel: UILabel!
     @IBOutlet weak var checkmarkImage: UIImageView!
-    
+
     // MARK: - Constant
     static let identifier: String = "JobEntryRobotSelectionRobotCollectionViewCell"
 
