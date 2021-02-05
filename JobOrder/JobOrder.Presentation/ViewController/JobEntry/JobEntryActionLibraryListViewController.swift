@@ -1,5 +1,5 @@
 //
-//  JobEntryMenuViewController.swift
+//  JobEntryActionLibraryListViewController.swift
 //  JobOrder.Presentation
 //
 //  Created by Frontarc on 2021/02/02.
@@ -12,19 +12,13 @@ class JobEntryActionLibraryListViewController: UIViewController {
 
     @IBOutlet weak var menuView: UIView!
 
-    //    var posY: CGFloat = 516.0
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
 
     override func viewWillAppear(_ animated: Bool) {
         let menuPos = self.menuView.layer.position
         self.menuView.layer.position.x = -self.menuView.frame.width
-        //        posY = self.menuView.frame.height - 244.0
-        //        self.menuView.layer.position.y = posY
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: { self.menuView.layer.position.x = menuPos.x }, completion: { bool in })
     }
 

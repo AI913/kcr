@@ -465,6 +465,7 @@
 		E5DE36FC2525629700D41B8B /* SettingsPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DE36FB2525629700D41B8B /* SettingsPageObject.swift */; };
 		E5EA88EC25271B7E0060E4FC /* RobotDetailPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EA88EB25271B7E0060E4FC /* RobotDetailPageObject.swift */; };
 		E5EA88EE25271BB30060E4FC /* JobSelectionPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EA88ED25271BB30060E4FC /* JobSelectionPageObject.swift */; };
+		FC31DABB25CB8F8A00E01187 /* JobEntrySearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC31DABA25CB8F8A00E01187 /* JobEntrySearchPresenter.swift */; };
 		FC4B8508259318340063B617 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4B8507259318340063B617 /* String.swift */; };
 		FC760838257491580039E8B8 /* TaskDetailViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC760837257491580039E8B8 /* TaskDetailViewData.swift */; };
 		FC8F7FBC25BEAA4E00C5780A /* JobEntryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8F7FBB25BEAA4E00C5780A /* JobEntryBuilder.swift */; };
@@ -1055,6 +1056,7 @@
 		E5EA88ED25271BB30060E4FC /* JobSelectionPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobSelectionPageObject.swift; sourceTree = "<group>"; };
 		F72453146312863759CA8C49 /* Pods-All-JobOrder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-JobOrder.debug.xcconfig"; path = "Target Support Files/Pods-All-JobOrder/Pods-All-JobOrder.debug.xcconfig"; sourceTree = "<group>"; };
 		FC309271258C8B4B007B6DA2 /* api_mock_examples_POST_tasks_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_POST_tasks_response.json; sourceTree = "<group>"; };
+		FC31DABA25CB8F8A00E01187 /* JobEntrySearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntrySearchPresenter.swift; sourceTree = "<group>"; };
 		FC4B8507259318340063B617 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		FC760837257491580039E8B8 /* TaskDetailViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewData.swift; sourceTree = "<group>"; };
 		FC8F7FBB25BEAA4E00C5780A /* JobEntryBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryBuilder.swift; sourceTree = "<group>"; };
@@ -2472,6 +2474,7 @@
 			isa = PBXGroup;
 			children = (
 				FC8F7FC625BEAAE200C5780A /* JobEntryGeneralInfoPresenter.swift */,
+				FC31DABA25CB8F8A00E01187 /* JobEntrySearchPresenter.swift */,
 			);
 			path = JobEntry;
 			sourceTree = "<group>";
@@ -3641,6 +3644,7 @@
 				A38C2AF9244FE4FA0089A70E /* RobotDetailSystemViewController.swift in Sources */,
 				A38C2B03244FE4FA0089A70E /* SettingsViewController.swift in Sources */,
 				A37EFD9724457EA800130EB6 /* JobListPresenter.swift in Sources */,
+				FC31DABB25CB8F8A00E01187 /* JobEntrySearchPresenter.swift in Sources */,
 				A3141F73252192A100992F45 /* WorkBenchSelectionTableViewCell.swift in Sources */,
 				D78EC1FE2411CB59003E5ECD /* PasswordAuthenticationViewController.swift in Sources */,
 				A305FA1024ADC8C400E99D3C /* DashboardViewController.swift in Sources */,

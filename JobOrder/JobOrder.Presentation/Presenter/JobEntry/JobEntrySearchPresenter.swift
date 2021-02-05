@@ -1,0 +1,182 @@
+//
+//  JobEntrySearchPresenter.swift
+//  JobOrder.Presentation
+//
+//  Created by Frontarc on 2021/02/04.
+//  Copyright © 2021 Kento Tatsumi. All rights reserved.
+//
+
+import Foundation
+import UIKit
+import Combine
+import JobOrder_Domain
+
+// MARK: - Interface
+/// JobEntrySearchPresenterProtocol
+/// @mockable
+protocol JobEntrySearchPresenterProtocol {
+    /// リストの行数
+    var numberOfRowsInSection: Int { get }
+    /// クラウドサーバー使用可否
+    var useCloudServer: Bool { get }
+    /// クラウドサーバーURL
+    var serverUrl: String? { get }
+    /// ActionLibrary ID取得
+    /// - Parameter index: 配列のIndex
+    func id(_ index: Int) -> String?
+    /// ActionLibraryの表示名取得
+    /// - Parameter index: 配列のIndex
+    func displayName(_ index: Int) -> String?
+    /// セルを選択
+    /// - Parameter index: 配列のIndex
+    func selectRow(index: Int)
+    /// 検索
+    /// - Parameter keyword: 検索キーワード
+    func filterAndSort(keyword: String?, keywordChanged: Bool)
+}
+
+// MARK: - Implementation
+/// JobEntrySearchPresenter
+class JobEntrySearchPresenter {
+    private var searchKeyString: String = ""
+    /// SettingsUseCaseProtocol
+    private let settingsUseCase: JobOrder_Domain.SettingsUseCaseProtocol
+    /// DataManageUseCaseProtocol
+    private let dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol
+    /// MQTTUseCaseProtocol
+    private let mqttUseCase: JobOrder_Domain.MQTTUseCaseProtocol
+    /// JobEntrySearchViewControllerProtocol
+    private let vc: JobEntrySearchViewControllerProtocol
+    /// A type-erasing cancellable objects that executes a provided closure when canceled.
+    private var cancellables: Set<AnyCancellable> = []
+    /// リストに表示するActionLibraryのデータ配列（フィルタ処理後）
+    var displayActionLibraries: [JobOrder_Domain.DataManageModel.Output.ActionLibrary]?
+    /// リストに表示するActionLibraryのデータ配列（フィルタ処理前）
+    var originalActionLibraries: [JobOrder_Domain.DataManageModel.Output.ActionLibrary]?
+
+    private var sortConditions = [SortCondition(key: .thingName, order: .ASC)] {
+        didSet {
+            self.filterAndSort(keyword: nil, keywordChanged: false)
+        }
+    }
+
+    /// イニシャライザ
+    /// - Parameters:
+    ///   - settingsUseCase: SettingsUseCaseProtocol
+    ///   - mqttUseCase: MQTTUseCaseProtocol
+    ///   - dataUseCase: DataManageUseCaseProtocol
+    ///   - vc: JobEntrySearchViewControllerProtocol
+    required init(settingsUseCase: JobOrder_Domain.SettingsUseCaseProtocol,
+                  mqttUseCase: JobOrder_Domain.MQTTUseCaseProtocol,
+                  dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol,
+                  vc: JobEntrySearchViewControllerProtocol) {
+        self.settingsUseCase = settingsUseCase
+        self.mqttUseCase = mqttUseCase
+        self.dataUseCase = dataUseCase
+        self.vc = vc
+        observeActionLibraries()
+    }
+}
+
+// MARK: - Protocol Function
+extension JobEntrySearchPresenter: JobEntrySearchPresenterProtocol {
+    /// リストの行数
+    var numberOfRowsInSection: Int {
+        displayActionLibraries?.count ?? 0
+    }
+
+    /// クラウドサーバー使用可否
+    var useCloudServer: Bool {
+        settingsUseCase.useCloudServer
+    }
+
+    /// クラウドサーバーURL
+    var serverUrl: String? {
+        settingsUseCase.serverUrl
+    }
+
+    /// ActionLibrary ID取得
+    /// - Parameter index: 配列のIndex
+    /// - Returns: ActionLibrary ID
+    func id(_ index: Int) -> String? {
+        return displayActionLibraries?[index].id
+    }
+
+    /// ActionLibraryの表示名取得
+    /// - Parameter index: 配列のIndex
+    /// - Returns: 表示名
+    func displayName(_ index: Int) -> String? {
+        return displayActionLibraries?[index].name
+    }
+
+    /// セルを選択
+    /// - Parameter index: 配列のIndex
+    func selectRow(index: Int) {
+        vc.transitionToAILibrary()
+    }
+
+    /// 検索
+    /// - Parameter keyword: 検索キーワード
+    func filterAndSort(keyword: String?, keywordChanged: Bool) {
+
+        filterAndSort(keyword: keyword, actionLibraries: displayActionLibraries, keywordChanged: keywordChanged)
+    }
+}
+
+// MARK: - Private Function
+extension JobEntrySearchPresenter {
+
+    private func observeActionLibraries() {
+        dataUseCase.observeActionLibraryData()
+            .receive(on: DispatchQueue.main)
+            .sink { response in
+                // Logger.debug(target: self, "\(String(describing: response))")
+                self.filterAndSort(actionLibraries: response, keywordChanged: false)
+            }.store(in: &cancellables)
+    }
+
+    func filterAndSort(keyword: String? = nil, actionLibraries: [JobOrder_Domain.DataManageModel.Output.ActionLibrary]?, keywordChanged: Bool) {
+        guard var actionLibraries = actionLibraries else { return }
+
+        var searchKeyWord: String? = keyword
+        if keywordChanged {
+            searchKeyString = searchKeyWord!
+            actionLibraries = originalActionLibraries!
+        } else {
+            searchKeyWord = searchKeyString
+            originalActionLibraries = actionLibraries
+        }
+
+        var display = actionLibraries.sorted {
+            if let name0 = $0.name, let name1 = $1.name, name0 != name1 {
+                return name0 < name1
+            } else {
+                return $0.id < $1.id
+            }
+        }
+
+        if let searchKeyWord = searchKeyWord, !searchKeyWord.isEmpty {
+            display = display.filter {
+                guard let name = $0.name else { return false }
+                return name.uppercased().contains(searchKeyWord.uppercased())
+            }
+        }
+
+        displayActionLibraries = display
+        vc.reloadTable()
+    }
+
+    private struct SortCondition {
+        var key: SortKey
+        var order: SortOrder
+
+        enum SortKey {
+            case thingName
+        }
+
+        enum SortOrder {
+            case ASC
+            case DESC
+        }
+    }
+}

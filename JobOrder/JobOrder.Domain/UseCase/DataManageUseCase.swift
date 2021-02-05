@@ -28,6 +28,8 @@ public protocol DataManageUseCaseProtocol {
     func observeJobData() -> AnyPublisher<[DataManageModel.Output.Job]?, Never>
     /// 保存してあるRobotデータの変化を監視
     func observeRobotData() -> AnyPublisher<[DataManageModel.Output.Robot]?, Never>
+    /// 保存してあるActionLibraryデータの変化を監視
+    func observeActionLibraryData() -> AnyPublisher<[DataManageModel.Output.ActionLibrary]?, Never>
     /// クラウドからデータを取得する
     func syncData() -> AnyPublisher<DataManageModel.Output.SyncData, Error>
     /// クラウドから取得したデータを削除する
@@ -203,6 +205,22 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
         self.robotData.observe()
             .map { value -> [DataManageModel.Output.Robot]? in
                 return value?.compactMap { DataManageModel.Output.Robot($0) }
+            }.sink { response in
+                // Logger.debug(target: self, "\(String(describing: response))")
+                publisher.send(response)
+            }.store(in: &self.cancellables)
+        return publisher.eraseToAnyPublisher()
+    }
+
+    /// 保存してあるActionLibraryデータの変化を監視
+    /// - Returns: ActionLibraryデータ
+    public func observeActionLibraryData() -> AnyPublisher<[DataManageModel.Output.ActionLibrary]?, Never> {
+        Logger.info(target: self)
+
+        let publisher = PassthroughSubject<[DataManageModel.Output.ActionLibrary]?, Never>()
+        self.actionLibraryData.observe()
+            .map { value -> [DataManageModel.Output.ActionLibrary]? in
+                return value?.compactMap { DataManageModel.Output.ActionLibrary($0) }
             }.sink { response in
                 // Logger.debug(target: self, "\(String(describing: response))")
                 publisher.send(response)
