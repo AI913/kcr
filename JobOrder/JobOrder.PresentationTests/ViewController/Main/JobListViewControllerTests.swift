@@ -23,15 +23,6 @@ class JobListViewControllerTests: XCTestCase {
 
     override func tearDownWithError() throws {}
 
-    func test_outlets() {
-        XCTAssertNotNil(vc.addButtonItem, "addButtonItemがOutletに接続されていない")
-    }
-
-    func test_actions() throws {
-        let addButtonItem = try XCTUnwrap(vc.addButtonItem, "Unwrap失敗")
-        XCTAssertNoThrow(addButtonItem.target?.perform(addButtonItem.action, with: nil), "タップで例外発生: \(addButtonItem)")
-    }
-
     func test_updateSearchResults() {
         vc.updateSearchResults(for: UISearchController())
         XCTAssertEqual(mock.filterAndSortCallCount, 1, "Presenterのメソッドが呼ばれない")

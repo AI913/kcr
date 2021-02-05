@@ -23,9 +23,15 @@ public enum JobOrderError: Error {
     /// サーバ接続エラーの理由
     public enum ConnectionFailureReason {
         /// Fail to Disconnect.
-        case failToDisconnect(error: Error?)
-        /// API Resuponse is null
-        case apiResuponseIsNull
+        case failToDisconnect
+        /// 想定しないレスポンス形式
+        case invalidResponseFormat
+        /// 処理できないレスポンス
+        case unacceptableResponse
+        /// サービス利用不可
+        case serviceUnavailable(code: String?, description: String?, error: Error)
+        /// ネットワーク利用不可
+        case networkUnavailable(error: URLError)
     }
 
     /// 入力エラーの理由
@@ -34,9 +40,13 @@ public enum JobOrderError: Error {
         case postDataIsNil
     }
 
+    /// 認証エラー
     case authenticationFailed(reason: AuthenticationFailureReason)
+    /// 接続エラー
     case connectionFailed(reason: ConnectionFailureReason)
+    /// 入力エラー
     case inputValidationFailed(reason: InputValidationErrorReason)
+    /// その他の内部エラー
     case internalError(error: Error?)
 
     public init(from error: Error?) {
@@ -44,12 +54,32 @@ public enum JobOrderError: Error {
         case let e as Self:
             self = e
             return
+        case let e as JobOrder_API.APIError:
+            self.init(from: e)
+            return
         case let e as JobOrder_API.AWSError:
             self.init(from: e)
+            return
+        case let e as URLError:
+            self = .connectionFailed(reason: .networkUnavailable(error: e))
             return
         default: break
         }
         self = .internalError(error: error)
+    }
+
+    public init(from error: JobOrder_API.APIError) {
+        switch error {
+        case let .invalidStatus(code: _, reason: reason):
+            switch reason {
+            case let .lambdaFunctionError(response: response):
+                self = .connectionFailed(reason: .serviceUnavailable(code: response.errorCode, description: response.errorDescription, error: error))
+                return
+            default: break
+            }
+        default: break
+        }
+        self = .connectionFailed(reason: .serviceUnavailable(code: nil, description: nil, error: error))
     }
 
     public init(from error: JobOrder_API.AWSError) {
@@ -61,13 +91,12 @@ public enum JobOrderError: Error {
                 case .notAuthorized:
                     self = .authenticationFailed(reason: .incorrectUsernameOrPassword(error: error))
                     return
-                default:
-                    self = .authenticationFailed(reason: .unknown(error: error))
+                default: break
                 }
             default: break
             }
         default: break
         }
-        self = .internalError(error: error)
+        self = .connectionFailed(reason: .serviceUnavailable(code: nil, description: nil, error: error))
     }
 }

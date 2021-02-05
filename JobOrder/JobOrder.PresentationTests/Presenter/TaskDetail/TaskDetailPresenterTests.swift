@@ -375,22 +375,25 @@ class TaskDetailPresenterTests: XCTestCase {
 
     // Command, Taskともに存在する場合
     func test_na() {
-        let command = DataManageModel.Output.Command.arbitrary.suchThat({ $0.success > 0 && $0.fail > 0 && $0.error > 0 }).generate
-        let task = DataManageModel.Output.Task.pattern(numberOfRuns: 1).generate
+        let command = DataManageModel.Output.Command.pattern(success: 1, fail: 2, error: 3).generate
+        let task = DataManageModel.Output.Task.pattern(numberOfRuns: 10).generate
+        let expected = 10 - (1 + 2 + 3)
+
         presenter.command = command
         presenter.task = task
-        XCTAssert(presenter.na() == calcNA(command: command, task: task), "正しい値が取得できていない")
+        let actual = presenter.na()
+        XCTAssertEqual( actual, expected, "正しい値が取得できていない: \(String(describing: actual))")
     }
 
     // Command, Taskともに存在しない場合
     func test_naWithoutCommandTask() {
-        XCTAssertEqual(presenter.na(), 0, "正しい値が取得できていない")
+        XCTAssertNil(presenter.na(), "正しい値が取得できていない")
     }
 
     // Commandが存在する, Taskが存在しない場合
     func test_naWithoutTask() {
         presenter.command = DataManageModel.Output.Command.arbitrary.generate
-        XCTAssertEqual(presenter.na(), 0, "正しい値が取得できていない")
+        XCTAssertNil(presenter.na(), "正しい値が取得できていない")
     }
 
     // Commandが存在しない, Taskが存在する場合
@@ -405,17 +408,4 @@ class TaskDetailPresenterTests: XCTestCase {
         // tapOrderEntryButtonが実装されていない
     }
 
-    private func calcNA(command: JobOrder_Domain.DataManageModel.Output.Command?, task: JobOrder_Domain.DataManageModel.Output.Task?) -> Int {
-        let otherCount = (command?.success ?? 0) + (command?.fail ?? 0) + (command?.error ?? 0)
-        var naCount = (task?.exit.option.numberOfRuns ?? 0)
-
-        if naCount != 0 {
-            naCount = (task?.exit.option.numberOfRuns ?? 0) - otherCount
-        }
-        //TODO:現在APIから返ってくる値の整合性が取れていない（総数よりSuccess数の方が多い）のでマイナスの値にならないようにする
-        if 0 > naCount {
-            naCount = 0
-        }
-        return naCount
-    }
 }

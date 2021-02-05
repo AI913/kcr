@@ -28,8 +28,6 @@ public protocol DataManageUseCaseProtocol {
     func observeJobData() -> AnyPublisher<[DataManageModel.Output.Job]?, Never>
     /// 保存してあるRobotデータの変化を監視
     func observeRobotData() -> AnyPublisher<[DataManageModel.Output.Robot]?, Never>
-    /// 保存してあるActionLibraryデータの変化を監視
-    func observeActionLibraryData() -> AnyPublisher<[DataManageModel.Output.ActionLibrary]?, Never>
     /// クラウドからデータを取得する
     func syncData() -> AnyPublisher<DataManageModel.Output.SyncData, Error>
     /// クラウドから取得したデータを削除する
@@ -212,22 +210,6 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
         return publisher.eraseToAnyPublisher()
     }
 
-    /// 保存してあるActionLibraryデータの変化を監視
-    /// - Returns: ActionLibraryデータ
-    public func observeActionLibraryData() -> AnyPublisher<[DataManageModel.Output.ActionLibrary]?, Never> {
-        Logger.info(target: self)
-
-        let publisher = PassthroughSubject<[DataManageModel.Output.ActionLibrary]?, Never>()
-        self.actionLibraryData.observe()
-            .map { value -> [DataManageModel.Output.ActionLibrary]? in
-                return value?.compactMap { DataManageModel.Output.ActionLibrary($0) }
-            }.sink { response in
-                // Logger.debug(target: self, "\(String(describing: response))")
-                publisher.send(response)
-            }.store(in: &self.cancellables)
-        return publisher.eraseToAnyPublisher()
-    }
-
     /// クラウドからデータを取得する
     /// - Returns: 取得したデータ群
     public func syncData() -> AnyPublisher<DataManageModel.Output.SyncData, Error> {
@@ -373,7 +355,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     if let output = response.data?.compactMap({ DataManageModel.Output.Command($0) }) {
                         promise(.success(.init(data: output, paging: response.paging)))
                     } else {
-                        promise(.failure(JobOrderError.connectionFailed(reason: .apiResuponseIsNull)))
+                        promise(.failure(JobOrderError.connectionFailed(reason: .invalidResponseFormat)))
                     }
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
@@ -407,7 +389,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     if let output = response.data {
                         promise(.success(.init(output)))
                     } else {
-                        promise(.failure(JobOrderError.connectionFailed(reason: .apiResuponseIsNull)))
+                        promise(.failure(JobOrderError.connectionFailed(reason: .invalidResponseFormat)))
                     }
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
@@ -441,7 +423,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     if let output = response.data?.compactMap({ DataManageModel.Output.Command($0) }) {
                         promise(.success(.init(output)))
                     } else {
-                        promise(.failure(JobOrderError.connectionFailed(reason: .apiResuponseIsNull)))
+                        promise(.failure(JobOrderError.connectionFailed(reason: .invalidResponseFormat)))
                     }
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
@@ -472,7 +454,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     if let output = response.data {
                         promise(.success(.init(output)))
                     } else {
-                        promise(.failure(JobOrderError.connectionFailed(reason: .apiResuponseIsNull)))
+                        promise(.failure(JobOrderError.connectionFailed(reason: .invalidResponseFormat)))
                     }
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
@@ -509,7 +491,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     if let output = response.data {
                         promise(.success(.init(output)))
                     } else {
-                        promise(.failure(JobOrderError.connectionFailed(reason: .apiResuponseIsNull)))
+                        promise(.failure(JobOrderError.connectionFailed(reason: .invalidResponseFormat)))
                     }
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
@@ -549,7 +531,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     if let robotSwconf = response.0.data, let robotAssets = response.1.data {
                         promise(.success(.init(robotSwconf: robotSwconf, robotAssets: robotAssets)))
                     } else {
-                        promise(.failure(JobOrderError.connectionFailed(reason: .apiResuponseIsNull)))
+                        promise(.failure(JobOrderError.connectionFailed(reason: .invalidResponseFormat)))
                     }
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
@@ -582,7 +564,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     if let output = response.data?.compactMap({ DataManageModel.Output.Task($0) }) {
                         promise(.success(.init(data: output, paging: response.paging)))
                     } else {
-                        promise(.failure(JobOrderError.connectionFailed(reason: .apiResuponseIsNull)))
+                        promise(.failure(JobOrderError.connectionFailed(reason: .invalidResponseFormat)))
                     }
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
@@ -618,7 +600,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     if let output = response.data?.compactMap({ DataManageModel.Output.ExecutionLog($0) }) {
                         promise(.success(.init(data: output, paging: response.paging)))
                     } else {
-                        promise(.failure(JobOrderError.connectionFailed(reason: .apiResuponseIsNull)))
+                        promise(.failure(JobOrderError.connectionFailed(reason: .invalidResponseFormat)))
                     }
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()

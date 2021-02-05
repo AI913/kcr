@@ -495,7 +495,7 @@ class MainUITests: XCTestCase {
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
         XCTContext.runActivity(named: "新しいジョブを作成する") { _ in
-            let page = JobListPageObject(application: app).tapAddJobButton().waitExists(JobInfoEntryPageObject.self)
+            let page = MainPageObject(application: app).tapAddJobButton().waitExists(JobInfoEntryPageObject.self)
             XCTAssertTrue(page.existsPage, "ジョブ作成ダイアログが開けなかった")
         }
     }
@@ -508,7 +508,7 @@ class MainUITests: XCTestCase {
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
         XCTContext.runActivity(named: "新しいジョブを作成する") { _ in
-            _ = JobListPageObject(application: app).tapAddJobButton().waitExists(JobInfoEntryPageObject.self)
+            _ = MainPageObject(application: app).tapAddJobButton().waitExists(JobInfoEntryPageObject.self)
         }
         XCTContext.runActivity(named: "Cancel") { _ in
             let page = JobInfoEntryPageObject(application: app).tapCancelButton().waitExists(JobListPageObject.self)
@@ -524,7 +524,7 @@ class MainUITests: XCTestCase {
      _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
      }
      XCTContext.runActivity(named: "新しいジョブを作成する") { _ in
-     _ = JobListPageObject(application: app).tapAddJobButton().waitExists(JobInfoEntryPageObject.self)
+     _ = MainPageObject(application: app).tapAddJobButton().waitExists(JobInfoEntryPageObject.self)
      }
      XCTContext.runActivity(named: "Next") { _ in
      // MARK: なぜかnext_buttonが取得できない viewの設計の問題？

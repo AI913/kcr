@@ -13,7 +13,7 @@ class JobDetailPageObject: PageObject {
         app = application
     }
     var orderButton: XCUIElement { return view.buttons[IDs.orderbutton] }
-    var backButton: XCUIElement { return app.navigationBars.buttons.element(boundBy: 2) }
+    var backButton: XCUIElement { return app.navigationBars.buttons.element(boundBy: 3) }
     var flowTab: XCUIElement {
         return app.segmentedControls.buttons.element(boundBy: 1)
     }

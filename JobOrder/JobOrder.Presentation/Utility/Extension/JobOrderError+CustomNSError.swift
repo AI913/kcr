@@ -14,6 +14,8 @@ extension JobOrder_Domain.JobOrderError: CustomNSError {
         switch self {
         case .authenticationFailed:
             return ["__type": "認証エラー"]
+        case .connectionFailed:
+            return ["__type": "接続エラー"]
         default:
             return [:]
         }

@@ -526,9 +526,6 @@
                         <viewLayoutGuide key="safeArea" id="Mdy-V4-qRL"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <connections>
-                        <outlet property="collectionView" destination="rkD-MN-7lb" id="JM1-rz-2up"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cEe-Cr-rgJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -8,11 +8,8 @@
 
 import Foundation
 
-enum APIError: Error {
-    case networkError(String?)
-    case invalidStatus(Int, String?)
-    case noDataInResponse
-    case parseError(Error)
+public enum APIError: Error {
+    case invalidStatus(code: Int?, reason: RCSError?)
     case missingContentType
     case unacceptableContentType(String)
     case unsupportedMediaFormat

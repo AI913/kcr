@@ -19,6 +19,8 @@ protocol RobotListViewControllerProtocol: class {
 
 class RobotListViewController: UITableViewController {
 
+    private var searchText: String = ""
+
     // MARK: - Variable
     var presenter: RobotListPresenterProtocol!
     private let searchController = UISearchController()
@@ -35,17 +37,26 @@ class RobotListViewController: UITableViewController {
         self.searchController.searchResultsUpdater = self
         self.searchController.searchBar.placeholder = L10n.keyword
         self.searchController.obscuresBackgroundDuringPresentation = false
-        self.navigationItem.searchController = self.searchController
-        self.navigationItem.hidesSearchBarWhenScrolling = false
+        self.searchController.automaticallyShowsCancelButton = false
+        tableView.tableHeaderView = self.searchController.searchBar
+        // 初期表示時searchBarを隠す
+        var contentOffset = tableView.contentOffset
+        contentOffset.y = searchController.searchBar.frame.size.height
+        tableView.contentOffset = contentOffset
+
+        self.searchController.searchBar.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        self.searchController.searchBar.text = self.searchText
         self.clearsSelectionOnViewWillAppear = self.splitViewController?.isCollapsed ?? false
         super.viewWillAppear(animated)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.searchController.isActive = false
     }
 }
 
@@ -62,10 +73,10 @@ extension RobotListViewController {
         default: break
         }
     }
-    //}
-    //
-    // MARK: - Implement UITableViewDataSource, UITableViewDelegate
-    //extension RobotListViewController {
+}
+
+// MARK: - Implement UITableViewDataSource, UITableViewDelegate
+extension RobotListViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         presenter?.numberOfRowsInSection ?? 0
@@ -82,8 +93,19 @@ extension RobotListViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        navigationController?.setNavigationBarHidden(false, animated: false)
         presenter?.selectRow(index: indexPath.row)
         tableView.deselectRow(at: indexPath, animated: true)
+        self.searchText = self.searchController.searchBar.text ?? ""
+        self.searchController.isActive = false
+    }
+}
+
+// MARK: - UISearchBarDelegate
+extension RobotListViewController: UISearchBarDelegate {
+
+    internal func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.searchText = searchText
     }
 }
 

@@ -255,7 +255,7 @@ public class AuthenticationUseCase: AuthenticationUseCaseProtocol {
                 .flatMap { value -> AnyPublisher<AuthenticationModel.Output.SignOutResult, Error> in
                     guard value.result else {
                         return Future<AuthenticationModel.Output.SignOutResult, Error> { promise in
-                            promise(.failure(JobOrderError.connectionFailed(reason: .failToDisconnect(error: nil))))
+                            promise(.failure(JobOrderError.connectionFailed(reason: .failToDisconnect)))
                         }.eraseToAnyPublisher()
                     }
                     // UserDefaults, キーチェーンは明示的にサインアウトした場合のみ削除する

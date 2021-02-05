@@ -168,16 +168,10 @@ extension TaskDetailRobotSelectionPresenter: TaskDetailRobotSelectionPresenterPr
     /// N/A数取得
     /// - Returns: N/A数
     func na(_ index: Int) -> Int? {
-        let otherCount = (commands?[index].success ?? 0) + (commands?[index].fail ?? 0) + (commands?[index].error ?? 0)
-        var naCount = (task?.exit.option.numberOfRuns ?? 0)
-
-        if naCount != 0 {
-            naCount = (task?.exit.option.numberOfRuns ?? 0) - otherCount
-        }
-        //TODO:現在APIから返ってくる値の整合性が取れていない（総数よりSuccess数の方が多い）のでマイナスの値にならないようにする
-        if 0 > naCount {
-            naCount = 0
-        }
+        guard let numberOfRuns = task?.exit.option.numberOfRuns else { return nil }
+        guard let command = commands?[index] else { return numberOfRuns }
+        let naCount = numberOfRuns - (command.success + command.fail + command.error)
+        guard naCount >= 1 else { return nil }
         return naCount
     }
     /// Robotの画像

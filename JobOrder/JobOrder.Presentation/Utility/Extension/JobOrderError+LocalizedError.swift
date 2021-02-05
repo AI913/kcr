@@ -14,17 +14,12 @@ extension JobOrder_Domain.JobOrderError: LocalizedError {
         switch self {
         case .authenticationFailed(reason: .incorrectUsernameOrPassword):
             return "ユーザ名またはパスワードが違います"
+        case let .connectionFailed(reason: .serviceUnavailable(code: code?, description: description?, error: _)):
+            return "\(code): \(description)"
+        case .connectionFailed(reason: .networkUnavailable):
+            return "ネットワーク接続中にエラーが発生しました"
         default:
             return "予期しないエラーが発生しました"
-        }
-    }
-
-    public var recoverySuggestion: String? {
-        switch self {
-        case .authenticationFailed(reason: .incorrectUsernameOrPassword):
-            return "..."
-        default:
-            return "製造元にお問い合わせください"
         }
     }
 }

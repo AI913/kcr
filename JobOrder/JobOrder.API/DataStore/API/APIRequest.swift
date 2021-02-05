@@ -43,7 +43,7 @@ public class APIRequest: APIRequestProtocol {
         let request = buildGetRequest(url: url, token: token, query: query)
 
         return URLSession.shared.dataTaskPublisher(for: request)
-            .validate(statusCode: successRange)
+            .validate(statusCode: { self.successRange.contains($0) }).map({ $0.data })
             .retry(retryCount)
             .decode(type: T.self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
@@ -74,7 +74,7 @@ public class APIRequest: APIRequestProtocol {
             .validate(contentType: { self.validImageContentTypes.contains($0) })
             .validate(responseData: { $0.isValidImage })
             .retry(retryCount)
-            .tryMap({ $0.data as! T })
+            .map({ $0.data as! T })
             .eraseToAnyPublisher()
     }
 
@@ -96,7 +96,7 @@ public class APIRequest: APIRequestProtocol {
         }
 
         return URLSession.shared.dataTaskPublisher(for: request)
-            .validate(statusCode: successRange)
+            .validate(statusCode: { self.successRange.contains($0) }).map({ $0.data })
             .retry(retryCount)
             .decode(type: T2.self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
@@ -121,7 +121,7 @@ public class APIRequest: APIRequestProtocol {
         }
 
         return URLSession.shared.dataTaskPublisher(for: request)
-            .validate(statusCode: successRange)
+            .validate(statusCode: { self.successRange.contains($0) }).map({ $0.data })
             .retry(retryCount)
             .decode(type: T2.self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
@@ -140,7 +140,7 @@ public class APIRequest: APIRequestProtocol {
         }
 
         return URLSession.shared.dataTaskPublisher(for: request)
-            .validate(statusCode: successRange)
+            .validate(statusCode: { self.successRange.contains($0) }).map({ $0.data })
             .retry(retryCount)
             .decode(type: T.self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
@@ -169,78 +169,44 @@ extension APIRequest {
 
 }
 
-extension URLSession.DataTaskPublisher {
+extension Publisher where Output == (data: Data, response: URLResponse) {
 
-    func validate<S: Sequence>(statusCode range: S) -> Publishers.TryMap<Self, Data> where S.Iterator.Element == Int {
-        tryMap { data, response -> Data in
+    func validate(statusCode isValid: @escaping (Int) -> Bool) -> Publishers.TryMap<Self, Output> {
+        tryMap { (result) -> Output in
+            let (data, response) = result
             switch (response as? HTTPURLResponse)?.statusCode {
-            case .some(let code) where range.contains(code):
-                return data
-            case .some(let code) where !range.contains(code):
-                throw APIError.invalidStatus(code, String(data: data, encoding: .utf8))
+            case .some(let code) where isValid(code):
+                return result
+            case .some(let code) where !isValid(code):
+                throw APIError.invalidStatus(code: code, reason: RCSError(from: data))
             default:
-                throw APIError.networkError(String(data: data, encoding: .utf8))
+                throw APIError.invalidStatus(code: nil, reason: nil)
             }
         }
     }
-}
 
-extension Publisher where Output == (data: Data, response: URLResponse) {
-
-    func validate(statusCode isValid: @escaping (Int) -> Bool) -> AnyPublisher<Output, APIError> {
-        return self
-            .mapError { $0 as! APIError }
-            .flatMap { (result) -> AnyPublisher<(data: Data, response: URLResponse), APIError> in
-                let (data, response) = result
-                switch (response as? HTTPURLResponse)?.statusCode {
-                case .some(let code) where isValid(code):
-                    return Just(result)
-                        .setFailureType(to: APIError.self)
-                        .eraseToAnyPublisher()
-                case .some(let code) where !isValid(code):
-                    return Fail(outputType: Output.self, failure: .invalidStatus(code, String(data: data, encoding: .utf8)))
-                        .eraseToAnyPublisher()
-                default:
-                    return Fail(outputType: Output.self, failure: .networkError(String(data: data, encoding: .utf8)))
-                        .eraseToAnyPublisher()
-                }
-            }.eraseToAnyPublisher()
+    func validate(contentType isValid: @escaping (String) -> Bool) -> Publishers.TryMap<Self, Output> {
+        tryMap { (result) -> Output in
+            let (_, response) = result
+            guard let type = (response as? HTTPURLResponse)?.mimeType else {
+                throw APIError.missingContentType
+            }
+            if isValid(type) {
+                return result
+            } else {
+                throw APIError.unacceptableContentType(type)
+            }
+        }
     }
 
-    func validate(contentType isValid: @escaping (String) -> Bool) -> AnyPublisher<Output, APIError> {
-        return self
-            .mapError { $0 as! APIError }
-            .flatMap { (result) -> AnyPublisher<(data: Data, response: URLResponse), APIError> in
-                let (_, response) = result
-                guard let type = (response as? HTTPURLResponse)?.mimeType else {
-                    return Fail(outputType: Output.self, failure: .missingContentType)
-                        .eraseToAnyPublisher()
-                }
-                if isValid(type) {
-                    return Just(result)
-                        .setFailureType(to: APIError.self)
-                        .eraseToAnyPublisher()
-                } else {
-                    return Fail(outputType: Output.self, failure: .unacceptableContentType(type))
-                        .eraseToAnyPublisher()
-                }
-            }.eraseToAnyPublisher()
+    func validate(responseData isValid: @escaping (Data) -> Bool) -> Publishers.TryMap<Self, Output> {
+        tryMap { (result) -> Output in
+            let (data, _) = result
+            if isValid(data) {
+                return result
+            } else {
+                throw APIError.unsupportedMediaFormat
+            }
+        }
     }
-
-    func validate(responseData isValid: @escaping (Data) -> Bool) -> AnyPublisher<Output, APIError> {
-        return self
-            .mapError { $0 as! APIError }
-            .flatMap { (result) -> AnyPublisher<(data: Data, response: URLResponse), APIError> in
-                let (data, _) = result
-                if isValid(data) {
-                    return Just(result)
-                        .setFailureType(to: APIError.self)
-                        .eraseToAnyPublisher()
-                } else {
-                    return Fail(outputType: Output.self, failure: .unsupportedMediaFormat)
-                        .eraseToAnyPublisher()
-                }
-            }.eraseToAnyPublisher()
-    }
-
 }

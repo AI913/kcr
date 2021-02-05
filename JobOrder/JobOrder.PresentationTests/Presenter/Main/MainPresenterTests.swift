@@ -80,6 +80,11 @@ class MainPresenterTests: XCTestCase {
         XCTAssertEqual(vc.showAlertCallCount, 1, "ViewControllerのメソッドが呼ばれない")
     }
 
+    func test_tapAddButton() {
+        presenter.tapAddButton()
+        XCTAssertEqual(vc.launchJobEntryCallCount, 1, "ViewControllerのメソッドが呼ばれない")
+    }
+
     func test_registerStateChangesNotReceivedAuthenticationState() {
         let handlerExpectation = expectation(description: "handler")
         let completionExpectation = expectation(description: "completion")

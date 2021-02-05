@@ -18,6 +18,7 @@ class MainPageObject: PageObject {
         static let TabRobotButton: String = "robot_tabbutton"
         static let TabJobButton: String = "job_tabbutton"
         static let TabDashboardButton: String = "dashboard_tabbutton"
+        static let AddJobButton: String = "addjob_button"
     }
 
     let app: XCUIApplication
@@ -30,6 +31,7 @@ class MainPageObject: PageObject {
     var tabRobotButton: XCUIElement { return app.tabBars.buttons[IDs.TabRobotButton] }
     var tabJobButton: XCUIElement { return app.tabBars.buttons[IDs.TabJobButton] }
     var tabDashboardButton: XCUIElement { return app.tabBars.buttons[IDs.TabDashboardButton] }
+    var addButton: XCUIElement { return app.navigationBars.buttons[IDs.AddJobButton] }
 
     private var settingsButton: XCUIElement {
         return app.navigationBars.buttons[IDs.NaviBarButton]
@@ -57,6 +59,11 @@ class MainPageObject: PageObject {
     func tapSettingButton() -> SettingsPageObject {
         settingsButton.tap()
         return SettingsPageObject(application: app)
+    }
+
+    func tapAddJobButton() -> JobInfoEntryPageObject {
+        addButton.tap()
+        return JobInfoEntryPageObject(application: app)
     }
 
     private func tabbarButton(atIndex index: Int) -> XCUIElement? {

@@ -59,6 +59,65 @@ public class FakeFactory {
     public var uuidStringGen: Gen<String> {
         return UUID.arbitrary.map({ $0.uuidString })
     }
+
+    public var httpErrorGen: Gen<(Int, String)> {
+        let error4xx: Gen<(Int, String)> = Gen<(Int, String)>.compose { c in
+            let code = c.generate(using: Gen<Int>.fromElements(in: 400...499))
+            let message = "DEFAULT_\(code)"
+            return (code, message)
+        }
+        let error5xx: Gen<(Int, String)> = Gen<(Int, String)>.compose { c in
+            let code = c.generate(using: Gen<Int>.fromElements(in: 500...599))
+            let message = "DEFAULT_\(code)"
+            return (code, message)
+        }
+
+        let errors: [Gen<(Int, String)>] = [
+            Gen.pure((403, "ACCESS_DENIED")),
+            Gen.pure((500, "API_CONFIGURATION_ERROR")),
+            Gen.pure((500, "AUTHORIZER_FAILURE")),
+            Gen.pure((500, "AUTHORIZER_CONFIGURATION_ERROR")),
+            Gen.pure((400, "BAD_REQUEST_PARAMETERS")),
+            Gen.pure((400, "BAD_REQUEST_BODY")),
+            error4xx,	// DEFAULT_4XX
+            error5xx,	// DEFAULT_5XX
+            Gen.pure((403, "EXPIRED_TOKEN")),
+            Gen.pure((403, "INVALID_SIGNATURE")),
+            Gen.pure((504, "INTEGRATION_FAILURE")),
+            Gen.pure((504, "INTEGRATION_TIMEOUT")),
+            Gen.pure((403, "INVALID_API_KEY")),
+            Gen.pure((403, "MISSING_AUTHENTICATION_TOKEN")),
+            Gen.pure((429, "QUOTA_EXCEEDED")),
+            Gen.pure((413, "REQUEST_TOO_LARGE")),
+            Gen.pure((404, "RESOURCE_NOT_FOUND")),
+            Gen.pure((429, "THROTTLED")),
+            Gen.pure((401, "UNAUTHORIZED")),
+            Gen.pure((415, "UNSUPPORTED_MEDIA_TYPE"))
+        ]
+        return Gen<(Int, String)>.one(of: errors)
+    }
+
+    public var rcsErrorGen: Gen<String> {
+        let v1Robots = (1...32).map { String(format: "ir%02d", $0) }
+        let v1Tasks = (1...7).map { String(format: "it%02d", $0) }
+        let v1Jobs = (1...7).map { String(format: "ij%02d", $0) }
+        let v1Action = (1...10).map { String(format: "il%02d", $0) }
+        let v1CerRobots = (1...2).map { String(format: "cr%02d", $0) }
+        let v1CerTasks = (1...5).map { String(format: "ct%02d", $0) }
+        let v1CerAction = (1...2).map { String(format: "cl%02d", $0) }
+        let mqtt = ["mr01", "mt01"]
+        let dynamo = ["dt01"]
+        let v1CerPost = ["ct06"]
+        let rcsMethodIDs: [String] = [v1Robots, v1Tasks, v1Jobs, v1Action, v1CerRobots, v1CerTasks, v1CerAction, mqtt, dynamo, v1CerPost].flatMap { $0 }
+        let errorCodes = (1...11).map { String(format: "%04d", $0) }
+        let detailCodes = (1...10).map { String(format: "%04d", $0) }
+
+        let rcsMethodIDGen: Gen<String> = Gen<String>.fromElements(of: [ rcsMethodIDs, ["zzzz"]].flatMap({ $0 }) )
+        let errorCodeGen: Gen<String> = Gen<String>.fromElements(of: [ errorCodes, ["9999"]].flatMap({ $0 }) )
+        let detailCodeGen: Gen<String> = Gen<String>.fromElements(of: [ detailCodes, ["9999"]].flatMap({ $0 }) )
+
+        return glue([rcsMethodIDGen, Gen.pure("-"), errorCodeGen, Gen.pure("-"), detailCodeGen])	// "ct02-0001-0003"
+    }
 }
 
 extension FakeFactory {

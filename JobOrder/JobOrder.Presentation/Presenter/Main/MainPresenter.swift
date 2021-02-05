@@ -24,6 +24,8 @@ protocol MainPresenterProtocol {
     func signInByBiometricsAuthentication()
     /// ConnectionStatusボタンをタップ
     func tapConnectionStatusButton()
+    /// addButtonボタンをタップ
+    func tapAddButton()
 }
 
 // MARK: - Implementation
@@ -107,6 +109,11 @@ extension MainPresenter: MainPresenterProtocol {
     /// ConnectionStatusボタンをタップ
     func tapConnectionStatusButton() {
         vc.showAlert(L10n.connectionStatus, data.displayName)
+    }
+
+    /// addButtonボタンをタップ
+    func tapAddButton() {
+        vc.launchJobEntry()
     }
 }
 

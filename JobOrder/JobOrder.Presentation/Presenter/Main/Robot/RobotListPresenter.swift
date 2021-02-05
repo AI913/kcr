@@ -205,7 +205,6 @@ extension RobotListPresenter {
                 return name.uppercased().contains(searchKeyWord.uppercased())
             }
         }
-
         displayRobots = display
         vc.reloadTable()
     }

@@ -233,12 +233,9 @@ class APIRequestTests: XCTestCase {
                     XCTFail("値を取得できてはいけない: \(data)")
                 },
                 onError: { error in
-                    switch error as! APIError {
-                    case .invalidStatus(let code, _):
-                        XCTAssertEqual(code, errorCode, "正しい値が取得できていない: \(errorCode)")
-                    default:
-                        XCTFail("想定外のエラー")
-                    }
+                    guard let error = error as? APIError else { return XCTFail("想定外のエラー") }
+                    guard case let .invalidStatus(code: code, reason: _) = error else { return XCTFail("想定外のエラー") }
+                    XCTAssertEqual(code, errorCode, "正しい値が取得できていない: \(errorCode)")
                 })
         }
 
@@ -458,12 +455,9 @@ class APIRequestTests: XCTestCase {
                     XCTFail("値を取得できてはいけない: \(data)")
                 },
                 onError: { error in
-                    switch error as! APIError {
-                    case .invalidStatus(let code, _):
-                        XCTAssertEqual(code, errorCode, "正しい値が取得できていない: \(errorCode)")
-                    default:
-                        XCTFail("想定外のエラー")
-                    }
+                    guard let error = error as? APIError else { return XCTFail("想定外のエラー") }
+                    guard case let .invalidStatus(code: code, reason: _) = error else { return XCTFail("想定外のエラー") }
+                    XCTAssertEqual(code, errorCode, "正しい値が取得できていない: \(errorCode)")
                 })
         }
 
@@ -485,6 +479,69 @@ class APIRequestTests: XCTestCase {
                 onError: { error in
                     XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
                 })
+        }
+    }
+
+    func test_getErrorResponse() throws {
+        let url = robot.url
+
+        XCTContext.runActivity(named: "APIGatewayエラーの場合") { _ in
+            let (errorCode, _) = FakeFactory.shared.httpErrorGen.generate
+            let errorResponse = RCSError.APIGatewayErrorResponse.arbitrary.generate
+            let data = try! JSONEncoder().encode(errorResponse)
+
+            stub(uri(url.absoluteString), jsonData(data, status: errorCode))
+
+            request(APIResult<[RobotAPIEntity.Data]>.self,
+                    result: api.get(url: url, token: nil),
+                    onSuccess: { data in
+                        XCTFail("値を取得できてはいけない: \(data)")
+                    }, onError: { error in
+                        guard let error = error as? APIError else { return XCTFail("想定外のエラー") }
+                        guard case let .invalidStatus(code: code, reason: reason) = error else { return XCTFail("想定外のエラー") }
+                        guard case let .apiGatewayError(response: actual) = reason else { return XCTFail("想定外のエラー") }
+                        XCTAssertEqual(code, errorCode, "正しい値が取得できていない: \(code)")
+                        XCTAssertEqual(actual, errorResponse, "正しい値が取得できていない: \(actual)")
+                    })
+        }
+
+        XCTContext.runActivity(named: "Lambda Functionエラーの場合") { _ in
+            let (errorCode, _) = FakeFactory.shared.httpErrorGen.generate
+            let errorResponse = RCSError.LamdbaFunctionErrorResponse.arbitrary.generate
+            let data = try! JSONEncoder().encode(errorResponse)
+
+            stub(uri(url.absoluteString), jsonData(data, status: errorCode))
+
+            request(APIResult<[RobotAPIEntity.Data]>.self,
+                    result: api.get(url: url, token: nil),
+                    onSuccess: { data in
+                        XCTFail("値を取得できてはいけない: \(data)")
+                    }, onError: { error in
+                        guard let error = error as? APIError else { return XCTFail("想定外のエラー") }
+                        guard case let .invalidStatus(code: code, reason: reason) = error else { return XCTFail("想定外のエラー") }
+                        guard case let .lambdaFunctionError(response: actual) = reason else { return XCTFail("想定外のエラー") }
+                        XCTAssertEqual(code, errorCode, "正しい値が取得できていない: \(code)")
+                        XCTAssertEqual(actual, errorResponse, "正しい値が取得できていない: \(actual)")
+                    })
+        }
+
+        XCTContext.runActivity(named: "不明なレスポンスの場合") { _ in
+            let (errorCode, _) = FakeFactory.shared.httpErrorGen.generate
+            let errorResponse = String.arbitrary.generate.data(using: .unicode)!
+
+            stub(uri(url.absoluteString), jsonData(errorResponse, status: errorCode))
+
+            request(APIResult<[RobotAPIEntity.Data]>.self,
+                    result: api.get(url: url, token: nil),
+                    onSuccess: { data in
+                        XCTFail("値を取得できてはいけない: \(data)")
+                    }, onError: { error in
+                        guard let error = error as? APIError else { return XCTFail("想定外のエラー") }
+                        guard case let .invalidStatus(code: code, reason: reason) = error else { return XCTFail("想定外のエラー") }
+                        guard case let .unknownError(data: actual) = reason else { return XCTFail("想定外のエラー") }
+                        XCTAssertEqual(code, errorCode, "正しい値が取得できていない: \(code)")
+                        XCTAssertEqual(actual, errorResponse, "正しい値が取得できていない")
+                    })
         }
     }
 
@@ -543,7 +600,8 @@ class APIRequestTests: XCTestCase {
 
         XCTContext.runActivity(named: "Robot画像を取得した場合(404)") { _ in
             let completionExpectation = expectation(description: "completion")
-            stub(uri(robot.url.absoluteString + "/\(param)/image"), http(404, download: .noContent))
+            let errorCode: Int = 404
+            stub(uri(robot.url.absoluteString + "/\(param)/image"), http(errorCode, download: .noContent))
 
             request(
                 Data.self,
@@ -552,12 +610,10 @@ class APIRequestTests: XCTestCase {
                     XCTFail("値を取得できてはいけない: \(data)")
                 },
                 onError: { error in
-                    switch error as? APIError {
-                    case .invalidStatus(404, ""):
-                        completionExpectation.fulfill()
-                    default:
-                        XCTFail("予期しないエラー: \(error)")
-                    }
+                    guard let error = error as? APIError else { return XCTFail("想定外のエラー") }
+                    guard case let .invalidStatus(code: code, reason: _) = error else { return XCTFail("想定外のエラー") }
+                    XCTAssertEqual(code, errorCode, "正しい値が取得できていない: \(code)")
+                    completionExpectation.fulfill()
                 })
             wait(for: [completionExpectation], timeout: ms1000)
         }

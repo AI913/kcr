@@ -242,6 +242,29 @@ extension DataManageModel.Output.Command: Arbitrary {
                                                   updator: c.generate(using: FakeFactory.shared.emailGen))
         }
     }
+
+    public static func pattern(success: Int, fail: Int, error: Int) -> Gen<Self> {
+        return Gen<Self>.compose { c in
+            return DataManageModel.Output.Command(taskId: c.generate(using: FakeFactory.shared.uuidStringGen),
+                                                  robotId: c.generate(using: FakeFactory.shared.uuidStringGen),
+                                                  started: c.generate(using: FakeFactory.shared.epochTimeGen),
+                                                  exited: c.generate(using: FakeFactory.shared.epochTimeGen),
+                                                  execDuration: c.generate(),
+                                                  receivedStartReort: c.generate(using: FakeFactory.shared.epochTimeGen),
+                                                  receivedExitReort: c.generate(using: FakeFactory.shared.epochTimeGen),
+                                                  status: c.generate(),
+                                                  resultInfo: c.generate(),
+                                                  success: success,
+                                                  fail: fail,
+                                                  error: error,
+                                                  robot: c.generate(),
+                                                  dataVersion: c.generate(),
+                                                  createTime: c.generate(using: FakeFactory.shared.epochTimeGen),
+                                                  creator: c.generate(using: FakeFactory.shared.emailGen),
+                                                  updateTime: c.generate(using: FakeFactory.shared.epochTimeGen),
+                                                  updator: c.generate(using: FakeFactory.shared.emailGen))
+        }
+    }
 }
 
 // MARK: - System情報

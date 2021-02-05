@@ -24,12 +24,22 @@ protocol MainTabBarControllerProtocol: class {
     /// ConnectionStatusボタンを更新
     /// - Parameter color: 表示カラー
     func updateConnectionStatusButton(color: UIColor?)
+    /// JobEntryを起動
+    func launchJobEntry()
 }
 
 class MainTabBarController: UITabBarController {
 
     // MARK: - IBOutlet
     @IBOutlet weak var connectionStatusBarButtonItem: UIBarButtonItem!
+
+    @IBOutlet weak var jobEntryBarButtonItem: UIBarButtonItem!
+
+    private enum Tab: String {
+        case Dashboard = "Dashboard"
+        case Robot = "Robot"
+        case Job = "Job"
+    }
 
     // MARK: - Variable
     var presenter: MainPresenterProtocol!
@@ -77,6 +87,19 @@ extension MainTabBarController {
     @IBAction private func selectorConnectionStatusBarButtonItem(_ sender: UIBarButtonItem) {
         presenter?.tapConnectionStatusButton()
     }
+
+    @IBAction func jobEntryButtonTapped(_ sender: Any) {
+        presenter?.tapAddButton()
+    }
+}
+
+// MARK: - UITabBarControllerDelegate
+extension MainTabBarController: UITabBarControllerDelegate {
+
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        let isJob = Tab(rawValue: tabBar.selectedItem?.title ?? "") == .Job
+        enableJobEntryButton(isJob)
+    }
 }
 
 // MARK: - Interface Function
@@ -100,6 +123,11 @@ extension MainTabBarController: MainTabBarControllerProtocol {
     func updateConnectionStatusButton(color: UIColor?) {
         connectionStatusBarButtonItem.tintColor = color
     }
+
+    func launchJobEntry() {
+        let vc = StoryboardScene.JobEntry.initialScene.instantiate()
+        self.present(vc, animated: true, completion: nil)
+    }
 }
 
 // MARK: - Private Function
@@ -113,5 +141,15 @@ extension MainTabBarController {
         view.addSubview(logo)
         let item = UIBarButtonItem(customView: view)
         self.navigationItem.leftBarButtonItems = [item, connectionStatusBarButtonItem]
+        enableJobEntryButton(false)
+    }
+
+    private func enableJobEntryButton(_ isJob: Bool) {
+        jobEntryBarButtonItem.isEnabled = isJob
+        if isJob {
+            jobEntryBarButtonItem.tintColor = nil
+        } else {
+            jobEntryBarButtonItem.tintColor = UIColor.clear
+        }
     }
 }

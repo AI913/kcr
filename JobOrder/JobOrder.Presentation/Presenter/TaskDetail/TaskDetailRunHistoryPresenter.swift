@@ -276,6 +276,12 @@ extension TaskDetailRunHistoryPresenter {
         let cursor = self.cursor ?? PagingModel.Cursor(offset: 0, limit: itemsPerPage)
         dataUseCase.tasksFromJob(id: id, cursor: cursor)
             .receive(on: DispatchQueue.main)
+            .tryMap({ response -> PagingModel.PaginatedResult<[DataManageModel.Output.Task]> in
+                if response.data.allSatisfy({ !$0.robotIds.isEmpty }) {
+                    return response
+                }
+                throw JobOrderError.connectionFailed(reason: .unacceptableResponse)
+            })
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished: break
@@ -287,7 +293,7 @@ extension TaskDetailRunHistoryPresenter {
                 self.tasks = response.data
                 self.totalItems = response.total
                 self.cursor = response.cursor
-                self.tasks.filter { !$0.robotIds.isEmpty }
+                self.tasks
                     .compactMap { self.dataUseCase.commandFromTask(taskId: $0.id, robotId: $0.robotIds.first!) }
                     .serialize()?
                     .receive(on: DispatchQueue.main)

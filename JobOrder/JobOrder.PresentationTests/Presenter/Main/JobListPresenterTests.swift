@@ -155,11 +155,6 @@ class JobListPresenterTests: XCTestCase {
         XCTAssertEqual(vc.transitionToJobDetailCallCount, 1, "ViewControllerのメソッドが呼ばれない")
     }
 
-    func test_tapAddButton() {
-        presenter.tapAddButton()
-        XCTAssertEqual(vc.launchJobEntryCallCount, 1, "ViewControllerのメソッドが呼ばれない")
-    }
-
     func test_filterAndSort() {
 
         XCTContext.runActivity(named: "未設定の場合") { _ in

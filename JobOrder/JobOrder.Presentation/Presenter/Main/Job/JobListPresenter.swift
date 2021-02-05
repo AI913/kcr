@@ -28,9 +28,6 @@ protocol JobListPresenterProtocol {
     func requirementText(_ index: Int) -> String?
     /// セルを選択
     func selectRow(index: Int)
-    /// Addボタンをタップ
-    /// - Parameter index: 配列のIndex
-    func tapAddButton()
     /// 検索
     /// - Parameter index: 配列のIndex
     func filterAndSort(keyword: String?, keywordChanged: Bool)
@@ -102,11 +99,6 @@ extension JobListPresenter: JobListPresenterProtocol {
     /// - Parameter index: 配列のIndex
     func selectRow(index: Int) {
         vc.transitionToJobDetail()
-    }
-
-    /// Addボタンをタップ
-    func tapAddButton() {
-        vc.launchJobEntry()
     }
 
     /// 検索

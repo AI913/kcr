@@ -536,7 +536,7 @@ class AuthenticationUseCaseTests: XCTestCase {
                     case .finished:
                         XCTFail("値を取得できてはいけない")
                     case .failure(let e):
-                        let expected = JobOrderError.connectionFailed(reason: .failToDisconnect(error: nil)) as NSError
+                        let expected = JobOrderError.connectionFailed(reason: .failToDisconnect) as NSError
                         XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
                     }
                     completionExpectation.fulfill()

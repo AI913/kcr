@@ -395,28 +395,36 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
 
     // Command, Taskともに存在する場合
     func test_na() {
-        let commands = DataManageModel.Output.Command.arbitrary.sample
-        let task = DataManageModel.Output.Task.arbitrary.generate
+        let command = DataManageModel.Output.Command.pattern(success: 1, fail: 2, error: 3).generate
+        let task = DataManageModel.Output.Task.pattern(numberOfRuns: 10).generate
+        let expected = 10 - (1 + 2 + 3)
+
+        let index = 0
+        var commands = DataManageModel.Output.Command.arbitrary.sample
+        commands.insert(command, at: index)
+
         presenter.commands = commands
         presenter.task = task
-        XCTAssert(presenter.na(0) == calcNA(command: commands[0], task: task), "正しい値が取得できていない")
+        let actual = presenter.na(index)
+        XCTAssertEqual(actual, expected, "正しい値が取得できていない: \(String(describing: actual))")
     }
 
     // Command, Taskともに存在しない場合
     func test_naWithoutCommandTask() {
-        XCTAssertEqual(presenter.na(1), 0, "正しい値が取得できていない")
+        XCTAssertNil(presenter.na(1), "正しい値が取得できていない")
     }
 
     // Commandが存在する, Taskが存在しない場合
     func test_naWithoutTask() {
         presenter.commands = DataManageModel.Output.Command.arbitrary.sample
-        XCTAssertEqual(presenter.na(1), 0, "正しい値が取得できていない")
+        XCTAssertNil(presenter.na(1), "正しい値が取得できていない")
     }
 
     // Commandが存在しない, Taskが存在する場合
     func test_naWithoutCommand() {
-        presenter.task = DataManageModel.Output.Task.pattern(numberOfRuns: 5).generate
-        XCTAssertEqual(presenter.na(1), presenter.task?.exit.option.numberOfRuns, "正しい値が取得できていない")
+        let task = DataManageModel.Output.Task.pattern(numberOfRuns: 5).generate
+        presenter.task = task
+        XCTAssertEqual(presenter.na(1), task.exit.option.numberOfRuns, "正しい値が取得できていない")
     }
 
     // TODO: テスト作成
@@ -424,17 +432,4 @@ class TaskDetailRobotSelectionPresenterTests: XCTestCase {
         // tapOrderEntryButtonが実装されていない
     }
 
-    private func calcNA(command: JobOrder_Domain.DataManageModel.Output.Command?, task: JobOrder_Domain.DataManageModel.Output.Task?) -> Int {
-        let otherCount = (command?.success ?? 0) + (command?.fail ?? 0) + (command?.error ?? 0)
-        var naCount = (task?.exit.option.numberOfRuns ?? 0)
-
-        if naCount != 0 {
-            naCount = (task?.exit.option.numberOfRuns ?? 0) - otherCount
-        }
-        //TODO:現在APIから返ってくる値の整合性が取れていない（総数よりSuccess数の方が多い）のでマイナスの値にならないようにする
-        if 0 > naCount {
-            naCount = 0
-        }
-        return naCount
-    }
 }

@@ -144,7 +144,7 @@ extension TaskDetailTaskInformationViewController {
         let successCount = (presenter?.success() ?? 0)
         let failCount = (presenter?.failure() ?? 0)
         let errorCount = (presenter?.error() ?? 0)
-        let naCount = (presenter?.na() ?? 0)
+        let naCount = presenter?.na()
 
         createdAtValueLabel.attributedText = presenter?.createdAt(textColor: createdAtValueLabel.textColor, font: createdAtValueLabel.font)
         lastUpdatedAtValueLabel.attributedText = presenter?.updatedAt(textColor: lastUpdatedAtValueLabel.textColor, font: lastUpdatedAtValueLabel.font)
@@ -172,25 +172,31 @@ extension TaskDetailTaskInformationViewController {
         CircularProgress.progressColor = UIColor.blue
         CircularProgress.trackLineWidth = 2.0
 
-        let fullValue = (successCount + failCount + errorCount + naCount)
-        var nValue: Float = 1
-        if fullValue == 0 {
-            nValue = 0
+        // Code for making the pie chart
+        let labels = ["Success", "Fail", "Error"]
+        let numbers = [successCount, failCount, errorCount]
+        let sum = numbers.reduce(0, +)
+
+        var results = Array(zip(labels, numbers))
+        var nValue: Float = 0.0
+        if let naCount = naCount, naCount > 0 {
+            if sum > 0 {
+                nValue = Float(sum) / Float(sum + naCount)
+            }
+            results.append(("N/A", naCount))
         } else {
-            nValue = Float(Float(successCount + failCount + errorCount) / Float(fullValue))
+            if sum > 0 {
+                nValue = 1.0
+            }
         }
 
         CircularProgress.setProgressWithAnimation(duration: 1.0, value: nValue)
         CircularProgress.progress = nValue
         CircularProgress.addSubview(statusImageView)
 
-        // Code for making the pie chart
-        let results = ["Success " + String(successCount),
-                       "Fail " + String(failCount),
-                       "Error " + String(errorCount),
-                       "N/A " + String(naCount)]
-        let numbers = [successCount, failCount, errorCount, naCount]
-        customizeChart(dataPoints: results, values: numbers.map { Double($0) })
+        let dataPoints = results.map({ String(format: "%@ %d", $0, $1) })
+        let values = results.map { Double($1) }
+        customizeChart(dataPoints: dataPoints, values: values)
     }
 
     private func customizeChart(dataPoints: [String], values: [Double]) {

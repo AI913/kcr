@@ -66,6 +66,49 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
         XCTAssertEqual(vc.reloadTableCallCount, 1, "画面が更新されない")
     }
 
+    func test_viewWillAppearEmptyRobotIds() {
+        let param = "test"
+
+        let expectedCursor = PagingModel.Cursor(offset: 0, limit: 20)
+        let expectedTotal = 123
+
+        let taksHandlerExpectation = expectation(description: "task handler")
+        let commandHandlerExpectation = expectation(description: "command handler")
+        commandHandlerExpectation.assertForOverFulfill = false
+        commandHandlerExpectation.isInverted = true
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
+        let task = DataManageModel.Output.Task.pattern(robotIds: []).generate
+        var tasks = DataManageModel.Output.Task.arbitrary.suchThat({ !$0.robotIds.isEmpty }).sample
+        tasks.append(task)
+        let command = DataManageModel.Output.Command.arbitrary.generate
+        presenter.jobData = MainViewData.Job(id: param)
+
+        data.tasksFromJobHandler = { id, cursor in
+            return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Task]>, Error> { promise in
+                promise(.success(.init(data: tasks, cursor: expectedCursor, total: expectedTotal)))
+                taksHandlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        data.commandFromTaskHandler = { _, _ in
+            return Future<JobOrder_Domain.DataManageModel.Output.Command, Error> { promise in
+                promise(.success(command))
+                commandHandlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        presenter.viewWillAppear()
+        wait(for: [taksHandlerExpectation, commandHandlerExpectation, completionExpectation], timeout: ms1000)
+
+        XCTAssertEqual(presenter.commands.count, 0, "値が取得できてはいけない")
+        XCTAssertEqual(presenter.tasks.count, 0, "値が取得できてはいけない")
+        XCTAssertNil(presenter.cursor, "値が取得できてはいけない")
+        XCTAssertNil(presenter.totalItems, "値が取得できてはいけない")
+        XCTAssertEqual(vc.reloadTableCallCount, 0, "画面が更新されてはいけない")
+        XCTAssertEqual(vc.showErrorAlertCallCount, 1, "エラーが表示されない")
+    }
+
     func test_viewWillAppearErrorTask() {
         let param = "test"
         let taksHandlerExpectation = expectation(description: "task handler")
@@ -104,7 +147,7 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
         let commandHandlerExpectation = expectation(description: "command handler")
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
-        let task = DataManageModel.Output.Task.arbitrary.generate
+        let task = DataManageModel.Output.Task.arbitrary.suchThat({ !$0.robotIds.isEmpty }).generate
         presenter.jobData = MainViewData.Job(id: param)
 
         data.tasksFromJobHandler = { id, _ in
@@ -624,7 +667,7 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
 
         data.tasksFromJobHandler = { _, cursor in
             return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Task]>, Error> { promise in
-                promise(.success(.init(data: [DataManageModel.Output.Task.arbitrary.generate], cursor: nil, total: nil)))
+                promise(.success(.init(data: [DataManageModel.Output.Task.arbitrary.suchThat({ !$0.robotIds.isEmpty }).generate], cursor: nil, total: nil)))
                 taksHandlerExpectation.fulfill()
                 XCTAssertEqual(cursor, expectedCursor, "前ページ取得指定になっていない")
             }.eraseToAnyPublisher()
@@ -661,7 +704,7 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
 
         data.tasksFromJobHandler = { _, cursor in
             return Future<PagingModel.PaginatedResult<[JobOrder_Domain.DataManageModel.Output.Task]>, Error> { promise in
-                promise(.success(.init(data: [DataManageModel.Output.Task.arbitrary.generate], cursor: nil, total: nil)))
+                promise(.success(.init(data: [DataManageModel.Output.Task.arbitrary.suchThat({ !$0.robotIds.isEmpty }).generate], cursor: nil, total: nil)))
                 taksHandlerExpectation.fulfill()
                 XCTAssertEqual(cursor, expectedCursor, "次ページ取得指定になっていない")
             }.eraseToAnyPublisher()
