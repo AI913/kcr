@@ -632,7 +632,7 @@ public struct DataManageModel {
             /// ID
             public let id: String
             /// 名前
-            public let name: String
+            public let name: String?
             /// 要求事項
             public var requirements: [Requirement] = []
             /// 画像パス

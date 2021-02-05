@@ -17,4 +17,11 @@ struct JobEntryBuilder {
         }
     }
 
+    struct ActionLibrarySelection {
+        func build(vc: JobEntrySearchViewController, viewData: JobEntryViewData) -> JobEntrySearchPresenter {
+            return JobEntrySearchPresenter(dataUseCase: Builder().dataUseCase,
+                                                     vc: vc,
+                                                     viewData: viewData)
+        }
+    }
 }
