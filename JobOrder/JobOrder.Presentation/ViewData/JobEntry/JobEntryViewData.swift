@@ -14,4 +14,5 @@ import JobOrder_Domain
 struct JobEntryViewData {
     /// Robot ID
     var robotId: String?
+    var robotIds: [String]?
 }

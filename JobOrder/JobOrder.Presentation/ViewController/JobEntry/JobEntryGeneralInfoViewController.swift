@@ -20,6 +20,7 @@ protocol JobEntryGeneralInfoViewControllerProtocol: class {
 class JobEntryGeneralInfoViewController: UIViewController {
 
     // MARK: - IBOutlet
+    @IBOutlet var robotCollection: UICollectionView!
     @IBOutlet private weak var subtitle: UILabel!
     @IBOutlet private weak var jobNameTitleLabel: UILabel!
     @IBOutlet private weak var jobNameTextField: UITextField!
@@ -27,7 +28,6 @@ class JobEntryGeneralInfoViewController: UIViewController {
     @IBOutlet private weak var overviewTextView: UITextView!
     @IBOutlet private weak var cancelBarButtonItem: UIBarButtonItem!
     @IBOutlet private weak var continueButton: UIButton!
-    @IBOutlet weak var robotCollection: UICollectionView!
 
     // MARK: - Variable
     var presenter: JobEntryGeneralInfoPresenterProtocol!
@@ -95,8 +95,8 @@ extension JobEntryGeneralInfoViewController {
     }
 
     @IBAction private func touchUpInsideContinueButton(_ sender: UIButton) {
-        //        let vc = StoryboardScene.ActionEntry.initialScene.instantiate()
-        //        self.present(vc, animated: true, completion: nil)
+        //                let vc = StoryboardScene.ActionEntry.initialScene.instantiate()
+        //                self.present(vc, animated: true, completion: nil)
     }
 }
 
@@ -107,9 +107,9 @@ extension JobEntryGeneralInfoViewController {
         navigationItem.leftBarButtonItem?.title = L10n.cancel
         navigationItem.title = L10n.JobEntryGeneralInformationForm.title
         subtitle?.text = L10n.JobEntryGeneralInformationForm.subtitle
-        jobNameTitleLabel?.text = L10n.JobEntryGeneralInformationForm.jobName
+        //        jobNameTitleLabel?.text = L10n.JobEntryGeneralInformationForm.jobName
         jobNameTitleLabel?.attributedText = self.toRequiredMutableAttributedString(jobNameTitleLabel.text)
-        overviewTitleLabel?.text = L10n.JobEntryGeneralInformationForm.remarks
+        //        overviewTitleLabel?.text = L10n.JobEntryGeneralInformationForm.remarks
         continueButton?.setTitle(L10n.JobEntryGeneralInformationForm.bottomButton, for: .normal)
     }
 }
@@ -129,10 +129,10 @@ extension JobEntryGeneralInfoViewController: UICollectionViewDataSource {
 
         cell.inject(presenter: presenter)
         cell.setItem(indexPath)
-        //        if let presenter = presenter, presenter.isSelected(indexPath: indexPath) {
-        //            cell.isSelected = true
-        //            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
-        //        }
+        if let presenter = presenter, presenter.isSelected(indexPath: indexPath) {
+            cell.isSelected = true
+            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
+        }
         return cell
     }
 }
@@ -140,38 +140,38 @@ extension JobEntryGeneralInfoViewController: UICollectionViewDataSource {
 // MARK: - Implement UICollectionViewDelegate
 extension JobEntryGeneralInfoViewController: UICollectionViewDelegate {
 
-    //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    //        presenter?.selectItem(indexPath: indexPath)
-    //        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
-    //    }
-    //
-    //    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-    //        presenter?.selectItem(indexPath: indexPath)
-    //        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
-    //    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter?.selectItem(indexPath: indexPath)
+        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        presenter?.selectItem(indexPath: indexPath)
+        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
+    }
 }
 
 // MARK: - Implement UICollectionViewDelegateFlowLayout
-//extension JobEntryGeneralInfoViewController: UICollectionViewDelegateFlowLayout {
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//
-//        guard self.computedCellSize == nil else {
-//            return self.computedCellSize!
-//        }
-//
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: JobEntryRobotSelectionRobotCollectionViewCell.identifier, for: indexPath)
-//
-//        guard let prototypeCell = cell as? JobEntryRobotSelectionRobotCollectionViewCell,
-//              let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else {
-//            fatalError("CollectionViewCell is not found.")
-//        }
-//
-//        let cellSize = prototypeCell.propotionalScaledSize(for: flowLayout, numberOfColumns: 2)
-//        self.computedCellSize = cellSize
-//        return cellSize
-//    }
-//}
+extension JobEntryGeneralInfoViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        guard self.computedCellSize == nil else {
+            return self.computedCellSize!
+        }
+
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: JobEntryRobotSelectionRobotCollectionViewCell.identifier, for: indexPath)
+
+        guard let prototypeCell = cell as? JobEntryRobotSelectionRobotCollectionViewCell,
+              let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else {
+            fatalError("CollectionViewCell is not found.")
+        }
+
+        let cellSize = prototypeCell.propotionalScaledSize(for: flowLayout, numberOfColumns: 2)
+        self.computedCellSize = cellSize
+        return cellSize
+    }
+}
 
 // MARK: - Protocol Function
 extension JobEntryGeneralInfoViewController: JobEntryGeneralInfoViewControllerProtocol {

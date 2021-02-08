@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6Mf-Bf-afd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6Mf-Bf-afd">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -45,31 +45,31 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MpI-BU-b6H">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MpI-BU-b6H">
                                 <rect key="frame" x="0.0" y="158" width="414" height="630"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q9R-11-yzm" userLabel="Container View">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="385.5"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q9R-11-yzm" userLabel="Container View">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="655"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="59q-3q-tD5">
-                                                <rect key="frame" x="20" y="20" width="374" height="910.5"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="59q-3q-tD5">
+                                                <rect key="frame" x="20" y="20" width="374" height="615"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="基本情報を入力" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6DM-Od-v3t" userLabel="Description Label">
-                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="14.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="基本情報を入力" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6DM-Od-v3t" userLabel="Description Label">
+                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                         <color key="textColor" systemColor="secondaryLabelColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="w3x-fk-ynV">
-                                                        <rect key="frame" x="0.0" y="34.5" width="374" height="62.5"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="w3x-fk-ynV">
+                                                        <rect key="frame" x="0.0" y="40.5" width="374" height="62.5"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="ジョブ名 *" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n2H-xe-Jgi" userLabel="Job Name Label">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ジョブ名 *" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n2H-xe-Jgi" userLabel="Job Name Label">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="19.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <textField opaque="NO" alpha="0.5" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="ジョブ1" borderStyle="roundedRect" placeholder="Enter name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="66c-b7-8sS" userLabel="Job Name Text Field">
+                                                            <textField opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="ジョブ1" borderStyle="roundedRect" placeholder="Enter name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="66c-b7-8sS" userLabel="Job Name Text Field">
                                                                 <rect key="frame" x="0.0" y="22.5" width="374" height="40"/>
                                                                 <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
                                                                 <constraints>
@@ -84,91 +84,102 @@
                                                             </textField>
                                                         </subviews>
                                                     </stackView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ジョブに確認に使用するロボット" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cPI-sM-4rj" userLabel="Description Label">
-                                                        <rect key="frame" x="0.0" y="117" width="374" height="20.5"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                        <color key="textColor" systemColor="secondaryLabelColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1sD-kq-Lbm" userLabel="Robot Collection">
-                                                        <rect key="frame" x="0.0" y="157.5" width="374" height="510.5"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="nkc-rs-XJT">
-                                                            <size key="itemSize" width="50" height="50"/>
-                                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                        </collectionViewFlowLayout>
-                                                        <cells>
-                                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="JobEntryRobotSelectionRobotCollectionViewCell" id="mZt-cY-IeK" userLabel="Robot Selection Collection View Cell" customClass="JobEntryRobotSelectionRobotCollectionViewCell" customModule="JobOrder_Presentation" customModuleProvider="target">
-                                                                <rect key="frame" x="81.5" y="0.0" width="211" height="100"/>
-                                                                <autoresizingMask key="autoresizingMask"/>
-                                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="hVr-4i-N21">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="211" height="100"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                    <subviews>
-                                                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cpn-Kb-rGd">
-                                                                            <rect key="frame" x="10" y="10" width="191" height="80"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7uz-q1-ZUV">
+                                                        <rect key="frame" x="0.0" y="123" width="374" height="249.5"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ジョブに確認に使用するロボット" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cPI-sM-4rj" userLabel="Description Label">
+                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="19.5"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="TUR-q0-xns" userLabel="Robot Collection">
+                                                                <rect key="frame" x="0.0" y="19.5" width="374" height="230"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="230" id="Ayg-ra-fXQ"/>
+                                                                </constraints>
+                                                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="nvN-Oq-tWz">
+                                                                    <size key="itemSize" width="50" height="50"/>
+                                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                                </collectionViewFlowLayout>
+                                                                <cells>
+                                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="JobEntryRobotSelectionRobotCollectionViewCell" id="fMQ-lW-4mS" userLabel="Robot Selection Collection View Cell" customClass="JobEntryRobotSelectionRobotCollectionViewCell" customModule="JobOrder_Presentation" customModuleProvider="target">
+                                                                        <rect key="frame" x="81.5" y="0.0" width="211" height="100"/>
+                                                                        <autoresizingMask key="autoresizingMask"/>
+                                                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="hbu-xw-KRd">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="211" height="100"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <subviews>
-                                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="o2L-bc-CyN">
-                                                                                    <rect key="frame" x="0.0" y="17" width="161" height="46"/>
+                                                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="tRH-au-cbn">
+                                                                                    <rect key="frame" x="10" y="10" width="191" height="80"/>
                                                                                     <subviews>
-                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HFN-3l-2Qn" userLabel="Display Name Label">
-                                                                                            <rect key="frame" x="0.0" y="0.0" width="161" height="21.5"/>
-                                                                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                                                            <nil key="textColor"/>
-                                                                                            <nil key="highlightedColor"/>
-                                                                                        </label>
-                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O33-hc-bUz" userLabel="Type And Classification Label">
-                                                                                            <rect key="frame" x="0.0" y="26.5" width="161" height="19.5"/>
-                                                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                                                            <color key="textColor" systemColor="secondaryLabelColor"/>
-                                                                                            <nil key="highlightedColor"/>
-                                                                                        </label>
+                                                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="DEd-2W-Z9s">
+                                                                                            <rect key="frame" x="0.0" y="17" width="161" height="46"/>
+                                                                                            <subviews>
+                                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x4y-1P-umU" userLabel="Display Name Label">
+                                                                                                    <rect key="frame" x="0.0" y="0.0" width="161" height="21.5"/>
+                                                                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                                                                    <nil key="textColor"/>
+                                                                                                    <nil key="highlightedColor"/>
+                                                                                                </label>
+                                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ns7-Mg-h2j" userLabel="Type And Classification Label">
+                                                                                                    <rect key="frame" x="0.0" y="26.5" width="161" height="19.5"/>
+                                                                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                                                                    <nil key="highlightedColor"/>
+                                                                                                </label>
+                                                                                            </subviews>
+                                                                                        </stackView>
+                                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZQn-Co-Hw9" userLabel="Checkmark Image">
+                                                                                            <rect key="frame" x="171" y="30" width="20" height="20"/>
+                                                                                            <constraints>
+                                                                                                <constraint firstAttribute="width" constant="20" id="FnJ-PB-pzE"/>
+                                                                                                <constraint firstAttribute="height" constant="20" id="vl6-7q-tfS"/>
+                                                                                            </constraints>
+                                                                                        </imageView>
                                                                                     </subviews>
-                                                                                </stackView>
-                                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kk7-dl-QrO" userLabel="Checkmark Image">
-                                                                                    <rect key="frame" x="171" y="30" width="20" height="20"/>
                                                                                     <constraints>
-                                                                                        <constraint firstAttribute="width" constant="20" id="NFO-7R-bi7"/>
-                                                                                        <constraint firstAttribute="height" constant="20" id="xHv-ZY-r1f"/>
+                                                                                        <constraint firstAttribute="height" constant="80" id="AiL-2k-s6Y"/>
                                                                                     </constraints>
-                                                                                </imageView>
+                                                                                </stackView>
                                                                             </subviews>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="height" constant="80" id="8Sp-hQ-Bhk"/>
+                                                                                <constraint firstItem="tRH-au-cbn" firstAttribute="top" secondItem="hbu-xw-KRd" secondAttribute="top" constant="10" id="333-gx-xYG"/>
+                                                                                <constraint firstAttribute="trailing" secondItem="tRH-au-cbn" secondAttribute="trailing" constant="10" id="7zD-b7-Ryx"/>
+                                                                                <constraint firstItem="tRH-au-cbn" firstAttribute="leading" secondItem="hbu-xw-KRd" secondAttribute="leading" constant="10" id="Tbq-N5-9eI"/>
+                                                                                <constraint firstAttribute="bottom" secondItem="tRH-au-cbn" secondAttribute="bottom" constant="10" id="jPZ-bV-UWA"/>
                                                                             </constraints>
-                                                                        </stackView>
-                                                                    </subviews>
-                                                                    <constraints>
-                                                                        <constraint firstItem="cpn-Kb-rGd" firstAttribute="top" secondItem="hVr-4i-N21" secondAttribute="top" constant="10" id="XnF-gn-ua6"/>
-                                                                        <constraint firstAttribute="trailing" secondItem="cpn-Kb-rGd" secondAttribute="trailing" constant="10" id="fFx-oI-Zli"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="cpn-Kb-rGd" secondAttribute="bottom" constant="10" id="qQB-MD-8eQ"/>
-                                                                        <constraint firstItem="cpn-Kb-rGd" firstAttribute="leading" secondItem="hVr-4i-N21" secondAttribute="leading" constant="10" id="tpv-t0-JPb"/>
-                                                                    </constraints>
-                                                                </collectionViewCellContentView>
-                                                                <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
-                                                                <size key="customSize" width="211" height="100"/>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                        <integer key="value" value="5"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                </userDefinedRuntimeAttributes>
+                                                                        </collectionViewCellContentView>
+                                                                        <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
+                                                                        <size key="customSize" width="211" height="100"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                                <integer key="value" value="5"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                        </userDefinedRuntimeAttributes>
+                                                                        <connections>
+                                                                            <outlet property="checkmarkImage" destination="ZQn-Co-Hw9" id="3ZE-fV-RFf"/>
+                                                                            <outlet property="displayNameLabel" destination="x4y-1P-umU" id="ZDa-q5-71T"/>
+                                                                            <outlet property="typeAndClassificationLabel" destination="Ns7-Mg-h2j" id="KVe-US-FoV"/>
+                                                                        </connections>
+                                                                    </collectionViewCell>
+                                                                </cells>
                                                                 <connections>
-                                                                    <outlet property="checkmarkImage" destination="Kk7-dl-QrO" id="NRN-6D-GHc"/>
-                                                                    <outlet property="displayNameLabel" destination="HFN-3l-2Qn" id="J7F-ol-m8n"/>
-                                                                    <outlet property="typeAndClassificationLabel" destination="O33-hc-bUz" id="QSr-wB-SNg"/>
+                                                                    <outlet property="dataSource" destination="Sdb-JC-f3O" id="e2V-Wg-c6f"/>
+                                                                    <outlet property="delegate" destination="Sdb-JC-f3O" id="LGn-ve-ij7"/>
                                                                 </connections>
-                                                            </collectionViewCell>
-                                                        </cells>
-                                                        <connections>
-                                                            <outlet property="dataSource" destination="Sdb-JC-f3O" id="p45-S2-SRf"/>
-                                                            <outlet property="delegate" destination="Sdb-JC-f3O" id="bu2-OD-scE"/>
-                                                        </connections>
-                                                    </collectionView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Wsq-eU-IcA">
-                                                        <rect key="frame" x="0.0" y="688" width="374" height="222.5"/>
+                                                            </collectionView>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="TUR-q0-xns" firstAttribute="top" secondItem="cPI-sM-4rj" secondAttribute="bottom" id="ACx-26-jZq"/>
+                                                        </constraints>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Wsq-eU-IcA">
+                                                        <rect key="frame" x="0.0" y="392.5" width="374" height="222.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="備考" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IOt-z7-PpC" userLabel="Overview Label">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="19.5"/>
@@ -203,11 +214,6 @@
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="cPI-sM-4rj" firstAttribute="top" secondItem="w3x-fk-ynV" secondAttribute="bottom" constant="20" id="GFA-iX-Fp9"/>
-                                                    <constraint firstItem="1sD-kq-Lbm" firstAttribute="top" secondItem="cPI-sM-4rj" secondAttribute="bottom" constant="20" id="KQg-T3-coT"/>
-                                                    <constraint firstItem="Wsq-eU-IcA" firstAttribute="top" secondItem="1sD-kq-Lbm" secondAttribute="bottom" constant="20" id="W78-wu-R8L"/>
-                                                </constraints>
                                             </stackView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -287,13 +293,13 @@
                         <outlet property="jobNameTitleLabel" destination="n2H-xe-Jgi" id="SCI-0U-fp5"/>
                         <outlet property="overviewTextView" destination="GXa-L4-wbE" id="e04-9l-7Cl"/>
                         <outlet property="overviewTitleLabel" destination="IOt-z7-PpC" id="myF-m1-J0p"/>
-                        <outlet property="robotCollection" destination="1sD-kq-Lbm" id="jdy-VS-igK"/>
+                        <outlet property="robotCollection" destination="TUR-q0-xns" id="GLc-kl-SZg"/>
                         <outlet property="subtitle" destination="6DM-Od-v3t" id="Drb-iO-nbl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2z6-wA-pMf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1655" y="55"/>
+            <point key="canvasLocation" x="1653.6231884057972" y="54.910714285714285"/>
         </scene>
         <!--Job Entry Action View Controller-->
         <scene sceneID="FHf-Pl-PPj">
