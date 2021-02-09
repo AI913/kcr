@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xUW-7u-1gX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xUW-7u-1gX">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -296,8 +296,10 @@
                         <viewLayoutGuide key="safeArea" id="kEW-ER-dAt"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="kEW-ER-dAt" firstAttribute="trailing" secondItem="ntg-Tc-SaB" secondAttribute="trailing" constant="20" id="5FJ-mX-as0"/>
                             <constraint firstItem="75h-VP-n9O" firstAttribute="top" secondItem="NjY-pQ-O0Z" secondAttribute="bottom" constant="20" id="7wH-6c-ix5"/>
                             <constraint firstItem="75h-VP-n9O" firstAttribute="leading" secondItem="kEW-ER-dAt" secondAttribute="leading" constant="20" id="AE2-Zm-se9"/>
+                            <constraint firstItem="ntg-Tc-SaB" firstAttribute="leading" secondItem="kEW-ER-dAt" secondAttribute="leading" constant="20" id="Kp4-07-1cV"/>
                             <constraint firstItem="NjY-pQ-O0Z" firstAttribute="leading" secondItem="kEW-ER-dAt" secondAttribute="leading" constant="20" id="Qel-Bw-VxE"/>
                             <constraint firstItem="ntg-Tc-SaB" firstAttribute="top" secondItem="75h-VP-n9O" secondAttribute="bottom" constant="20" id="X82-yX-H8o"/>
                             <constraint firstItem="kEW-ER-dAt" firstAttribute="bottom" secondItem="Wy4-PO-2sZ" secondAttribute="bottom" constant="20" id="Ynf-aU-1rT"/>

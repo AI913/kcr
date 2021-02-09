@@ -29,7 +29,7 @@ class JobEntryRobotSelectionRobotCollectionViewCell: UICollectionViewCell, UICol
     override func awakeFromNib() {
         super.awakeFromNib()
         let selectedBackgroundView = UIView(frame: self.bounds)
-        selectedBackgroundView.backgroundColor = .black
+        selectedBackgroundView.backgroundColor = .secondarySystemFill
         selectedBackgroundView.alpha = self.alpha * 0.5
         self.selectedBackgroundView = selectedBackgroundView
     }

@@ -18,7 +18,7 @@ protocol JobEntryGeneralInfoPresenterProtocol {
     /// リストの行数
     var numberOfItemsInSection: Int { get }
     /// Continueボタンの有効無効
-    //    var isEnabledContinueButton: Bool { get }
+    var isEnabledContinueButton: Bool { get }
     /// Robotの表示名取得
     /// - Parameter index: 配列のIndex
     func displayName(_ index: Int) -> String?
@@ -27,10 +27,10 @@ protocol JobEntryGeneralInfoPresenterProtocol {
     func type(_ index: Int) -> String?
     /// セルの選択可否
     /// - Parameter indexPath: インデックスパス
-    //    func isSelected(indexPath: IndexPath) -> Bool
+    func isSelected(indexPath: IndexPath) -> Bool
     /// セルの選択
     /// - Parameter indexPath: インデックスパス
-    //    func selectItem(indexPath: IndexPath)
+    func selectItem(indexPath: IndexPath)
     /// Continueボタンをタップ
     func tapContinueButton()
 }
@@ -48,8 +48,6 @@ class JobEntryGeneralInfoPresenter {
     private var cancellables: Set<AnyCancellable> = []
     /// リストに表示するRobotのデータ配列
     private var displayRobots: [JobOrder_Domain.DataManageModel.Output.Robot]?
-    /// リストに表示するRobotのデータ配列（フィルタ処理前）
-    var originalRobots: [JobOrder_Domain.DataManageModel.Output.Robot]?
     /// 取得したRobotのデータ配列
     private var cachedRobots: [String: JobOrder_Domain.DataManageModel.Output.Robot]?
 
@@ -76,9 +74,9 @@ extension JobEntryGeneralInfoPresenter: JobEntryGeneralInfoPresenterProtocol {
     }
 
     /// Continueボタンの有効無効
-    //    var isEnabledContinueButton: Bool {
-    //        data.form.robotIds?.count ?? 0 > 0
-    //    }
+    var isEnabledContinueButton: Bool {
+        data.robotIds?.count ?? 0 > 0
+    }
 
     /// Robotの表示名取得
     /// - Parameter index: 配列のIndex
@@ -97,23 +95,23 @@ extension JobEntryGeneralInfoPresenter: JobEntryGeneralInfoPresenterProtocol {
     /// セルの選択可否
     /// - Parameter indexPath: インデックスパス
     /// - Returns: 選択中かどうか
-    //    func isSelected(indexPath: IndexPath) -> Bool {
-    //        guard let id = displayRobots?[indexPath.row].id else { return false }
-    //        return data.form.robotIds?.contains(id) ?? false
-    //    }
+    func isSelected(indexPath: IndexPath) -> Bool {
+        guard let id = displayRobots?[indexPath.row].id else { return false }
+        return data.robotIds?.contains(id) ?? false
+    }
 
     /// セルの選択
     /// - Parameter indexPath: インデックスパス
-    //    func selectItem(indexPath: IndexPath) {
-    //        guard let id = displayRobots?[indexPath.row].id else { return }
-    //        if let index = data.form.robotIds?.firstIndex(of: id) {
-    //            data.form.robotIds?.remove(at: index)
-    //        } else if data.form.robotIds == nil {
-    //            data.form.robotIds = [id]
-    //        } else {
-    //            data.form.robotIds?.append(id)
-    //        }
-    //    }
+    func selectItem(indexPath: IndexPath) {
+        guard let id = displayRobots?[indexPath.row].id else { return }
+        if let index = data.robotIds?.firstIndex(of: id) {
+            data.robotIds?.remove(at: index)
+        } else if data.robotIds == nil {
+            data.robotIds = [id]
+        } else {
+            data.robotIds?.append(id)
+        }
+    }
 
     /// Continueボタンをタップ
     func tapContinueButton() {
@@ -136,7 +134,6 @@ extension JobEntryGeneralInfoPresenter {
     func cacheRobots(_ robots: [DataManageModel.Output.Robot]?) {
         guard let robots = robots else { return }
         cachedRobots = robots.reduce(into: [String: DataManageModel.Output.Robot]()) { $0[$1.id] = $1 }
-        print(cachedRobots)
         filterAndSort()
     }
 
@@ -153,47 +150,7 @@ extension JobEntryGeneralInfoPresenter {
             display = display.filter { _ in true }
         }
         displayRobots = display
-        //        vc.reloadCollection()
+        vc.reloadCollection()
     }
-    //
-    //    private func observeRobots() {
-    //        useCase.observeRobotData()
-    //            .receive(on: DispatchQueue.main)
-    //            .sink { response in
-    //                // Logger.debug(target: self, "\(String(describing: response))")
-    //                self.filterAndSort(robots: response, keywordChanged: false)
-    //            }.store(in: &cancellables)
-    //    }
-    //
-    //
-    //    func filterAndSort(keyword: String? = nil, robots: [JobOrder_Domain.DataManageModel.Output.Robot]?, keywordChanged: Bool) {
-    //        guard var robots = robots else { return }
-    //
-    //        var searchKeyWord: String? = keyword
-    //        if keywordChanged {
-    //            searchKeyString = searchKeyWord!
-    //            robots = originalRobots!
-    //        } else {
-    //            searchKeyWord = searchKeyString
-    //            originalRobots = robots
-    //        }
-    //
-    //        // TODO: - Sort by user settings.
-    //        var display = robots.sorted {
-    //            if let name0 = $0.name, let name1 = $1.name, name0 != name1 {
-    //                return name0 < name1
-    //            } else {
-    //                return $0.id < $1.id
-    //            }
-    //        }
-    //
-    //        if let searchKeyWord = searchKeyWord, !searchKeyWord.isEmpty {
-    //            display = display.filter {
-    //                guard let name = $0.name else { return false }
-    //                return name.uppercased().contains(searchKeyWord.uppercased())
-    //            }
-    //        }
-    //        displayRobots = display
-    //        vc.reloadCollection()
-    //    }
+
 }
