@@ -500,7 +500,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rkD-MN-7lb">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rkD-MN-7lb" userLabel="ActionLibrary Collection">
                                 <rect key="frame" x="0.0" y="44" width="260" height="640"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor"/>
@@ -511,16 +511,64 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="z81-1S-2jM">
-                                        <rect key="frame" x="66" y="0.0" width="128" height="128"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="z81-1S-2jM" customClass="JobEntryActionLibraryViewCell" customModule="JobOrder_Presentation" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="118" height="117.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="oGF-LH-xZa">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="118" height="117.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="xVY-6T-Ieb">
+                                                    <rect key="frame" x="0.0" y="0.0" width="118" height="117.5"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nLJ-a2-ecx">
+                                                            <rect key="frame" x="0.0" y="0.0" width="118" height="80"/>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ActionLibrary" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95s-T3-NJz">
+                                                            <rect key="frame" x="0.0" y="83" width="118" height="17"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bnr-lR-Hiw">
+                                                            <rect key="frame" x="0.0" y="103" width="118" height="14.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="bnr-lR-Hiw" secondAttribute="trailing" id="78s-RR-UOX"/>
+                                                        <constraint firstAttribute="trailing" secondItem="95s-T3-NJz" secondAttribute="trailing" id="Hak-DF-Czp"/>
+                                                        <constraint firstItem="nLJ-a2-ecx" firstAttribute="top" secondItem="xVY-6T-Ieb" secondAttribute="top" id="Q4H-m5-KhZ"/>
+                                                        <constraint firstItem="95s-T3-NJz" firstAttribute="leading" secondItem="xVY-6T-Ieb" secondAttribute="leading" id="bfD-SR-3TQ"/>
+                                                        <constraint firstItem="nLJ-a2-ecx" firstAttribute="leading" secondItem="xVY-6T-Ieb" secondAttribute="leading" id="hQB-x8-E6i"/>
+                                                        <constraint firstItem="bnr-lR-Hiw" firstAttribute="leading" secondItem="xVY-6T-Ieb" secondAttribute="leading" id="jsP-sg-iwE"/>
+                                                        <constraint firstAttribute="bottom" secondItem="bnr-lR-Hiw" secondAttribute="bottom" id="tRS-xQ-1Ug"/>
+                                                        <constraint firstAttribute="trailing" secondItem="nLJ-a2-ecx" secondAttribute="trailing" id="w41-Sb-Wwo"/>
+                                                        <constraint firstItem="bnr-lR-Hiw" firstAttribute="top" secondItem="95s-T3-NJz" secondAttribute="bottom" constant="3" id="xnl-cx-C8N"/>
+                                                    </constraints>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="xVY-6T-Ieb" firstAttribute="leading" secondItem="oGF-LH-xZa" secondAttribute="leading" id="6pi-v9-NNT"/>
+                                                <constraint firstAttribute="trailing" secondItem="xVY-6T-Ieb" secondAttribute="trailing" id="NHH-rM-xjY"/>
+                                                <constraint firstAttribute="bottom" secondItem="xVY-6T-Ieb" secondAttribute="bottom" id="TV3-s9-3Xg"/>
+                                                <constraint firstItem="xVY-6T-Ieb" firstAttribute="top" secondItem="oGF-LH-xZa" secondAttribute="top" id="VF0-rx-7jc"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                        <connections>
+                                            <outlet property="actionLibraryImage" destination="nLJ-a2-ecx" id="qqS-5l-lOk"/>
+                                            <outlet property="nameLabel" destination="95s-T3-NJz" id="eWj-He-7JR"/>
+                                            <outlet property="versionLabel" destination="bnr-lR-Hiw" id="ZdG-ka-kYa"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="PHi-9D-yBB" id="1Ri-FJ-P17"/>
+                                    <outlet property="delegate" destination="PHi-9D-yBB" id="SnS-LC-94H"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Mdy-V4-qRL"/>

@@ -15,14 +15,22 @@ import JobOrder_Domain
 /// JobEntrySearchPresenterProtocol
 /// @mockable
 protocol JobEntrySearchPresenterProtocol {
+    /// JobEntryのViewData
+    var data: JobEntryViewData { get }
     /// リストの行数
     var numberOfRowsInSection: Int { get }
     /// ActionLibrary ID取得
     /// - Parameter index: 配列のIndex
     func id(_ index: Int) -> String?
+    /// ActionLibraryの画像名取得
+    /// - Parameter index: 配列のIndex
+    func actionLibraryImagePath(_ index: Int) -> String?
     /// ActionLibraryの表示名取得
     /// - Parameter index: 配列のIndex
     func displayName(_ index: Int) -> String?
+    /// ActionLibraryのバージョン取得
+    /// - Parameter index: 配列のIndex
+    func version(_ index: Int) -> Int?
     /// 検索
     /// - Parameter keyword: 検索キーワード
     func filterAndSort(keyword: String?, keywordChanged: Bool)
@@ -70,6 +78,7 @@ class JobEntrySearchPresenter {
 
 // MARK: - Protocol Function
 extension JobEntrySearchPresenter: JobEntrySearchPresenterProtocol {
+    
     /// リストの行数
     var numberOfRowsInSection: Int {
         displayActionLibraries?.count ?? 0
@@ -82,6 +91,13 @@ extension JobEntrySearchPresenter: JobEntrySearchPresenterProtocol {
         return displayActionLibraries?[index].id
     }
 
+    /// ActionLibraryの画像名取得
+    /// - Parameter index: 配列のIndex
+    /// - Returns: 画像名
+    func actionLibraryImagePath(_ index: Int) -> String? {
+        return displayActionLibraries?[index].imagePath
+    }
+
     /// ActionLibraryの表示名取得
     /// - Parameter index: 配列のIndex
     /// - Returns: 表示名
@@ -89,10 +105,11 @@ extension JobEntrySearchPresenter: JobEntrySearchPresenterProtocol {
         return displayActionLibraries?[index].name
     }
 
-    /// セルを選択
+    /// ActionLibraryのバージョン取得
     /// - Parameter index: 配列のIndex
-    func selectRow(index: Int) {
-        vc.transitionToAILibrary()
+    /// - Returns: バージョン
+    func version(_ index: Int) -> Int? {
+        return displayActionLibraries?[index].version
     }
 
     /// 検索
@@ -149,7 +166,7 @@ extension JobEntrySearchPresenter {
         }
 
         displayActionLibraries = display
-        vc.reloadTable()
+        vc.reloadCollection()
     }
 
     private struct SortCondition {

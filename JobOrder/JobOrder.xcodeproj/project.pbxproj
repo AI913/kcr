@@ -1873,7 +1873,6 @@
 		A3DCD5C8251AEE55004BC808 /* JobEntry */ = {
 			isa = PBXGroup;
 			children = (
-				FC369E4C25C7DD4400B70B03 /* CollectionViewCell */,
 				A3DCD5C9251AEE55004BC808 /* JobEntryGeneralInfoViewController.swift */,
 				A3B26D3C251C7979008DFEC5 /* JobEntryActionFlowViewController.swift */,
 				FCB357FD25C91BBF004C8DE1 /* JobEntryActionLibraryListViewController.swift */,
@@ -1881,6 +1880,7 @@
 				A3DCD5CD251AF15B004BC808 /* JobEntryStepView.swift */,
 				A3DCD5CE251AF15B004BC808 /* JobEntryStepView.xib */,
 				FCB06C4A25C7808A007AC492 /* JobEntryCompleteViewController.swift */,
+				FC369E4C25C7DD4400B70B03 /* CollectionViewCell */,
 			);
 			path = JobEntry;
 			sourceTree = "<group>";
