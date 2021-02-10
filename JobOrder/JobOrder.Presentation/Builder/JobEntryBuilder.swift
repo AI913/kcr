@@ -12,16 +12,13 @@ struct JobEntryBuilder {
 
     struct GeneralInfo {
         func build(vc: JobEntryGeneralInfoViewController) -> JobEntryGeneralInfoPresenter {
-            return JobEntryGeneralInfoPresenter(useCase: Builder().dataUseCase,
-                                                vc: vc)
+            return JobEntryGeneralInfoPresenter(useCase: Builder().dataUseCase, vc: vc)
         }
     }
 
     struct ActionLibrarySelection {
-        func build(vc: JobEntrySearchViewController, viewData: JobEntryViewData) -> JobEntrySearchPresenter {
-            return JobEntrySearchPresenter(dataUseCase: Builder().dataUseCase,
-                                           vc: vc as! JobEntrySearchViewControllerProtocol,
-                                                     viewData: viewData)
+        func build(vc: JobEntrySearchViewController) -> JobEntrySearchPresenter {
+            return JobEntrySearchPresenter(dataUseCase: Builder().dataUseCase, vc: vc)
         }
     }
 }

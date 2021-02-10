@@ -159,6 +159,8 @@ extension JobEntryGeneralInfoViewController: UICollectionViewDelegateFlowLayout 
         guard self.computedCellSize == nil else {
             return self.computedCellSize!
         }
+        
+        print(indexPath)
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: JobEntryRobotSelectionRobotCollectionViewCell.identifier, for: indexPath)
 
