@@ -33,6 +33,14 @@ class JobEntrySearchViewController: UIViewController {
     // MARK: - Override function (view controller lifecycle)
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        collectionView.dataSource = self
+//        collectionView.backgroundColor = .lightGray
+//
+//        let layout = UICollectionViewFlowLayout()
+//        layout.itemSize = CGSize(width: 100, height: 120)
+//        layout.minimumInteritemSpacing = 5
+//        collectionView.collectionViewLayout = layout
     }
 
     override func viewWillAppear(_ animated: Bool) {
