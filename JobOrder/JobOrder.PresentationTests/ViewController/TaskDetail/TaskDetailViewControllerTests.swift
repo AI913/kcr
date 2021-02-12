@@ -64,7 +64,7 @@ class TaskDetailViewControllerTests: XCTestCase {
 
     func test_tapOrderButton() {
         vc.cancelTaskButton.sendActions(for: .touchUpInside)
-        //TODO:未実装
+        // TODO:未実装
     }
 
     func test_showErrorAlert() {

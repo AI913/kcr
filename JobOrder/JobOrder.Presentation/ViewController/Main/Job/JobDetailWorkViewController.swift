@@ -148,7 +148,7 @@ extension JobDetailWorkViewController: JobDetailWorkViewControllerProtocol {
         taskTableView.reloadData()
         historyTableView.reloadData()
         viewDidLayoutSubviews()
-        //self.view.setNeedsLayout()	// FIXME: こっちだとレイアウトが崩れる（アコーディオンも同じ？）
+        // self.view.setNeedsLayout()	// FIXME: こっちだとレイアウトが崩れる（アコーディオンも同じ？）
     }
 
     /// テーブル行の更新
@@ -173,7 +173,7 @@ extension JobDetailWorkViewController: JobDetailWorkViewControllerProtocol {
         guard let taskId = taskId else { return }
         guard let robotIds = robotIds else { return }
 
-        //robotIdsが一つしか格納されていないのであればRobotSelection画面を飛ばす
+        // robotIdsが一つしか格納されていないのであればRobotSelection画面を飛ばす
         if robotIds.count == 1 {
             guard let jobid = presenter.data.id else { return }
             let navigationController = StoryboardScene.TaskDetail.initialScene.instantiate()

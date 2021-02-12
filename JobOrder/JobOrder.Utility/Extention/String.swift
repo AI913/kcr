@@ -24,7 +24,7 @@ extension String {
 /// https://dishware.sakura.ne.jp/swift/archives/243
 extension String {
 
-    //var md5:    String { return digest(string: self, algorithm: .MD5) }
+    // var md5:    String { return digest(string: self, algorithm: .MD5) }
     var sha1: String { return digest(string: self, algorithm: .SHA1) }
     var sha224: String { return digest(string: self, algorithm: .SHA224) }
     public var sha256: String { return digest(string: self, algorithm: .SHA256) }
@@ -37,7 +37,7 @@ extension String {
         if let cdata = string.cString(using: String.Encoding.utf8) {
             result = Array(repeating: 0, count: digestLength)
             switch algorithm {
-            //case .MD5:      CC_MD5(cdata, CC_LONG(cdata.count-1), &result)
+            // case .MD5:      CC_MD5(cdata, CC_LONG(cdata.count-1), &result)
             case .SHA1:     CC_SHA1(cdata, CC_LONG(cdata.count - 1), &result)
             case .SHA224:   CC_SHA224(cdata, CC_LONG(cdata.count - 1), &result)
             case .SHA256:   CC_SHA256(cdata, CC_LONG(cdata.count - 1), &result)
@@ -57,7 +57,7 @@ extension String {
         var digestLength: Int {
             var result: Int32 = 0
             switch self {
-            //case .MD5:      result = CC_MD5_DIGEST_LENGTH
+            // case .MD5:      result = CC_MD5_DIGEST_LENGTH
             case .SHA1:     result = CC_SHA1_DIGEST_LENGTH
             case .SHA224:   result = CC_SHA224_DIGEST_LENGTH
             case .SHA256:   result = CC_SHA256_DIGEST_LENGTH
@@ -144,13 +144,13 @@ extension Data {
 
 /// https://qiita.com/KikurageChan/items/807e84e3fa68bb9c4de6
 extension String {
-    //絵文字など(2文字分)も含めた文字数を返します
+    // 絵文字など(2文字分)も含めた文字数を返します
     var length: Int {
         let string_NS = self as NSString
         return string_NS.length
     }
 
-    //正規表現の検索をします
+    // 正規表現の検索をします
     public func pregMatche(pattern: String, options: NSRegularExpression.Options = []) -> Bool {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: options) else {
             return false
@@ -159,7 +159,7 @@ extension String {
         return !matches.isEmpty
     }
 
-    //正規表現の検索結果を利用できます
+    // 正規表現の検索結果を利用できます
     public func pregMatche(pattern: String, options: NSRegularExpression.Options = [], matches: inout [String]) -> Bool {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: options) else {
             return false
@@ -175,7 +175,7 @@ extension String {
         return !results.isEmpty
     }
 
-    //正規表現の置換をします
+    // 正規表現の置換をします
     public func pregReplace(pattern: String, with: String, options: NSRegularExpression.Options = []) -> String {
         let regex = try! NSRegularExpression(pattern: pattern, options: options)
         return regex.stringByReplacingMatches(in: self, options: [], range: NSRange(location: 0, length: self.length), withTemplate: with)

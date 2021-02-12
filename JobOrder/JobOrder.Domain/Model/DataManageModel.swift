@@ -316,7 +316,7 @@ public struct DataManageModel {
                 self.updator = robot.updator
                 self.thingName = robot.awsKey?.thingName
                 self.thingArn = robot.awsKey?.thingArn
-                //TODO:RobotのAPIから返ってこない値がinitに必要？
+                // TODO:RobotのAPIから返ってこない値がinitに必要？
                 self.state = State.toEnum("")
             }
 
@@ -805,8 +805,8 @@ public struct DataManageModel {
         }
     }
 
-    /// PostTask用データ
     public struct Input: Codable {
+        /// PostTask用データ
         public struct Task: Codable, Equatable {
             public let jobId: String
             public let robotIds: [String]
@@ -898,6 +898,81 @@ public struct DataManageModel {
                 self.robotIds = task.robotIds
                 self.start = Start(task.start)
                 self.exit = Exit(task.exit)
+            }
+        }
+        /// PostJob用データ
+        public struct Job {
+            public init(name: String, actions: [DataManageModel.Input.Job.Action], entryPoint: Int, overview: String?, remarks: String?, requirements: [DataManageModel.Input.Job.Requirement]?) {
+                self.name = name
+                self.actions = actions
+                self.entryPoint = entryPoint
+                self.overview = overview
+                self.remarks = remarks
+                self.requirements = requirements
+            }
+
+            /// 表示名称
+            public let name: String
+            /// アクション情報
+            public let actions: [Action]
+            /// エントリポイント
+            public let entryPoint: Int
+            /// 概要
+            public let overview: String?
+            /// 備考
+            public let remarks: String?
+            /// 実行要件
+            public let requirements: [Requirement]?
+
+            /// 該当ジョブのアクション情報
+            public struct Action {
+                public init(index: Int, actionLibraryId: String, parameter: DataManageModel.Input.Job.Action.Parameter?, catch: String?, then: String?) {
+                    self.index = index
+                    self.actionLibraryId = actionLibraryId
+                    self.parameter = parameter
+                    self.catch = `catch`
+                    self.then = then
+                }
+
+                /// インデックス
+                public let index: Int
+                /// アクションライブラリ識別子(UUID)
+                public let actionLibraryId: String
+                /// 該当アクションで用いるアクションライブラリの識別子
+                public let parameter: Parameter?
+                /// 後続処理情報群（失敗）
+                public let `catch`: String?
+                /// 後続処理情報群（成功）
+                public let `then`: String?
+
+                /// アクションで実行時引数となるパラメータオブジェクト情報
+                public struct Parameter {
+                    public init(aiLibraryId: String?, aiLibraryObjectId: String?) {
+                        self.aiLibraryId = aiLibraryId
+                        self.aiLibraryObjectId = aiLibraryObjectId
+                    }
+
+                    /// AIライブラリ識別子(UUID)
+                    public let aiLibraryId: String?
+                    /// AIライブラリ分類識別子
+                    public let aiLibraryObjectId: String?
+                }
+
+            }
+
+            /// 実行要件
+            public struct Requirement {
+                public init(type: String, subtype: String, id: String?, versionId: String?) {
+                    self.type = type
+                    self.subtype = subtype
+                    self.id = id
+                    self.versionId = versionId
+                }
+
+                public let type: String
+                public let subtype: String
+                public let id: String?
+                public let versionId: String?
             }
         }
     }

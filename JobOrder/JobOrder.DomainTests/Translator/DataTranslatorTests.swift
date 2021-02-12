@@ -9,6 +9,7 @@
 import XCTest
 @testable import JobOrder_Domain
 @testable import JobOrder_API
+import SwiftCheck
 
 class DataTranslatorTests: XCTestCase {
 
@@ -140,8 +141,59 @@ class DataTranslatorTests: XCTestCase {
 
     func test_toDataWithoutTaskInput() {
         let translator = DataTranslator()
-        let data = translator.toData(model: nil)
+        let model: DataManageModel.Input.Task? = nil
+        let data = translator.toData(model: model)
 
         XCTAssertNil(data, "値を取得できてはいけない")
+    }
+
+    func test_toDataWithJobInput() {
+        let translator = DataTranslator()
+
+        property("DataManageModel.Input.JobをJobOrder_API.JobAPIEntity.Input.Dataに変換した場合") <- forAll { (model: DataManageModel.Input.Job) in
+            guard let data = translator.toData(model: model) else { return false }
+            return model == data
+        }
+    }
+
+    func test_toDataWithoutJobInput() {
+        let translator = DataTranslator()
+        let model: DataManageModel.Input.Job? = nil
+        let data = translator.toData(model: model)
+
+        XCTAssertNil(data, "値を取得できてはいけない")
+    }
+}
+
+extension DataManageModel.Input.Job {
+    static func == (lhs: DataManageModel.Input.Job, rhs: JobOrder_API.JobAPIEntity.Input.Data) -> Bool {
+        let isEqualRequirements = { (lhs: [DataManageModel.Input.Job.Requirement]?, rhs: [JobOrder_API.JobAPIEntity.Input.Data.Requirement]?) -> Bool in
+            switch (lhs, rhs) {
+            case let (lhs?, rhs?):
+                return lhs.elementsEqual(rhs, by: { $0.type == $1.type && $0.subtype == $1.subtype && $0.id == $1.id && $0.versionId == $1.versionId })
+            case (nil, nil): return true
+            default: return false
+            }
+        }
+        let isEqualParameter = { (lhs: DataManageModel.Input.Job.Action.Parameter?, rhs: JobOrder_API.JobAPIEntity.Input.Data.Action.Parameter?) -> Bool in
+            switch (lhs, rhs) {
+            case let (lhs?, rhs?):
+                return lhs.aiLibraryId == rhs.aiLibraryId && lhs.aiLibraryObjectId == rhs.aiLibraryObjectId
+            case (nil, nil): return true
+            default: return false
+            }
+        }
+        return lhs.name == rhs.name &&
+            lhs.actions.elementsEqual(rhs.actions, by: {
+                $0.index == $1.index &&
+                    $0.actionLibraryId == $1.actionLibraryId &&
+                    isEqualParameter($0.parameter, $1.parameter) &&
+                    $0.catch == $1.catch &&
+                    $0.then == $1.then
+            }) &&
+            lhs.entryPoint == rhs.entryPoint &&
+            lhs.overview == rhs.overview &&
+            lhs.remarks == rhs.remarks &&
+            isEqualRequirements(lhs.requirements, rhs.requirements)
     }
 }

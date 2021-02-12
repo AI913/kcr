@@ -143,7 +143,7 @@ class TaskDetailPresenterTests: XCTestCase {
 
         presenter.getCommandAndTask(taskId: param, robotId: param)
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-        //レスポンスが間に合ってない
+        // レスポンスが間に合ってない
         XCTAssert(presenter.task == task, "正しい値が取得できていない")
         XCTAssertEqual(vc.showErrorAlertCallCount, 0, "エラーが起こってはいけない")
     }
@@ -398,10 +398,10 @@ class TaskDetailPresenterTests: XCTestCase {
 
     // Commandが存在しない, Taskが存在する場合
     // TODO: #111 で対策するため一旦コメントアウト
-    //func test_naWithoutCommand() {
+    // func test_naWithoutCommand() {
     //    presenter.task = DataManageModel.Output.Task.arbitrary.generate
     //    XCTAssertEqual(presenter.na(), 0, "正しい値が取得できていない")
-    //}
+    // }
 
     // TODO: テスト作成
     func test_tapOrderEntryButton() {

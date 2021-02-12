@@ -1802,6 +1802,124 @@ class DataManageUseCaseTests: XCTestCase {
         wait(for: [tokenHandlerExpectation, postTaskHandlerExpectation, completionExpectation], timeout: ms1000)
     }
 
+    func test_postJob() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let postTaskHandlerExpectation = expectation(description: "Post task handler")
+        let completionExpectation = expectation(description: "completion")
+        let job = DataManageModel.Input.Job.arbitrary.generate
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        jobAPI.postHandler = {_, argJob  in
+            XCTAssert(job == argJob, "正しい値が取得できていない: \(argJob)")
+            return Future<APIResult<JobAPIEntity.Data>, Error> { promise in
+                postTaskHandlerExpectation.fulfill()
+                let entity: APIResult<JobAPIEntity.Data> = APIResult.arbitrary.generate
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.postJob(postData: job)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished: break
+                case .failure(let error):
+                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+                }
+                completionExpectation.fulfill()
+            }, receiveValue: { response in
+                XCTAssertNotNil(response, "値が取得できていない")
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, postTaskHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_postJobNotReceive() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let postTaskHandlerExpectation = expectation(description: "Post task handler")
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
+        let job = DataManageModel.Input.Job.arbitrary.generate
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        jobAPI.postHandler = {_, _  in
+            return Future<APIResult<JobAPIEntity.Data>, Error> { promise in
+                postTaskHandlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.postJob(postData: job)
+            .sink(receiveCompletion: { _ in
+                XCTFail("値を取得できてはいけない")
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, postTaskHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_postJobError() {
+        let param = "test"
+        let tokenHandlerExpectation = expectation(description: "Token handler")
+        let postTaskHandlerExpectation = expectation(description: "Post task handler")
+        let completionExpectation = expectation(description: "completion")
+        let job = DataManageModel.Input.Job.arbitrary.generate
+        let error = NSError(domain: "Error", code: -1, userInfo: nil)
+        let expected = JobOrderError.internalError(error: error) as NSError
+
+        auth.getTokensHandler = {
+            return Future<JobOrder_API.AuthenticationEntity.Output.Tokens, Error> { promise in
+                tokenHandlerExpectation.fulfill()
+                let entity = JobOrder_API.AuthenticationEntity.Output.Tokens(accessToken: param,
+                                                                             refreshToken: param,
+                                                                             idToken: param,
+                                                                             expiration: Date())
+                promise(.success(entity))
+            }.eraseToAnyPublisher()
+        }
+
+        jobAPI.postHandler = {_, _  in
+            return Future<APIResult<JobAPIEntity.Data>, Error> { promise in
+                postTaskHandlerExpectation.fulfill()
+                promise(.failure(error))
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.postJob(postData: job)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    XCTFail("値を取得できてはいけない")
+                case .failure(let e):
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
+                }
+                completionExpectation.fulfill()
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [tokenHandlerExpectation, postTaskHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
     func test_saveData() {
         let timestamp = FakeFactory.shared.epochTimeGen.generate
         let jobsResult: APIResult<[JobAPIEntity.Data]> = APIResult.arbitrary.suchThat({ $0.time > timestamp }).generate

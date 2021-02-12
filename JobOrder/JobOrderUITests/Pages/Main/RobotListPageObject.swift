@@ -23,8 +23,8 @@ class RobotListPageObject: PageObject {
     var cells: XCUIElementQuery { return view.cells.matching(identifier: IDs.cells) }
 
     func tapCell(index: Int) -> RobotDetailPageObject {
-        //assert(Cells.count > 0, "識別子「robot_listcell」を持つTableCellが格納されていない")
-        //assert(index < Cells.count, "識別子「robot_listcell」を持つセルの数が指定されたインデックス(" + String(index) + ")より少ない")
+        // assert(Cells.count > 0, "識別子「robot_listcell」を持つTableCellが格納されていない")
+        // assert(index < Cells.count, "識別子「robot_listcell」を持つセルの数が指定されたインデックス(" + String(index) + ")より少ない")
         cells.element(boundBy: index).tap()
 
         return RobotDetailPageObject(application: app)

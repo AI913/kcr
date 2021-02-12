@@ -51,7 +51,7 @@ public protocol AuthenticationUseCaseProtocol {
     /// e-mailアドレス取得
     func email() -> AnyPublisher<AuthenticationModel.Output.Email, Error>
 
-    //var _processing: Published<Bool> { get set }
+    // var _processing: Published<Bool> { get set }
     var processing: Bool { get }
     var processingPublished: Published<Bool> { get }
     var processingPublisher: Published<Bool>.Publisher { get }

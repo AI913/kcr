@@ -34,7 +34,7 @@ public class APIRequest: APIRequestProtocol {
     ]
     private let retryCount = 1
     private let session: URLSession = URLSession.shared
-    private let cacheSec: TimeInterval = 5 * 60; //5分キャッシュ
+    private let cacheSec: TimeInterval = 5 * 60; // 5分キャッシュ
 
     public init() {}
 

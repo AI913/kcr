@@ -20,7 +20,7 @@ protocol WebRTCClientDelegate: class {
 final class WebRTCClient: NSObject {
     private static let factory: RTCPeerConnectionFactory = {
         RTCInitializeSSL()
-        //support all codec formats for encode and decode
+        // support all codec formats for encode and decode
         return RTCPeerConnectionFactory(encoderFactory: RTCDefaultVideoEncoderFactory(),
                                         decoderFactory: RTCDefaultVideoDecoderFactory())
     }()

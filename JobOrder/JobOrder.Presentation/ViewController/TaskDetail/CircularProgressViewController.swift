@@ -94,14 +94,14 @@ class CircularProgressView: UIView {
     }
 
     private var centerSquareGuideBounds: CGRect {
-        //let squareSideLength = min(layer.bounds.width, layer.bounds.height)
+        // let squareSideLength = min(layer.bounds.width, layer.bounds.height)
         return CGRect(origin: .zero, size: CGSize(width: 60 /*squareSideLength*/, height: 60 /*squareSideLength*/))
     }
 
     private var centerSquareGuideFrame: CGRect {
-        //let squareOriginOffset = abs(layer.bounds.width - layer.bounds.height) / 2
-        //let squareOriginOffsetX = layer.bounds.width < layer.bounds.height ? 0 : squareOriginOffset
-        //let squareOriginOffsetY = layer.bounds.width < layer.bounds.height ? squareOriginOffset : 0
+        // let squareOriginOffset = abs(layer.bounds.width - layer.bounds.height) / 2
+        // let squareOriginOffsetX = layer.bounds.width < layer.bounds.height ? 0 : squareOriginOffset
+        // let squareOriginOffsetY = layer.bounds.width < layer.bounds.height ? squareOriginOffset : 0
         return centerSquareGuideBounds.offsetBy(dx: 0, dy: 0)
     }
 

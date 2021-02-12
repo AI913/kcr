@@ -11,8 +11,103 @@ import Foundation
 /// JobAPIのエンティティ
 public struct JobAPIEntity: Codable {
 
+    /// Job登録
+    public struct Input: Codable {
+        /// アプリからサーバへジョブの登録リクエストをする際に用いられる、登録するジョブ情報のモデル。
+        public struct Data: Codable {
+            public init(name: String, actions: [JobAPIEntity.Input.Data.Action], entryPoint: Int, overview: String?, remarks: String?, requirements: [JobAPIEntity.Input.Data.Requirement]?) {
+                self.name = name
+                self.actions = actions
+                self.entryPoint = entryPoint
+                self.overview = overview
+                self.remarks = remarks
+                self.requirements = requirements
+            }
+
+            /// 表示名称
+            public let name: String
+            /// アクション情報
+            public let actions: [Action]
+            /// エントリポイント
+            public let entryPoint: Int
+            /// 概要
+            public let overview: String?
+            /// 備考
+            public let remarks: String?
+            /// 実行要件
+            public let requirements: [Requirement]?
+
+            enum CodingKeys: String, CodingKey {
+                case name = "displayName"
+                case actions, entryPoint, overview, remarks, requirements
+            }
+
+            /// 該当ジョブのアクション情報
+            public struct Action: Codable {
+                public init(index: Int, actionLibraryId: String, parameter: JobAPIEntity.Input.Data.Action.Parameter?, catch: String?, then: String?) {
+                    self.index = index
+                    self.actionLibraryId = actionLibraryId
+                    self.parameter = parameter
+                    self.catch = `catch`
+                    self.then = then
+                }
+
+                /// インデックス
+                public let index: Int
+                /// アクションライブラリ識別子(UUID)
+                public let actionLibraryId: String
+                /// 該当アクションで用いるアクションライブラリの識別子
+                public let parameter: Parameter?
+                /// 後続処理情報群（失敗）
+                public let `catch`: String?
+                /// 後続処理情報群（成功）
+                public let `then`: String?
+
+                /// アクションで実行時引数となるパラメータオブジェクト情報
+                public struct Parameter: Codable {
+                    public init(aiLibraryId: String?, aiLibraryObjectId: String?) {
+                        self.aiLibraryId = aiLibraryId
+                        self.aiLibraryObjectId = aiLibraryObjectId
+                    }
+
+                    /// AIライブラリ識別子(UUID)
+                    public let aiLibraryId: String?
+                    /// AIライブラリ分類識別子
+                    public let aiLibraryObjectId: String?
+
+                    enum CodingKeys: String, CodingKey {
+                        case aiLibraryId, aiLibraryObjectId
+                    }
+                }
+
+                enum CodingKeys: String, CodingKey {
+                    case index, actionLibraryId, parameter, `catch`, `then`
+                }
+            }
+
+            /// 実行要件
+            public struct Requirement: Codable {
+                public init(type: String, subtype: String, id: String?, versionId: String?) {
+                    self.type = type
+                    self.subtype = subtype
+                    self.id = id
+                    self.versionId = versionId
+                }
+
+                public let type: String
+                public let subtype: String
+                public let id: String?
+                public let versionId: String?
+
+                enum CodingKeys: String, CodingKey {
+                    case type, subtype, id, versionId
+                }
+            }
+        }
+    }
+
     /// Jobデータ
-    public struct Data: Codable {
+    public struct Data: Codable, Equatable {
         /// ID
         public let id: String
         /// 名前
@@ -49,7 +144,7 @@ public struct JobAPIEntity: Codable {
             case updator = "updatedBy"
         }
 
-        static func == (lhs: Data, rhs: Data) -> Bool {
+        public static func == (lhs: Data, rhs: Data) -> Bool {
             return lhs.id == rhs.id &&
                 lhs.name == rhs.name &&
                 lhs.actions == rhs.actions &&

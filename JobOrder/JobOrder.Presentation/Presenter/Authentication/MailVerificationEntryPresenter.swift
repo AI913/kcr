@@ -99,7 +99,7 @@ extension MailVerificationEntryPresenter {
 
     private func subscribeUseCaseProcessing() {
         // 通信中はキー無効
-        //useCase.$processing.sink { response in
+        // useCase.$processing.sink { response in
         useCase.processingPublisher
             .receive(on: DispatchQueue.main)
             .sink { response in

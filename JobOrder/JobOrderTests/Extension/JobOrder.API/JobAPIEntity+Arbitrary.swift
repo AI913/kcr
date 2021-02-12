@@ -48,3 +48,48 @@ extension JobAPIEntity.Data.Requirement: Arbitrary {
         }
     }
 }
+
+extension JobAPIEntity.Input.Data: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            return JobAPIEntity.Input.Data(name: c.generate(),
+                                           actions: c.generate(),
+                                           entryPoint: c.generate(),
+                                           overview: c.generate(),
+                                           remarks: c.generate(),
+                                           requirements: c.generate())
+        }
+    }
+}
+
+extension JobAPIEntity.Input.Data.Action: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            return JobAPIEntity.Input.Data.Action(index: c.generate(),
+                                                  actionLibraryId: c.generate(using: FakeFactory.shared.uuidStringGen),
+                                                  parameter: c.generate(),
+                                                  catch: c.generate(),
+                                                  then: c.generate())
+        }
+    }
+}
+
+extension JobAPIEntity.Input.Data.Action.Parameter: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            return JobAPIEntity.Input.Data.Action.Parameter(aiLibraryId: c.generate(using: FakeFactory.shared.uuidStringGen),
+                                                            aiLibraryObjectId: c.generate())
+        }
+    }
+}
+
+extension JobAPIEntity.Input.Data.Requirement: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            return JobAPIEntity.Input.Data.Requirement(type: c.generate(),
+                                                       subtype: c.generate(),
+                                                       id: c.generate(),
+                                                       versionId: c.generate())
+        }
+    }
+}

@@ -236,7 +236,7 @@ extension SettingsPresenter {
 
     private func subscribeUseCaseProcessing() {
         // 通信中はキー無効
-        //authUseCase.$processing.sink { response in
+        // authUseCase.$processing.sink { response in
         authUseCase.processingPublisher
             .receive(on: DispatchQueue.main)
             .sink { response in
@@ -245,7 +245,7 @@ extension SettingsPresenter {
             }.store(in: &cancellables)
 
         // 通信中はキー無効
-        //dataUseCase.$processing.sink { response in
+        // dataUseCase.$processing.sink { response in
         dataUseCase.processingPublisher
             .receive(on: DispatchQueue.main)
             .sink { response in

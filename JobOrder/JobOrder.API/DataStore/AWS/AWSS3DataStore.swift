@@ -41,7 +41,7 @@ public class AWSS3DataStore: CloudStorageRepository {
                                                         }
                                                       }).continueWith { (task) -> AnyObject? in
                                                         return nil
-                                                      }
+            }
         }.eraseToAnyPublisher()
     }
 

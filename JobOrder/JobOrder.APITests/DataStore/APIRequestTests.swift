@@ -37,7 +37,10 @@ class APIRequestTests: XCTestCase {
     private let robotCommandsJson = "api_mock_examples_GET_robots_robotid_commands_response"
     private let taskCommandExecutionsJson = "api_mock_examples_GET_tasks_taskid_commands_robotid_executions_response"
     private let taskCommandsJson = "api_mock_examples_GET_tasks_taskid_commands_response"
+
     private let postTaskJson = "api_mock_examples_POST_tasks_response"
+    private let postJobRequestJson = "api_openapi-spec_v1_examples_post_job_request_example"
+    private let postJobResponseJson = "job_response_example"
 
     override func setUpWithError() throws {}
     override func tearDownWithError() throws {}
@@ -157,6 +160,19 @@ class APIRequestTests: XCTestCase {
             request(
                 APIResult<TaskAPIEntity.Data>.self,
                 result: api.post(resUrl: task.url, token: nil, data: TaskAPIEntity.Input.Data()),
+                onSuccess: { data in XCTAssertNotNil(data, "値が取得できていない: \(data)") },
+                onError: { error in XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)") })
+        }
+
+        XCTContext.runActivity(named: "post_job_request_example.json") { _ in
+            guard let requestData = try? getJSONData(postJobRequestJson) else { XCTFail("jsonデータが存在しない"); return }
+            guard let data = try? JSONDecoder().decode(JobAPIEntity.Input.Data.self, from: requestData) else { XCTFail("デコードできない"); return }
+
+            guard let responseData = try? getJSONData(postJobResponseJson) else { XCTFail("jsonデータが存在しない"); return }
+            stub(uri(job.url.absoluteString), jsonData(responseData))
+            request(
+                APIResult<JobAPIEntity.Data>.self,
+                result: api.post(resUrl: job.url, token: nil, data: data),
                 onSuccess: { data in XCTAssertNotNil(data, "値が取得できていない: \(data)") },
                 onError: { error in XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)") })
         }

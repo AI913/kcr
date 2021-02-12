@@ -43,7 +43,7 @@ class WebRTCMessageTests: XCTestCase {
         XCTAssertEqual(actualMessage.getAction(), iceCandidateAction)
         XCTAssertNotNil(actualMessage.getMessagePayload)
         XCTAssertNotNil(actualMessage.getSenderClientId)
-        XCTAssertEqual(actualMessage.getSenderClientId(), "") //senderClientId is empty when connected as master
+        XCTAssertEqual(actualMessage.getSenderClientId(), "") // senderClientId is empty when connected as master
         XCTAssertNotNil(actualMessage.getRecipientClientId)
         XCTAssertEqual(actualMessage.getRecipientClientId(), testRecipientClientId)
     }
@@ -57,6 +57,6 @@ class WebRTCMessageTests: XCTestCase {
         XCTAssertNotNil(actualMessage.getSenderClientId)
         XCTAssertEqual(actualMessage.getSenderClientId(), testSenderClientId)
         XCTAssertNotNil(actualMessage.getRecipientClientId)
-        XCTAssertEqual(actualMessage.getRecipientClientId(), "") //recipientClient is empty when connected as viewer
+        XCTAssertEqual(actualMessage.getRecipientClientId(), "") // recipientClient is empty when connected as viewer
     }
 }

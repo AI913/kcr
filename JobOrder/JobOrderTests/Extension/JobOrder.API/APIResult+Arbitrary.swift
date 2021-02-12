@@ -57,6 +57,16 @@ extension APIResult where T == [JobAPIEntity.Data] {
     }
 }
 
+extension APIResult where T == JobAPIEntity.Data {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            let time = FakeFactory.shared.epochTimeGen.generate
+            let data = JobAPIEntity.Data.arbitrary.generate
+            return APIResult(time: time, data: data, count: nil, paging: nil)
+        }
+    }
+}
+
 // MARK: - Task情報
 extension APIResult where T == [TaskAPIEntity.Data] {
     public static var arbitrary: Gen<Self> {

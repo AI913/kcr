@@ -195,6 +195,51 @@ extension DataManageModel.Output.Job.Requirement: Arbitrary {
     }
 }
 
+extension DataManageModel.Input.Job: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            return DataManageModel.Input.Job(name: c.generate(),
+                                             actions: c.generate(),
+                                             entryPoint: c.generate(),
+                                             overview: c.generate(),
+                                             remarks: c.generate(),
+                                             requirements: c.generate())
+        }
+    }
+}
+
+extension DataManageModel.Input.Job.Action: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            return DataManageModel.Input.Job.Action(index: c.generate(),
+                                                    actionLibraryId: c.generate(using: FakeFactory.shared.uuidStringGen),
+                                                    parameter: c.generate(),
+                                                    catch: c.generate(),
+                                                    then: c.generate())
+        }
+    }
+}
+
+extension DataManageModel.Input.Job.Action.Parameter: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            return DataManageModel.Input.Job.Action.Parameter(aiLibraryId: c.generate(using: FakeFactory.shared.uuidStringGen),
+                                                              aiLibraryObjectId: c.generate())
+        }
+    }
+}
+
+extension DataManageModel.Input.Job.Requirement: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            return DataManageModel.Input.Job.Requirement(type: c.generate(),
+                                                         subtype: c.generate(),
+                                                         id: c.generate(),
+                                                         versionId: c.generate())
+        }
+    }
+}
+
 // MARK: - Command情報
 extension DataManageModel.Output.Command: Arbitrary {
     public static var arbitrary: Gen<Self> {

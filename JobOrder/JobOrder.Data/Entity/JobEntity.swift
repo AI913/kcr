@@ -102,9 +102,9 @@ final public class JobRequirement: Object, Codable {
 }
 
 // TODO: Realmでエラーが出るので中身が決まるまでコメントアウト
-//public class JobParameter: Object, Codable {
+// public class JobParameter: Object, Codable {
 //
 //    public static func == (lhs: JobParameter, rhs: JobParameter) -> Bool {
 //        return true
 //    }
-//}
+// }

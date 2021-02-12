@@ -186,6 +186,68 @@ class JobAPIDataStoreTests: XCTestCase {
                 XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
             })
     }
+
+    func test_post() {
+        let handlerExpectation = expectation(description: "handler")
+        let completionExpectation = expectation(description: "completion")
+        let jobResult: APIResult<JobAPIEntity.Data> = APIResult.arbitrary.generate
+
+        mock.postHandler = { url, token, _ in
+            return Future<APIResult<JobAPIEntity.Data>, Error> { promise in
+                handlerExpectation.fulfill()
+                promise(.success(jobResult))
+            }.eraseToAnyPublisher()
+        }
+
+        post(
+            [handlerExpectation, completionExpectation],
+            onSuccess: { data in
+                XCTAssert(data == jobResult, "正しい値が取得できていない: \(data)")
+                XCTAssertEqual(data.data, jobResult.data, "正しい値が取得できていない: \(data)")
+            },
+            onError: { error in XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)") })
+    }
+
+    func test_postError() {
+        let handlerExpectation = expectation(description: "handler")
+        let completionExpectation = expectation(description: "completion")
+
+        mock.postHandler = { url, token, _ in
+            return Future<APIResult<JobAPIEntity.Data>, Error> { promise in
+                handlerExpectation.fulfill()
+                let error = NSError(domain: "Error", code: -1, userInfo: nil)
+                promise(.failure(error))
+            }.eraseToAnyPublisher()
+        }
+
+        post(
+            [handlerExpectation, completionExpectation],
+            onSuccess: { data in
+                XCTFail("値を取得できてはいけない: \(data)")
+            },
+            onError: { error in
+                let error = error as NSError
+                XCTAssertEqual(error.code, -1, "正しい値が取得できていない: \(error.code)")
+                XCTAssertEqual(error.localizedDescription, "The operation couldn’t be completed. (Error error -1.)", "正しい値が取得できていない: \(error.localizedDescription)")
+            })
+    }
+
+    func test_postNotReceived() {
+        let handlerExpectation = expectation(description: "handler")
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
+
+        mock.postHandler = { url, token, _ in
+            return Future<APIResult<JobAPIEntity.Data>, Error> { promise in
+                handlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        post(
+            [handlerExpectation, completionExpectation],
+            onSuccess: { data in XCTFail("値を取得できてはいけない: \(data)") },
+            onError: { error in XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)") })
+    }
 }
 
 extension JobAPIDataStoreTests {
@@ -211,6 +273,25 @@ extension JobAPIDataStoreTests {
         let param = "test"
 
         dataStore.getTasks(param, id: param, paging: paging)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished: break
+                case .failure(let error):
+                    onError(error)
+                }
+                exps.last?.fulfill()
+            }, receiveValue: { response in
+                onSuccess(response)
+            }).store(in: &cancellables)
+
+        wait(for: exps, timeout: ms1000)
+    }
+
+    private func post(_ exps: [XCTestExpectation], onSuccess: @escaping (APIResult<JobAPIEntity.Data>) -> Void, onError: @escaping (Error) -> Void) {
+        let data = JobAPIEntity.Input.Data.arbitrary.generate
+        let token = "test"
+
+        dataStore.post(token, data: data)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished: break

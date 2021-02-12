@@ -352,10 +352,10 @@
             </objects>
             <point key="canvasLocation" x="2492.753623188406" y="54.910714285714285"/>
         </scene>
-        <!--View Controller-->
+        <!--Job Entry Action Flow View Controller-->
         <scene sceneID="hU0-ah-ObT">
             <objects>
-                <viewController id="pnu-Vu-XtZ" sceneMemberID="viewController">
+                <viewController id="pnu-Vu-XtZ" customClass="JobEntryActionFlowViewController" customModule="JobOrder_Presentation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6hY-QN-O0K">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="728"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -30,7 +30,7 @@ class RobotSelectionPageObject: PageObject {
     }
 
     func tapSelectJobButton() -> JobSelectionPageObject {
-        //print("NavigationBarButtonCount -> " + String(app.navigationBars.buttons.count))
+        // print("NavigationBarButtonCount -> " + String(app.navigationBars.buttons.count))
         selectJobButton.tap()
         return JobSelectionPageObject(application: app)
     }

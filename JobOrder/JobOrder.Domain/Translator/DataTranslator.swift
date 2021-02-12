@@ -23,7 +23,7 @@ struct DataTranslator {
             let action = JobOrder_Data.JobAction()
             action.index = $0.index
             action.id = $0.id
-            //action.parameter = $0.parameter
+            // action.parameter = $0.parameter
             action._catch = $0._catch
             action.then = $0.then
             actions.append(action)
@@ -131,4 +131,38 @@ struct DataTranslator {
                                                      start: TaskAPIEntity.Start(condition: model.start.condition),
                                                      exit: TaskAPIEntity.Exit(condition: model.exit.condition, option: TaskAPIEntity.Exit.Option(numberOfRuns: model.exit.option.numberOfRuns ?? 0)))
     }
+
+    func toData(model: DataManageModel.Input.Job?) -> JobOrder_API.JobAPIEntity.Input.Data? {
+        guard let model = model else { return nil }
+
+        let parameterTranslator = { (parameter: DataManageModel.Input.Job.Action.Parameter?) -> JobOrder_API.JobAPIEntity.Input.Data.Action.Parameter? in
+            guard let parameter = parameter else { return nil }
+            return JobOrder_API.JobAPIEntity.Input.Data.Action.Parameter(aiLibraryId: parameter.aiLibraryId,
+                                                                         aiLibraryObjectId: parameter.aiLibraryObjectId)
+        }
+
+        let actionTranslator = { (actions: [DataManageModel.Input.Job.Action]) -> [JobOrder_API.JobAPIEntity.Input.Data.Action] in
+            actions.map { JobOrder_API.JobAPIEntity.Input.Data.Action(index: $0.index,
+                                                                      actionLibraryId: $0.actionLibraryId,
+                                                                      parameter: parameterTranslator($0.parameter),
+                                                                      catch: $0.catch,
+                                                                      then: $0.then) }
+        }
+
+        let requirementTranslator = { (requirements: [DataManageModel.Input.Job.Requirement]?) -> [JobOrder_API.JobAPIEntity.Input.Data.Requirement]? in
+            guard let requirements = requirements else { return nil }
+            return requirements.map { JobOrder_API.JobAPIEntity.Input.Data.Requirement(type: $0.type,
+                                                                                       subtype: $0.subtype,
+                                                                                       id: $0.id,
+                                                                                       versionId: $0.versionId) }
+        }
+
+        return JobOrder_API.JobAPIEntity.Input.Data(name: model.name,
+                                                    actions: actionTranslator(model.actions),
+                                                    entryPoint: model.entryPoint,
+                                                    overview: model.overview,
+                                                    remarks: model.remarks,
+                                                    requirements: requirementTranslator(model.requirements))
+    }
+
 }

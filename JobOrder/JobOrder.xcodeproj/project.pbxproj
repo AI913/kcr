@@ -135,12 +135,9 @@
 		A37B1D68244D87E00082F61C /* RobotDetailWorkPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37B1D66244D87E00082F61C /* RobotDetailWorkPresenter.swift */; };
 		A37EFD9724457EA800130EB6 /* JobListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37EFD9624457EA800130EB6 /* JobListPresenter.swift */; };
 		A37EFD9924457F2600130EB6 /* JobDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37EFD9824457F2600130EB6 /* JobDetailPresenter.swift */; };
-		A37F6976257634200013A3F6 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = A37F6975257634200013A3F6 /* SkeletonView */; };
-		A37F6978257634200013A3F6 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = A37F6977257634200013A3F6 /* Charts */; };
-		A37F697A257634200013A3F6 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A37F6979257634200013A3F6 /* KeychainAccess */; };
-		A37F69CB257636380013A3F6 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A37F69CA257636380013A3F6 /* KeychainAccess */; };
-		A37F6A0B257636D30013A3F6 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = A37F6A0A257636D30013A3F6 /* SkeletonView */; };
-		A37F6A0D257636D30013A3F6 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = A37F6A0C257636D30013A3F6 /* Charts */; };
+		A37F69CB257636380013A3F6 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = A37F69CA257636380013A3F6 /* SwiftPackageProductDependency */; };
+		A37F6A0B257636D30013A3F6 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = A37F6A0A257636D30013A3F6 /* SwiftPackageProductDependency */; };
+		A37F6A0D257636D30013A3F6 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = A37F6A0C257636D30013A3F6 /* SwiftPackageProductDependency */; };
 		A38C2AF4244FE4FA0089A70E /* JobDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38C2AE2244FE4FA0089A70E /* JobDetailViewController.swift */; };
 		A38C2AF5244FE4FA0089A70E /* JobListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38C2AE3244FE4FA0089A70E /* JobListViewController.swift */; };
 		A38C2AF6244FE4FA0089A70E /* JobListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38C2AE4244FE4FA0089A70E /* JobListViewCell.swift */; };
@@ -234,6 +231,8 @@
 		B7590F7C25AEBD160018520D /* ActionLibraryEntity+Arbitrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7590F7B25AEBD160018520D /* ActionLibraryEntity+Arbitrary.swift */; };
 		B7590F8625AEBEB70018520D /* AILibraryEntity+Arbitrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7590F8525AEBEB70018520D /* AILibraryEntity+Arbitrary.swift */; };
 		B7590F9925AECBAC0018520D /* DataManageModel+Arbitrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7590F9825AECBAC0018520D /* DataManageModel+Arbitrary.swift */; };
+		B763C54725D2777D00729D52 /* job_response_example.json in Resources */ = {isa = PBXBuildFile; fileRef = B763C54625D2777C00729D52 /* job_response_example.json */; };
+		B763C57125D2793400729D52 /* api_openapi-spec_v1_examples_post_job_request_example.json in Resources */ = {isa = PBXBuildFile; fileRef = B763C57025D2793400729D52 /* api_openapi-spec_v1_examples_post_job_request_example.json */; };
 		B76F39E92564B5AD000ECBDE /* JobDetailWorkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76F39E82564B5AD000ECBDE /* JobDetailWorkTableViewCell.swift */; };
 		B76F39F82564B5E8000ECBDE /* JobDetailWorkTaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76F39F72564B5E8000ECBDE /* JobDetailWorkTaskTableViewCell.swift */; };
 		B76F3A072564B5FC000ECBDE /* JobDetailWorkHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76F3A062564B5FC000ECBDE /* JobDetailWorkHistoryTableViewCell.swift */; };
@@ -378,7 +377,7 @@
 		B7FC913225AD2E920003F453 /* tmrobot.png in Resources */ = {isa = PBXBuildFile; fileRef = A3AD72D52522EBD300DD5DBE /* tmrobot.png */; };
 		B7FC914325AD2E9D0003F453 /* OneOffFuncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32E99E224ECAC8A005C4605 /* OneOffFuncTests.swift */; };
 		B7FC914425AD2E9D0003F453 /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32E99E424ECB3D7005C4605 /* StringTests.swift */; };
-		B7FC915625AD2FD90003F453 /* SwiftCheck in Frameworks */ = {isa = PBXBuildFile; productRef = B7FC915525AD2FD90003F453 /* SwiftCheck */; };
+		B7FC915625AD2FD90003F453 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B7FC915525AD2FD90003F453 /* SwiftPackageProductDependency */; };
 		B7FC915F25AD32600003F453 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3CE646324EF70B100999753 /* Realm.framework */; };
 		B7FC916025AD32630003F453 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3CE645624EF677D00999753 /* RealmSwift.framework */; };
 		B7FD409125625FF800643AAE /* JobDetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FD409025625FF800643AAE /* JobDetailPageViewController.swift */; };
@@ -915,6 +914,8 @@
 		B75B5BCF25764B7000B90A64 /* api_mock_examples_GET_robots_robotid_commands_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_GET_robots_robotid_commands_response.json; sourceTree = "<group>"; };
 		B75B5BEB25764DF000B90A64 /* api_mock_examples_GET_jobs_jobid_tasks_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_GET_jobs_jobid_tasks_response.json; sourceTree = "<group>"; };
 		B7614437256CC2E2008DA411 /* api_mock_examples_GET_tasks_taskid_commands_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_GET_tasks_taskid_commands_response.json; sourceTree = "<group>"; };
+		B763C54625D2777C00729D52 /* job_response_example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = job_response_example.json; sourceTree = "<group>"; };
+		B763C57025D2793400729D52 /* api_openapi-spec_v1_examples_post_job_request_example.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "api_openapi-spec_v1_examples_post_job_request_example.json"; sourceTree = "<group>"; };
 		B76D2C5125A2E88D007D40F4 /* FakeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeFactory.swift; sourceTree = "<group>"; };
 		B76F39E82564B5AD000ECBDE /* JobDetailWorkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailWorkTableViewCell.swift; sourceTree = "<group>"; };
 		B76F39F72564B5E8000ECBDE /* JobDetailWorkTaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailWorkTaskTableViewCell.swift; sourceTree = "<group>"; };
@@ -1097,7 +1098,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7FC915625AD2FD90003F453 /* SwiftCheck in Frameworks */,
+				B7FC915625AD2FD90003F453 /* BuildFile in Frameworks */,
 				B7FC915F25AD32600003F453 /* Realm.framework in Frameworks */,
 				B7FC916025AD32630003F453 /* RealmSwift.framework in Frameworks */,
 			);
@@ -1107,9 +1108,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A37F697A257634200013A3F6 /* KeychainAccess in Frameworks */,
-				A37F6976257634200013A3F6 /* SkeletonView in Frameworks */,
-				A37F6978257634200013A3F6 /* Charts in Frameworks */,
 				8C0A00B41A0341D4D1CF1651 /* Pods_JobOrderUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1128,7 +1126,7 @@
 			files = (
 				A3CE646524EF70C400999753 /* Realm.framework in Frameworks */,
 				A3CE645724EF677D00999753 /* RealmSwift.framework in Frameworks */,
-				A37F69CB257636380013A3F6 /* KeychainAccess in Frameworks */,
+				A37F69CB257636380013A3F6 /* BuildFile in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1151,8 +1149,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A37F6A0B257636D30013A3F6 /* SkeletonView in Frameworks */,
-				A37F6A0D257636D30013A3F6 /* Charts in Frameworks */,
+				A37F6A0B257636D30013A3F6 /* BuildFile in Frameworks */,
+				A37F6A0D257636D30013A3F6 /* BuildFile in Frameworks */,
 				CC5DE5E0735BF32159780D68 /* Pods_All_JobOrder_Presentation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1575,6 +1573,8 @@
 				B7614437256CC2E2008DA411 /* api_mock_examples_GET_tasks_taskid_commands_response.json */,
 				B70A22D22579BEAD0057582C /* api_mock_examples_GET_tasks_taskid_response.json */,
 				FC309271258C8B4B007B6DA2 /* api_mock_examples_POST_tasks_response.json */,
+				B763C54625D2777C00729D52 /* job_response_example.json */,
+				B763C57025D2793400729D52 /* api_openapi-spec_v1_examples_post_job_request_example.json */,
 			);
 			path = json;
 			sourceTree = "<group>";
@@ -2557,7 +2557,7 @@
 				D77CF21B240EA4DD007A61EE /* Frameworks */,
 				D77CF21C240EA4DD007A61EE /* Resources */,
 				D77CF26D240EA57B007A61EE /* Embed Frameworks */,
-				A3CE645B24EF6B8700999753 /* Run Script (Carthage) */,
+				A3E932C325D1214C007D650F /* Run Script (Carthage) */,
 				CCB6A5A8FC0A520478981182 /* [CP] Embed Pods Frameworks */,
 				E586CB16252572F2007AD3EC /* ShellScript */,
 			);
@@ -2590,7 +2590,7 @@
 			);
 			name = JobOrderTests;
 			packageProductDependencies = (
-				B7FC915525AD2FD90003F453 /* SwiftCheck */,
+				B7FC915525AD2FD90003F453 /* SwiftPackageProductDependency */,
 			);
 			productName = JobOrderTests;
 			productReference = D77CF234240EA4DF007A61EE /* JobOrderTests.xctest */;
@@ -2605,7 +2605,7 @@
 				D77CF23C240EA4DF007A61EE /* Frameworks */,
 				D77CF23D240EA4DF007A61EE /* Resources */,
 				A539131DE7B83FE3DCA033DA /* [CP] Embed Pods Frameworks */,
-				A39990252535E68700EA96DB /* Run Script (Carthage) */,
+				A34FAA8C25D22070009A9453 /* Run Script (Carthage) */,
 			);
 			buildRules = (
 			);
@@ -2613,11 +2613,6 @@
 				D77CF241240EA4DF007A61EE /* PBXTargetDependency */,
 			);
 			name = JobOrderUITests;
-			packageProductDependencies = (
-				A37F6975257634200013A3F6 /* SkeletonView */,
-				A37F6977257634200013A3F6 /* Charts */,
-				A37F6979257634200013A3F6 /* KeychainAccess */,
-			);
 			productName = JobOrderUITests;
 			productReference = D77CF23F240EA4DF007A61EE /* JobOrderUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -2662,7 +2657,7 @@
 			);
 			name = JobOrder.Data;
 			packageProductDependencies = (
-				A37F69CA257636380013A3F6 /* KeychainAccess */,
+				A37F69CA257636380013A3F6 /* SwiftPackageProductDependency */,
 			);
 			productName = JobOrder.Data;
 			productReference = D77CF2DF240EA675007A61EE /* JobOrder_Data.framework */;
@@ -2728,8 +2723,8 @@
 			);
 			name = JobOrder.Presentation;
 			packageProductDependencies = (
-				A37F6A0A257636D30013A3F6 /* SkeletonView */,
-				A37F6A0C257636D30013A3F6 /* Charts */,
+				A37F6A0A257636D30013A3F6 /* SwiftPackageProductDependency */,
+				A37F6A0C257636D30013A3F6 /* SwiftPackageProductDependency */,
 			);
 			productName = JobOrder.Presenter;
 			productReference = D78EC1D72411CAA6003E5ECD /* JobOrder_Presentation.framework */;
@@ -2791,10 +2786,10 @@
 			);
 			mainGroup = D77CF215240EA4DD007A61EE;
 			packageReferences = (
-				A37F6938257632C30013A3F6 /* XCRemoteSwiftPackageReference "SkeletonView" */,
-				A37F69482576330B0013A3F6 /* XCRemoteSwiftPackageReference "Charts" */,
-				A37F69582576339B0013A3F6 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
-				B7631B142599C00B00CA8AA1 /* XCRemoteSwiftPackageReference "SwiftCheck" */,
+				A37F6938257632C30013A3F6 /* RemoteSwiftPackageReference */,
+				A37F69482576330B0013A3F6 /* RemoteSwiftPackageReference */,
+				A37F69582576339B0013A3F6 /* RemoteSwiftPackageReference */,
+				B7631B142599C00B00CA8AA1 /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = D77CF21F240EA4DD007A61EE /* Products */;
 			projectDirPath = "";
@@ -2846,7 +2841,9 @@
 				B7FC911E25AD2E8C0003F453 /* api_mock_examples_GET_jobs_response.json in Resources */,
 				B7FC912925AD2E8C0003F453 /* api_mock_examples_GET_robots_robotid_commands_response.json in Resources */,
 				B7FC912525AD2E8C0003F453 /* api_mock_examples_GET_ai_libs_response.json in Resources */,
+				B763C57125D2793400729D52 /* api_openapi-spec_v1_examples_post_job_request_example.json in Resources */,
 				B7FC912625AD2E8C0003F453 /* api_mock_examples_GET_robots_robotid_assets_response.json in Resources */,
+				B763C54725D2777D00729D52 /* job_response_example.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2979,6 +2976,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		A34FAA8C25D22070009A9453 /* Run Script (Carthage) */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
+			);
+			name = "Run Script (Carthage)";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which mint >/dev/null; then\n  mint run Carthage/Carthage carthage copy-frameworks\nelse\n  echo \"warning: Mint not installed, download from https://github.com/yonaskolb/Mint\"\nfi\n";
+		};
 		A39054A42489D1950021DEBA /* Run Script (SwiftGen) */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2997,26 +3014,6 @@
 			shellPath = /bin/sh;
 			shellScript = "unset SDKROOT\nif which mint >/dev/null; then\n  mint run swiftgen\nelse\n  echo \"warning: Mint not installed, download from https://github.com/yonaskolb/Mint\"\nfi\n";
 		};
-		A39990252535E68700EA96DB /* Run Script (Carthage) */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
-			);
-			name = "Run Script (Carthage)";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "unset SDKROOT\nif which mint >/dev/null; then\n  mint run Carthage/Carthage carthage copy-frameworks\nelse\n  echo \"warning: Mint not installed, download from https://github.com/yonaskolb/Mint\"\nfi\n";
-		};
 		A3AB8DDE24C01BA20017411A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3032,7 +3029,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which periphery >/dev/null; then\n  periphery scan --workspace JobOrder.xcworkspace --schemes JobOrder --targets JobOrder,JobOrder.Data,JobOrder.API,JobOrder.Domain,JobOrder.Utility,JobOrder.Presentation, --format xcode\nelse\n  echo \"warning: Periphery not installed, download from https://github.com/peripheryapp/periphery\"\nfi\n";
+			shellScript = "if which mint >/dev/null; then\n  xcrun --sdk macosx mint run periphery scan --workspace JobOrder.xcworkspace --schemes JobOrder --targets JobOrder,JobOrder.Data,JobOrder.API,JobOrder.Domain,JobOrder.Utility,JobOrder.Presentation, --format xcode\nelse\n  echo \"warning: Periphery not installed, download from https://github.com/peripheryapp/periphery\"\nfi\n";
 		};
 		A3AB8DE024C037600017411A /* Run Script (Mockolo) */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3047,7 +3044,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				$SRCROOT/$TARGET_NAME/MockResults.swift,
+				"$SRCROOT/$TARGET_NAME/MockResults.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3066,7 +3063,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				$SRCROOT/$TARGET_NAME/MockResults.swift,
+				"$SRCROOT/$TARGET_NAME/MockResults.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3085,7 +3082,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				$SRCROOT/$TARGET_NAME/MockResults.swift,
+				"$SRCROOT/$TARGET_NAME/MockResults.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3104,7 +3101,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				$SRCROOT/$TARGET_NAME/MockResults.swift,
+				"$SRCROOT/$TARGET_NAME/MockResults.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3123,13 +3120,13 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				$SRCROOT/$TARGET_NAME/MockResults.swift,
+				"$SRCROOT/$TARGET_NAME/MockResults.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "unset SDKROOT\nif which mint >/dev/null; then\n  rm -f $SRCROOT/$TARGET_NAME/MockResults.swift\n  mint run mockolo mockolo --sourcedirs $SRCROOT/$TARGET_NAME --destination $SRCROOT/$TARGET_NAME/MockResults.swift\nelse\n  echo \"warning: Mint not installed, download from https://github.com/yonaskolb/Mint\"\nfi\n";
 		};
-		A3CE645B24EF6B8700999753 /* Run Script (Carthage) */ = {
+		A3E932C325D1214C007D650F /* Run Script (Carthage) */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3147,7 +3144,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "unset SDKROOT\nif which mint >/dev/null; then\n  mint run Carthage/Carthage carthage copy-frameworks\nelse\n  echo \"warning: Mint not installed, download from https://github.com/yonaskolb/Mint\"\nfi\n";
+			shellScript = "if which mint >/dev/null; then\n  mint run Carthage/Carthage carthage copy-frameworks\nelse\n  echo \"warning: Mint not installed, download from https://github.com/yonaskolb/Mint\"\nfi\n";
 		};
 		A539131DE7B83FE3DCA033DA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4928,7 +4925,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A37F6938257632C30013A3F6 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+		A37F6938257632C30013A3F6 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Juanpe/SkeletonView";
 			requirement = {
@@ -4936,7 +4933,7 @@
 				minimumVersion = 1.11.0;
 			};
 		};
-		A37F69482576330B0013A3F6 /* XCRemoteSwiftPackageReference "Charts" */ = {
+		A37F69482576330B0013A3F6 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/danielgindi/Charts";
 			requirement = {
@@ -4944,7 +4941,7 @@
 				minimumVersion = 3.6.0;
 			};
 		};
-		A37F69582576339B0013A3F6 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+		A37F69582576339B0013A3F6 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
 			requirement = {
@@ -4952,7 +4949,7 @@
 				minimumVersion = 4.2.1;
 			};
 		};
-		B7631B142599C00B00CA8AA1 /* XCRemoteSwiftPackageReference "SwiftCheck" */ = {
+		B7631B142599C00B00CA8AA1 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/typelift/SwiftCheck";
 			requirement = {
@@ -4963,39 +4960,24 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A37F6975257634200013A3F6 /* SkeletonView */ = {
+		A37F69CA257636380013A3F6 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A37F6938257632C30013A3F6 /* XCRemoteSwiftPackageReference "SkeletonView" */;
-			productName = SkeletonView;
-		};
-		A37F6977257634200013A3F6 /* Charts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A37F69482576330B0013A3F6 /* XCRemoteSwiftPackageReference "Charts" */;
-			productName = Charts;
-		};
-		A37F6979257634200013A3F6 /* KeychainAccess */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A37F69582576339B0013A3F6 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			package = A37F69582576339B0013A3F6 /* RemoteSwiftPackageReference */;
 			productName = KeychainAccess;
 		};
-		A37F69CA257636380013A3F6 /* KeychainAccess */ = {
+		A37F6A0A257636D30013A3F6 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A37F69582576339B0013A3F6 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
-			productName = KeychainAccess;
-		};
-		A37F6A0A257636D30013A3F6 /* SkeletonView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A37F6938257632C30013A3F6 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			package = A37F6938257632C30013A3F6 /* RemoteSwiftPackageReference */;
 			productName = SkeletonView;
 		};
-		A37F6A0C257636D30013A3F6 /* Charts */ = {
+		A37F6A0C257636D30013A3F6 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A37F69482576330B0013A3F6 /* XCRemoteSwiftPackageReference "Charts" */;
+			package = A37F69482576330B0013A3F6 /* RemoteSwiftPackageReference */;
 			productName = Charts;
 		};
-		B7FC915525AD2FD90003F453 /* SwiftCheck */ = {
+		B7FC915525AD2FD90003F453 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B7631B142599C00B00CA8AA1 /* XCRemoteSwiftPackageReference "SwiftCheck" */;
+			package = B7631B142599C00B00CA8AA1 /* RemoteSwiftPackageReference */;
 			productName = SwiftCheck;
 		};
 /* End XCSwiftPackageProductDependency section */

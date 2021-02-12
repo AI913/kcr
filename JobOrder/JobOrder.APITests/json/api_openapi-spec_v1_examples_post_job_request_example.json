@@ -1,0 +1,27 @@
+{
+    "actions": [
+        {
+            "actionLibraryId": "30cf3116-c823-4093-a62d-4fe07c81ffff",
+            "catch": null,
+            "then": null,
+            "index": 1,
+            "parameter":
+                {
+                    "aiLibraryId": "fa9f7d4a-0ba6-4a10-9abc-f97f805dd3e6",
+                    "aiLibraryObjectId": "aiLibraryObjectId-value"
+                }
+        }
+    ],
+    "displayName": "LED Flicker Job (RED)",
+    "entryPoint": 1,
+    "overview": "A job for flickering Raspberry Pi LEDs",
+    "remarks": "The remarks of Job 1",
+    "requirements":  [
+        {
+            "subtype": "lightOfLED",
+            "versionId": "d06c512d-2e96-4ef1-8062-114c74645a9b",
+            "id": "75e809a4-33bd-4d70-8b41-eef9c8c06bcb",
+            "type": "Hardware"
+        }
+    ]
+}

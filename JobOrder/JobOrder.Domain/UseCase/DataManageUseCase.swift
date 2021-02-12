@@ -59,6 +59,9 @@ public protocol DataManageUseCaseProtocol {
     /// Task情報を送信する
     /// - Parameter postData: 送信用Task Data
     func postTask(postData: DataManageModel.Input.Task) -> AnyPublisher<DataManageModel.Output.Task, Error>
+    /// Job情報を送信する
+    /// - Parameter postData: 送信用Job Data
+    func postJob(postData: DataManageModel.Input.Job) -> AnyPublisher<DataManageModel.Output.Job, Error>
     /// RobotSystemの情報を取得する
     /// - Parameter id: Robot ID
     func robotSystem(id: String) -> AnyPublisher<DataManageModel.Output.System, Error>
@@ -71,7 +74,7 @@ public protocol DataManageUseCaseProtocol {
     ///   - robotId: Robot ID
     ///   - cursor: カーソル
     func executionLogsFromTask(taskId: String, robotId: String, cursor: PagingModel.Cursor?) -> AnyPublisher<PagingModel.PaginatedResult<[DataManageModel.Output.ExecutionLog]>, Error>
-    //var _processing: Published<Bool> { get set }
+    // var _processing: Published<Bool> { get set }
     var processing: Bool { get }
     var processingPublished: Published<Bool> { get }
     var processingPublisher: Published<Bool>.Publisher { get }
@@ -497,6 +500,41 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                         }.eraseToAnyPublisher()
                     }
                     return self.taskAPI.postTask(token, task: data).eraseToAnyPublisher()
+                }.sink(receiveCompletion: { completion in
+                    self.processing = false
+                    switch completion {
+                    case .finished: break
+                    case .failure(let error):
+                        Logger.error(target: self, error.localizedDescription)
+                        promise(.failure(JobOrderError(from: error)))
+                    }
+                }, receiveValue: { response in
+                    if let output = response.data {
+                        promise(.success(.init(output)))
+                    } else {
+                        promise(.failure(JobOrderError.connectionFailed(reason: .invalidResponseFormat)))
+                    }
+                }).store(in: &self.cancellables)
+        }.eraseToAnyPublisher()
+    }
+    /// Job情報を送信する
+    /// - Parameter postData: 送信用Job Data
+    public func postJob(postData: DataManageModel.Input.Job) -> AnyPublisher<DataManageModel.Output.Job, Error> {
+        Logger.info(target: self)
+        self.processing = true
+        return Future<DataManageModel.Output.Job, Error> { promise in
+            guard let data = self.translator.toData(model: postData) else {
+                promise(.failure(JobOrderError.inputValidationFailed(reason: .postDataIsNil)))
+                return
+            }
+            self.auth.getTokens()
+                .flatMap { value -> AnyPublisher<APIResult<JobOrder_API.JobAPIEntity.Data>, Error> in
+                    guard let token = value.idToken else {
+                        return Future<APIResult<JobOrder_API.JobAPIEntity.Data>, Error> { promise in
+                            promise(.failure(JobOrderError.authenticationFailed(reason: .idTokenIsNull)))
+                        }.eraseToAnyPublisher()
+                    }
+                    return self.jobAPI.post(token, data: data).eraseToAnyPublisher()
                 }.sink(receiveCompletion: { completion in
                     self.processing = false
                     switch completion {

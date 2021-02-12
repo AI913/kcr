@@ -24,7 +24,7 @@ public protocol JobAPIRepository {
     /// - Parameters:
     ///   - token: トークン情報
     ///   - data: Job情報
-    func post(_ token: String, data: JobAPIEntity.Data) -> AnyPublisher<APIResult<JobAPIEntity.Data>, Error>
+    func post(_ token: String, data: JobAPIEntity.Input.Data) -> AnyPublisher<APIResult<JobAPIEntity.Data>, Error>
     /// 指定したJob情報を更新する
     /// - Parameters:
     ///   - token: トークン情報

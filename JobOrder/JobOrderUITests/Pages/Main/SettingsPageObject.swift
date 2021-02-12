@@ -53,8 +53,8 @@ class SettingsPageObject: PageObject {
     }
 
     private func tapCells(index: Int) -> PageObject {
-        //assert(Cells.count > 0, "識別子「setting_table」を持つテーブルにセルが格納されていない")
-        //assert(index < Cells.count, "識別子「setting_table」を持つテーブルのセル数が指定されたインデックス(" + String(index) + ")より少ない")
+        // assert(Cells.count > 0, "識別子「setting_table」を持つテーブルにセルが格納されていない")
+        // assert(index < Cells.count, "識別子「setting_table」を持つテーブルのセル数が指定されたインデックス(" + String(index) + ")より少ない")
 
         cells.element(boundBy: index).tap()
         var result: PageObject?

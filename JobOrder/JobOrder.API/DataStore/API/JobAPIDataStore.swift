@@ -48,7 +48,7 @@ public class JobAPIDataStore: JobAPIRepository {
     ///   - token: トークン情報
     ///   - data: Job情報
     /// - Returns: Job情報
-    public func post(_ token: String, data: JobAPIEntity.Data) -> AnyPublisher<APIResult<JobAPIEntity.Data>, Error> {
+    public func post(_ token: String, data: JobAPIEntity.Input.Data) -> AnyPublisher<APIResult<JobAPIEntity.Data>, Error> {
         Logger.info(target: self)
         return api.post(resUrl: url, token: token, data: data)
     }
