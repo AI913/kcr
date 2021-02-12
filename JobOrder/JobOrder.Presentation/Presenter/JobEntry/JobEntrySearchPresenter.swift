@@ -29,6 +29,9 @@ protocol JobEntrySearchPresenterProtocol {
     /// ActionLibraryのバージョン取得
     /// - Parameter index: 配列のIndex
     func version(_ index: Int) -> Int?
+    /// 検索
+    /// - Parameter keyword: 検索キーワード
+    func filterAndSort(keyword: String?, keywordChanged: Bool)
 }
 
 // MARK: - Implementation
@@ -95,6 +98,13 @@ extension JobEntrySearchPresenter: JobEntrySearchPresenterProtocol {
     func version(_ index: Int) -> Int? {
         return displayActionLibraries?[index].version
     }
+
+    /// 検索
+    /// - Parameter keyword: 検索キーワード
+    func filterAndSort(keyword: String?, keywordChanged: Bool) {
+
+        filterAndSort(keyword: keyword, actionLibraries: displayActionLibraries, keywordChanged: keywordChanged)
+    }
 }
 
 // MARK: - Private Function
@@ -126,6 +136,52 @@ extension JobEntrySearchPresenter {
             display = display.filter { _ in true }
         }
         displayActionLibraries = display
+        originalActionLibraries = display
         vc.reloadCollection()
+    }
+
+    func filterAndSort(keyword: String? = nil, actionLibraries: [JobOrder_Domain.DataManageModel.Output.ActionLibrary]?, keywordChanged: Bool) {
+        guard var actionLibraries = actionLibraries else { return }
+
+        var searchKeyWord: String? = keyword
+        if keywordChanged {
+            searchKeyString = searchKeyWord!
+            actionLibraries = originalActionLibraries!
+        } else {
+            searchKeyWord = searchKeyString
+            originalActionLibraries = actionLibraries
+        }
+
+        // TODO: - Sort by user settings.
+        var display = actionLibraries.sorted {
+            if let name0 = $0.name, let name1 = $1.name, name0 != name1 {
+                return name0 < name1
+            } else {
+                return $0.id < $1.id
+            }
+        }
+
+        if let searchKeyWord = searchKeyWord, !searchKeyWord.isEmpty {
+            display = display.filter {
+                guard let name = $0.name else { return false }
+                return name.uppercased().contains(searchKeyWord.uppercased())
+            }
+        }
+        displayActionLibraries = display
+        vc.reloadCollection()
+    }
+
+    private struct SortCondition {
+        var key: SortKey
+        var order: SortOrder
+
+        enum SortKey {
+            case thingName
+        }
+
+        enum SortOrder {
+            case ASC
+            case DESC
+        }
     }
 }

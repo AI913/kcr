@@ -18,11 +18,15 @@ protocol JobEntrySearchViewControllerProtocol: class {
 
 class JobEntrySearchViewController: UIViewController {
 
+    private var searchText: String = ""
+    private let searchBarHeight: CGFloat = 44
+
     // MARK: - IBOutlet
     @IBOutlet weak var collectionView: UICollectionView!
     
     // MARK: - Variable
     var presenter: JobEntrySearchPresenterProtocol!
+    private let searchController = UISearchController()
     private var computedCellSize: CGSize?
 
     required init?(coder aDecoder: NSCoder) {
@@ -34,13 +38,13 @@ class JobEntrySearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        collectionView.dataSource = self
-//        collectionView.backgroundColor = .lightGray
-//
-//        let layout = UICollectionViewFlowLayout()
-//        layout.itemSize = CGSize(width: 100, height: 120)
-//        layout.minimumInteritemSpacing = 5
-//        collectionView.collectionViewLayout = layout
+        self.searchController.searchResultsUpdater = self
+        self.searchController.searchBar.placeholder = L10n.keyword
+        self.searchController.obscuresBackgroundDuringPresentation = false
+        self.searchController.automaticallyShowsCancelButton = false
+        self.searchController.searchBar.frame = CGRect(x: 0, y: 0, width: self.collectionView.frame.width, height: searchBarHeight)
+        self.searchController.hidesNavigationBarDuringPresentation = false
+        collectionView.addSubview(self.searchController.searchBar)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -63,10 +67,7 @@ extension JobEntrySearchViewController: UICollectionViewDataSource {
 
         cell.inject(presenter: presenter)
         cell.setItem(indexPath)
-//        if let presenter = presenter, presenter.isSelected(indexPath: indexPath) {
-//            cell.isSelected = true
-//            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
-//        }
+        self.searchController.searchBar.frame = CGRect(x: 0, y: 0, width: self.collectionView.frame.width, height: searchBarHeight)
         return cell
     }
 }
@@ -101,5 +102,21 @@ extension JobEntrySearchViewController: JobEntrySearchViewControllerProtocol {
 
     func reloadCollection() {
         collectionView?.reloadData()
+    }
+}
+
+// MARK: - UISearchBarDelegate
+extension JobEntrySearchViewController: UISearchBarDelegate {
+
+    internal func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.searchText = searchText
+    }
+}
+
+// MARK: - Implement UISearchResultsUpdating
+extension JobEntrySearchViewController: UISearchResultsUpdating {
+
+    func updateSearchResults(for searchController: UISearchController) {
+        presenter?.filterAndSort(keyword: searchController.searchBar.text, keywordChanged: true)
     }
 }
