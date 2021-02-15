@@ -16,16 +16,17 @@ platform :ios do
   desc "Marge to master branch (Deploy to AppStore Connect)"
   lane :deploy do
 
-    setup_library(useWorkaround: true)
+    setup_library
 
     import_certificates
+    api_key
     get_provisioning_profile
 
     run_tests
     # slather
 
     codecov
-    danger_wrapper
+    # danger_wrapper
 
     increment_build_number
     clean_build_artifacts
@@ -51,16 +52,17 @@ platform :ios do
   desc "Marge to staging branch (Deploy to AdHoc)"
   lane :stage do
 
-    setup_library(useWorkaround: true)
+    setup_library
 
     import_certificates
+    api_key
     get_provisioning_profile(adhoc: true)
 
     run_tests
     # slather
 
     codecov
-    danger_wrapper
+    # danger_wrapper
 
     license_plist
     build_app
@@ -74,26 +76,19 @@ platform :ios do
 
   desc "Push to development branch"
   lane :cache_library do
-    setup_library(useWorkaround: true)
+    setup_library
   end
 
   desc "https://gist.github.com/hjanuschka/94ba3678553ebcb40b97a62304eb8418"
   lane :danger_wrapper do
-    puts ENV['DANGER_GITLAB_HOST']
-    puts ENV['DANGER_GITLAB_API_BASE_URL']
-    puts ENV['DANGER_GITLAB_API_TOKEN']
-    puts ENV['CI_MERGE_REQUEST_ID']
-    puts ENV['BITRISE_PULL_REQUEST']
-    puts ENV['BITRISE_GIT_COMMIT']
-    remotes= sh("git ls-remote -q origin merge-requests\\*head|grep #{ENV['CI_MERGE_REQUEST_ID']} || echo 'no pr' ")
+    remotes = sh("git ls-remote -q origin merge-requests\\*head|grep #{ENV['BITRISE_GIT_COMMIT']} || echo 'no mr' ")
     match_data = /.*merge-requests\/([0-9]+)\//.match(remotes)
-    puts "remotes="
-    puts remotes
-    puts "match_data ="
-    puts match_data
     if match_data && match_data[1]
       ENV['CI_MERGE_REQUEST_ID'] =  match_data[1]
-      danger
+      danger(
+        github_api_token: ENV["DANGER_GITLAB_API_TOKEN"],
+        verbose: true
+      )
     else 
       UI.important "not a MR"
     end
@@ -125,6 +120,16 @@ platform :ios do
     )
   end
 
+  desc "Get API Key from App Store Connect"
+  private_lane :api_key do
+    app_store_connect_api_key(
+      key_id: ENV['APP_STORE_CONNECT_KEY_ID'],
+      issuer_id: ENV['APP_STORE_CONNECT_ISSUER_ID'],
+      key_filepath: ENV['FASTLANE_CERTIFICATE_PATH'] + "/AuthKey_SDT48H5453.p8",
+      in_house: false
+    )
+  end
+
   desc "Auto upate build number"
   private_lane :increment_bundle_version do
     update_plist(
@@ -142,19 +147,12 @@ platform :ios do
   end
 
   desc "Setup libraries"
-  private_lane :setup_library do |options|
+  private_lane :setup_library do
     sh("cd .. && make prepare-ci")
-    if options[:useWorkaround]
-      carthage_wrapper(
-        platform: "iOS",
-        cache_builds: true,
-      )
-    else
-      carthage(
-        platform: "iOS",
-        cache_builds: true,
-      )
-    end
+    carthage(
+      platform: "iOS",
+      cache_builds: true,
+    )
     cocoapods
   end
 
@@ -182,27 +180,6 @@ platform :ios do
       sh("cd .. && make generate-documents-release")
     else
       sh("cd .. && make generate-documents-adhoc")
-    end
-  end
-
-  # https://github.com/Carthage/Carthage/issues/3019#issuecomment-699161281
-  desc "Run carthage in a wrapper that works with Xcode 12"
-  private_lane :carthage_wrapper do |options|
-    require 'tempfile'
-    tmp = Tempfile.new('xcconfig')
-    oldXcconfig = ENV['XCODE_XCCONFIG_FILE']
-    ENV['XCODE_XCCONFIG_FILE'] = tmp.path
-    begin
-      tmp.write("EXCLUDED_ARCHS__EFFECTIVE_PLATFORM_SUFFIX_simulator__NATIVE_ARCH_64_BIT_x86_64__XCODE_1200 = arm64 arm64e armv7 armv7s armv6 armv8\n")
-      tmp.write("EXCLUDED_ARCHS = $(inherited) $(EXCLUDED_ARCHS__EFFECTIVE_PLATFORM_SUFFIX_$(EFFECTIVE_PLATFORM_SUFFIX)__NATIVE_ARCH_64_BIT_$(NATIVE_ARCH_64_BIT)__XCODE_$(XCODE_VERSION_MAJOR))\n")
-      tmp.flush
-
-      carthage(options)
-    ensure
-      # Always delete the temp file
-      tmp.close
-      tmp.unlink
-      ENV['XCODE_XCCONFIG_FILE'] = oldXcconfig
     end
   end
 

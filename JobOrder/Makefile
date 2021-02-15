@@ -100,16 +100,12 @@ update-cocoapods: # Update CocoaPods dependencies and generate workspace
 
 .PHONY: install-carthage
 install-carthage: # Install Carthage dependencies
-# Workaround: Issueが解決したら元に戻す(https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323)
-	./carthage.sh carthage bootstrap --platform iOS --cache-builds
-#	mint run carthage carthage bootstrap --platform iOS --cache-builds
+	mint run carthage carthage bootstrap --platform iOS --cache-builds --use-xcframeworks
 	$(MAKE) show-carthage-dependencies
 
 .PHONY: update-carthage
 update-carthage: # Update Carthage dependencies
-# Workaround: Issueが解決したら元に戻す(https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323)
-	./carthage.sh carthage update --platform iOS
-#	mint run carthage carthage update --platform iOS
+	mint run carthage carthage update --platform iOS --use-xcframeworks
 	$(MAKE) show-carthage-dependencies
 
 .PHONY: show-carthage-dependencies

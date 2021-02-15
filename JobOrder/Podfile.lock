@@ -25,20 +25,29 @@ PODS:
     - AWSCore (= 2.19.1)
   - CommonCryptoModule (1.0.2)
   - GoogleWebRTC (1.1.31999)
+  - Mockingjay (3.0.0-alpha.1):
+    - Mockingjay/Core (= 3.0.0-alpha.1)
+    - Mockingjay/XCTest (= 3.0.0-alpha.1)
+  - Mockingjay/Core (3.0.0-alpha.1):
+    - URITemplate (~> 3.0)
+  - Mockingjay/XCTest (3.0.0-alpha.1):
+    - Mockingjay/Core
   - Starscream (3.1.1)
+  - URITemplate (3.0.0)
 
 DEPENDENCIES:
-  - AWSCognito (~> 2.17)
-  - AWSCognitoIdentityProvider (~> 2.17)
-  - AWSCore (~> 2.17)
-  - AWSIoT (~> 2.17)
-  - AWSKinesisVideo (~> 2.17)
-  - AWSKinesisVideoSignaling (~> 2.17)
-  - AWSMobileClient (~> 2.17)
-  - AWSPinpoint (~> 2.17)
-  - AWSS3 (~> 2.17)
+  - AWSCognito (~> 2.19)
+  - AWSCognitoIdentityProvider (~> 2.19)
+  - AWSCore (~> 2.19)
+  - AWSIoT (~> 2.19)
+  - AWSKinesisVideo (~> 2.19)
+  - AWSKinesisVideoSignaling (~> 2.19)
+  - AWSMobileClient (~> 2.19)
+  - AWSPinpoint (~> 2.19)
+  - AWSS3 (~> 2.19)
   - CommonCryptoModule (~> 1.0.2)
   - GoogleWebRTC (~> 1.1)
+  - Mockingjay (= 3.0.0-alpha.1)
   - Starscream (~> 3.0)
 
 SPEC REPOS:
@@ -56,7 +65,9 @@ SPEC REPOS:
     - AWSS3
     - CommonCryptoModule
     - GoogleWebRTC
+    - Mockingjay
     - Starscream
+    - URITemplate
 
 SPEC CHECKSUMS:
   AWSAuthCore: 387c5e3482edbbb0fe754fa110a2a0203c783432
@@ -72,8 +83,10 @@ SPEC CHECKSUMS:
   AWSS3: 2272253b098d07803af8dd20ce6ce7302bcffb47
   CommonCryptoModule: 63a68b57abed79655b3a01011419bf037a05b0a0
   GoogleWebRTC: b39a78c4f5cc6b0323415b9233db03a2faa7b0f0
+  Mockingjay: 0f7c5aa49c7f1b95621cee3c79b557141f5a225c
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
+  URITemplate: 58e0d47f967006c5d59888af5356c4a8ed3b197d
 
-PODFILE CHECKSUM: 8c686493e7a8cf46da77d981f4330e6ebaca04d5
+PODFILE CHECKSUM: 38ae4b068cad0ea156a2aff6d41e7d413625f135
 
 COCOAPODS: 1.10.0
