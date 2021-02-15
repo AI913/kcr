@@ -470,6 +470,7 @@
 		E5DE36FC2525629700D41B8B /* SettingsPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DE36FB2525629700D41B8B /* SettingsPageObject.swift */; };
 		E5EA88EC25271B7E0060E4FC /* RobotDetailPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EA88EB25271B7E0060E4FC /* RobotDetailPageObject.swift */; };
 		E5EA88EE25271BB30060E4FC /* JobSelectionPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EA88ED25271BB30060E4FC /* JobSelectionPageObject.swift */; };
+		FC0353A725DA54E30079B64D /* JobEntryActionViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0353A625DA54E30079B64D /* JobEntryActionViewControllerTests.swift */; };
 		FC4B8508259318340063B617 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC4B8507259318340063B617 /* String.swift */; };
 		FC5FEC6A25CCDDC50069F600 /* JobEntrySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5FEC6925CCDDC50069F600 /* JobEntrySearchViewController.swift */; };
 		FC5FEC7C25CCDFD10069F600 /* JobEntrySearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5FEC7B25CCDFD10069F600 /* JobEntrySearchPresenter.swift */; };
@@ -1071,6 +1072,7 @@
 		E5EA88EB25271B7E0060E4FC /* RobotDetailPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobotDetailPageObject.swift; sourceTree = "<group>"; };
 		E5EA88ED25271BB30060E4FC /* JobSelectionPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobSelectionPageObject.swift; sourceTree = "<group>"; };
 		F1C4CDFBE32C89CC186D6FEE /* Pods-All-JobOrder.API.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-JobOrder.API.release.xcconfig"; path = "Target Support Files/Pods-All-JobOrder.API/Pods-All-JobOrder.API.release.xcconfig"; sourceTree = "<group>"; };
+		FC0353A625DA54E30079B64D /* JobEntryActionViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryActionViewControllerTests.swift; sourceTree = "<group>"; };
 		FC309271258C8B4B007B6DA2 /* api_mock_examples_POST_tasks_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = api_mock_examples_POST_tasks_response.json; sourceTree = "<group>"; };
 		FC3534F825DA096C00AB296D /* JobOrder.API copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "JobOrder.API copy-Info.plist"; path = "/Users/frontarc/robotarm/JobOrder/JobOrder.API copy-Info.plist"; sourceTree = "<absolute>"; };
 		FC35354325DA0A7500AB296D /* JobOrderUITests copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "JobOrderUITests copy-Info.plist"; path = "/Users/frontarc/robotarm/JobOrder/JobOrderUITests copy-Info.plist"; sourceTree = "<absolute>"; };
@@ -1967,6 +1969,7 @@
 		A3F98D4C24EB51FD0016A181 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				FC0353A625DA54E30079B64D /* JobEntryActionViewControllerTests.swift */,
 				A32E99B224EB5D8D005C4605 /* MainPresenterTests.swift */,
 				A32E99B624EB769A005C4605 /* DashboardPresenterTests.swift */,
 				A32E99BA24EB8EB9005C4605 /* RobotListPresenterTests.swift */,
@@ -3329,6 +3332,7 @@
 				B7FC909025AD2E3E0003F453 /* NewPasswordRequiredPresenterTests.swift in Sources */,
 				B7FC908225AD2E380003F453 /* SettingsPresenterTests.swift in Sources */,
 				B7FC90D425AD2E6E0003F453 /* ActionLibraryDataStoreTests.swift in Sources */,
+				FC0353A725DA54E30079B64D /* JobEntryActionViewControllerTests.swift in Sources */,
 				B7FC905425AD2E160003F453 /* MailVerificationCompleteViewControllerTests.swift in Sources */,
 				B7FC906D25AD2E340003F453 /* TaskDetailRunHistoryPresenterTest.swift in Sources */,
 				B7FC908525AD2E380003F453 /* JobListPresenterTests.swift in Sources */,
