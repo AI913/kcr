@@ -129,7 +129,7 @@ extension JobEntrySearchPresenter {
         guard let actionLibraries = cachedActionLibraries else { return }
 
         var display = actionLibraries.values.sorted {
-            $0.name ?? "N/A" < $1.name ?? "N/A"
+            $0.name < $1.name
         }
 
         if let actionLibraries = dataUseCase.actionLibraries, !actionLibraries.isEmpty {
@@ -154,8 +154,8 @@ extension JobEntrySearchPresenter {
 
         // TODO: - Sort by user settings.
         var display = actionLibraries.sorted {
-            if let name0 = $0.name, let name1 = $1.name, name0 != name1 {
-                return name0 < name1
+            if $0.name != $1.name {
+                return $0.name < $1.name
             } else {
                 return $0.id < $1.id
             }
@@ -163,8 +163,7 @@ extension JobEntrySearchPresenter {
 
         if let searchKeyWord = searchKeyWord, !searchKeyWord.isEmpty {
             display = display.filter {
-                guard let name = $0.name else { return false }
-                return name.uppercased().contains(searchKeyWord.uppercased())
+                return $0.name.uppercased().contains(searchKeyWord.uppercased())
             }
         }
         displayActionLibraries = display
