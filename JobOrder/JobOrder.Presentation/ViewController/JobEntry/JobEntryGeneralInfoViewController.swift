@@ -21,13 +21,13 @@ class JobEntryGeneralInfoViewController: UIViewController {
 
     // MARK: - IBOutlet
     @IBOutlet var robotCollection: UICollectionView!
-    @IBOutlet private weak var subtitle: UILabel!
-    @IBOutlet private weak var jobNameTitleLabel: UILabel!
-    @IBOutlet private weak var jobNameTextField: UITextField!
-    @IBOutlet private weak var overviewTitleLabel: UILabel!
-    @IBOutlet private weak var overviewTextView: UITextView!
-    @IBOutlet private weak var cancelBarButtonItem: UIBarButtonItem!
-    @IBOutlet private weak var continueButton: UIButton!
+    @IBOutlet weak var subtitle: UILabel!
+    @IBOutlet weak var jobNameTitleLabel: UILabel!
+    @IBOutlet weak var jobNameTextField: UITextField!
+    @IBOutlet weak var overviewTitleLabel: UILabel!
+    @IBOutlet weak var overviewTextView: UITextView!
+    @IBOutlet weak var cancelBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var continueButton: UIButton!
 
     // MARK: - Variable
     var presenter: JobEntryGeneralInfoPresenterProtocol!
@@ -43,7 +43,8 @@ class JobEntryGeneralInfoViewController: UIViewController {
         super.viewDidLoad()
         setup()
         robotCollection?.allowsSelection = true
-        robotCollection?.allowsMultipleSelection = true
+        robotCollection?.allowsMultipleSelection = false
+        continueButton.isEnabled = false
     }
 
     // MARK: - Override function (view controller event)
@@ -58,7 +59,8 @@ extension JobEntryGeneralInfoViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
         let updatedText = self.updatedText(textField.text, range: range, replacementString: string)
-        self.continueButton.isEnabled = updatedText != nil
+        setContinueButtonEnale(updatedText != "")
+//        self.continueButton.isEnabled = updatedText != ""
         return true
     }
 
@@ -73,13 +75,6 @@ extension JobEntryGeneralInfoViewController: UITextFieldDelegate {
         }
 
         return unwrappedText.replacingCharacters(in: textRange, with: replacementString)
-    }
-}
-
-// MARK: - Implement UITextViewDelegate
-extension JobEntryGeneralInfoViewController: UITextViewDelegate {
-
-    func textViewDidEndEditing(_ textView: UITextView) {
     }
 }
 
@@ -107,10 +102,18 @@ extension JobEntryGeneralInfoViewController {
         navigationItem.leftBarButtonItem?.title = L10n.cancel
         navigationItem.title = L10n.JobEntryGeneralInformationForm.title
         subtitle?.text = L10n.JobEntryGeneralInformationForm.subtitle
-        //        jobNameTitleLabel?.text = L10n.JobEntryGeneralInformationForm.jobName
         jobNameTitleLabel?.attributedText = self.toRequiredMutableAttributedString(jobNameTitleLabel.text)
-        //        overviewTitleLabel?.text = L10n.JobEntryGeneralInformationForm.remarks
         continueButton?.setTitle(L10n.JobEntryGeneralInformationForm.bottomButton, for: .normal)
+    }
+    
+    private func setContinueButtonEnale(_ enableFlg: Bool) {
+        if enableFlg {
+            if presenter?.isEnabledContinueButton ?? true {
+                continueButton.isEnabled = enableFlg
+            }
+        } else {
+            continueButton.isEnabled = enableFlg
+        }
     }
 }
 
@@ -142,13 +145,17 @@ extension JobEntryGeneralInfoViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         presenter?.selectItem(indexPath: indexPath)
-        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
+        print(presenter?.isEnabledContinueButton)
+        setContinueButtonEnale(presenter?.isEnabledContinueButton ?? false)
+        print(presenter?.isEnabledContinueButton)
+//        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
     }
 
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        presenter?.selectItem(indexPath: indexPath)
-        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
-    }
+//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+//        presenter?.selectItem(indexPath: indexPath)
+//        setContinueButtonEnale(presenter?.isEnabledContinueButton ?? false)
+////        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
+//    }
 }
 
 // MARK: - Implement UICollectionViewDelegateFlowLayout

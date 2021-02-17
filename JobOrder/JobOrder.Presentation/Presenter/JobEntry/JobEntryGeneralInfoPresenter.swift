@@ -15,16 +15,22 @@ import JobOrder_Utility
 /// JobEntryGeneralInfoPresenterProtocol
 /// @mockable
 protocol JobEntryGeneralInfoPresenterProtocol {
+    /// ジョブ名
+    var jobName: String? { get }
+    /// 備考
+    var remarks: String? { get }
     /// リストの行数
     var numberOfItemsInSection: Int { get }
     /// Continueボタンの有効無効
     var isEnabledContinueButton: Bool { get }
+
     /// Robotの表示名取得
     /// - Parameter index: 配列のIndex
     func displayName(_ index: Int) -> String?
     /// Robotのタイプ取得
     /// - Parameter index: 配列のIndex
     func type(_ index: Int) -> String?
+
     /// セルの選択可否
     /// - Parameter indexPath: インデックスパス
     func isSelected(indexPath: IndexPath) -> Bool
@@ -38,7 +44,7 @@ protocol JobEntryGeneralInfoPresenterProtocol {
 // MARK: - Implementation
 /// JobEntryRobotGeneralInfoPresenter
 class JobEntryGeneralInfoPresenter {
-    var data: JobEntryViewData = JobEntryViewData()
+    var data: JobEntryViewData = JobEntryViewData(nil, nil, nil)
     private var searchKeyString: String = ""
     /// DataManageUseCaseProtocol
     private let useCase: JobOrder_Domain.DataManageUseCaseProtocol
@@ -68,6 +74,18 @@ class JobEntryGeneralInfoPresenter {
 // MARK: - Protocol Function
 extension JobEntryGeneralInfoPresenter: JobEntryGeneralInfoPresenterProtocol {
 
+    /// ジョブ名
+    var jobName: String? {
+        get { return data.form.jobName }
+        set { data.form.jobName = newValue }
+    }
+
+    /// 備考
+    var remarks: String? {
+        get { return data.form.remarks }
+        set { data.form.remarks = newValue }
+    }
+
     /// リストの行数
     var numberOfItemsInSection: Int {
         displayRobots?.count ?? 0
@@ -75,9 +93,10 @@ extension JobEntryGeneralInfoPresenter: JobEntryGeneralInfoPresenterProtocol {
 
     /// Continueボタンの有効無効
     var isEnabledContinueButton: Bool {
-        data.robotIds?.count ?? 0 > 0
+        data.form.robotIds?.count ?? 0 > 0
     }
-
+    
+    
     /// Robotの表示名取得
     /// - Parameter index: 配列のIndex
     /// - Returns: Robotの表示名
@@ -90,26 +109,26 @@ extension JobEntryGeneralInfoPresenter: JobEntryGeneralInfoPresenterProtocol {
     /// - Returns: Robotのタイプ名
     func type(_ index: Int) -> String? {
         return displayRobots?[index].type
-    }
+     }
 
     /// セルの選択可否
     /// - Parameter indexPath: インデックスパス
     /// - Returns: 選択中かどうか
     func isSelected(indexPath: IndexPath) -> Bool {
         guard let id = displayRobots?[indexPath.row].id else { return false }
-        return data.robotIds?.contains(id) ?? false
+        return data.form.robotIds?.contains(id) ?? false
     }
 
     /// セルの選択
     /// - Parameter indexPath: インデックスパス
     func selectItem(indexPath: IndexPath) {
         guard let id = displayRobots?[indexPath.row].id else { return }
-        if let index = data.robotIds?.firstIndex(of: id) {
-            data.robotIds?.remove(at: index)
-        } else if data.robotIds == nil {
-            data.robotIds = [id]
+        if let index = data.form.robotIds?.firstIndex(of: id) {
+            data.form.robotIds?.remove(at: index)
+        } else if data.form.robotIds == nil {
+            data.form.robotIds = [id]
         } else {
-            data.robotIds?.append(id)
+            data.form.robotIds?.append(id)
         }
     }
 
