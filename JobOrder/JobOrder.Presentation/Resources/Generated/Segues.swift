@@ -23,6 +23,13 @@ internal enum StoryboardSegue {
     case unwindToWorkObjectSelection
     case unwindToWorkbenchEntry
   }
+  internal enum Authentication: String, SegueType {
+    case showConnectionSettings
+    case showMailVerificationComplete
+    case showMailVerificationConfirm
+    case showMailVerificationEntry
+    case showNewPasswordRequired
+  }
   internal enum JobEntry: String, SegueType {
     case showAction
   }
@@ -40,12 +47,8 @@ internal enum StoryboardSegue {
     case showConfirm
     case showRobotSelection
   }
-  internal enum PasswordAuthentication: String, SegueType {
-    case showConnectionSettings
-    case showMailVerificationComplete
-    case showMailVerificationConfirm
-    case showMailVerificationEntry
-    case showNewPasswordRequired
+  internal enum Startup: String, SegueType {
+    case launchMain
   }
   internal enum TaskDetail: String, SegueType {
     case robotSelectionCellToTaskInfo

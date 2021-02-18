@@ -23,7 +23,7 @@ class JobEntrySearchViewController: UIViewController {
 
     // MARK: - IBOutlet
     @IBOutlet weak var collectionView: UICollectionView!
-    
+
     // MARK: - Variable
     var presenter: JobEntrySearchPresenterProtocol!
     private let searchController = UISearchController()
@@ -37,7 +37,7 @@ class JobEntrySearchViewController: UIViewController {
     // MARK: - Override function (view controller lifecycle)
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.searchController.searchResultsUpdater = self
         self.searchController.searchBar.placeholder = L10n.keyword
         self.searchController.obscuresBackgroundDuringPresentation = false

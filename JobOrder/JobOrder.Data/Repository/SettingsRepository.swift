@@ -19,10 +19,8 @@ public protocol SettingsRepository {
     var lastSynced: Int { get set }
     /// Space名
     var space: String? { get set }
-    /// クラウドサーバー使用可否
-    var useCloudServer: Bool { get set }
-    /// サーバーURL
-    var serverUrl: String? { get set }
     /// Thing名
     var thingName: String? { get }
+    /// Server Confugurationデータ
+    var serverConfiguration: Data? { get set }
 }

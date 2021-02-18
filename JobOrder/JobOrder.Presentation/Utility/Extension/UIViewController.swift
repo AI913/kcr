@@ -51,10 +51,14 @@ extension UIViewController {
         self.view.addGestureRecognizer(recognizer)
     }
 
-    public func presentAlert(_ unlocalizedTitle: String, _ unlocalizedMessage: String, handler: ((UIAlertAction) -> Void)? = nil) {
+    public func presentAlert(_ unlocalizedTitle: String, _ unlocalizedMessage: String, hasCancel: Bool = false, handler: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: unlocalizedTitle.localized, message: unlocalizedMessage.localized, preferredStyle: .alert)
         let defaultAction = UIAlertAction(title: "OK".localized, style: .default, handler: handler)
+        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .cancel)
         alert.addAction(defaultAction)
+        if hasCancel {
+            alert.addAction(cancelAction)
+        }
         self.present(alert, animated: true, completion: nil)
     }
 

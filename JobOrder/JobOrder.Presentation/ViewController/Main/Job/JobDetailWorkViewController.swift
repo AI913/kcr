@@ -175,10 +175,9 @@ extension JobDetailWorkViewController: JobDetailWorkViewControllerProtocol {
 
         // robotIdsが一つしか格納されていないのであればRobotSelection画面を飛ばす
         if robotIds.count == 1 {
-            guard let jobid = presenter.data.id else { return }
             let navigationController = StoryboardScene.TaskDetail.initialScene.instantiate()
             if let vc = navigationController.topViewController as? TaskDetailTaskInformationViewController {
-                vc.inject(jobId: jobid, robotId: robotIds[0])
+                vc.inject(taskId: taskId, robotId: robotIds[0])
                 self.present(navigationController, animated: true, completion: nil)
             }
         } else {

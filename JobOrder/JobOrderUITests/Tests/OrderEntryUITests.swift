@@ -8,14 +8,7 @@
 
 import XCTest
 
-class OrderEntryUITests: XCTestCase {
-
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-        XCUIApplication().launch()
-    }
-
-    override func tearDownWithError() throws {}
+class OrderEntryUITests: JobOrderUITests {
 
     func testCancelOrderEntryViaRobotDetail() throws {
         let jobSelectionPage = jobSelectionPageViaRobotDetail()
@@ -254,7 +247,7 @@ extension OrderEntryUITests {
     private func jobSelectionPageViaRobotDetail(by index: Int = 0) -> JobSelectionPageObject {
         let app = XCUIApplication()
         // ログインする
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         let jobSelectionPage = MainPageObject(application: app)
             .tapTabRobotButton()	// ロボットタブを選択する
@@ -270,7 +263,7 @@ extension OrderEntryUITests {
     private func robotSelectionPageViaJobDetail(by index: Int = 0) -> RobotSelectionPageObject {
         let app = XCUIApplication()
         // ログインする
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         let robotSelectionPage = MainPageObject(application: app)
             .tapTabJobButton()		// ジョブタブを選択する

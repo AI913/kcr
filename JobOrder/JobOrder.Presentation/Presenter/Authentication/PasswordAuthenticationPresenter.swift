@@ -19,12 +19,18 @@ protocol PasswordAuthenticationPresenterProtocol {
     var isRestoredIdentifier: Bool { get }
     /// ユーザー名
     var username: String? { get }
+    /// Settingsボタン有効無効
+    var isEnabledSettingsButton: Bool { get }
+    /// Password Resetボタン有効無効
+    var isEnabledPasswordResetButton: Bool { get }
     /// SignInボタン有効無効
     var isEnabledSignInButton: Bool { get }
     /// 生体認証ボタン有効無効
     var isEnabledBiometricsButton: Bool { get }
+    /// 再起動の案内文言
+    var rebootExplain: String? { get }
     /// Viewの表示開始
-    func viewDidAppear()
+    func viewDidLoad()
     /// SignInボタンをタップ
     func tapSignInButton()
     /// 生体認証ボタンをタップ
@@ -53,8 +59,6 @@ class PasswordAuthenticationPresenter {
     private var identifier: String?
     /// パスワード
     private var password: String?
-    /// One Off Func
-    private let oneOffFunc = OneOffFunc()
 
     /// イニシャライザ
     /// - Parameters:
@@ -67,8 +71,8 @@ class PasswordAuthenticationPresenter {
         self.useCase = authUseCase
         self.settingsUseCase = settingsUseCase
         self.vc = vc
-        subscribeUseCaseProcessing()
-        registerStateChanges()
+        self.subscribeUseCaseProcessing()
+        self.registerStateChanges()
     }
 
     /// デイニシャライザ
@@ -90,9 +94,19 @@ extension PasswordAuthenticationPresenter: PasswordAuthenticationPresenterProtoc
         useCase.currentUsername
     }
 
+    /// Settingsボタン有効無効
+    var isEnabledSettingsButton: Bool {
+        !(settingsUseCase.spaceName ?? "").isEmpty
+    }
+
+    /// Password Resetボタン有効無効
+    var isEnabledPasswordResetButton: Bool {
+        !(settingsUseCase.spaceName ?? "").isEmpty
+    }
+
     /// SignInボタン有効無効
     var isEnabledSignInButton: Bool {
-        isEnabled(identifier, password)
+        !(identifier ?? "").isEmpty && !(password ?? "").isEmpty && !(settingsUseCase.spaceName ?? "").isEmpty
     }
 
     /// 生体認証ボタン有効無効
@@ -100,21 +114,18 @@ extension PasswordAuthenticationPresenter: PasswordAuthenticationPresenterProtoc
         return useCase.isSignedIn && settingsUseCase.useBiometricsAuthentication && useCase.canUseBiometricsAuthentication.result
     }
 
+    /// 再起動の案内文言
+    var rebootExplain: String? {
+        (settingsUseCase.spaceName ?? "").isEmpty ? "重要：Space名がリセットされたためアプリを再起動してください。" : nil
+    }
+
     /// Viewの表示開始
-    func viewDidAppear() {
-
-        guard settingsUseCase.spaceName != nil else {
-            vc.transitionToConnectionSettings()
-            return
-        }
-
-        oneOffFunc.execute {
-            // サインイン中かつ、生体認証が使える場合は生体認証を実施
-            if useCase.isSignedIn &&
-                useCase.canUseBiometricsAuthentication.result &&
-                settingsUseCase.useBiometricsAuthentication {
-                doBiometricsAuthentication()
-            }
+    func viewDidLoad() {
+        // サインイン中かつ、生体認証が使える場合は生体認証を実施
+        if useCase.isSignedIn &&
+            useCase.canUseBiometricsAuthentication.result &&
+            settingsUseCase.useBiometricsAuthentication {
+            doBiometricsAuthentication()
         }
     }
 
@@ -170,7 +181,7 @@ extension PasswordAuthenticationPresenter: PasswordAuthenticationPresenterProtoc
 // MARK: - Private Function
 extension PasswordAuthenticationPresenter {
 
-    private func subscribeUseCaseProcessing() {
+    func subscribeUseCaseProcessing() {
         // 通信中はキー無効
         // useCase.$processing.sink { response in
         useCase.processingPublisher
@@ -180,7 +191,7 @@ extension PasswordAuthenticationPresenter {
             }.store(in: &cancellables)
     }
 
-    private func registerStateChanges() {
+    func registerStateChanges() {
 
         useCase.registerAuthenticationStateChange()
             .receive(on: DispatchQueue.main)
@@ -215,15 +226,11 @@ extension PasswordAuthenticationPresenter {
             }, receiveValue: { response in
                 Logger.debug(target: self, "\(response)")
                 if response {
-                    self.vc.dismissByBiometricsAuthentication()
+                    self.vc.dismiss()
                 } else {
                     // TODO: エラーケース
                 }
             }).store(in: &cancellables)
-    }
-
-    func isEnabled(_ st1: String?, _ st2: String?) -> Bool {
-        return st1 != nil && st1 != "" && st2 != nil && st2 != ""
     }
 
     func validate(password: String) -> Bool {

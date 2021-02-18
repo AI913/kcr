@@ -12,6 +12,7 @@ import SwiftCheck
 
 extension RobotEntity: Arbitrary {
     public static var arbitrary: Gen<RobotEntity> {
+        let stageGen = Gen<String>.fromElements(of: ["unknown", "terminated", "stopped", "starting", "waiting", "processing"])
         return Gen<RobotEntity>.compose { c in
             let robot = RobotEntity()
             robot.id = c.generate(using: FakeFactory.shared.uuidStringGen)
@@ -32,7 +33,7 @@ extension RobotEntity: Arbitrary {
             robot.updator = c.generate(using: FakeFactory.shared.emailGen)
             robot.thingName = c.generate()
             robot.thingArn = c.generate()
-            robot.state = c.generate()
+            robot.state = c.generate(using: stageGen)
             return robot
         }
     }

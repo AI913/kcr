@@ -62,19 +62,6 @@ class MainPresenterTests: XCTestCase {
         }
     }
 
-    func test_viewDidAppear() {
-
-        XCTContext.runActivity(named: "初回") { _ in
-            presenter.viewDidAppear()
-            XCTAssertEqual(vc.launchPasswordAuthenticationCallCount, 1, "ViewControllerのメソッドが呼ばれない")
-        }
-
-        XCTContext.runActivity(named: "2回目以降") { _ in
-            presenter.viewDidAppear()
-            XCTAssertEqual(vc.launchPasswordAuthenticationCallCount, 1, "ViewControllerのメソッドが呼ばれてしまう")
-        }
-    }
-
     func test_tapConnectionStatusButton() {
         presenter.tapConnectionStatusButton()
         XCTAssertEqual(vc.showAlertCallCount, 1, "ViewControllerのメソッドが呼ばれない")
@@ -96,16 +83,9 @@ class MainPresenterTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        // 初期化時に登録
-        presenter = MainPresenter(authUseCase: auth,
-                                  mqttUseCase: mqtt,
-                                  settingsUseCase: settings,
-                                  dataUseCase: data,
-                                  analyticsUseCase: analytics,
-                                  vc: vc)
-
+        presenter.registerStateChanges()
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-        XCTAssertEqual(vc.launchPasswordAuthenticationCallCount, 0, "ViewControllerのメソッドが呼ばれてしまう")
+        XCTAssertEqual(vc.launchAuthenticationCallCount, 0, "ViewControllerのメソッドが呼ばれてしまう")
         XCTAssertEqual(mqtt.connectCallCount, 0, "MQTTUseCaseのメソッドが呼ばれてしまう")
         XCTAssertEqual(data.syncDataCallCount, 0, "DataManageUseCaseのメソッドが呼ばれてしまう")
     }
@@ -126,14 +106,7 @@ class MainPresenterTests: XCTestCase {
                 }.eraseToAnyPublisher()
             }
 
-            // 初期化時に登録
-            presenter = MainPresenter(authUseCase: auth,
-                                      mqttUseCase: mqtt,
-                                      settingsUseCase: settings,
-                                      dataUseCase: data,
-                                      analyticsUseCase: analytics,
-                                      vc: vc)
-
+            presenter.registerStateChanges()
             wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
 
             switch state {
@@ -143,7 +116,7 @@ class MainPresenterTests: XCTestCase {
                 signedOutCallCount += 1
             default: break
             }
-            XCTAssertEqual(vc.launchPasswordAuthenticationCallCount, signedOutCallCount, "ViewControllerのメソッドが呼ばれない")
+            XCTAssertEqual(vc.launchAuthenticationCallCount, signedOutCallCount, "ViewControllerのメソッドが呼ばれない")
             XCTAssertEqual(mqtt.connectCallCount, signedInCallCount, "MQTTUseCaseのメソッドが呼ばれない")
             XCTAssertEqual(data.syncDataCallCount, signedInCallCount, "DataManageUseCaseのメソッドが呼ばれない")
         }
@@ -160,14 +133,7 @@ class MainPresenterTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        // 初期化時に登録
-        presenter = MainPresenter(authUseCase: auth,
-                                  mqttUseCase: mqtt,
-                                  settingsUseCase: settings,
-                                  dataUseCase: data,
-                                  analyticsUseCase: analytics,
-                                  vc: vc)
-
+        presenter.registerStateChanges()
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
         XCTAssertEqual(vc.updateConnectionStatusButtonCallCount, 0, "ViewControllerのメソッドが呼ばれてしまう")
     }
@@ -187,14 +153,7 @@ class MainPresenterTests: XCTestCase {
                 }.eraseToAnyPublisher()
             }
 
-            // 初期化時に登録
-            presenter = MainPresenter(authUseCase: auth,
-                                      mqttUseCase: mqtt,
-                                      settingsUseCase: settings,
-                                      dataUseCase: data,
-                                      analyticsUseCase: analytics,
-                                      vc: vc)
-
+            presenter.registerStateChanges()
             wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
             XCTAssertEqual(vc.updateConnectionStatusButtonCallCount, callCount, "ViewControllerのメソッドが呼ばれない")
         }
@@ -314,10 +273,7 @@ class MainPresenterTests: XCTestCase {
 
         data.syncDataHandler = {
             return Future<JobOrder_Domain.DataManageModel.Output.SyncData, Error> { promise in
-                let model = JobOrder_Domain.DataManageModel.Output.SyncData(jobEntities: [],
-                                                                            robotEntities: [],
-                                                                            actionLibraryEntities: [],
-                                                                            aiLibraryEntities: [])
+                let model = JobOrder_Domain.DataManageModel.Output.SyncData.arbitrary.generate
                 promise(.success(model))
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()

@@ -12,7 +12,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Dfl-Oo-W3z">
             <objects>
-                <navigationController id="mJR-42-Hoo" sceneMemberID="viewController">
+                <navigationController modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="mJR-42-Hoo" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9Xb-dF-O6q">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -93,9 +93,6 @@
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
-                        </userDefinedRuntimeAttributes>
                     </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="efk-ch-Pq7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
@@ -108,6 +105,7 @@
                     <connections>
                         <outlet property="connectionStatusBarButtonItem" destination="hvL-LN-PYz" id="b95-Vg-x9f"/>
                         <outlet property="jobEntryBarButtonItem" destination="g4z-6W-yPx" id="5yo-q0-3uH"/>
+                        <outlet property="settingsBarButtonItem" destination="p2O-S5-fTf" id="cUA-vw-ewn"/>
                         <segue destination="Kmx-3v-WSR" kind="relationship" relationship="viewControllers" id="Hh9-Vd-tDH"/>
                         <segue destination="soi-4e-xgS" kind="relationship" relationship="viewControllers" id="zvT-l8-l4T"/>
                         <segue destination="HMK-Qk-c24" kind="relationship" relationship="viewControllers" id="0tx-lp-8YT"/>
@@ -179,13 +177,13 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="ERK-pz-YFc">
                                                             <rect key="frame" x="30" y="0.5" width="344" height="40.5"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mvl-Em-r6z" userLabel="Title Label">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mvl-Em-r6z" userLabel="Title Label">
                                                                     <rect key="frame" x="0.0" y="0.0" width="344" height="20.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iyh-zD-zb0" userLabel="Remarks Label">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iyh-zD-zb0" userLabel="Remarks Label">
                                                                     <rect key="frame" x="0.0" y="23.5" width="344" height="17"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -229,13 +227,13 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="svk-eK-7is">
                                                             <rect key="frame" x="30" y="0.5" width="285" height="40.5"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a7f-Js-hpO" userLabel="Title Label">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a7f-Js-hpO" userLabel="Title Label">
                                                                     <rect key="frame" x="0.0" y="0.0" width="285" height="20.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFl-eR-M5G" userLabel="Remarks Label">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFl-eR-M5G" userLabel="Remarks Label">
                                                                     <rect key="frame" x="0.0" y="23.5" width="285" height="17"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -321,7 +319,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="jgY-7E-lAq">
                                 <rect key="frame" x="0.0" y="138" width="414" height="187.5"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="249" image="01_brandsymbol_color" translatesAutoresizingMaskIntoConstraints="NO" id="GID-Zp-GYm" userLabel="Service Logo Image View">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="249" image="logo_service" translatesAutoresizingMaskIntoConstraints="NO" id="GID-Zp-GYm" userLabel="Service Logo Image View">
                                         <rect key="frame" x="82" y="0.0" width="250" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="iji-qB-EZb"/>
@@ -401,7 +399,7 @@
                                 <rect key="frame" x="0.0" y="28" width="414" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fUY-UB-V5L" id="7fg-RF-xM1">
-                                    <rect key="frame" x="0.0" y="0.0" width="383" height="75"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="395" height="75"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="3t5-0U-GNA">
@@ -473,7 +471,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qVR-m3-vrM">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hsB-zK-J1P" userLabel="Container View">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="598.5"/>
@@ -652,7 +650,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rhE-ET-cbe">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ma2-L9-5rj" userLabel="Container View">
                                         <rect key="frame" x="0.0" y="70" width="414" height="732"/>
@@ -2025,13 +2023,13 @@
         <segue reference="Zto-0u-Dik"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="01_brandsymbol_color" width="2165" height="649"/>
         <image name="arrow.2.circlepath" catalog="system" width="128" height="101"/>
         <image name="bg_dashboard" width="1000" height="784"/>
         <image name="checkmark.circle.fill" catalog="system" width="128" height="121"/>
         <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="img_robot_no_image" width="100" height="100"/>
         <image name="link" catalog="system" width="128" height="122"/>
+        <image name="logo_service" width="2165" height="649"/>
         <image name="pause.circle.fill" catalog="system" width="128" height="121"/>
         <image name="person.circle" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>

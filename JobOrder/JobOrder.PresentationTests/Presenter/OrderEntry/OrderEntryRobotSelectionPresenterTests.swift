@@ -74,7 +74,7 @@ class OrderEntryRobotSelectionPresenterTests: XCTestCase {
     }
 
     func test_type() {
-        let robots = DataManageModel.Output.Robot.arbitrary.sample
+        let robots = DataManageModel.Output.Robot.arbitrary.suchThat({ !($0.name ?? "").isEmpty }).sample
         XCTContext.runActivity(named: "未設定の場合") { _ in
             presenter.cacheRobots(nil)
             robots.sorted(by: { $0.name ?? "N/A" < $1.name ?? "N/A" }).enumerated().forEach {
@@ -91,7 +91,7 @@ class OrderEntryRobotSelectionPresenterTests: XCTestCase {
     }
 
     func test_isSelected() {
-        let robots = DataManageModel.Output.Robot.arbitrary.sample
+        let robots = DataManageModel.Output.Robot.arbitrary.suchThat({ !($0.name ?? "").isEmpty }).sample
         XCTContext.runActivity(named: "未設定の場合") { _ in
             presenter.cacheRobots(nil)
             robots.sorted(by: { $0.name ?? "N/A" < $1.name ?? "N/A" }).enumerated().forEach {
@@ -118,7 +118,7 @@ class OrderEntryRobotSelectionPresenterTests: XCTestCase {
     }
 
     func test_selectItem() {
-        let robots = DataManageModel.Output.Robot.arbitrary.sample
+        let robots = DataManageModel.Output.Robot.arbitrary.suchThat({ !($0.name ?? "").isEmpty }).sample
         XCTContext.runActivity(named: "未設定の場合") { _ in
             presenter.data.form.robotIds = nil
             presenter.cacheRobots(nil)

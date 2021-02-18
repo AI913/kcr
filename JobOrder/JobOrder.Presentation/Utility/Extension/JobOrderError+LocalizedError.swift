@@ -14,6 +14,12 @@ extension JobOrder_Domain.JobOrderError: LocalizedError {
         switch self {
         case .authenticationFailed(reason: .incorrectUsernameOrPassword):
             return "ユーザ名またはパスワードが違います"
+        case .authenticationFailed(reason: .failedToGetConfiguration):
+            return "サーバーからデータの取得に失敗しました"
+        case .authenticationFailed(reason: .configurationDataIsNotCorrect):
+            return "サーバーから取得したデータが不正です"
+        case .authenticationFailed(reason: .initializeFailed):
+            return "サーバーの設定に失敗しました\nアプリを再起動してください"
         case let .connectionFailed(reason: .serviceUnavailable(code: code?, description: description?, error: _)):
             return "\(code): \(description)"
         case .connectionFailed(reason: .networkUnavailable):

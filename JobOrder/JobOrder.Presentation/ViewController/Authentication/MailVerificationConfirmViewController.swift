@@ -151,6 +151,6 @@ extension MailVerificationConfirmViewController: MailVerificationConfirmViewCont
     }
 
     func transitionToCompleteScreen() {
-        self.perform(segue: StoryboardSegue.PasswordAuthentication.showMailVerificationComplete)
+        self.perform(segue: StoryboardSegue.Authentication.showMailVerificationComplete)
     }
 }

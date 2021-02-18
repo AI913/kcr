@@ -1713,7 +1713,8 @@ class DataManageUseCaseTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        useCase.postTask(postData: DataManageModel.Input.Task())
+        let postData = DataManageModel.Input.Task.arbitrary.generate
+        useCase.postTask(postData: postData)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished: break
@@ -1752,7 +1753,8 @@ class DataManageUseCaseTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        useCase.postTask(postData: DataManageModel.Input.Task())
+        let postData = DataManageModel.Input.Task.arbitrary.generate
+        useCase.postTask(postData: postData)
             .sink(receiveCompletion: { _ in
                 XCTFail("値を取得できてはいけない")
             }, receiveValue: { _ in
@@ -1787,7 +1789,8 @@ class DataManageUseCaseTests: XCTestCase {
             }.eraseToAnyPublisher()
         }
 
-        useCase.postTask(postData: DataManageModel.Input.Task())
+        let postData = DataManageModel.Input.Task.arbitrary.generate
+        useCase.postTask(postData: postData)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:

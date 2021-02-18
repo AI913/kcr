@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xUW-7u-1gX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xUW-7u-1gX">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -187,6 +187,17 @@
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NjY-pQ-O0Z" customClass="OrderEntryStepView" customModule="JobOrder_Presentation" customModuleProvider="target">
+                                <rect key="frame" x="20" y="98" width="374" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="GwF-LZ-FSl"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="stepValue">
+                                        <integer key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ntg-Tc-SaB">
                                 <rect key="frame" x="20" y="218.5" width="374" height="510.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -281,25 +292,12 @@
                                     <action selector="touchUpInsideContinueButton:" destination="yDK-Vg-9uP" eventType="touchUpInside" id="doS-Mp-gVr"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NjY-pQ-O0Z" customClass="OrderEntryStepView" customModule="JobOrder_Presentation" customModuleProvider="target">
-                                <rect key="frame" x="20" y="88" width="374" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="GwF-LZ-FSl"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="stepValue">
-                                        <integer key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kEW-ER-dAt"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="kEW-ER-dAt" firstAttribute="trailing" secondItem="ntg-Tc-SaB" secondAttribute="trailing" constant="20" id="5FJ-mX-as0"/>
                             <constraint firstItem="75h-VP-n9O" firstAttribute="top" secondItem="NjY-pQ-O0Z" secondAttribute="bottom" constant="20" id="7wH-6c-ix5"/>
                             <constraint firstItem="75h-VP-n9O" firstAttribute="leading" secondItem="kEW-ER-dAt" secondAttribute="leading" constant="20" id="AE2-Zm-se9"/>
-                            <constraint firstItem="ntg-Tc-SaB" firstAttribute="leading" secondItem="kEW-ER-dAt" secondAttribute="leading" constant="20" id="Kp4-07-1cV"/>
                             <constraint firstItem="NjY-pQ-O0Z" firstAttribute="leading" secondItem="kEW-ER-dAt" secondAttribute="leading" constant="20" id="Qel-Bw-VxE"/>
                             <constraint firstItem="ntg-Tc-SaB" firstAttribute="top" secondItem="75h-VP-n9O" secondAttribute="bottom" constant="20" id="X82-yX-H8o"/>
                             <constraint firstItem="kEW-ER-dAt" firstAttribute="bottom" secondItem="Wy4-PO-2sZ" secondAttribute="bottom" constant="20" id="Ynf-aU-1rT"/>

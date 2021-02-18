@@ -59,7 +59,7 @@ extension MailVerificationEntryViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch StoryboardSegue.PasswordAuthentication(segue) {
+        switch StoryboardSegue.Authentication(segue) {
         case .showMailVerificationConfirm:
             guard let data = presenter?.data else { return }
             (segue.destination as! MailVerificationConfirmViewController).inject(viewData: data)
@@ -101,6 +101,6 @@ extension MailVerificationEntryViewController: MailVerificationEntryViewControll
     }
 
     func transitionToConfirmScreen() {
-        self.perform(segue: StoryboardSegue.PasswordAuthentication.showMailVerificationConfirm)
+        self.perform(segue: StoryboardSegue.Authentication.showMailVerificationConfirm)
     }
 }

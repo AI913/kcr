@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.makeKeyAndVisible()
 
         let bundle = Bundle(identifier: "jp.co.kyocera.robotics.client.joborder-Presentation")
-        let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+        let storyboard = UIStoryboard(name: "Startup", bundle: bundle)
         window.rootViewController = storyboard.instantiateInitialViewController()
     }
 

@@ -25,16 +25,22 @@ class MainTabBarControllerTests: XCTestCase {
 
     func test_outlets() {
         XCTAssertNotNil(vc.connectionStatusBarButtonItem, "connectionStatusBarButtonItemがOutletに接続されていない")
+        XCTAssertNotNil(vc.jobEntryBarButtonItem, "jobEntryBarButtonItemがOutletに接続されていない")
+        XCTAssertNotNil(vc.settingsBarButtonItem, "settingsBarButtonItemがOutletに接続されていない")
     }
 
     func test_actions() throws {
         let connectionStatusBarButtonItem = try XCTUnwrap(vc.connectionStatusBarButtonItem, "Unwrap失敗")
         XCTAssertNoThrow(connectionStatusBarButtonItem.target?.perform(connectionStatusBarButtonItem.action, with: nil), "タップで例外発生: \(connectionStatusBarButtonItem)")
+        let jobEntryBarButtonItem = try XCTUnwrap(vc.jobEntryBarButtonItem, "Unwrap失敗")
+        XCTAssertNoThrow(jobEntryBarButtonItem.target?.perform(jobEntryBarButtonItem.action, with: nil), "タップで例外発生: \(jobEntryBarButtonItem)")
+        let settingsBarButtonItem = try XCTUnwrap(vc.settingsBarButtonItem, "Unwrap失敗")
+        XCTAssertNoThrow(settingsBarButtonItem.target?.perform(settingsBarButtonItem.action, with: nil), "タップで例外発生: \(settingsBarButtonItem)")
     }
 
-    func test_viewDidAppear() {
-        vc.viewDidAppear(true)
-        XCTAssertEqual(mock.viewDidAppearCallCount, 1, "Presenterのメソッドが呼ばれない")
+    func test_viewDidLoad() {
+        vc.viewDidLoad()
+        XCTAssertEqual(mock.viewDidLoadCallCount, 1, "Presenterのメソッドが呼ばれない")
     }
 
     func test_tapConnectionStatusBarButtonItem() {

@@ -131,12 +131,11 @@ extension OrderEntryConfirmPresenter {
     private func createJobInputModel() -> JobOrder_Domain.DataManageModel.Input.Task? {
         guard let jobid = data.form.jobId, let robotIds = data.form.robotIds,
               let start = data.form.startCondition, let exit = data.form.exitCondition else { return nil }
-        let model = JobOrder_Domain.DataManageModel.Input.Task(jobId: jobid,
-                                                               robotIds: robotIds,
-                                                               start: DataManageModel.Input.Task.Start(start.rawValue),
-                                                               exit: DataManageModel.Input.Task.Exit(
-                                                                condition: exit.rawValue,
-                                                                option: DataManageModel.Input.Task.Exit.Option(data.form.numberOfRuns)))
+        let model = JobOrder_Domain.DataTranslator().toModel(jobId: jobid,
+                                                             robotIds: robotIds,
+                                                             startCondition: start.rawValue,
+                                                             exitCondition: exit.rawValue,
+                                                             numberOfRuns: data.form.numberOfRuns)
         return model
     }
 }

@@ -8,36 +8,50 @@
 
 import Foundation
 import Combine
-import AWSMobileClient
 import JobOrder_Utility
 
 /// AWSMobileClient APIを利用してAmazon Cognitoを操作する
 public class AWSAuthenticationDataStore: AuthenticationRepository {
 
-    /// AWSMobileClientProtocol
-    var awsMobileClient: AWSMobileClientProtocol = AWSMobileClient.default()
+    /// Factory
+    let factory = AWSSDKFactory.shared
 
-    /// AWS Mobile Clientクラスを初期化する
-    public init() {
-        awsMobileClient.initialize { (userState, error) in
-            if let error = error {
-                Logger.error(target: self, "error : \(error.localizedDescription)")
-            } else {
-                Logger.debug(target: self, "userState : \(userState ?? .unknown)")
+    /// イニシャライザ
+    public init() {}
+
+    /// Configuration を設定し初期化
+    /// - Parameter configuration: Configuration データ
+    /// - Returns: 結果
+    public func initialize(_ configuration: [String: Any]) -> AnyPublisher<AuthenticationEntity.Output.AuthenticationState, Error> {
+        self.factory.set(configuration: configuration)
+
+        return Future<AuthenticationEntity.Output.AuthenticationState, Error> { promise in
+            self.factory.mobileClient?.initialize { (userState, error) in
+                if let error = error {
+                    Logger.error(target: self, "error : \(error.localizedDescription)")
+                    promise(.failure(AWSError.authenticationFailed(reason: .init(error))))
+                } else {
+                    guard let state = userState, state != .unknown else {
+                        promise(.failure(AWSError.authenticationFailed(reason: .unknown(error: NSError()))))
+                        return
+                    }
+                    Logger.debug(target: self, "userState : \(state)")
+                    promise(.success(.init(state)))
+                }
             }
-        }
+        }.eraseToAnyPublisher()
     }
 
     /// AWSから現在のユーザー名を取得
     /// - Returns: ユーザー名
     public var currentUsername: String? {
-        return awsMobileClient.username
+        return factory.mobileClient?.username
     }
 
     /// AWSからサインイン状態を取得
     /// - Returns: サインイン状態
     public var isSignedIn: Bool {
-        return awsMobileClient.isSignedIn
+        return factory.mobileClient?.isSignedIn ?? false
     }
 
     /// サインイン状態通知イベントの登録
@@ -45,7 +59,7 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
     public func registerUserStateChange() -> AnyPublisher<AuthenticationEntity.Output.AuthenticationState, Never> {
 
         let publisher = PassthroughSubject<AuthenticationEntity.Output.AuthenticationState, Never>()
-        awsMobileClient.addUserStateListener(self) { userState, _ in
+        factory.mobileClient?.addUserStateListener(self) { userState, _ in
             let entity = AuthenticationEntity.Output.AuthenticationState(userState)
             // Logger.debug(target: self, "\(entity)")
             publisher.send(entity)
@@ -55,7 +69,7 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
 
     /// サインイン状態通知イベントの解除
     public func unregisterUserStateChange() {
-        awsMobileClient.removeUserStateListener(self)
+        factory.mobileClient?.removeUserStateListener(self)
     }
 
     /// AWSへサインイン
@@ -67,12 +81,12 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
         Logger.info(target: self)
 
         // ログイン済の場合は一旦ログアウト
-        if awsMobileClient.isSignedIn {
-            awsMobileClient.signOut()
+        if factory.mobileClient?.isSignedIn ?? false {
+            factory.mobileClient?.signOut()
         }
 
         return Future<AuthenticationEntity.Output.SignInResult, Error> { promise in
-            self.awsMobileClient.signIn(username: username, password: password) { result, error in
+            self.factory.mobileClient?.signIn(username: username, password: password) { result, error in
                 if let error = error {
                     promise(.failure(AWSError.authenticationFailed(reason: .init(error))))
                 } else {
@@ -91,7 +105,7 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
         Logger.info(target: self)
 
         return Future<AuthenticationEntity.Output.SignInResult, Error> { promise in
-            self.awsMobileClient.confirmSignIn(challengeResponse: newPassword) { result, error in
+            self.factory.mobileClient?.confirmSignIn(challengeResponse: newPassword) { result, error in
                 if let error = error {
                     promise(.failure(AWSError.authenticationFailed(reason: .init(error))))
                 } else {
@@ -109,7 +123,7 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
         Logger.info(target: self)
 
         return Future<AuthenticationEntity.Output.SignOutResult, Error> { promise in
-            self.awsMobileClient.signOut { error in
+            self.factory.mobileClient?.signOut { error in
                 if let error = error {
                     promise(.failure(AWSError.authenticationFailed(reason: .init(error))))
                 } else {
@@ -127,7 +141,7 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
         Logger.info(target: self)
 
         return Future<AuthenticationEntity.Output.Tokens, Error> { promise in
-            self.awsMobileClient.getTokens { result, error in
+            self.factory.mobileClient?.getTokens { result, error in
                 if let error = error {
                     promise(.failure(AWSError.authenticationFailed(reason: .init(error))))
                 } else {
@@ -145,7 +159,7 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
         Logger.info(target: self)
 
         return Future<AuthenticationEntity.Output.Attributes, Error> { promise in
-            self.awsMobileClient.getUserAttributes { result, error in
+            self.factory.mobileClient?.getUserAttributes { result, error in
                 if let error = error {
                     promise(.failure(AWSError.authenticationFailed(reason: .init(error))))
                 } else {
@@ -164,7 +178,7 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
         Logger.info(target: self)
 
         return Future<AuthenticationEntity.Output.ForgotPasswordResult, Error> { promise in
-            self.awsMobileClient.forgotPassword(username: username) { result, error in
+            self.factory.mobileClient?.forgotPassword(username: username) { result, error in
                 if let error = error {
                     promise(.failure(AWSError.authenticationFailed(reason: .init(error))))
                 } else {
@@ -186,7 +200,7 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
         Logger.info(target: self)
 
         return Future<AuthenticationEntity.Output.ForgotPasswordResult, Error> { promise in
-            self.awsMobileClient.confirmForgotPassword(username: username, newPassword: newPassword, confirmationCode: confirmationCode) { result, error in
+            self.factory.mobileClient?.confirmForgotPassword(username: username, newPassword: newPassword, confirmationCode: confirmationCode) { result, error in
                 if let error = error {
                     promise(.failure(AWSError.authenticationFailed(reason: .init(error))))
                 } else {
@@ -205,7 +219,7 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
         Logger.info(target: self)
 
         return Future<AuthenticationEntity.Output.SignUpResult, Error> { promise in
-            self.awsMobileClient.resendSignUpCode(username: username) { result, error in
+            self.factory.mobileClient?.resendSignUpCode(username: username) { result, error in
                 if let error = error {
                     promise(.failure(AWSError.authenticationFailed(reason: .init(error))))
                 } else {
@@ -215,47 +229,5 @@ public class AWSAuthenticationDataStore: AuthenticationRepository {
                 }
             }
         }.eraseToAnyPublisher()
-    }
-}
-
-/// @mockable
-protocol AWSMobileClientProtocol {
-    var username: String? { get }
-    var isSignedIn: Bool { get }
-    func initialize(_ completionHandler: @escaping (UserState?, Error?) -> Void)
-    func addUserStateListener(_ object: AnyObject, _ callback: @escaping UserStateChangeCallback)
-    func removeUserStateListener(_ object: AnyObject)
-    func signIn(username: String, password: String, completionHandler: @escaping ((SignInResult?, Error?) -> Void))
-    func confirmSignIn(challengeResponse: String, completionHandler: @escaping ((SignInResult?, Error?) -> Void))
-    func signOut()
-    func signOut(completionHandler: @escaping ((Error?) -> Void))
-    func getTokens(_ completionHandler: @escaping (Tokens?, Error?) -> Void)
-    func getUserAttributes(completionHandler: @escaping (([String: String]?, Error?) -> Void))
-    func forgotPassword(username: String, completionHandler: @escaping ((ForgotPasswordResult?, Error?) -> Void))
-    func confirmForgotPassword(username: String, newPassword: String, confirmationCode: String, completionHandler: @escaping ((ForgotPasswordResult?, Error?) -> Void))
-    func resendSignUpCode(username: String, completionHandler: @escaping ((SignUpResult?, Error?) -> Void))
-    func getAWSCredentials(_ completionHandler: @escaping(AWSCredentials?, Error?) -> Void)
-    func getIdentityId() -> AWSTask<NSString>
-}
-
-extension AWSMobileClient: AWSMobileClientProtocol {
-    func resendSignUpCode(username: String, completionHandler: @escaping ((SignUpResult?, Error?) -> Void)) {
-        resendSignUpCode(username: username, clientMetaData: [:], completionHandler: completionHandler)
-    }
-
-    func signIn(username: String, password: String, completionHandler: @escaping ((SignInResult?, Error?) -> Void)) {
-        signIn(username: username, password: password, validationData: nil, completionHandler: completionHandler)
-    }
-    func confirmSignIn(challengeResponse: String, completionHandler: @escaping ((SignInResult?, Error?) -> Void)) {
-        confirmSignIn(challengeResponse: challengeResponse, userAttributes: [:], clientMetaData: [:], completionHandler: completionHandler)
-    }
-    func signOut(completionHandler: @escaping ((Error?) -> Void)) {
-        signOut(options: SignOutOptions(), completionHandler: completionHandler)
-    }
-    func forgotPassword(username: String, completionHandler: @escaping ((ForgotPasswordResult?, Error?) -> Void)) {
-        forgotPassword(username: username, clientMetaData: [:], completionHandler: completionHandler)
-    }
-    func confirmForgotPassword(username: String, newPassword: String, confirmationCode: String, completionHandler: @escaping ((ForgotPasswordResult?, Error?) -> Void)) {
-        confirmForgotPassword(username: username, newPassword: newPassword, confirmationCode: confirmationCode, clientMetaData: [:], completionHandler: completionHandler)
     }
 }

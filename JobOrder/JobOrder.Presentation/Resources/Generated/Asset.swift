@@ -29,7 +29,6 @@ internal enum Asset {
     internal static let txtBtnAuthenticationDisable = ColorAsset(name: "txt_btn_authentication_disable")
   }
   internal enum Image {
-    internal static let _01BrandsymbolColor = ImageAsset(name: "01_brandsymbol_color")
     internal static let bgAuthentication = ImageAsset(name: "bg_authentication")
     internal static let bgDashboard = ImageAsset(name: "bg_dashboard")
     internal static let icSettings = ImageAsset(name: "ic_settings")
@@ -38,6 +37,7 @@ internal enum Asset {
     internal static let iconStationery = ImageAsset(name: "icon_stationery")
     internal static let imgRobotNoImage = ImageAsset(name: "img_robot_no_image")
     internal static let industrialResult = ImageAsset(name: "industrial_result")
+    internal static let logoCompany = ImageAsset(name: "logo_company")
     internal static let logoService = ImageAsset(name: "logo_service")
     internal static let point1TrayIndustrial = ImageAsset(name: "point1_tray_industrial")
     internal static let point2TrayIndustrial = ImageAsset(name: "point2_tray_industrial")

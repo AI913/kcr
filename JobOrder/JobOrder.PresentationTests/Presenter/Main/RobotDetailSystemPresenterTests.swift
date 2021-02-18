@@ -104,7 +104,7 @@ class RobotDetailSystemPresenterTests: XCTestCase {
             XCTAssertTrue(presenter.title(in: .hardware, section: firstHardwareSection) == ("", nil), "正しい値が取得できていない")
         }
         XCTContext.runActivity(named: "detailSystemが存在する場合") { _ in
-            let system = DataManageModel.Output.System.arbitrary.generate
+            let system = DataManageModel.Output.System.arbitrary.suchThat({ !$0.hardwareConfigurations.isEmpty }).generate
             presenter.detailSystem = system
             XCTAssertTrue(presenter.title(in: .software, section: firstSoftwareSection) == (viewData.detailSystem.softwareSystemTitle, system.softwareConfiguration.system), "正しい値が取得できていない")
             XCTAssertTrue(presenter.title(in: .software, section: installedSoftwareSection) == (viewData.detailSystem.softwareInstalledsoftwareTitle, nil), "正しい値が取得できていない")
@@ -123,7 +123,7 @@ class RobotDetailSystemPresenterTests: XCTestCase {
             XCTAssertTrue(presenter.detail(in: .hardware, indexPath: IndexPath(row: firstHardwareRow, section: firstHardwareSection)) == ("", ""), "正しい値が取得できていない")
         }
         XCTContext.runActivity(named: "detailSystemが存在する場合") { _ in
-            let system = DataManageModel.Output.System.arbitrary.generate
+            let system = DataManageModel.Output.System.arbitrary.suchThat({ !$0.hardwareConfigurations.isEmpty && !$0.softwareConfiguration.installs.isEmpty }).generate
             presenter.detailSystem = system
             XCTAssertTrue(presenter.detail(in: .software, indexPath: IndexPath(row: firstSoftwareInstalledRow, section: installedSoftwareSection)) == (system.softwareConfiguration.installs[firstSoftwareInstalledRow].name, system.softwareConfiguration.installs[firstSoftwareInstalledRow].version), "正しい値が取得できていない")
             XCTAssertTrue(presenter.detail(in: .hardware, indexPath: IndexPath(row: firstHardwareRow, section: firstHardwareSection)) == (viewData.detailSystem.hardwareMakerTitle, system.hardwareConfigurations[firstHardwareRow].maker), "正しい値が取得できていない")

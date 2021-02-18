@@ -20,10 +20,6 @@ public protocol SettingsUseCaseProtocol {
     var lastSynced: Int? { get }
     /// Space名
     var spaceName: String? { get set }
-    /// クラウドサーバー使用可否
-    var useCloudServer: Bool { get set }
-    /// サーバーURL
-    var serverUrl: String? { get set }
     /// Thing名
     var thingName: String? { get }
 }
@@ -32,50 +28,38 @@ public protocol SettingsUseCaseProtocol {
 public class SettingsUseCase: SettingsUseCaseProtocol {
 
     /// Settingsレポジトリ
-    private var repository: JobOrder_Data.SettingsRepository
+    private var settings: JobOrder_Data.SettingsRepository
 
-    public required init(repository: JobOrder_Data.SettingsRepository) {
-        self.repository = repository
+    public required init(settingsRepository: JobOrder_Data.SettingsRepository) {
+        self.settings = settingsRepository
     }
 
     /// ログインID保存可否
     public var restoreIdentifier: Bool {
-        get { return repository.restoreIdentifier }
-        set { repository.restoreIdentifier = newValue }
+        get { return settings.restoreIdentifier }
+        set { settings.restoreIdentifier = newValue }
     }
 
     /// 生体認証使用可否
     public var useBiometricsAuthentication: Bool {
-        get { return repository.useBiometricsAuthentication }
-        set { repository.useBiometricsAuthentication = newValue }
+        get { return settings.useBiometricsAuthentication }
+        set { settings.useBiometricsAuthentication = newValue }
     }
 
     /// 最終同期日時
     public var lastSynced: Int? {
-        if repository.lastSynced == 0 { return nil }
-        return repository.lastSynced
+        if settings.lastSynced == 0 { return nil }
+        return settings.lastSynced
     }
 
     /// Space名
     public var spaceName: String? {
-        get { return repository.space }
-        set { repository.space = newValue }
-    }
-
-    /// クラウドサーバー使用可否
-    public var useCloudServer: Bool {
-        get { return repository.useCloudServer }
-        set { repository.useCloudServer = newValue }
-    }
-
-    /// サーバーURL
-    public var serverUrl: String? {
-        get { return repository.serverUrl }
-        set { repository.serverUrl = newValue }
+        get { return settings.space }
+        set { settings.space = newValue }
     }
 
     /// Thing名
     public var thingName: String? {
-        repository.thingName
+        settings.thingName
     }
 }

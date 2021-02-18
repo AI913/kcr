@@ -38,13 +38,6 @@ class RobotListViewCell: UITableViewCell {
             ]))
         }
 
-        if let useCloudServer = presenter?.useCloudServer, useCloudServer == false {
-            mutableAttributedString.append(NSAttributedString(string: " (\(toLabelText(presenter?.serverUrl).localized)) ", attributes: [
-                .foregroundColor: UIColor.secondaryLabel,
-                .font: UIFont.systemFont(ofSize: 14.0)
-            ]))
-        }
-
         displayNameLabel.attributedText = mutableAttributedString
         stateValueLabel.text = presenter?.stateName(indexPath.row)
         stateImageView.image = UIImage(systemName: presenter?.stateImageName(indexPath.row) ?? "")

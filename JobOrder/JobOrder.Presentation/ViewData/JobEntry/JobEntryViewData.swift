@@ -1,5 +1,5 @@
 //
-//  OrderEntryViewData.swift
+//  JobEntryViewData.swift
 //  JobOrder.Presentation
 //
 //  Created by Yu Suzuki on 2020/04/14.
@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import JobOrder_Domain
 
-/// OrderEntryViewData
+/// JobEntryViewData
 struct JobEntryViewData {
 
     /// 入力フォーム

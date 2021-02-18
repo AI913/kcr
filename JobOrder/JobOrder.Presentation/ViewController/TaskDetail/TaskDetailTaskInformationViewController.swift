@@ -49,9 +49,9 @@ class TaskDetailTaskInformationViewController: UIViewController {
         }
     }
 
-    func inject(jobId: String, robotId: String) {
+    func inject(taskId: String, robotId: String) {
         presenter = TaskDetailBuilder.TaskDetail().build(vc: self)
-        self.taskId = jobId
+        self.taskId = taskId
         self.robotId = robotId
     }
 

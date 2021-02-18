@@ -29,6 +29,9 @@ public protocol AuthenticationUseCaseProtocol {
     func unregisterAuthenticationStateChange()
     /// 生体認証実施
     func biometricsAuthentication() -> AnyPublisher<AuthenticationModel.Output.BiometricsAuthentication, Error>
+    /// サーバーの初期化
+    /// - Parameter space: Space名
+    func initializeServer(space: String) -> AnyPublisher<AuthenticationModel.Output.InitializeServer, Error>
     /// サインイン
     func signIn(identifier: String, password: String) -> AnyPublisher<AuthenticationModel.Output.SignInResult, Error>
     /// 新しいパスワードを設定してサインイン
@@ -73,8 +76,14 @@ public class AuthenticationUseCase: AuthenticationUseCaseProtocol {
     private let auth: JobOrder_API.AuthenticationRepository
     /// MQTTレポジトリ
     private let mqtt: JobOrder_API.MQTTRepository
+    /// VideoStreamingレポジトリ
+    private let video: JobOrder_API.VideoStreamingRepository
+    /// AnalyticsServiceレポジトリ
+    private let analytics: JobOrder_API.AnalyticsServiceRepository
+    /// publicAPIレポジトリ
+    private var publicAPI: JobOrder_API.PublicAPIRepository
     /// Settingsレポジトリ
-    private var settings: JobOrder_Data.SettingsRepository!
+    private var settings: JobOrder_Data.SettingsRepository
     /// UserDefaultsレポジトリ
     private let ud: JobOrder_Data.UserDefaultsRepository
     /// Keychainレポジトリ
@@ -92,6 +101,9 @@ public class AuthenticationUseCase: AuthenticationUseCaseProtocol {
     /// - Parameters:
     ///   - authRepository: Authenticationレポジトリ
     ///   - mqttRepository: MQTTレポジトリ
+    ///   - videoRepository: VideoStreamingレポジトリ
+    ///   - analyticsServiceRepository: AnalyticsServiceレポジトリ
+    ///   - publicAPIRepository: PublicAPIレポジトリ
     ///   - settingsRepository: Settingsレポジトリ
     ///   - userDefaultsRepository: UserDefaultsレポジトリ
     ///   - keychainRepository: Keychainレポジトリ
@@ -101,6 +113,9 @@ public class AuthenticationUseCase: AuthenticationUseCaseProtocol {
     ///   - aiLibraryDataRepository: AI Libraryレポジトリ
     public required init(authRepository: JobOrder_API.AuthenticationRepository,
                          mqttRepository: JobOrder_API.MQTTRepository,
+                         videoRepository: JobOrder_API.VideoStreamingRepository,
+                         analyticsServiceRepository: JobOrder_API.AnalyticsServiceRepository,
+                         publicAPIRepository: JobOrder_API.PublicAPIRepository,
                          settingsRepository: JobOrder_Data.SettingsRepository,
                          userDefaultsRepository: JobOrder_Data.UserDefaultsRepository,
                          keychainRepository: JobOrder_Data.KeychainRepository,
@@ -110,6 +125,9 @@ public class AuthenticationUseCase: AuthenticationUseCaseProtocol {
                          aiLibraryDataRepository: JobOrder_Data.AILibraryRepository) {
         self.auth = authRepository
         self.mqtt = mqttRepository
+        self.video = videoRepository
+        self.analytics = analyticsServiceRepository
+        self.publicAPI = publicAPIRepository
         self.settings = settingsRepository
         self.ud = userDefaultsRepository
         self.keychain = keychainRepository
@@ -188,6 +206,52 @@ public class AuthenticationUseCase: AuthenticationUseCaseProtocol {
                     promise(.success(model))
                 }
             }
+        }.eraseToAnyPublisher()
+    }
+
+    /// サーバーの初期化
+    /// - Parameter space: Space名
+    /// - Returns: 結果
+    public func initializeServer(space: String) -> AnyPublisher<AuthenticationModel.Output.InitializeServer, Error> {
+        Logger.info(target: self)
+
+        return Future<AuthenticationModel.Output.InitializeServer, Error> { promise in
+            var conf: [String: Any]?
+            self.publicAPI.getServerConfiguration(name: space)
+                .flatMap { value -> AnyPublisher<AuthenticationEntity.Output.AuthenticationState, Error> in
+                    guard let json = try? JSONSerialization.jsonObject(with: value),
+                          let configuration = json as? [String: Any] else {
+                        return Future<AuthenticationEntity.Output.AuthenticationState, Error> { promise in
+                            self.settings.serverConfiguration = nil
+                            promise(.failure(JobOrderError.authenticationFailed(reason: .configurationDataIsNotCorrect)))
+                        }.eraseToAnyPublisher()
+                    }
+                    self.settings.serverConfiguration = value
+                    conf = configuration
+                    return self.auth.initialize(configuration).eraseToAnyPublisher()
+                }.sink(receiveCompletion: { completion in
+                    switch completion {
+                    case .finished: break
+                    case .failure(let error):
+                        if error is AWSError {
+                            promise(.failure(JobOrderError.authenticationFailed(reason: .initializeFailed(error: error))))
+                        } else if error is APIError {
+                            promise(.failure(JobOrderError.authenticationFailed(reason: .failedToGetConfiguration(error: error))))
+                        } else {
+                            promise(.failure(error))
+                        }
+                    }
+                }, receiveValue: { response in
+                    // Logger.debug(target: self, "\(response)")
+                    guard let conf = conf else {
+                        return promise(.success(.init(result: false)))
+                    }
+                    self.mqtt.initialize()
+                    self.video.initialize()
+                    self.analytics.initialize(conf)
+                    self.settings.space = space
+                    promise(.success(.init(result: true)))
+                }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
     }
 

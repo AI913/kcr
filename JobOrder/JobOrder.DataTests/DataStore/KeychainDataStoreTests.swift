@@ -20,7 +20,7 @@ class KeychainDataStoreTests: XCTestCase {
 
     override func tearDownWithError() throws {}
 
-    func test_getter() {
+    func test_getString() {
 
         XCTContext.runActivity(named: "未設定の場合") { _ in
             KeychainKey.allCases.forEach {
@@ -38,8 +38,41 @@ class KeychainDataStoreTests: XCTestCase {
         }
     }
 
-    func test_setter() {
+    func test_getData() {
+
+        XCTContext.runActivity(named: "未設定の場合") { _ in
+            KeychainKey.allCases.forEach {
+                XCTAssertNil(dataStore.getData($0), "値を取得できてはいけない")
+            }
+        }
+
+        XCTContext.runActivity(named: "値が設定済みの場合") { _ in
+            KeychainKey.allCases.forEach {
+                mock.subscriptDataHandler = { key in
+                    return Data()
+                }
+                XCTAssertEqual(dataStore.getData($0), Data(), "正しい値が取得できていない")
+            }
+        }
+    }
+
+    func test_setString() {
         let param = "test"
+        var i = 0
+
+        XCTContext.runActivity(named: "\(param)を設定した場合") { _ in
+            KeychainKey.allCases.forEach {
+                i += 1
+                dataStore.set(param, key: $0)
+                // TODO: Mockoloのバグ Subscriptのセッターモックが作成されない
+                // XCTAssertEqual(mock.subscriptCallCount, i, "設定回数が\(i)回になっていない")
+                XCTAssertEqual(mock.subscriptCallCount, 0, "設定回数が\(0)回になっていない")
+            }
+        }
+    }
+
+    func test_setData() {
+        let param = Data()
         var i = 0
 
         XCTContext.runActivity(named: "\(param)を設定した場合") { _ in

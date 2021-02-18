@@ -16,6 +16,12 @@ public enum JobOrderError: Error {
         case incorrectUsernameOrPassword(error: Error)
         /// idToken is null.
         case idTokenIsNull
+        /// Configurationファイル取得エラー
+        case failedToGetConfiguration(error: Error?)
+        /// Configurationファイルが不正
+        case configurationDataIsNotCorrect
+        /// DataStoreの初期化エラー
+        case initializeFailed(error: Error)
         /// その他
         case unknown(error: Error)
     }

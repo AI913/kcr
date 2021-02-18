@@ -153,20 +153,3 @@ class JobOrderErrorTests: XCTestCase {
         }
     }
 }
-
-extension APIError: Equatable {
-    public static func == (lhs: APIError, rhs: APIError) -> Bool {
-        switch (lhs, rhs) {
-        case let (.invalidStatus(code: lhsCode, reason: lhsReason), .invalidStatus(code: rhsCode, reason: rhsReason)):
-            return lhsCode == rhsCode && lhsReason == rhsReason
-        case (.missingContentType, .missingContentType):
-            return true
-        case let (.unacceptableContentType(lhsType), .unacceptableContentType(rhsType)):
-            return lhsType == rhsType
-        case (.unsupportedMediaFormat, .unsupportedMediaFormat):
-            return true
-        default:
-            return false
-        }
-    }
-}

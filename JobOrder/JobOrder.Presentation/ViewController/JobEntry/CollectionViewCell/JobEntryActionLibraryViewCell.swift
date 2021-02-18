@@ -42,7 +42,7 @@ class JobEntryActionLibraryViewCell: UICollectionViewCell, UICollectionViewCellW
 
     func setItem(_ indexPath: IndexPath) {
         actionLibraryImage.image = UIImage(systemName: "checkmark")
-//        actionLibraryImage.image = UIImage(named: presenter?.actionLibraryImagePath(indexPath.row) ?? "")
+        // actionLibraryImage.image = UIImage(named: presenter?.actionLibraryImagePath(indexPath.row) ?? "")
         nameLabel?.text = toLabelText(presenter?.displayName(indexPath.row))
         versionLabel?.text = toLabelText(presenter?.version(indexPath.row))
     }

@@ -17,6 +17,25 @@ internal enum StoryboardScene {
 
     internal static let initialScene = InitialSceneType<UIKit.UINavigationController>(storyboard: ActionEntry.self)
   }
+  internal enum Authentication: StoryboardType {
+    internal static let storyboardName = "Authentication"
+
+    internal static let initialScene = InitialSceneType<JobOrder_Presentation.AuthenticationNavigationController>(storyboard: Authentication.self)
+
+    internal static let authenticationNavigation = SceneType<JobOrder_Presentation.AuthenticationNavigationController>(storyboard: Authentication.self, identifier: "AuthenticationNavigation")
+
+    internal static let connectionSettings = SceneType<JobOrder_Presentation.ConnectionSettingsViewController>(storyboard: Authentication.self, identifier: "ConnectionSettings")
+
+    internal static let mailVerificationComplete = SceneType<JobOrder_Presentation.MailVerificationCompleteViewController>(storyboard: Authentication.self, identifier: "MailVerificationComplete")
+
+    internal static let mailVerificationConfirm = SceneType<JobOrder_Presentation.MailVerificationConfirmViewController>(storyboard: Authentication.self, identifier: "MailVerificationConfirm")
+
+    internal static let mailVerificationEntry = SceneType<JobOrder_Presentation.MailVerificationEntryViewController>(storyboard: Authentication.self, identifier: "MailVerificationEntry")
+
+    internal static let newPasswordRequired = SceneType<JobOrder_Presentation.NewPasswordRequiredViewController>(storyboard: Authentication.self, identifier: "NewPasswordRequired")
+
+    internal static let passwordAuthentication = SceneType<JobOrder_Presentation.PasswordAuthenticationViewController>(storyboard: Authentication.self, identifier: "PasswordAuthentication")
+  }
   internal enum JobEntry: StoryboardType {
     internal static let storyboardName = "JobEntry"
 
@@ -76,24 +95,12 @@ internal enum StoryboardScene {
 
     internal static let robotSelection = SceneType<JobOrder_Presentation.OrderEntryRobotSelectionViewController>(storyboard: OrderEntry.self, identifier: "RobotSelection")
   }
-  internal enum PasswordAuthentication: StoryboardType {
-    internal static let storyboardName = "PasswordAuthentication"
+  internal enum Startup: StoryboardType {
+    internal static let storyboardName = "Startup"
 
-    internal static let initialScene = InitialSceneType<JobOrder_Presentation.PasswordAuthenticationNavigationController>(storyboard: PasswordAuthentication.self)
+    internal static let initialScene = InitialSceneType<JobOrder_Presentation.StartupViewController>(storyboard: Startup.self)
 
-    internal static let connectionSettings = SceneType<JobOrder_Presentation.ConnectionSettingsViewController>(storyboard: PasswordAuthentication.self, identifier: "ConnectionSettings")
-
-    internal static let mailVerificationComplete = SceneType<JobOrder_Presentation.MailVerificationCompleteViewController>(storyboard: PasswordAuthentication.self, identifier: "MailVerificationComplete")
-
-    internal static let mailVerificationConfirm = SceneType<JobOrder_Presentation.MailVerificationConfirmViewController>(storyboard: PasswordAuthentication.self, identifier: "MailVerificationConfirm")
-
-    internal static let mailVerificationEntry = SceneType<JobOrder_Presentation.MailVerificationEntryViewController>(storyboard: PasswordAuthentication.self, identifier: "MailVerificationEntry")
-
-    internal static let newPasswordRequired = SceneType<JobOrder_Presentation.NewPasswordRequiredViewController>(storyboard: PasswordAuthentication.self, identifier: "NewPasswordRequired")
-
-    internal static let passwordAuthentication = SceneType<JobOrder_Presentation.PasswordAuthenticationViewController>(storyboard: PasswordAuthentication.self, identifier: "PasswordAuthentication")
-
-    internal static let passwordAuthenticationNavigation = SceneType<JobOrder_Presentation.PasswordAuthenticationNavigationController>(storyboard: PasswordAuthentication.self, identifier: "PasswordAuthenticationNavigation")
+    internal static let startup = SceneType<JobOrder_Presentation.StartupViewController>(storyboard: Startup.self, identifier: "Startup")
   }
   internal enum TaskDetail: StoryboardType {
     internal static let storyboardName = "TaskDetail"

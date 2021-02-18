@@ -11,6 +11,9 @@ import Foundation
 /// クラウドに対して行動分析の送信を行うためのプロトコル
 /// @mockable
 public protocol AnalyticsServiceRepository {
+    /// 初期化
+    /// - Parameter configuration: Configuration データ
+    func initialize(_ configuration: [String: Any])
     /// エンドポイントID
     var endpointId: String? { get }
     /// デバイス登録

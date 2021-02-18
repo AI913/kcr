@@ -8,55 +8,25 @@
 
 import Foundation
 import Combine
-import AWSMobileClient
 import AWSIoT
 import JobOrder_Utility
 
 /// AWS IoTを操作する
 public class AWSIoTDataStore: MQTTRepository {
 
-    /// シングルトン
-    static public let shared = AWSIoTDataStore()
+    /// Factory
+    let factory = AWSSDKFactory.shared
     /// 接続状態配信
     private let connectionStatusPublisher = PassthroughSubject<MQTTEntity.Output.ConnectionStatus, Never>()
     /// メッセージ配信
     private let subscribedMessagePublisher = PassthroughSubject<MQTTEntity.Output.SubscribedMessage, Never>()
-    /// AWSMobileClientProtocol
-    var awsMobileClient: AWSMobileClientProtocol
-    /// AWSIoTDataManager
-    var dataManager: AWSIoTDataManagerProtocol
-    /// AWSIoT
-    var awsIot: AWSIoTProtocol
 
     /// イニシャライザ
-    init() {
-        // TODO: 登録をjsonでできないかAmazonに質問
+    public init() {}
 
-        // Default
-        let defaultConfiguration = AWSServiceConfiguration(region: AWSConstants.IoT.region,
-                                                           credentialsProvider: AWSMobileClient.default()
-        )
-        AWSServiceManager.default().defaultServiceConfiguration = defaultConfiguration
-
-        // Configuration for AWSIoT control plane APIs
-        let iotCtrlConfiguration = AWSServiceConfiguration(
-            region: AWSConstants.IoT.region,
-            credentialsProvider: AWSMobileClient.default()
-        )
-        AWSIoTManager.register(with: iotCtrlConfiguration, forKey: AWSConstants.IoT.ctrlManagerKey)
-
-        // Configuration for AWSIoT data plane APIs
-        let iotEndPoint = AWSEndpoint(urlString: AWSConstants.IoT.endPoint)
-        let iotDataConfiguration = AWSServiceConfiguration(
-            region: AWSConstants.IoT.region,
-            endpoint: iotEndPoint,
-            credentialsProvider: AWSMobileClient.default()
-        )
-        AWSIoTDataManager.register(with: iotDataConfiguration!, forKey: AWSConstants.IoT.dataManagerKey)
-
-        awsMobileClient = AWSMobileClient.default()
-        dataManager = AWSIoTDataManager(forKey: AWSConstants.IoT.dataManagerKey)
-        awsIot = AWSIoT.default()
+    /// 初期化
+    public func initialize() {
+        factory.generateIoT()
     }
 
     /// 接続状態通知イベントの登録
@@ -130,22 +100,22 @@ public class AWSIoTDataStore: MQTTRepository {
     /// - Returns: 購読結果
     public func subscribe(topic: String) -> Bool {
         Logger.info(target: self, thingName(topic: topic))
-        guard dataManager.getConnectionStatus() == .connected else { return false }
+        guard factory.iotDataManager?.getConnectionStatus() == .connected else { return false }
 
-        return dataManager.subscribe(toTopic: topic, qoS: .messageDeliveryAttemptedAtMostOnce, extendedCallback: { mqttClient, topic, data in
+        return factory.iotDataManager?.subscribe(toTopic: topic, qoS: .messageDeliveryAttemptedAtMostOnce, extendedCallback: { mqttClient, topic, data in
             let entity = MQTTEntity.Output.SubscribedMessage(topic: topic, data: data)
             Logger.debug(target: self, "Topic: \(entity.topic), Payload: \(entity.payload)")
             self.subscribedMessagePublisher.send(entity)
-        })
+        }) ?? false
     }
 
     /// MQTT購読解除
     /// - Parameter topic: トピック
     public func unSubscribe(topic: String) {
         Logger.info(target: self, thingName(topic: topic))
-        guard dataManager.getConnectionStatus() == .connected else { return }
+        guard factory.iotDataManager?.getConnectionStatus() == .connected else { return }
 
-        dataManager.unsubscribeTopic(topic)
+        factory.iotDataManager?.unsubscribeTopic(topic)
     }
 
     /// MQTT配信
@@ -155,9 +125,9 @@ public class AWSIoTDataStore: MQTTRepository {
     /// - Returns: 配信結果
     public func publish(topic: String, message: String) -> Bool {
         Logger.info(target: self, "Topic: \(topic), Message: \(message)")
-        guard dataManager.getConnectionStatus() == .connected else { return false }
+        guard factory.iotDataManager?.getConnectionStatus() == .connected else { return false }
 
-        return dataManager.publishString(message, onTopic: topic, qoS: .messageDeliveryAttemptedAtMostOnce)
+        return factory.iotDataManager?.publishString(message, onTopic: topic, qoS: .messageDeliveryAttemptedAtMostOnce) ?? false
     }
 
     /// Job作成
@@ -195,7 +165,7 @@ public class AWSIoTDataStore: MQTTRepository {
             presignedUrlConfig.expiresInSec = 300
             createJobRequest.presignedUrlConfig = presignedUrlConfig
 
-            self.awsIot.createJob(createJobRequest).continueWith { (task) -> AnyObject? in
+            self.factory.iot?.createJob(createJobRequest).continueWith { (task) -> AnyObject? in
                 if let error = task.error {
                     promise(.failure(AWSError.ioTControlFailed(reason: .awsIoTClientFailed(error: error))))
                 } else {
@@ -244,7 +214,7 @@ extension AWSIoTDataStore {
 
     func getIdentityId(callback: @escaping (_ id: String?, _ state: APITaskEntity.State, _ error: Error?) -> Void) {
 
-        self.awsMobileClient.getIdentityId().continueWith { (task) -> AnyObject? in
+        self.factory.mobileClient?.getIdentityId().continueWith { (task) -> AnyObject? in
 
             let state = APITaskEntity.State(task)
 
@@ -270,7 +240,7 @@ extension AWSIoTDataStore {
             let request = AWSIoTAttachPolicyRequest()!
             request.policyName = "App-JobOrder"
             request.target = id
-            self.awsIot.attachPolicy(request).continueWith { task in
+            self.factory.iot?.attachPolicy(request).continueWith { task in
                 let state = APITaskEntity.State(task)
                 callback(id, state, task.error)
                 return nil
@@ -290,7 +260,7 @@ extension AWSIoTDataStore {
             let request = AWSIoTDetachPolicyRequest()!
             request.policyName = "App-JobOrder"
             request.target = id
-            self.awsIot.detachPolicy(request).continueWith { task in
+            self.factory.iot?.detachPolicy(request).continueWith { task in
                 let state = APITaskEntity.State(task)
                 callback(state, task.error)
                 return nil
@@ -307,14 +277,14 @@ extension AWSIoTDataStore {
         }
 
         DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
-            let result = self.dataManager.connectUsingWebSocket(withClientId: clientId,
-                                                                cleanSession: true,
-                                                                statusCallback: { status in
-                                                                    let entity = MQTTEntity.Output.ConnectionStatus(status)
-                                                                    self.connectionStatusPublisher.send(entity)
-                                                                })
+            let result = self.factory.iotDataManager?.connectUsingWebSocket(withClientId: clientId,
+                                                                            cleanSession: true,
+                                                                            statusCallback: { status in
+                                                                                let entity = MQTTEntity.Output.ConnectionStatus(status)
+                                                                                self.connectionStatusPublisher.send(entity)
+                                                                            })
 
-            if result {
+            if result ?? false {
                 callback(.completed, nil)
             } else {
                 callback(.faulted, AWSError.ioTControlFailed(reason: .connectionFailed(reason: .connectFailed)))
@@ -326,30 +296,8 @@ extension AWSIoTDataStore {
         Logger.info(target: self)
 
         DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
-            self.dataManager.disconnect()
+            self.factory.iotDataManager?.disconnect()
             callback?(.completed, nil)
         }
     }
 }
-
-/// @mockable
-protocol AWSIoTDataManagerProtocol {
-    func getConnectionStatus() -> AWSIoTMQTTStatus
-    func subscribe(toTopic: String, qoS: AWSIoTMQTTQoS, extendedCallback: @escaping AWSIoTMQTTExtendedNewMessageBlock) -> Bool
-    func unsubscribeTopic(_ topic: String)
-    func publishString(_ string: String, onTopic: String, qoS: AWSIoTMQTTQoS) -> Bool
-    func connectUsingWebSocket(withClientId clientId: String, cleanSession: Bool, statusCallback callback: @escaping (AWSIoTMQTTStatus) -> Void) -> Bool
-    func disconnect()
-}
-
-extension AWSIoTDataManager: AWSIoTDataManagerProtocol {}
-
-/// @mockable
-protocol AWSIoTProtocol {
-    func createJob(_ request: AWSIoTCreateJobRequest) -> AWSTask<AWSIoTCreateJobResponse>
-    func listJobExecutions(forThing: AWSIoTListJobExecutionsForThingRequest) -> AWSTask<AWSIoTListJobExecutionsForThingResponse>
-    func attachPolicy(_ request: AWSIoTAttachPolicyRequest) -> AWSTask<AnyObject>
-    func detachPolicy(_ request: AWSIoTDetachPolicyRequest) -> AWSTask<AnyObject>
-}
-
-extension AWSIoT: AWSIoTProtocol {}

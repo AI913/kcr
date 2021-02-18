@@ -12,6 +12,9 @@ import Combine
 /// クラウドに対してユーザー認証を行うためのプロトコル
 /// @mockable
 public protocol AuthenticationRepository {
+    /// Configuration を設定し初期化
+    /// - Parameter configuration: Configuration データ
+    func initialize(_ configuration: [String: Any]) -> AnyPublisher<AuthenticationEntity.Output.AuthenticationState, Error>
     /// 現在のユーザー名を取得
     var currentUsername: String? { get }
     /// サインイン状態を取得

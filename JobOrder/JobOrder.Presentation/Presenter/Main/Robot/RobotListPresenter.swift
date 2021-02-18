@@ -17,10 +17,6 @@ import JobOrder_Domain
 protocol RobotListPresenterProtocol {
     /// リストの行数
     var numberOfRowsInSection: Int { get }
-    /// クラウドサーバー使用可否
-    var useCloudServer: Bool { get }
-    /// クラウドサーバーURL
-    var serverUrl: String? { get }
     /// Robot ID取得
     /// - Parameter index: 配列のIndex
     func id(_ index: Int) -> String?
@@ -95,16 +91,6 @@ extension RobotListPresenter: RobotListPresenterProtocol {
     /// リストの行数
     var numberOfRowsInSection: Int {
         displayRobots?.count ?? 0
-    }
-
-    /// クラウドサーバー使用可否
-    var useCloudServer: Bool {
-        settingsUseCase.useCloudServer
-    }
-
-    /// クラウドサーバーURL
-    var serverUrl: String? {
-        settingsUseCase.serverUrl
     }
 
     /// Robot ID取得

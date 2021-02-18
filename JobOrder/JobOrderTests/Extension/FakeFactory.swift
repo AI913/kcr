@@ -147,3 +147,13 @@ extension UUID: Arbitrary {
         return Gen<Self>.compose { _ in UUID() }
     }
 }
+
+extension Data: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        let dictionary = Dictionary<String, String>.arbitrary.generate
+        guard let data = try? JSONSerialization.data(withJSONObject: dictionary, options: []) else {
+            return Gen<Self>.compose { _ in Data() }
+        }
+        return Gen<Self>.compose { _ in data }
+    }
+}

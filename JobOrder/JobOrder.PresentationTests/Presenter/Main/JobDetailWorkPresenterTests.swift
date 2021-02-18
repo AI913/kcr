@@ -179,7 +179,7 @@ class JobDetailWorkPresenterTests: XCTestCase {
 
     func test_assignName() {
         let index = 0
-        let robots = DataManageModel.Output.Robot.arbitrary.sample
+        let robots = DataManageModel.Output.Robot.arbitrary.suchThat({ !($0.name ?? "").isEmpty }).sample
         let robotIds = robots.map { $0.id }
         let name = robots[index].name!
         data.robots = robots

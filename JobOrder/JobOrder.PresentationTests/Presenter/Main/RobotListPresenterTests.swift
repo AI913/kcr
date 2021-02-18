@@ -63,36 +63,6 @@ class RobotListPresenterTests: XCTestCase {
         }
     }
 
-    func test_useCloudServer() {
-
-        XCTContext.runActivity(named: "未設定の場合") { _ in
-            XCTAssertFalse(presenter.useCloudServer, "有効になってはいけない")
-        }
-
-        XCTContext.runActivity(named: "Trueの場合") { _ in
-            settings.useCloudServer = true
-            XCTAssertTrue(presenter.useCloudServer, "無効になってはいけない")
-        }
-
-        XCTContext.runActivity(named: "Falseの場合") { _ in
-            settings.useCloudServer = false
-            XCTAssertFalse(presenter.useCloudServer, "有効になってはいけない")
-        }
-    }
-
-    func test_serverUrl() {
-        let param = "test"
-
-        XCTContext.runActivity(named: "未設定の場合") { _ in
-            XCTAssertNil(presenter.serverUrl, "値を取得できてはいけない")
-        }
-
-        XCTContext.runActivity(named: "\(param)が設定済みの場合") { _ in
-            settings.serverUrl = param
-            XCTAssertEqual(presenter.serverUrl, param, "正しい値が取得できていない: \(param)")
-        }
-    }
-
     func test_id() {
         let robots = DataManageModel.Output.Robot.arbitrary.sample
         XCTContext.runActivity(named: "未設定の場合") { _ in

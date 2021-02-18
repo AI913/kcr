@@ -22,9 +22,10 @@ protocol TaskDetailRunHistoryViewControllerProtocol: class {
     ///   - at: 更新行
     func reloadRows(at: [IndexPath])
     /// TaskDetail TaskInformation画面へ遷移
-    /// - Parameter jobID: job ID
-    /// - Parameter robotId: robot ID
-    func launchTaskDetailTaskInformation(jobId: String, robotId: String)
+    /// - Parameters:
+    ///   - taskId: task ID
+    ///   - robotId: robot ID
+    func launchTaskDetailTaskInformation(taskId: String, robotId: String)
     /// TaskDetail RobotSelection画面へ遷移
     /// - Parameter taskId: task ID
     func launchTaskDetailRobotSelection(taskId: String)
@@ -73,10 +74,10 @@ extension TaskDetailRunHistoryViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch StoryboardSegue.TaskDetail(segue) {
         case .taskDetailRunHistoryCellToTaskInformation:
-            guard let (jobId, robotId) = sender as? (String, String) else { return }
-            Logger.debug(target: self, "jobId: \(jobId), robotId: \(robotId)")
+            guard let (taskId, robotId) = sender as? (String, String) else { return }
+            Logger.debug(target: self, "taskId: \(taskId), robotId: \(robotId)")
             let vc = segue.destination as! TaskDetailTaskInformationViewController
-            vc.inject(jobId: jobId, robotId: robotId)
+            vc.inject(taskId: taskId, robotId: robotId)
         case .taskDetailRunHistoryCellToRobotSelection:
             guard let taskId = sender as? String else { return }
             Logger.debug(target: self, "taskId: \(taskId)")
@@ -172,10 +173,10 @@ extension TaskDetailRunHistoryViewController: TaskDetailRunHistoryViewController
     }
 
     /// TaskDetail TaskInformation画面へ遷移
-    /// - Parameter jobId: job ID
+    /// - Parameter taskId: task ID
     /// - Parameter robotId: robot ID
-    func launchTaskDetailTaskInformation(jobId: String, robotId: String) {
-        self.perform(segue: StoryboardSegue.TaskDetail.taskDetailRunHistoryCellToTaskInformation, sender: (jobId, robotId))
+    func launchTaskDetailTaskInformation(taskId: String, robotId: String) {
+        self.perform(segue: StoryboardSegue.TaskDetail.taskDetailRunHistoryCellToTaskInformation, sender: (taskId, robotId))
     }
 
     /// TaskDetail RobotSelection画面へ遷移

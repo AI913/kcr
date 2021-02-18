@@ -23,14 +23,12 @@ protocol JobEntryGeneralInfoPresenterProtocol {
     var numberOfItemsInSection: Int { get }
     /// Continueボタンの有効無効
     var isEnabledContinueButton: Bool { get }
-
     /// Robotの表示名取得
     /// - Parameter index: 配列のIndex
     func displayName(_ index: Int) -> String?
     /// Robotのタイプ取得
     /// - Parameter index: 配列のIndex
     func type(_ index: Int) -> String?
-
     /// セルの選択可否
     /// - Parameter indexPath: インデックスパス
     func isSelected(indexPath: IndexPath) -> Bool
@@ -95,8 +93,7 @@ extension JobEntryGeneralInfoPresenter: JobEntryGeneralInfoPresenterProtocol {
     var isEnabledContinueButton: Bool {
         data.form.robotIds?.count ?? 0 > 0
     }
-    
-    
+
     /// Robotの表示名取得
     /// - Parameter index: 配列のIndex
     /// - Returns: Robotの表示名
@@ -109,7 +106,7 @@ extension JobEntryGeneralInfoPresenter: JobEntryGeneralInfoPresenterProtocol {
     /// - Returns: Robotのタイプ名
     func type(_ index: Int) -> String? {
         return displayRobots?[index].type
-     }
+    }
 
     /// セルの選択可否
     /// - Parameter indexPath: インデックスパス
@@ -171,5 +168,4 @@ extension JobEntryGeneralInfoPresenter {
         displayRobots = display
         vc.reloadCollection()
     }
-
 }

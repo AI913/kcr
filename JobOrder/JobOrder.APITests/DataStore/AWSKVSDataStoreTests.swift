@@ -27,11 +27,11 @@ class AWSKVSDataStoreTests: XCTestCase {
 
     override func setUpWithError() throws {
         dataStore.signalingClient = signalingClient
-        dataStore.awsKinesisVideo = kinesisVideo
-        dataStore.awsMobileClient = awsMobileClient
-        dataStore.awsKinesisVideoSignaling = awsKinesisVideoSignaling
-        dataStore.awsKinesisVideoSignalingClass = awsKinesisVideoSignalingClass
-        dataStore.kvsSignerClass = kvsSigner
+        dataStore.factory.kinesisVideo = kinesisVideo
+        dataStore.factory.mobileClient = awsMobileClient
+        dataStore.factory.kinesisVideoSignaling = awsKinesisVideoSignaling
+        dataStore.factory.kinesisVideoSignalingClass = awsKinesisVideoSignalingClass
+        dataStore.factory.kvsSignerClass = kvsSigner
     }
 
     override func tearDownWithError() throws {}

@@ -19,7 +19,7 @@ class AWSAuthenticationDataStoreTests: XCTestCase {
     private var cancellables: Set<AnyCancellable> = []
 
     override func setUpWithError() throws {
-        dataStore.awsMobileClient = mock
+        dataStore.factory.mobileClient = mock
     }
 
     override func tearDownWithError() throws {}

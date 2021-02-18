@@ -41,22 +41,19 @@ public class SettingsDataStore: SettingsRepository {
 
     /// Space名
     public var space: String? {
-        get { ud.string(forKey: .space) }
+        get {
+            if let s = ud.string(forKey: .space), s == "" { return nil }
+            return ud.string(forKey: .space)
+        }
         set { ud.set(newValue, forKey: .space) }
-    }
-
-    /// クラウドサーバー使用可否
-    public var useCloudServer: Bool {
-        get { ud.bool(forKey: .useCloudServer) }
-        set { ud.set(newValue, forKey: .useCloudServer) }
-    }
-
-    /// サーバーURL
-    public var serverUrl: String? {
-        get { ud.string(forKey: .serverUrl) }
-        set { ud.set(newValue, forKey: .serverUrl) }
     }
 
     /// Thing名
     public var thingName: String? { kc.getString(.thingName) }
+
+    /// Server Confugurationデータ
+    public var serverConfiguration: Data? {
+        get { kc.getData(.serverConfiguration) }
+        set { kc.set(newValue, key: .serverConfiguration) }
+    }
 }

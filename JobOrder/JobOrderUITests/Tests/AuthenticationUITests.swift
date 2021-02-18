@@ -8,115 +8,71 @@
 
 import XCTest
 
-class AuthenticationUITests: XCTestCase {
-
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-        XCUIApplication().launch()
-    }
-
-    override func tearDownWithError() throws {}
-
-    func testSetSpace() throws {
-        let app = XCUIApplication()
-
-        AuthenticationUITests.waitConnectionSettingsPage()
-        XCTContext.runActivity(named: "Space名を設定する") { _ in
-            let name = "test"
-            let authPage = PasswordAuthenticationPageObject(application: app)
-            let page = (authPage.existsPage ? authPage.tapSettings() : ConnectionSettingsPageObject(application: app))
-                .enterSpace(name)
-                .tapSaveButton()
-                .waitExists(PasswordAuthenticationPageObject.self)
-            XCTAssertTrue(page.existsPage)
-        }
-    }
+class AuthenticationUITests: JobOrderUITests {
 
     func testSignIn() throws {
-        let app = XCUIApplication()
-        checkSpaceName()
 
         XCTContext.runActivity(named: "サインインする") { _ in
-            let identifier = "200300137"
             XCTContext.runActivity(named: "サインイン失敗した時はアラートを表示する") { _ in
-                let password = "Kyocera7!"
-                let page = PasswordAuthenticationPageObject(application: app)
-                _ = page
-                    .enterIdentifier(identifier)
-                    .enterPassword(password)
-                    .tapSignInButton()
-
-                XCTAssert(page.invalidAlert.waitForExistence(timeout: 3))
+                let page = signInError()
+                XCTAssert(page.invalidAlert.waitForExistence(timeout: 3), "Alertを表示できなかった")
             }
             XCTContext.runActivity(named: "サインイン成功した時はMain画面へ遷移する") { _ in
-                let password = "Kyocera8!"
-                let page = PasswordAuthenticationPageObject(application: app)
-                    .enterIdentifier(identifier)
-                    .enterPassword(password)
-                    .tapSignInButton()
-                    .waitExists(MainPageObject.self, timeout: 10)
-
-                XCTAssertTrue(page.isExists)
+                let page = signIn()
+                XCTAssertTrue(page.isExists, "画面遷移できなかった")
             }
         }
     }
 
     func testForgotYourPassword() throws {
         let app = XCUIApplication()
-        checkSpaceName()
+        _ = setSpace()
 
         XCTContext.runActivity(named: "パスワードを再設定する") { _ in
             let page = PasswordAuthenticationPageObject(application: app)
                 .tapForgotYourPasswordButton()
                 .waitExists(MailVerificationEntryPageObject.self)
-
-            XCTAssertTrue(page.existsPage)
+            XCTAssertTrue(page.existsPage, "画面遷移できなかった")
         }
     }
 
-    private func checkSpaceName() {
+    func testToSettings() throws {
         let app = XCUIApplication()
+        _ = setSpace()
 
-        AuthenticationUITests.waitConnectionSettingsPage()
-        XCTContext.runActivity(named: "Space名が未設定の場合は設定する") { _ in
-            let name = "test"
-            let page = ConnectionSettingsPageObject(application: app)
-            if page.existsPage {
-                XCTAssertTrue(
-                    page.enterSpace(name)
-                        .tapSaveButton()
-                        .waitForExistence())
-            }
+        XCTContext.runActivity(named: "設定画面へ遷移する") { _ in
+            let page = PasswordAuthenticationPageObject(application: app).tapSettings().waitExists(ConnectionSettingsPageObject.self)
+            XCTAssertTrue(page.existsPage, "画面遷移できなかった")
+        }
+        XCTContext.runActivity(named: "戻る") { _ in
+            let page = ConnectionSettingsPageObject(application: app).tapBackButton().waitExists(PasswordAuthenticationPageObject.self)
+            XCTAssertTrue(page.existsPage, "画面遷移できなかった")
         }
     }
 
-    private static func waitConnectionSettingsPage(timeout: TimeInterval = 1) {
-        sleep(UInt32(timeout))
-    }
-
-    public static func Login() {
+    func testResetAlert() throws {
         let app = XCUIApplication()
-        waitConnectionSettingsPage()
-        XCTContext.runActivity(named: "Space名が未設定の場合は設定する") { _ in
-            let name = "test"
-            let page = ConnectionSettingsPageObject(application: app)
-            if page.existsPage {
-                XCTAssertTrue(
-                    page.enterSpace(name)
-                        .tapSaveButton()
-                        .waitForExistence())
-            }
+        _ = setSpace()
+
+        XCTContext.runActivity(named: "設定画面へ遷移する") { _ in
+            let page = PasswordAuthenticationPageObject(application: app).tapSettings().waitExists(ConnectionSettingsPageObject.self)
+            XCTAssertTrue(page.existsPage, "画面遷移できなかった")
         }
-        XCTContext.runActivity(named: "サインインする") { _ in
-            let identifier = "kenichi.aoki"
-            XCTContext.runActivity(named: "サインイン成功した時はMain画面へ遷移する") { _ in
-                let password = "Fa06215309!"
-                _ = PasswordAuthenticationPageObject(application: app)
-                    .enterIdentifier(identifier)
-                    .enterPassword(password)
-                    .tapSignInButton()
-                    .waitExists(MainPageObject.self)
-            }
+        XCTContext.runActivity(named: "リセットボタン押下でアラート表示") { _ in
+            let page = ConnectionSettingsPageObject(application: app).tapResetButton()
+            XCTAssertTrue(page.alert.waitForExistence(timeout: 3), "Alertを表示できなかった")
+        }
+        XCTContext.runActivity(named: "アラートのキャンセルボタン押下") { _ in
+            let page = ConnectionSettingsPageObject(application: app).tapAlertCancelButton().waitExists(ConnectionSettingsPageObject.self)
+            XCTAssertTrue(page.existsPage, "画面遷移できなかった")
+        }
+        XCTContext.runActivity(named: "リセットボタン押下でアラート表示") { _ in
+            let page = ConnectionSettingsPageObject(application: app).tapResetButton()
+            XCTAssertTrue(page.waitForExistence(timeout: 3), "Alertを表示できなかった")
+        }
+        XCTContext.runActivity(named: "アラートのOKボタン押下で戻る") { _ in
+            let page = ConnectionSettingsPageObject(application: app).tapAlertOkButton().waitExists(PasswordAuthenticationPageObject.self)
+            XCTAssertTrue(page.existsPage, "画面遷移できなかった")
         }
     }
 }

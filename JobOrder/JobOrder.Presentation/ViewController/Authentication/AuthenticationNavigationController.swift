@@ -1,5 +1,5 @@
 //
-//  PasswordAuthenticationNavigationController.swift
+//  AuthenticationNavigationController.swift
 //  JobOrder.Presentation
 //
 //  Created by Yu Suzuki on 2020/03/31.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PasswordAuthenticationNavigationController: UINavigationController {
+class AuthenticationNavigationController: UINavigationController {
 
     // MARK: - Override function (view controller lifecycle)
     override func viewDidLoad() {
@@ -24,7 +24,7 @@ class PasswordAuthenticationNavigationController: UINavigationController {
 }
 
 // MARK: - Interface Function
-extension PasswordAuthenticationNavigationController: UINavigationControllerDelegate {
+extension AuthenticationNavigationController: UINavigationControllerDelegate {
 
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         for vc in self.viewControllers {
@@ -34,9 +34,9 @@ extension PasswordAuthenticationNavigationController: UINavigationControllerDele
 }
 
 // MARK: - Private Function
-extension PasswordAuthenticationNavigationController {
+extension AuthenticationNavigationController {
 
     private func isHiddenNavigationBar(_ vc: UIViewController) -> Bool {
-        return (vc as? PasswordAuthenticationViewController) != nil
+        return vc is PasswordAuthenticationViewController
     }
 }

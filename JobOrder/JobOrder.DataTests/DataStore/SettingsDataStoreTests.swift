@@ -77,53 +77,22 @@ class SettingsDataStoreTests: XCTestCase {
     }
 
     func test_getSpace() {
-        let param = "test"
 
         XCTContext.runActivity(named: "未設定の場合") { _ in
             XCTAssertNil(dataStore.space, "値を取得できてはいけない")
         }
 
+        var param = ""
+        XCTContext.runActivity(named: "空文字列の場合") { _ in
+            XCTAssertNil(dataStore.space, "値を取得できてはいけない")
+        }
+
+        param = "test"
         XCTContext.runActivity(named: "\(param)が設定済みの場合") { _ in
             ud.stringHandler = { key in
                 return param
             }
             XCTAssertEqual(dataStore.space, param, "正しい値が取得できていない: \(param)")
-        }
-    }
-
-    func test_getUseCloudServer() {
-
-        XCTContext.runActivity(named: "未設定の場合") { _ in
-            XCTAssertFalse(dataStore.useCloudServer, "有効になってはいけない")
-        }
-
-        XCTContext.runActivity(named: "Trueが設定済みの場合") { _ in
-            ud.boolHandler = { key in
-                return true
-            }
-            XCTAssertTrue(dataStore.useCloudServer, "無効になってはいけない")
-        }
-
-        XCTContext.runActivity(named: "Falseが設定済みの場合") { _ in
-            ud.boolHandler = { key in
-                return false
-            }
-            XCTAssertFalse(dataStore.useCloudServer, "有効になってはいけない")
-        }
-    }
-
-    func test_getServerUrl() {
-        let param = "test"
-
-        XCTContext.runActivity(named: "未設定の場合") { _ in
-            XCTAssertNil(dataStore.serverUrl, "値を取得できてはいけない")
-        }
-
-        XCTContext.runActivity(named: "\(param)が設定済みの場合") { _ in
-            ud.stringHandler = { key in
-                return param
-            }
-            XCTAssertEqual(dataStore.serverUrl, param, "正しい値が取得できていない: \(param)")
         }
     }
 
@@ -139,6 +108,21 @@ class SettingsDataStoreTests: XCTestCase {
                 return param
             }
             XCTAssertEqual(dataStore.thingName, param, "正しい値が取得できていない: \(param)")
+        }
+    }
+
+    func test_getServerConfiguration() {
+        let param = Data()
+
+        XCTContext.runActivity(named: "未設定の場合") { _ in
+            XCTAssertNil(dataStore.serverConfiguration, "値を取得できてはいけない")
+        }
+
+        XCTContext.runActivity(named: "\(param)が設定済みの場合") { _ in
+            kc.getDataHandler = { key in
+                return param
+            }
+            XCTAssertEqual(dataStore.serverConfiguration, param, "正しい値が取得できていない")
         }
     }
 
@@ -171,22 +155,12 @@ class SettingsDataStoreTests: XCTestCase {
         }
     }
 
-    func test_setUseCloudServerWithTrue() {
-        dataStore.useCloudServer = true
-        XCTAssertEqual(ud.setValueCallCount, 1, "UserDefaultsRepositoryのメソッドが呼ばれない")
-    }
-
-    func test_setUseCloudServerWithFalse() {
-        dataStore.useCloudServer = false
-        XCTAssertEqual(ud.setValueCallCount, 1, "UserDefaultsRepositoryのメソッドが呼ばれない")
-    }
-
-    func test_setServerUrl() {
-        let param = "test"
+    func test_setServerConfiguration() {
+        let param = Data()
 
         XCTContext.runActivity(named: "\(param)を設定した場合") { _ in
-            dataStore.serverUrl = param
-            XCTAssertEqual(ud.setValueForKeyCallCount, 1, "UserDefaultsRepositoryのメソッドが呼ばれない")
+            dataStore.serverConfiguration = param
+            XCTAssertEqual(kc.setValueCallCount, 1, "KeychainRepositoryのメソッドが呼ばれない")
         }
     }
 }

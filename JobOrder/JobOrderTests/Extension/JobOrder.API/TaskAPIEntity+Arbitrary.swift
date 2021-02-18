@@ -53,3 +53,14 @@ extension TaskAPIEntity.Exit.Option: Arbitrary {
         }
     }
 }
+
+extension TaskAPIEntity.Input.Data: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            return TaskAPIEntity.Input.Data(jobId: c.generate(),
+                                            robotIds: c.generate(),
+                                            start: c.generate(),
+                                            exit: c.generate())
+        }
+    }
+}

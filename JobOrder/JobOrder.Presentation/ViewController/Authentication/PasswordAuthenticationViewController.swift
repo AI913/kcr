@@ -13,8 +13,11 @@ import UIKit
 protocol PasswordAuthenticationViewControllerProtocol: class {
     /// Viewを閉じる
     func dismiss()
-    /// 生体認証ログインによりViewを閉じる
-    func dismissByBiometricsAuthentication()
+    /// アラート表示
+    /// - Parameters:
+    ///   - title: title
+    ///   - message: message
+    func showAlert(title: String, message: String)
     /// エラーアラート表示
     /// - Parameter error: エラー
     func showErrorAlert(_ error: Error)
@@ -37,6 +40,7 @@ class PasswordAuthenticationViewController: UIViewController {
     @IBOutlet weak var biometricsAuthenticationLabel: UILabel!
     @IBOutlet weak var passwordResetButton: UIButton!
     @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var rebootLabel: UILabel!
 
     // MARK: - Variable
     var presenter: PasswordAuthenticationPresenterProtocol!
@@ -62,8 +66,8 @@ class PasswordAuthenticationViewController: UIViewController {
         didSet {
             identifierTextField?.isEnabled = !processing
             passwordTextField?.isEnabled = !processing
-            connectionSettingsButton?.isEnabled = !processing
-            passwordResetButton?.isEnabled = !processing
+            passwordResetButton?.isEnabled = !processing && (presenter?.isEnabledPasswordResetButton ?? false)
+            connectionSettingsButton?.isEnabled = !processing && (presenter?.isEnabledSettingsButton ?? false)
             togglePasswordVisibilityButton?.isEnabled = !processing
             signInButton?.isEnabled = !processing && (presenter?.isEnabledSignInButton ?? false)
             biometricsAuthenticationButton?.isEnabled = !processing && (presenter?.isEnabledBiometricsButton ?? false)
@@ -79,6 +83,7 @@ class PasswordAuthenticationViewController: UIViewController {
     // MARK: - Override function (view controller lifecycle)
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.viewDidLoad()
         self.isModalInPresentation = true
         togglePasswordVisibilityButton = UIButton(type: .custom)
         passwordTextField?.rightView = togglePasswordVisibilityButton
@@ -102,11 +107,9 @@ class PasswordAuthenticationViewController: UIViewController {
         biometricsAuthenticationButton?.isHidden = !presenter.isEnabledBiometricsButton
         biometricsAuthenticationLabel?.isHidden = !presenter.isEnabledBiometricsButton
         signInButton?.isEnabled = presenter.isEnabledSignInButton
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        presenter?.viewDidAppear()
+        connectionSettingsButton?.isEnabled = presenter.isEnabledSettingsButton
+        passwordResetButton?.isEnabled = presenter.isEnabledPasswordResetButton
+        rebootLabel?.text = presenter.rebootExplain
     }
 }
 
@@ -158,16 +161,14 @@ extension PasswordAuthenticationViewController: PasswordAuthenticationViewContro
 
     func dismiss() {
         dismiss(animated: true)
+
+        if let vc = self.parent?.presentingViewController?.children.compactMap({ $0 as? MainTabBarController }).first {
+            vc.viewWillAppearBySignIn()
+        }
     }
 
-    func dismissByBiometricsAuthentication() {
-        dismiss(animated: true)
-
-        self.parent?.presentingViewController?.children.forEach {
-            if let vc = $0 as? MainTabBarController {
-                vc.viewWillAppearByBiometricsAuthentication()
-            }
-        }
+    func showAlert(title: String, message: String) {
+        presentAlert(title, message)
     }
 
     func showErrorAlert(_ error: Error) {
@@ -179,10 +180,10 @@ extension PasswordAuthenticationViewController: PasswordAuthenticationViewContro
     }
 
     func transitionToNewPasswordRequiredScreen() {
-        self.perform(segue: StoryboardSegue.PasswordAuthentication.showNewPasswordRequired)
+        self.perform(segue: StoryboardSegue.Authentication.showNewPasswordRequired)
     }
 
     func transitionToConnectionSettings() {
-        self.perform(segue: StoryboardSegue.PasswordAuthentication.showConnectionSettings)
+        self.perform(segue: StoryboardSegue.Authentication.showConnectionSettings)
     }
 }

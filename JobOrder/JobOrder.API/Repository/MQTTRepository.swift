@@ -12,6 +12,8 @@ import Combine
 /// クラウドに対してMQTT通信を行うためのプロトコル
 /// @mockable
 public protocol MQTTRepository {
+    /// 初期化
+    func initialize()
     /// 接続状態通知イベントの登録
     func registerConnectionStatusChange() -> AnyPublisher<MQTTEntity.Output.ConnectionStatus, Never>
     /// MQTTメッセージ受信イベントの登録

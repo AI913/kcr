@@ -19,8 +19,8 @@ protocol MainTabBarControllerProtocol: class {
     /// エラーアラート表示
     /// - Parameter error: エラー
     func showErrorAlert(_ error: Error)
-    /// PasswordAuthentication起動
-    func launchPasswordAuthentication()
+    /// Authentication起動
+    func launchAuthentication()
     /// ConnectionStatusボタンを更新
     /// - Parameter color: 表示カラー
     func updateConnectionStatusButton(color: UIColor?)
@@ -32,8 +32,8 @@ class MainTabBarController: UITabBarController {
 
     // MARK: - IBOutlet
     @IBOutlet weak var connectionStatusBarButtonItem: UIBarButtonItem!
-
     @IBOutlet weak var jobEntryBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var settingsBarButtonItem: UIBarButtonItem!
 
     private enum Tab: String {
         case Dashboard = "Dashboard"
@@ -48,15 +48,14 @@ class MainTabBarController: UITabBarController {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         presenter = MainBuilder.Main().build(vc: self)
-
-        let isDarkMode = self.traitCollection.userInterfaceStyle == .dark
-        presenter?.setAnalyticsEndpointProfiles(displayAppearance: isDarkMode ? "Dark" : "Light" )
     }
 
     // MARK: - Override function (view controller lifecycle)
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.viewDidLoad()
         createLeftBarItem()
+        createRightBarItem()
 
         guard let viewControllers = self.viewControllers else {
             fatalError("ViewController is not found.")
@@ -67,16 +66,13 @@ class MainTabBarController: UITabBarController {
         }
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        presenter?.viewDidAppear()
-    }
-
-    func viewWillAppearByBiometricsAuthentication() {
-        /// 生体認証時はSignIn通知が来ないため、認証画面からイベントを受け取ってSignIn時の処理を行う
+    /// Note: SignIn のタイミングを Authentication から通知してもらう
+    func viewWillAppearBySignIn() {
         if let presented = self.presentedViewController,
-           type(of: presented) == PasswordAuthenticationNavigationController.self {
-            presenter?.signInByBiometricsAuthentication()
+           type(of: presented) == AuthenticationNavigationController.self {
+            let isDarkMode = self.traitCollection.userInterfaceStyle == .dark
+            presenter?.setAnalyticsEndpointProfiles(displayAppearance: isDarkMode ? "Dark" : "Light" )
+            presenter?.signIn()
         }
     }
 }
@@ -113,9 +109,9 @@ extension MainTabBarController: MainTabBarControllerProtocol {
         presentAlert(error)
     }
 
-    func launchPasswordAuthentication() {
-        if self.presentedViewController is PasswordAuthenticationNavigationController { return }
-        let vc = StoryboardScene.PasswordAuthentication.initialScene.instantiate()
+    func launchAuthentication() {
+        if self.presentedViewController is AuthenticationNavigationController { return }
+        let vc = StoryboardScene.Authentication.initialScene.instantiate()
         self.present(vc, animated: true, completion: nil)
         self.selectedIndex = 0
     }
@@ -134,22 +130,26 @@ extension MainTabBarController: MainTabBarControllerProtocol {
 extension MainTabBarController {
 
     private func createLeftBarItem() {
-        let rect = CGRect(x: 0, y: 0, width: 100, height: 30)
-        let view = UIView(frame: rect)
-        let logo = UIImageView(frame: rect)
-        logo.image = Asset.Image._01BrandsymbolColor.image
+        let logo = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
+        logo.image = Asset.Image.logoService.image
+        let view = UIView(frame: logo.frame)
         view.addSubview(logo)
-        let item = UIBarButtonItem(customView: view)
-        self.navigationItem.leftBarButtonItems = [item, connectionStatusBarButtonItem]
+        self.navigationItem.leftBarButtonItems = [UIBarButtonItem(customView: view), connectionStatusBarButtonItem]
+    }
+
+    private func createRightBarItem() {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
+        label.text = presenter.rightBarLabel
+        label.textAlignment = .right
+        label.minimumScaleFactor = 0.5
+        let view = UIView(frame: label.frame)
+        view.addSubview(label)
+        self.navigationItem.rightBarButtonItems = [settingsBarButtonItem, UIBarButtonItem(customView: view), jobEntryBarButtonItem]
         enableJobEntryButton(false)
     }
 
     private func enableJobEntryButton(_ isJob: Bool) {
         jobEntryBarButtonItem.isEnabled = isJob
-        if isJob {
-            jobEntryBarButtonItem.tintColor = nil
-        } else {
-            jobEntryBarButtonItem.tintColor = UIColor.clear
-        }
+        jobEntryBarButtonItem.tintColor = isJob ? nil : .clear
     }
 }

@@ -9,6 +9,7 @@
 import XCTest
 @testable import JobOrder_Domain
 @testable import JobOrder_API
+@testable import JobOrder_Data
 import SwiftCheck
 
 class DataTranslatorTests: XCTestCase {
@@ -125,75 +126,163 @@ class DataTranslatorTests: XCTestCase {
         XCTAssertNil(data, "値を取得できてはいけない")
     }
 
-    func test_toDataWithTaskInput() {
+    func test_toEntityWithTaskInput() {
         let translator = DataTranslator()
-        let model = DataManageModel.Input.Task()
-        guard let data = translator.toData(model: model) else {
+        let model = DataManageModel.Input.Task.arbitrary.suchThat({ $0.exit.option.numberOfRuns != nil }).generate
+        guard let data = translator.toEntity(taskModel: model) else {
             XCTFail("値が取得できていない: \(model)")
             return
         }
 
         XCTAssertEqual(model.jobId, data.jobId, "値が取得できていない: \(model)")
         XCTAssertEqual(model.robotIds, data.robotIds, "値が取得できていない: \(model)")
-        XCTAssertEqual(model.start, JobOrder_Domain.DataManageModel.Input.Task.Start(data.start), "値が取得できていない: \(model)")
-        XCTAssertEqual(model.exit, JobOrder_Domain.DataManageModel.Input.Task.Exit(data.exit), "値が取得できていない: \(model)")
+        XCTAssertEqual(model.start, JobOrder_Domain.DataManageModel.Input.Task.Start(condition: data.start.condition), "値が取得できていない: \(model)")
+        XCTAssertEqual(model.exit, JobOrder_Domain.DataManageModel.Input.Task.Exit(condition: data.exit.condition, option: JobOrder_Domain.DataManageModel.Input.Task.Exit.Option(numberOfRuns: data.exit.option.numberOfRuns)), "値が取得できていない: \(model)")
     }
 
-    func test_toDataWithoutTaskInput() {
+    func test_toEntityWithoutTaskInput() {
         let translator = DataTranslator()
-        let model: DataManageModel.Input.Task? = nil
-        let data = translator.toData(model: model)
+        let data = translator.toEntity(taskModel: nil)
 
         XCTAssertNil(data, "値を取得できてはいけない")
     }
 
-    func test_toDataWithJobInput() {
+    func test_toEntityWithJobInput() {
         let translator = DataTranslator()
 
         property("DataManageModel.Input.JobをJobOrder_API.JobAPIEntity.Input.Dataに変換した場合") <- forAll { (model: DataManageModel.Input.Job) in
-            guard let data = translator.toData(model: model) else { return false }
+            guard let data = translator.toEntity(jobModel: model) else { return false }
             return model == data
         }
     }
 
-    func test_toDataWithoutJobInput() {
+    func test_toEntityWithoutJobInput() {
         let translator = DataTranslator()
-        let model: DataManageModel.Input.Job? = nil
-        let data = translator.toData(model: model)
+        let data = translator.toEntity(jobModel: nil)
 
         XCTAssertNil(data, "値を取得できてはいけない")
     }
-}
 
-extension DataManageModel.Input.Job {
-    static func == (lhs: DataManageModel.Input.Job, rhs: JobOrder_API.JobAPIEntity.Input.Data) -> Bool {
-        let isEqualRequirements = { (lhs: [DataManageModel.Input.Job.Requirement]?, rhs: [JobOrder_API.JobAPIEntity.Input.Data.Requirement]?) -> Bool in
-            switch (lhs, rhs) {
-            case let (lhs?, rhs?):
-                return lhs.elementsEqual(rhs, by: { $0.type == $1.type && $0.subtype == $1.subtype && $0.id == $1.id && $0.versionId == $1.versionId })
-            case (nil, nil): return true
-            default: return false
-            }
+    func test_toModelSyncData() throws {
+        let translator = DataTranslator()
+        let isEqual = { (model: DataManageModel.Output.SyncData, data: ([JobOrder_Data.JobEntity]?, [JobOrder_Data.RobotEntity]?, [JobOrder_Data.ActionLibraryEntity]?, [JobOrder_Data.AILibraryEntity]?)) -> Bool in
+            if !isEqualArray(model.jobs, data.0, isEqual: { $0 == $1 }) { return false }
+            if !isEqualArray(model.robots, data.1, isEqual: { $0 == $1 }) { return false }
+            if !isEqualArray(model.actionLibraries, data.2, isEqual: { $0 == $1 }) { return false }
+            if !isEqualArray(model.aiLibraries, data.3, isEqual: { $0 == $1 }) { return false }
+            return true
         }
-        let isEqualParameter = { (lhs: DataManageModel.Input.Job.Action.Parameter?, rhs: JobOrder_API.JobAPIEntity.Input.Data.Action.Parameter?) -> Bool in
-            switch (lhs, rhs) {
-            case let (lhs?, rhs?):
-                return lhs.aiLibraryId == rhs.aiLibraryId && lhs.aiLibraryObjectId == rhs.aiLibraryObjectId
-            case (nil, nil): return true
-            default: return false
-            }
+
+        let jobEntities = JobOrder_Data.JobEntity.arbitrary.sample
+        let robotEntities = JobOrder_Data.RobotEntity.arbitrary.sample
+        let actionLibraryEntities = JobOrder_Data.ActionLibraryEntity.arbitrary.sample
+        let aiLibraryEntities = JobOrder_Data.AILibraryEntity.arbitrary.sample
+
+        let model = translator.toModel(jobEntities: jobEntities, robotEntities: robotEntities, actionLibraryEntities: actionLibraryEntities, aiLibraryEntities: aiLibraryEntities)
+        XCTAssertTrue(isEqual(model, (jobEntities, robotEntities, actionLibraryEntities, aiLibraryEntities)), "正しい値が取得できない")
+    }
+
+    func test_toModelJobEntity() throws {
+        let translator = DataTranslator()
+        property("JobOrder_API.JobAPIEntity.Dataをドメインモデルに変換した場合") <- forAll { (data: JobOrder_API.JobAPIEntity.Data) in
+            let model = translator.toModel(data)
+            return model == data
         }
-        return lhs.name == rhs.name &&
-            lhs.actions.elementsEqual(rhs.actions, by: {
-                $0.index == $1.index &&
-                    $0.actionLibraryId == $1.actionLibraryId &&
-                    isEqualParameter($0.parameter, $1.parameter) &&
-                    $0.catch == $1.catch &&
-                    $0.then == $1.then
-            }) &&
-            lhs.entryPoint == rhs.entryPoint &&
-            lhs.overview == rhs.overview &&
-            lhs.remarks == rhs.remarks &&
-            isEqualRequirements(lhs.requirements, rhs.requirements)
+    }
+
+    func test_toModelJobData() throws {
+        let translator = DataTranslator()
+        property("JobOrder_Data.JobEntityをドメインモデルに変換した場合") <- forAll { (data: JobOrder_Data.JobEntity) in
+            let model = translator.toModel(data)
+            return model == data
+        }
+    }
+
+    func test_toModelRobotData() throws {
+        let translator = DataTranslator()
+        property("JobOrder_API.RobotAPIEntity.Dataをドメインモデルに変換した場合") <- forAll { (data: JobOrder_API.RobotAPIEntity.Data) in
+            let model = translator.toModel(data)
+            return model == data
+        }
+    }
+
+    func test_toModelRobotEntity() throws {
+        let translator = DataTranslator()
+        property("JobOrder_Data.RobotEntityをドメインモデルに変換した場合") <- forAll { (data: JobOrder_Data.RobotEntity) in
+            let model = translator.toModel(data)
+            return model == data
+        }
+    }
+
+    func test_toModelCommandData() throws {
+        let translator = DataTranslator()
+        property("JobOrder_API.CommandEntity.Dataをドメインモデルに変換した場合") <- forAll { (data: JobOrder_API.CommandEntity.Data) in
+            let model = translator.toModel(data)
+            return model == data
+        }
+    }
+
+    func test_toModelTaskEntity() throws {
+        let translator = DataTranslator()
+        property("JobOrder_API.TaskAPIEntity.Dataをドメインモデルに変換した場合") <- forAll { (data: JobOrder_API.TaskAPIEntity.Data) in
+            let model = translator.toModel(data)
+            return model == data
+        }
+    }
+
+    func test_toModelSwconfAssetEntity() throws {
+        let translator = DataTranslator()
+        let isEqual = {(model: DataManageModel.Output.System, data: (robotSwconf: JobOrder_API.RobotAPIEntity.Swconf, robotAssets: [JobOrder_API.RobotAPIEntity.Asset])) -> Bool in
+            if !isEqualElement(model.softwareConfiguration, data.0, isEqual: { $0 == $1 }) { return false }
+            if !isEqualArray(model.hardwareConfigurations, data.1, isEqual: { $0 == $1 }) { return false }
+            return true
+        }
+
+        let robotSwconf = JobOrder_API.RobotAPIEntity.Swconf.arbitrary.generate
+        let robotAssets = JobOrder_API.RobotAPIEntity.Asset.arbitrary.sample
+
+        let model = translator.toModel(robotSwconf: robotSwconf, robotAssets: robotAssets)
+        XCTAssertTrue(isEqual(model, (robotSwconf, robotAssets)), "正しい値が取得できない")
+    }
+
+    func test_toModelActionLibraryData() throws {
+        let translator = DataTranslator()
+        property("JobOrder_Data.ActionLibraryEntityをドメインモデルに変換した場合") <- forAll { (data: JobOrder_Data.ActionLibraryEntity) in
+            let model = translator.toModel(data)
+            return model == data
+        }
+    }
+
+    func test_toModelAILibraryData() throws {
+        let translator = DataTranslator()
+        property("JobOrder_Data.AILibraryEntityをドメインモデルに変換した場合") <- forAll { (data: JobOrder_Data.AILibraryEntity) in
+            let model = translator.toModel(data)
+            return model == data
+        }
+    }
+
+    func test_toModelInputTaskEntity() throws {
+        let translator = DataTranslator()
+        property("JobOrder_API.TaskAPIEntity.Input.Dataをドメインモデルに変換した場合") <- forAll { (data: JobOrder_API.TaskAPIEntity.Input.Data) in
+            let model = translator.toModel(data)
+            return model == data
+        }
+    }
+
+    func test_toModelInputTask() throws {
+        let translator = DataTranslator()
+        property("JobOrder_API.TaskAPIEntity.Input.Dataをドメインモデルに変換した場合") <- forAll { (jobId: String, robotIds: [String], startCondition: String, exitCondition: String, numberOfRuns: Int) in
+            let model = translator.toModel(jobId: jobId,
+                                           robotIds: robotIds,
+                                           startCondition: startCondition,
+                                           exitCondition: exitCondition,
+                                           numberOfRuns: numberOfRuns)
+            return model.jobId == jobId &&
+                model.robotIds == robotIds &&
+                model.start == DataManageModel.Input.Task.Start(condition: startCondition) &&
+                model.exit == DataManageModel.Input.Task.Exit(
+                    condition: exitCondition,
+                    option: DataManageModel.Input.Task.Exit.Option(numberOfRuns: numberOfRuns))
+        }
     }
 }

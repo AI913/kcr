@@ -42,7 +42,8 @@ struct AuthenticationBuilder {
 
     struct ConnectionSettings {
         func build(vc: ConnectionSettingsViewController) -> ConnectionSettingsPresenter {
-            return ConnectionSettingsPresenter(useCase: Builder().settingsUseCase,
+            return ConnectionSettingsPresenter(authUseCase: Builder().authUseCase,
+                                               settingsUseCase: Builder().settingsUseCase,
                                                vc: vc)
         }
     }

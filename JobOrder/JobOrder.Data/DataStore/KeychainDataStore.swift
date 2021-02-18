@@ -33,12 +33,27 @@ public class KeychainDataStore: KeychainRepository {
         keychain[key.key]
     }
 
+    /// Data型のデータを取得
+    /// - Parameter key: 保存キー
+    /// - Returns: 保存データ
+    public func getData(_ key: KeychainKey) -> Data? {
+        keychain[data: key.key]
+    }
+
     /// String型のデータを保存
     /// - Parameters:
     ///   - value: 保存データ
     ///   - key: 保存キー
     public func set(_ value: String?, key: KeychainKey) {
         keychain[key.key] = value
+    }
+
+    /// Data型のデータを保存
+    /// - Parameters:
+    ///   - value: 保存データ
+    ///   - key: 保存キー
+    public func set(_ value: Data?, key: KeychainKey) {
+        keychain[data: key.key] = value
     }
 }
 
@@ -51,7 +66,8 @@ public enum KeychainKey: String, CaseIterable {
     case certificateId
     /// 証明書ARN
     case certificateArn
-
+    /// Server Configuration
+    case serverConfiguration
     /// キー生成
     public var key: String {
         let deviceId = UIDevice.current.identifierForVendor!.uuidString
@@ -62,6 +78,7 @@ public enum KeychainKey: String, CaseIterable {
 /// @mockable
 protocol KeychainProtocol {
     subscript(key: String) -> String? { get set }
+    subscript(data key: String) -> Data? { get set }
 }
 
 extension Keychain: KeychainProtocol {}

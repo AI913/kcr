@@ -61,8 +61,54 @@ class PasswordAuthenticationPresenterTests: XCTestCase {
         }
     }
 
+    func test_isEnabledSettingsButton() {
+        let param = String.arbitrary.generate
+
+        XCTContext.runActivity(named: "未設定の場合") { _ in
+            XCTAssertFalse(presenter.isEnabledSettingsButton, "有効になってはいけない")
+        }
+
+        XCTContext.runActivity(named: "Spaceが設定されていない場合") { _ in
+            settings.spaceName = nil
+            XCTAssertFalse(presenter.isEnabledSettingsButton, "有効になってはいけない")
+        }
+
+        XCTContext.runActivity(named: "Spaceが空の場合") { _ in
+            settings.spaceName = ""
+            XCTAssertFalse(presenter.isEnabledSettingsButton, "有効になってはいけない")
+        }
+
+        XCTContext.runActivity(named: "Spaceが設定されている場合") { _ in
+            settings.spaceName = param
+            XCTAssertTrue(presenter.isEnabledSettingsButton, "無効になってはいけない")
+        }
+    }
+
+    func test_isEnabledPasswordResetButton() {
+        let param = String.arbitrary.generate
+
+        XCTContext.runActivity(named: "未設定の場合") { _ in
+            XCTAssertFalse(presenter.isEnabledPasswordResetButton, "有効になってはいけない")
+        }
+
+        XCTContext.runActivity(named: "Spaceが設定されていない場合") { _ in
+            settings.spaceName = nil
+            XCTAssertFalse(presenter.isEnabledPasswordResetButton, "有効になってはいけない")
+        }
+
+        XCTContext.runActivity(named: "Spaceが空の場合") { _ in
+            settings.spaceName = ""
+            XCTAssertFalse(presenter.isEnabledPasswordResetButton, "有効になってはいけない")
+        }
+
+        XCTContext.runActivity(named: "Spaceが設定されている場合") { _ in
+            settings.spaceName = param
+            XCTAssertTrue(presenter.isEnabledPasswordResetButton, "無効になってはいけない")
+        }
+    }
+
     func test_isEnabledSignInButton() {
-        let param = "test"
+        let param = String.arbitrary.generate
 
         XCTContext.runActivity(named: "未設定の場合") { _ in
             XCTAssertFalse(presenter.isEnabledSignInButton, "有効になってはいけない")
@@ -80,9 +126,15 @@ class PasswordAuthenticationPresenterTests: XCTestCase {
             XCTAssertFalse(presenter.isEnabledSignInButton, "有効になってはいけない")
         }
 
-        XCTContext.runActivity(named: "Identifier, Password共に設定されている場合") { _ in
+        XCTContext.runActivity(named: "Spaceが設定されていない場合") { _ in
+            settings.spaceName = nil
+            XCTAssertFalse(presenter.isEnabledSignInButton, "有効になってはいけない")
+        }
+
+        XCTContext.runActivity(named: "Identifier, Password, Space共に設定されている場合") { _ in
             presenter.changedIdentifierTextField(param)
             presenter.changedPasswordTextField(param)
+            settings.spaceName = param
             XCTAssertTrue(presenter.isEnabledSignInButton, "無効になってはいけない")
         }
     }
@@ -122,8 +174,31 @@ class PasswordAuthenticationPresenterTests: XCTestCase {
         }
     }
 
+    func test_rebootExplain() {
+        let param = String.arbitrary.generate
+
+        XCTContext.runActivity(named: "未設定の場合") { _ in
+            XCTAssertNotNil(presenter.rebootExplain, "値を取得できていない")
+        }
+
+        XCTContext.runActivity(named: "Spaceが設定されていない場合") { _ in
+            settings.spaceName = nil
+            XCTAssertNotNil(presenter.rebootExplain, "値を取得できていない")
+        }
+
+        XCTContext.runActivity(named: "Spaceが空の場合") { _ in
+            settings.spaceName = ""
+            XCTAssertNotNil(presenter.rebootExplain, "値を取得できていない")
+        }
+
+        XCTContext.runActivity(named: "Spaceが設定されている場合") { _ in
+            settings.spaceName = param
+            XCTAssertNil(presenter.rebootExplain, "値を取得できてはいけない")
+        }
+    }
+
     func test_tapSignInButton() {
-        let param = "test"
+        let param = String.arbitrary.generate
 
         JobOrder_Domain.AuthenticationModel.Output.SignInResult.State.allCases.forEach { state in
             let handlerExpectation = expectation(description: "handler \(state)")
@@ -177,6 +252,7 @@ class PasswordAuthenticationPresenterTests: XCTestCase {
         let completionExpectation = expectation(description: "completion")
         completionExpectation.isInverted = true
         let param = "test"
+        settings.spaceName = param
 
         auth.signInHandler = { identifier, password in
             return Future<JobOrder_Domain.AuthenticationModel.Output.SignInResult, Error> { promise in
@@ -229,7 +305,7 @@ class PasswordAuthenticationPresenterTests: XCTestCase {
             presenter.tapBiometricsAuthenticationButton()
 
             wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
-            XCTAssertEqual(vc.dismissByBiometricsAuthenticationCallCount, 1, "ViewControllerのメソッドが呼ばれない")
+            XCTAssertEqual(vc.dismissCallCount, 1, "ViewControllerのメソッドが呼ばれない")
         }
     }
 
@@ -260,7 +336,6 @@ class PasswordAuthenticationPresenterTests: XCTestCase {
         presenter = PasswordAuthenticationPresenter(authUseCase: auth,
                                                     settingsUseCase: settings,
                                                     vc: vc)
-
         wait(for: [completionExpectation], timeout: ms1000)
         XCTAssertEqual(vc.changedProcessingCallCount, 1, "ViewControllerのメソッドが呼ばれない")
     }
@@ -280,7 +355,6 @@ class PasswordAuthenticationPresenterTests: XCTestCase {
         presenter = PasswordAuthenticationPresenter(authUseCase: auth,
                                                     settingsUseCase: settings,
                                                     vc: vc)
-
         wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
         XCTAssertEqual(vc.changedProcessingCallCount, 1, "ViewControllerのメソッドが呼ばれてしまう") // changeProsessingで1回カウントされる
     }
@@ -305,7 +379,6 @@ class PasswordAuthenticationPresenterTests: XCTestCase {
             presenter = PasswordAuthenticationPresenter(authUseCase: auth,
                                                         settingsUseCase: settings,
                                                         vc: vc)
-
             wait(for: [handlerExpectation, completionExpectation], timeout: ms1000)
 
             switch state {
@@ -313,26 +386,8 @@ class PasswordAuthenticationPresenterTests: XCTestCase {
                 callCount += 1
             default: break
             }
-            XCTAssertEqual(vc.changedProcessingCallCount, callCount, "ViewControllerのメソッドが呼ばれない") // changeProsessingで1回カウントされる
+            XCTAssertEqual(vc.changedProcessingCallCount, callCount, "ViewControllerのメソッドが呼ばれない")
         }
-    }
-
-    func test_isEnabled() {
-        let param = "test"
-
-        XCTAssertTrue(presenter.isEnabled(param, param), "無効になってはいけない")
-
-        XCTAssertFalse(presenter.isEnabled("", ""), "有効になってはいけない")
-        XCTAssertFalse(presenter.isEnabled(nil, nil), "有効になってはいけない")
-
-        XCTAssertFalse(presenter.isEnabled(nil, param), "有効になってはいけない")
-        XCTAssertFalse(presenter.isEnabled(nil, ""), "有効になってはいけない")
-
-        XCTAssertFalse(presenter.isEnabled("", nil), "有効になってはいけない")
-        XCTAssertFalse(presenter.isEnabled("", param), "有効になってはいけない")
-
-        XCTAssertFalse(presenter.isEnabled(param, nil), "有効になってはいけない")
-        XCTAssertFalse(presenter.isEnabled(param, ""), "有効になってはいけない")
     }
 
     func test_validate() {

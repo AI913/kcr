@@ -141,19 +141,17 @@ extension TaskDetailRunHistoryPresenter: TaskDetailRunHistoryPresenterProtocol {
         switch browsing {
         case .tasks:
             let robotIds = tasks[indexPath.section].robotIds
+            let taskId = tasks[indexPath.section].id
             if robotIds.count > 1 {
-                let taskId = tasks[indexPath.section].id
                 vc.launchTaskDetailRobotSelection(taskId: taskId)
             } else {
-                let jobId = tasks[indexPath.section].jobId
                 guard let robotId = tasks[indexPath.section].robotIds.first else { return }
-                vc.launchTaskDetailTaskInformation(jobId: jobId, robotId: robotId)
+                vc.launchTaskDetailTaskInformation(taskId: taskId, robotId: robotId)
             }
         case .commands:
             let taskId = commands[indexPath.section].taskId
             let robotId = commands[indexPath.section].robotId
-            guard let jobId = tasks.first(where: { $0.id == taskId })?.jobId else { return }
-            vc.launchTaskDetailTaskInformation(jobId: jobId, robotId: robotId)
+            vc.launchTaskDetailTaskInformation(taskId: taskId, robotId: robotId)
         }
     }
 

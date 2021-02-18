@@ -22,9 +22,9 @@ class AWSIoTDataStoreTests: XCTestCase {
     private var cancellables: Set<AnyCancellable> = []
 
     override func setUpWithError() throws {
-        dataStore.awsMobileClient = mobileClient
-        dataStore.dataManager = dataManager
-        dataStore.awsIot = iot
+        dataStore.factory.mobileClient = mobileClient
+        dataStore.factory.iotDataManager = dataManager
+        dataStore.factory.iot = iot
     }
 
     override func tearDownWithError() throws {}

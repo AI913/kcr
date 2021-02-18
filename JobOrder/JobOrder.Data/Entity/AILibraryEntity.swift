@@ -19,7 +19,7 @@ final public class AILibraryEntity: Object, Codable {
     /// タイプ
     @objc public dynamic var type: String = ""
     /// 要求事項
-    public var requirements = List<AILibraryRequirement>()
+    var requirements = List<AILibraryRequirement>()
     /// 画像パス
     @objc public dynamic var imagePath: String?
     /// 概要
@@ -67,6 +67,10 @@ final public class AILibraryEntity: Object, Codable {
             lhs.creator == rhs.creator &&
             lhs.updateTime == rhs.updateTime &&
             lhs.updator == rhs.updator
+    }
+
+    public var requirementsArray: [AILibraryRequirement] {
+        Array(self.requirements)
     }
 }
 

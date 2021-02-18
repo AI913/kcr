@@ -11,7 +11,7 @@ import XCTest
 
 class MailVerificationCompleteViewControllerTests: XCTestCase {
 
-    private let vc = StoryboardScene.PasswordAuthentication.mailVerificationComplete.instantiate()
+    private let vc = StoryboardScene.Authentication.mailVerificationComplete.instantiate()
 
     override func setUpWithError() throws {
         let window = UIWindow(frame: UIScreen.main.bounds)

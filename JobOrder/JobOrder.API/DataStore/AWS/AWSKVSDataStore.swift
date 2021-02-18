@@ -8,7 +8,6 @@
 
 import Foundation
 import Combine
-import AWSCore
 import AWSMobileClient
 import AWSKinesisVideo
 import AWSKinesisVideoSignaling
@@ -18,6 +17,8 @@ import JobOrder_Utility
 /// AWS KVSを操作する
 public class AWSKVSDataStore: VideoStreamingRepository {
 
+    /// Factory
+    let factory = AWSSDKFactory.shared
     /// Signaling接続状態配信
     private var signalingConnectionStatusPublisher = PassthroughSubject<VideoStreamingEntity.Output.SignalingConnectionStatus, Never>()
     /// SDP受信通知
@@ -26,16 +27,6 @@ public class AWSKVSDataStore: VideoStreamingRepository {
     private var receiveIceCandidatePublisher = PassthroughSubject<VideoStreamingEntity.Output.ReceiveIceCandidate, Never>()
     /// SignalingClient
     var signalingClient: SignalingClientProtocol?
-    /// AWSKinesisVideoProtocol
-    var awsKinesisVideo: AWSKinesisVideoProtocol?
-    /// AWSMobileClientProtocol
-    var awsMobileClient: AWSMobileClientProtocol = AWSMobileClient.default()
-    /// AWSKinesisVideoSignaling
-    var awsKinesisVideoSignaling: AWSKinesisVideoSignalingProtocol = AWSKinesisVideoSignaling(forKey: AWSConstants.KVS.managerKey)
-    /// AWSKinesisVideoSignalingProtocolのクラス
-    var awsKinesisVideoSignalingClass: AWSKinesisVideoSignalingProtocol.Type = AWSKinesisVideoSignaling.self
-    /// KVSSignerProtocolのクラス
-    var kvsSignerClass: KVSSignerProtocol.Type = KVSSigner.self
     /// Local Client ID
     private let localSenderClientId = NSUUID().uuidString.lowercased()
     /// Remote Client ID
@@ -44,12 +35,11 @@ public class AWSKVSDataStore: VideoStreamingRepository {
     private var isMaster: Bool = true
 
     /// イニシャライザ
-    public init() {
-        // Default
-        guard let configuration = AWSServiceConfiguration(region: AWSConstants.KVS.region,
-                                                          credentialsProvider: AWSMobileClient.default()) else { return }
-        AWSKinesisVideo.register(with: configuration, forKey: AWSConstants.KVS.managerKey)
-        awsKinesisVideo = AWSKinesisVideo(forKey: AWSConstants.KVS.managerKey)
+    public init() {}
+
+    /// 初期化
+    public func initialize() {
+        factory.generateKVS()
     }
 
     /// Signaling接続状態通知イベントの登録
@@ -188,7 +178,7 @@ extension AWSKVSDataStore {
     func retrieveChannelArn(_ channelName: String, callback: ((_ state: APITaskEntity.State, _ info: AWSKinesisVideoChannelInfo?, _ error: Error?) -> Void)?) {
         let input = AWSKinesisVideoDescribeSignalingChannelInput()!
         input.channelName = channelName
-        awsKinesisVideo?.describeSignalingChannel(input).continueWith { (task) -> Void in
+        factory.kinesisVideo?.describeSignalingChannel(input).continueWith { (task) -> Void in
             callback?(APITaskEntity.State(task), task.result?.channelInfo, task.error)
         }
     }
@@ -200,7 +190,7 @@ extension AWSKVSDataStore {
     func createChannel(_ channelName: String, callback: ((_ state: APITaskEntity.State, _ arn: String?, _ error: Error?) -> Void)?) {
         let input = AWSKinesisVideoCreateSignalingChannelInput()!
         input.channelName = channelName
-        awsKinesisVideo?.createSignalingChannel(input).continueWith { (task) -> Void in
+        factory.kinesisVideo?.createSignalingChannel(input).continueWith { (task) -> Void in
             callback?(APITaskEntity.State(task), task.result?.channelARN, task.error)
         }
     }
@@ -256,7 +246,7 @@ extension AWSKVSDataStore {
         input.channelARN = channelArn
         input.singleMasterChannelEndpointConfiguration = configuration
 
-        awsKinesisVideo?.getSignalingChannelEndpoint(input).continueWith { (task) -> Void in
+        factory.kinesisVideo?.getSignalingChannelEndpoint(input).continueWith { (task) -> Void in
 
             let state = APITaskEntity.State(task)
 
@@ -307,19 +297,19 @@ extension AWSKVSDataStore {
                 ]
             }
 
-            self.awsMobileClient.getAWSCredentials { credentials, error in
+            self.factory.mobileClient?.getAWSCredentials { credentials, error in
 
                 guard let credentials = credentials, let sessionKey = credentials.sessionKey else {
                     callback?(.faulted, nil, error)
                     return
                 }
 
-                let _wssUrl = self.kvsSignerClass.sign(signRequest: wssUrlComponents.url!,
-                                                       secretKey: credentials.secretKey,
-                                                       accessKey: credentials.accessKey,
-                                                       sessionToken: sessionKey,
-                                                       wssRequest: wssUrl,
-                                                       region: AWSConstants.KVS.region.stringValue)
+                let _wssUrl = self.factory.kvsSignerClass.sign(signRequest: wssUrlComponents.url!,
+                                                               secretKey: credentials.secretKey,
+                                                               accessKey: credentials.accessKey,
+                                                               sessionToken: sessionKey,
+                                                               wssRequest: wssUrl,
+                                                               region: AWSConstants.KVS.region.stringValue)
 
                 guard let wssUrl = _wssUrl else {
                     callback?(.faulted, nil, AWSError.kvsControlFailed(reason: .wssUrlIsNotAvailable))
@@ -340,23 +330,23 @@ extension AWSKVSDataStore {
     func getIceServerConfig(_ endpointUrl: URL, _ channelArn: String, _ clientId: String, callback: ((_ state: APITaskEntity.State, _ iceServerList: [AWSKinesisVideoSignalingIceServer]?, _ error: Error?) -> Void)?) {
 
         // Get the List of Ice Server Config and store it in the self.iceServerList.
-        let endpoint =
-            AWSEndpoint(region: AWSConstants.KVS.region,
-                        service: .KinesisVideo,
-                        url: endpointUrl)
+        guard let endpoint =
+                factory.endpointClass.init(region: AWSConstants.KVS.region,
+                                           service: .KinesisVideo,
+                                           url: endpointUrl) as? AWSEndpoint else { return }
 
         guard let configuration =
-                AWSServiceConfiguration(region: AWSConstants.KVS.region,
-                                        endpoint: endpoint,
-                                        credentialsProvider: AWSMobileClient.default()) else { return }
+                factory.serviceConfigurationClass.init(region: AWSConstants.KVS.region,
+                                                       endpoint: endpoint,
+                                                       credentialsProvider: factory.mobileClient as? AWSMobileClient) as? AWSServiceConfiguration else { return }
 
-        awsKinesisVideoSignalingClass.remove(forKey: AWSConstants.KVS.managerKey)
-        awsKinesisVideoSignalingClass.register(with: configuration, forKey: AWSConstants.KVS.managerKey)
+        factory.kinesisVideoSignalingClass.remove(forKey: AWSConstants.KVS.managerKey)
+        factory.kinesisVideoSignalingClass.register(with: configuration, forKey: AWSConstants.KVS.managerKey)
 
         let iceServerConfigRequest = AWSKinesisVideoSignalingGetIceServerConfigRequest()!
         iceServerConfigRequest.channelARN = channelArn
         iceServerConfigRequest.clientId = clientId
-        awsKinesisVideoSignaling.getIceServerConfig(iceServerConfigRequest).continueWith(block: { (task) -> Void in
+        factory.kinesisVideoSignaling?.getIceServerConfig(iceServerConfigRequest).continueWith(block: { (task) -> Void in
             callback?(APITaskEntity.State(task), task.result?.iceServerList, task.error)
         })
     }
@@ -389,15 +379,6 @@ extension AWSKVSDataStore: SignalClientDelegate {
 }
 
 /// @mockable
-protocol AWSKinesisVideoProtocol {
-    func describeSignalingChannel(_ request: AWSKinesisVideoDescribeSignalingChannelInput) -> AWSTask<AWSKinesisVideoDescribeSignalingChannelOutput>
-    func createSignalingChannel(_ request: AWSKinesisVideoCreateSignalingChannelInput) -> AWSTask<AWSKinesisVideoCreateSignalingChannelOutput>
-    func getSignalingChannelEndpoint(_ request: AWSKinesisVideoGetSignalingChannelEndpointInput) -> AWSTask<AWSKinesisVideoGetSignalingChannelEndpointOutput>
-}
-
-extension AWSKinesisVideo: AWSKinesisVideoProtocol {}
-
-/// @mockable
 protocol SignalingClientProtocol {
     var delegate: SignalClientDelegate? { get set }
     func connect()
@@ -408,19 +389,3 @@ protocol SignalingClientProtocol {
 }
 
 extension SignalingClient: SignalingClientProtocol {}
-
-/// @mockable
-protocol AWSKinesisVideoSignalingProtocol {
-    static func remove(forKey: String)
-    static func register(with: AWSServiceConfiguration, forKey: String)
-    func getIceServerConfig(_ request: AWSKinesisVideoSignalingGetIceServerConfigRequest) -> AWSTask<AWSKinesisVideoSignalingGetIceServerConfigResponse>
-}
-
-extension AWSKinesisVideoSignaling: AWSKinesisVideoSignalingProtocol {}
-
-/// @mockable
-protocol KVSSignerProtocol {
-    static func sign(signRequest: URL, secretKey: String, accessKey: String, sessionToken: String, wssRequest: URL, region: String) -> URL?
-}
-
-extension KVSSigner: KVSSignerProtocol {}

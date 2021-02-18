@@ -19,6 +19,9 @@ class AuthenticationUseCaseTests: XCTestCase {
     private let context = LAContextProtocolMock()
     private let auth = JobOrder_API.AuthenticationRepositoryMock()
     private let mqtt = JobOrder_API.MQTTRepositoryMock()
+    private let video = JobOrder_API.VideoStreamingRepositoryMock()
+    private let analytics = JobOrder_API.AnalyticsServiceRepositoryMock()
+    private let publicAPI = JobOrder_API.PublicAPIRepositoryMock()
     private let settings = JobOrder_Data.SettingsRepositoryMock()
     private let ud = JobOrder_Data.UserDefaultsRepositoryMock()
     private let keychain = JobOrder_Data.KeychainRepositoryMock()
@@ -28,6 +31,9 @@ class AuthenticationUseCaseTests: XCTestCase {
     private let aiLibrary = JobOrder_Data.AILibraryRepositoryMock()
     private lazy var useCase = AuthenticationUseCase(authRepository: auth,
                                                      mqttRepository: mqtt,
+                                                     videoRepository: video,
+                                                     analyticsServiceRepository: analytics,
+                                                     publicAPIRepository: publicAPI,
                                                      settingsRepository: settings,
                                                      userDefaultsRepository: ud,
                                                      keychainRepository: keychain,
@@ -245,6 +251,218 @@ class AuthenticationUseCaseTests: XCTestCase {
             }).store(in: &cancellables)
 
         wait(for: [evaluatePolicyHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_initializeServer() {
+        let getConfigHandlerExpectation = expectation(description: "getConfig handler")
+        let initializeHandlerExpectation = expectation(description: "initialize handler")
+        let completionExpectation = expectation(description: "completion")
+        let config = Data.arbitrary.generate
+        let space = String.arbitrary.generate
+
+        publicAPI.getServerConfigurationHandler = { name in
+            return Future<Data, Error> { promise in
+                getConfigHandlerExpectation.fulfill()
+                promise(.success(config))
+            }.eraseToAnyPublisher()
+        }
+
+        auth.initializeHandler = { configuration in
+            return Future<JobOrder_API.AuthenticationEntity.Output.AuthenticationState, Error> { promise in
+                initializeHandlerExpectation.fulfill()
+                promise(.success(.signedIn))
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.initializeServer(space: space)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished: break
+                case .failure(let error):
+                    XCTFail("エラーを取得できてはいけない: \(error.localizedDescription)")
+                }
+                completionExpectation.fulfill()
+            }, receiveValue: { response in
+                XCTAssertEqual(self.mqtt.initializeCallCount, 1, "MQTTRepositoryのメソッドが呼ばれていない")
+                XCTAssertEqual(self.video.initializeCallCount, 1, "VideoStreamingRepositoryのメソッドが呼ばれていない")
+                XCTAssertEqual(self.analytics.initializeCallCount, 1, "AnalyticsServiceRepositoryのメソッドが呼ばれていない")
+                XCTAssertEqual(self.settings.space, space, "正しい値が設定されていない")
+                XCTAssertTrue(response.result, "正しい値が取得できていない")
+            }).store(in: &cancellables)
+
+        wait(for: [getConfigHandlerExpectation, initializeHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_initializeServerGetConfigNotReceive() {
+        let getConfigHandlerExpectation = expectation(description: "getConfig handler")
+        let initializeHandlerExpectation = expectation(description: "initialize handler")
+        let completionExpectation = expectation(description: "completion")
+        initializeHandlerExpectation.isInverted = true
+        completionExpectation.isInverted = true
+        let space = String.arbitrary.generate
+
+        publicAPI.getServerConfigurationHandler = { name in
+            return Future<Data, Error> { promise in
+                getConfigHandlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.initializeServer(space: space)
+            .sink(receiveCompletion: { _ in
+                XCTFail("値を取得できてはいけない")
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [getConfigHandlerExpectation, initializeHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_initializeServerNotReceive() {
+        let getConfigHandlerExpectation = expectation(description: "getConfig handler")
+        let initializeHandlerExpectation = expectation(description: "initialize handler")
+        let completionExpectation = expectation(description: "completion")
+        completionExpectation.isInverted = true
+        let config = Data.arbitrary.generate
+        let space = String.arbitrary.generate
+
+        publicAPI.getServerConfigurationHandler = { name in
+            return Future<Data, Error> { promise in
+                getConfigHandlerExpectation.fulfill()
+                promise(.success(config))
+            }.eraseToAnyPublisher()
+        }
+
+        auth.initializeHandler = { configuration in
+            return Future<JobOrder_API.AuthenticationEntity.Output.AuthenticationState, Error> { promise in
+                initializeHandlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.initializeServer(space: space)
+            .sink(receiveCompletion: { _ in
+                XCTFail("値を取得できてはいけない")
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [getConfigHandlerExpectation, initializeHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_initializeServerGetConfigError() {
+        let getConfigHandlerExpectation = expectation(description: "getConfig handler")
+        let initializeHandlerExpectation = expectation(description: "initialize handler")
+        let completionExpectation = expectation(description: "completion")
+        initializeHandlerExpectation.isInverted = true
+        let error = APIError.invalidStatus(code: nil, reason: nil)
+        let expected = JobOrderError.authenticationFailed(reason: .failedToGetConfiguration(error: error)) as NSError
+        let space = String.arbitrary.generate
+
+        publicAPI.getServerConfigurationHandler = { name in
+            return Future<Data, Error> { promise in
+                getConfigHandlerExpectation.fulfill()
+                promise(.failure(error))
+            }.eraseToAnyPublisher()
+        }
+
+        auth.initializeHandler = { configuration in
+            return Future<JobOrder_API.AuthenticationEntity.Output.AuthenticationState, Error> { promise in
+                initializeHandlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.initializeServer(space: space)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    XCTFail("値を取得できてはいけない")
+                case .failure(let e):
+                    XCTAssertNil(self.settings.serverConfiguration, "nilが設定されていない")
+                    XCTAssertNil(self.settings.space, "nilが設定されていない")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
+                }
+                completionExpectation.fulfill()
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [getConfigHandlerExpectation, initializeHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_initializeServerConfigIsNotCorrectError() {
+        let getConfigHandlerExpectation = expectation(description: "getConfig handler")
+        let initializeHandlerExpectation = expectation(description: "initialize handler")
+        let completionExpectation = expectation(description: "completion")
+        initializeHandlerExpectation.isInverted = true
+        let error = JobOrderError.authenticationFailed(reason: .configurationDataIsNotCorrect)
+        let expected = JobOrderError.authenticationFailed(reason: .configurationDataIsNotCorrect) as NSError
+        let space = String.arbitrary.generate
+
+        publicAPI.getServerConfigurationHandler = { name in
+            return Future<Data, Error> { promise in
+                getConfigHandlerExpectation.fulfill()
+                promise(.failure(error))
+            }.eraseToAnyPublisher()
+        }
+
+        auth.initializeHandler = { configuration in
+            return Future<JobOrder_API.AuthenticationEntity.Output.AuthenticationState, Error> { promise in
+                initializeHandlerExpectation.fulfill()
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.initializeServer(space: space)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    XCTFail("値を取得できてはいけない")
+                case .failure(let e):
+                    XCTAssertNil(self.settings.serverConfiguration, "nilが設定されていない")
+                    XCTAssertNil(self.settings.space, "nilが設定されていない")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
+                }
+                completionExpectation.fulfill()
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [getConfigHandlerExpectation, initializeHandlerExpectation, completionExpectation], timeout: ms1000)
+    }
+
+    func test_initializeServerError() {
+        let getConfigHandlerExpectation = expectation(description: "getConfig handler")
+        let initializeHandlerExpectation = expectation(description: "initialize handler")
+        let completionExpectation = expectation(description: "completion")
+        let e = NSError(domain: "Error", code: -1, userInfo: nil)
+        let error = AWSError.authenticationFailed(reason: .init(e))
+        let expected = JobOrderError.authenticationFailed(reason: .initializeFailed(error: error)) as NSError
+        let config = Data.arbitrary.generate
+        let space = String.arbitrary.generate
+
+        publicAPI.getServerConfigurationHandler = { name in
+            return Future<Data, Error> { promise in
+                getConfigHandlerExpectation.fulfill()
+                promise(.success(config))
+            }.eraseToAnyPublisher()
+        }
+
+        auth.initializeHandler = { configuration in
+            return Future<JobOrder_API.AuthenticationEntity.Output.AuthenticationState, Error> { promise in
+                initializeHandlerExpectation.fulfill()
+                promise(.failure(error))
+            }.eraseToAnyPublisher()
+        }
+
+        useCase.initializeServer(space: space)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    XCTFail("値を取得できてはいけない")
+                case .failure(let e):
+                    XCTAssertEqual(self.settings.serverConfiguration, config, "正しい値が取得できていない: \(config)")
+                    XCTAssertNil(self.settings.space, "nilが設定されていない")
+                    XCTAssertEqual(expected, e as NSError, "正しい値が取得できていない: \(e)")
+                }
+                completionExpectation.fulfill()
+            }, receiveValue: { _ in
+            }).store(in: &cancellables)
+
+        wait(for: [getConfigHandlerExpectation, initializeHandlerExpectation, completionExpectation], timeout: ms1000)
     }
 
     func test_signIn() {

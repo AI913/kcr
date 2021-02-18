@@ -46,7 +46,7 @@ class TaskDetailViewControllerTests: XCTestCase {
     func test_inject() {
         let param1 = "TaskTest"
         let param2 = "RobotTest"
-        vc.inject(jobId: param1, robotId: param2)
+        vc.inject(taskId: param1, robotId: param2)
         XCTAssertEqual(vc.taskId, param1, "正常に値が設定されていない")
         XCTAssertEqual(vc.robotId, param2, "正常に値が設定されていない")
     }
@@ -54,7 +54,7 @@ class TaskDetailViewControllerTests: XCTestCase {
     func test_viewWillAppear() {
         let param1 = "TaskTest"
         let param2 = "RobotTest"
-        vc.inject(jobId: param1, robotId: param2)
+        vc.inject(taskId: param1, robotId: param2)
         vc.presenter = mock
         vc.viewWillAppear(true)
 

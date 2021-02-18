@@ -119,7 +119,7 @@ extension RobotDetailWorkPresenter: RobotDetailWorkPresenterProtocol {
         let commands = selectCommands(in: dataset)
         let taskId = commands?[indexPath.section].taskId
         let robotId = commands?[indexPath.section].robotId
-        vc.launchTaskDetail(jobId: taskId, robotId: robotId)
+        vc.launchTaskDetail(taskId: taskId, robotId: robotId)
     }
 
     /// Task名取得

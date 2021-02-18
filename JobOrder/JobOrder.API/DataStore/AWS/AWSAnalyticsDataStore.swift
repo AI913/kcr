@@ -13,33 +13,35 @@ import JobOrder_Utility
 /// AWS Analytics API を利用して Amazon Pinpoint を操作する
 public class AWSAnalyticsDataStore: AnalyticsServiceRepository {
 
-    /// AWSPinpointNotificationManagerProtocol
-    var awsPinpointNotificationManager: AWSPinpointNotificationManagerProtocol
-    /// AWSPinpointTargetingClientProtocol
-    var awsPinpointTargetClient: AWSPinpointTargetingClientProtocol
-    /// AWSAnalyticsClientProtocol
-    var awsAnalyticsClient: AWSAnalyticsClientProtocol
+    /// Factory
+    let factory = AWSSDKFactory.shared
 
     /// AWSPinpoint クラスを初期化する
     /// - Parameter launchOptions: AppDelegate から渡される起動オプション
     public init(_ launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) {
-        let config = AWSPinpointConfiguration.defaultPinpointConfiguration(launchOptions: launchOptions)
-        config.debug = true
-        let pinpoint = AWSPinpoint(configuration: config)
-        awsPinpointNotificationManager = pinpoint.notificationManager
-        awsAnalyticsClient = pinpoint.analyticsClient
-        awsPinpointTargetClient = pinpoint.targetingClient
+        factory.set(launchOptions: launchOptions)
+    }
+
+    /// 初期化
+    /// - Parameter configuration: Configuration データ
+    public func initialize(_ configuration: [String: Any]) {
+        guard let id = configuration
+                .filter { $0.key == "PinpointAnalytics" }.compactMapValues { $0 as? [String: Any] }.first?.value
+                .filter { $0.key == "Default" }.compactMapValues { $0 as? [String: Any] }.first?.value
+                .filter({ $0.key == "AppId" }).compactMapValues({ $0 as? String }).first?.value else { return }
+
+        factory.generatePinpoint(appId: id)
     }
 
     /// エンドポイントID
     public var endpointId: String? {
-        awsPinpointTargetClient.currentEndpointProfile().endpointId
+        factory.pinpointTargetClient?.currentEndpointProfile().endpointId
     }
 
     /// デバイス登録
     /// - Parameter deviceToken: トークン
     public func registerDevice(_ deviceToken: Data) {
-        awsPinpointNotificationManager.interceptDidRegisterForRemoteNotifications(withDeviceToken: deviceToken)
+        factory.pinpointNotificationManager?.interceptDidRegisterForRemoteNotifications(withDeviceToken: deviceToken)
         let token = deviceToken.map { String(format: "%.2hhx", $0) }.joined()
         print("deviceToken: \(token)")
     }
@@ -47,7 +49,7 @@ public class AWSAnalyticsDataStore: AnalyticsServiceRepository {
     /// 通知イベント送信
     /// - Parameter userInfo: ユーザー情報
     public func passRemoteNotificationEvent(_ userInfo: [AnyHashable: Any]) {
-        awsPinpointNotificationManager.interceptDidReceiveRemoteNotification(userInfo)
+        factory.pinpointNotificationManager?.interceptDidReceiveRemoteNotification(userInfo)
     }
 
     /// エンドポイント情報更新
@@ -56,8 +58,8 @@ public class AWSAnalyticsDataStore: AnalyticsServiceRepository {
     ///   - value: 値
     public func updateEndpointProfile(_ key: String, value: String) {
         Logger.info(target: self, "key: \(key), value: \(value)")
-        awsPinpointTargetClient.addAttribute([value], forKey: key)
-        _ = awsPinpointTargetClient.updateEndpointProfile()
+        factory.pinpointTargetClient?.addAttribute([value], forKey: key)
+        _ = factory.pinpointTargetClient?.updateEndpointProfile()
     }
 
     /// イベント記録
@@ -68,7 +70,7 @@ public class AWSAnalyticsDataStore: AnalyticsServiceRepository {
     public func recordEvent(_ eventName: String, parameters: [String: String]?, metrics: [String: Double]?) {
         Logger.info(target: self, "Event: \(eventName), parameters: \(String(describing: parameters)), metrics: \(String(describing: metrics))")
 
-        let event = awsAnalyticsClient.createEvent(withEventType: eventName)
+        guard let event = factory.analyticsClient?.createEvent(withEventType: eventName) else { return }
         if parameters != nil {
             for (key, value) in parameters! {
                 event.addAttribute(value, forKey: key)
@@ -79,33 +81,7 @@ public class AWSAnalyticsDataStore: AnalyticsServiceRepository {
                 event.addMetric(NSNumber(value: value), forKey: key)
             }
         }
-        _ = awsAnalyticsClient.record(event)
-        _ = awsAnalyticsClient.submitEvents()
+        _ = factory.analyticsClient?.record(event)
+        _ = factory.analyticsClient?.submitEvents()
     }
 }
-
-/// @mockable
-protocol AWSPinpointNotificationManagerProtocol {
-    func interceptDidRegisterForRemoteNotifications(withDeviceToken deviceToken: Data)
-    func interceptDidReceiveRemoteNotification(_ userInfo: [AnyHashable: Any])
-}
-
-extension AWSPinpointNotificationManager: AWSPinpointNotificationManagerProtocol {}
-
-/// @mockable
-protocol AWSPinpointTargetingClientProtocol {
-    func currentEndpointProfile() -> AWSPinpointEndpointProfile
-    func addAttribute(_ theValue: [Any], forKey theKey: String)
-    func updateEndpointProfile() -> AWSTask<AnyObject>
-}
-
-extension AWSPinpointTargetingClient: AWSPinpointTargetingClientProtocol {}
-
-/// @mockable
-protocol AWSAnalyticsClientProtocol {
-    func createEvent(withEventType theEventType: String) -> AWSPinpointEvent
-    func record(_ theEvent: AWSPinpointEvent) -> AWSTask<AnyObject>
-    func submitEvents() -> AWSTask<AnyObject>
-}
-
-extension AWSPinpointAnalyticsClient: AWSAnalyticsClientProtocol {}

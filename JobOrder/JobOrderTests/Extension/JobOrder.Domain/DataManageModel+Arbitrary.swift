@@ -10,6 +10,73 @@ import Foundation
 import SwiftCheck
 @testable import JobOrder_Domain
 
+// MARK: - Sync情報
+extension DataManageModel.Output.SyncData: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            return DataManageModel.Output.SyncData(jobs: c.generate(),
+                                                   robots: c.generate(),
+                                                   actionLibraries: c.generate(),
+                                                   aiLibraries: c.generate())
+        }
+    }
+}
+
+// MARK: - ActionLibrary情報
+extension DataManageModel.Output.ActionLibrary: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            return DataManageModel.Output.ActionLibrary(id: c.generate(using: FakeFactory.shared.uuidStringGen),
+                                                        name: c.generate(),
+                                                        requirements: c.generate(),
+                                                        imagePath: c.generate(),
+                                                        overview: c.generate(),
+                                                        remarks: c.generate(),
+                                                        version: c.generate(),
+                                                        createTime: c.generate(using: FakeFactory.shared.epochTimeGen),
+                                                        creator: c.generate(using: FakeFactory.shared.emailGen),
+                                                        updateTime: c.generate(using: FakeFactory.shared.epochTimeGen),
+                                                        updator: c.generate(using: FakeFactory.shared.emailGen))
+        }
+    }
+}
+
+extension DataManageModel.Output.ActionLibrary.Requirement: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            return DataManageModel.Output.ActionLibrary.Requirement()
+        }
+    }
+}
+
+// MARK: - AILibrary情報
+extension DataManageModel.Output.AILibrary: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            return DataManageModel.Output.AILibrary(id: c.generate(using: FakeFactory.shared.uuidStringGen),
+                                                    name: c.generate(),
+                                                    type: c.generate(),
+                                                    requirements: c.generate(),
+                                                    imagePath: c.generate(),
+                                                    overview: c.generate(),
+                                                    remarks: c.generate(),
+                                                    version: c.generate(),
+                                                    createTime: c.generate(using: FakeFactory.shared.epochTimeGen),
+                                                    creator: c.generate(using: FakeFactory.shared.emailGen),
+                                                    updateTime: c.generate(using: FakeFactory.shared.epochTimeGen),
+                                                    updator: c.generate(using: FakeFactory.shared.emailGen))
+        }
+    }
+}
+
+extension DataManageModel.Output.AILibrary.Requirement: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            return DataManageModel.Output.AILibrary.Requirement()
+        }
+    }
+}
+
 // MARK: - Robot情報
 extension DataManageModel.Output.Robot: Arbitrary {
     public static var arbitrary: Gen<Self> {
@@ -33,12 +100,13 @@ extension DataManageModel.Output.Robot: Arbitrary {
                                                 updator: c.generate(using: FakeFactory.shared.emailGen),
                                                 thingName: c.generate(),
                                                 thingArn: c.generate(),
-                                                state: c.generate(using: stageGen))
+                                                state: DataManageModel.Output.Robot.State.toEnum(c.generate(using: stageGen)))
         }
     }
 
     public static func pattern(id: String, name: String) -> Gen<Self> {
         return Gen<Self>.compose { c in
+            let stageGen = Gen<String>.fromElements(of: ["unknown", "terminated", "stopped", "starting", "waiting", "processing"])
             return DataManageModel.Output.Robot(id: id,
                                                 name: name,
                                                 type: c.generate(),
@@ -57,7 +125,7 @@ extension DataManageModel.Output.Robot: Arbitrary {
                                                 updator: c.generate(using: FakeFactory.shared.emailGen),
                                                 thingName: c.generate(),
                                                 thingArn: c.generate(),
-                                                state: c.generate())
+                                                state: DataManageModel.Output.Robot.State.toEnum(c.generate(using: stageGen)))
         }
     }
 }
@@ -111,14 +179,14 @@ extension DataManageModel.Output.Task.Exit: Arbitrary {
     public static var arbitrary: Gen<Self> {
         return Gen<Self>.compose { c in
             let option: DataManageModel.Output.Task.Exit.Option = c.generate()
-            return DataManageModel.Output.Task.Exit(option)
+            return DataManageModel.Output.Task.Exit(option: option)
         }
     }
 
     public static func pattern(numberOfRuns: Int) -> Gen<Self> {
         return Gen<Self>.compose { c in
             let option: DataManageModel.Output.Task.Exit.Option = c.generate(using: DataManageModel.Output.Task.Exit.Option.pattern(numberOfRuns: numberOfRuns))
-            return DataManageModel.Output.Task.Exit(option)
+            return DataManageModel.Output.Task.Exit(option: option)
         }
     }
 }
@@ -127,13 +195,48 @@ extension DataManageModel.Output.Task.Exit.Option: Arbitrary {
     public static var arbitrary: Gen<Self> {
         return Gen<Self>.compose { c in
             let numberOfRuns: Int = c.generate()
-            return DataManageModel.Output.Task.Exit.Option(numberOfRuns)
+            return DataManageModel.Output.Task.Exit.Option(numberOfRuns: numberOfRuns)
         }
     }
 
     public static func pattern(numberOfRuns: Int) -> Gen<Self> {
         return Gen<Self>.compose { c in
-            return DataManageModel.Output.Task.Exit.Option(numberOfRuns)
+            return DataManageModel.Output.Task.Exit.Option(numberOfRuns: numberOfRuns)
+        }
+    }
+}
+
+extension DataManageModel.Input.Task: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            return DataManageModel.Input.Task(jobId: c.generate(),
+                                              robotIds: c.generate(),
+                                              start: c.generate(), exit: c.generate())
+        }
+    }
+}
+
+extension DataManageModel.Input.Task.Start: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            return DataManageModel.Input.Task.Start(condition: c.generate())
+        }
+    }
+}
+
+extension DataManageModel.Input.Task.Exit: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            return DataManageModel.Input.Task.Exit(condition: c.generate(),
+                                                   option: c.generate())
+        }
+    }
+}
+
+extension DataManageModel.Input.Task.Exit.Option: Arbitrary {
+    public static var arbitrary: Gen<Self> {
+        return Gen<Self>.compose { c in
+            return DataManageModel.Input.Task.Exit.Option(numberOfRuns: c.generate())
         }
     }
 }

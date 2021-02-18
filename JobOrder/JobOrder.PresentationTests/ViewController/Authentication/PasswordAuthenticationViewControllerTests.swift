@@ -12,7 +12,7 @@ import XCTest
 class PasswordAuthenticationViewControllerTests: XCTestCase {
 
     private let mock = PasswordAuthenticationPresenterProtocolMock()
-    private let vc = StoryboardScene.PasswordAuthentication.passwordAuthentication.instantiate()
+    private let vc = StoryboardScene.Authentication.passwordAuthentication.instantiate()
 
     override func setUpWithError() throws {
         let window = UIWindow(frame: UIScreen.main.bounds)
@@ -32,6 +32,7 @@ class PasswordAuthenticationViewControllerTests: XCTestCase {
         XCTAssertNotNil(vc.passwordResetButton, "passwordResetButtonがOutletに接続されていない")
         XCTAssertNotNil(vc.signInButton, "signInButtonがOutletに接続されていない")
         XCTAssertNotNil(vc.togglePasswordVisibilityButton, "togglePasswordVisibilityButtonがOutletに接続されていない")
+        XCTAssertNotNil(vc.rebootLabel, "rebootLabelがOutletに接続されていない")
     }
 
     func test_actions() throws {
@@ -70,11 +71,6 @@ class PasswordAuthenticationViewControllerTests: XCTestCase {
             vc.viewWillAppear(true)
             XCTAssertEqual(identifierTextField.text, param, "テキストが設定されていない: \(identifierTextField)")
         }
-    }
-
-    func test_viewDidAppear() {
-        vc.viewDidAppear(true)
-        XCTAssertEqual(mock.viewDidAppearCallCount, 1, "Presenterのメソッドが呼ばれない")
     }
 
     func test_signInButtonEnabled() throws {
@@ -161,15 +157,8 @@ class PasswordAuthenticationViewControllerTests: XCTestCase {
         let passwordResetButton = try XCTUnwrap(vc.passwordResetButton, "Unwrap失敗")
         let togglePasswordVisibilityButton = try XCTUnwrap(vc.togglePasswordVisibilityButton, "Unwrap失敗")
         mock.isEnabledBiometricsButton = true
-
-        XCTContext.runActivity(named: "未設定の場合") { _ in
-            XCTAssertTrue(identifierTextField.isEnabled, "テキストフィールドが無効になってはいけない: \(identifierTextField)")
-            XCTAssertTrue(passwordTextField.isEnabled, "テキストフィールドが無効になってはいけない: \(passwordTextField)")
-            XCTAssertTrue(connectionSettingsButton.isEnabled, "ボタンが無効になってはいけない: \(connectionSettingsButton)")
-            XCTAssertTrue(biometricsAuthenticationButton.isEnabled, "ボタンが無効になってはいけない: \(biometricsAuthenticationButton)")
-            XCTAssertTrue(passwordResetButton.isEnabled, "ボタンが無効になってはいけない: \(passwordResetButton)")
-            XCTAssertTrue(togglePasswordVisibilityButton.isEnabled, "ボタンが無効になってはいけない: \(togglePasswordVisibilityButton)")
-        }
+        mock.isEnabledSettingsButton = true
+        mock.isEnabledPasswordResetButton = true
 
         XCTContext.runActivity(named: "処理中の場合") { _ in
             vc.changedProcessing(true)
@@ -193,6 +182,13 @@ class PasswordAuthenticationViewControllerTests: XCTestCase {
     }
 
     func test_showAlert() {
+        let title = String.arbitrary.generate
+        let message = String.arbitrary.generate
+        vc.showAlert(title: title, message: message)
+        XCTAssertTrue(vc.presentedViewController is UIAlertController, "アラートが表示されない")
+    }
+
+    func test_showErrorAlert() {
         vc.showErrorAlert(NSError(domain: "Error", code: -1, userInfo: nil))
         XCTAssertTrue(vc.presentedViewController is UIAlertController, "アラートが表示されない")
     }

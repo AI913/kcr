@@ -7,57 +7,41 @@
 //
 
 import Foundation
+import Combine
 import JobOrder_Domain
+import JobOrder_Utility
 
 // MARK: - Interface
 /// ConnectionSettingsPresenterProtocol
 /// @mockable
 protocol ConnectionSettingsPresenterProtocol {
-    /// Space名登録状態
-    var isRegisteredSpace: Bool { get }
-    /// Space名取得
-    var registeredSpaceName: String? { get }
-    /// サーバーURL取得
-    var registeredServerUrl: String? { get }
-    /// クラウドサーバー使用可否取得
-    var registeredUseCloudServer: Bool { get }
-    /// Saveボタンの有効無効
-    var isEnabledSaveButton: Bool { get }
-    /// Saveボタンをタップ
-    func tapSaveButton()
-    /// Space名変更
-    /// - Parameter spaceName: スペース名
-    func changedSpaceNameTextField(_ spaceName: String?)
-    /// サーバーURL変更
-    /// - Parameter serverUrl: サーバーURL
-    func changedServerUrlTextField(_ serverUrl: String?)
-    /// クラウドサーバー使用可否変更
-    /// - Parameter isOn: 使用可否
-    func changedUseCloudServerSwitch(_ isOn: Bool)
+    /// Resetボタンをタップ
+    func tapResetButton()
 }
 
 // MARK: - Implementation
 /// ConnectionSettingsPresenter
 class ConnectionSettingsPresenter {
 
+    /// AuthenticationUseCaseProtocol
+    private let authUseCase: JobOrder_Domain.AuthenticationUseCaseProtocol
     /// SettingsUseCaseProtocol
-    private var useCase: JobOrder_Domain.SettingsUseCaseProtocol
+    private var settingsUseCase: JobOrder_Domain.SettingsUseCaseProtocol
     /// ConnectionSettingsViewControllerProtocol
     private let vc: ConnectionSettingsViewControllerProtocol
-    /// スペース名
-    private var spaceName: String?
-    /// サーバーURL
-    private var serverUrl: String?
-    /// クラウドサーバー使用可否
-    private var doesUseCloudServer: Bool = false
+    /// A type-erasing cancellable objects that executes a provided closure when canceled.
+    private var cancellables: Set<AnyCancellable> = []
 
     /// イニシャライザ
     /// - Parameters:
-    ///   - useCase: SettingsUseCaseProtocol
+    ///   - authUseCase: AuthenticationUseCaseProtocol
+    ///   - settingsUseCase: SettingsUseCaseProtocol
     ///   - vc: ConnectionSettingsViewControllerProtocol
-    required init(useCase: JobOrder_Domain.SettingsUseCaseProtocol,
+    required init(authUseCase: JobOrder_Domain.AuthenticationUseCaseProtocol,
+                  settingsUseCase: JobOrder_Domain.SettingsUseCaseProtocol,
                   vc: ConnectionSettingsViewControllerProtocol) {
-        self.useCase = useCase
+        self.authUseCase = authUseCase
+        self.settingsUseCase = settingsUseCase
         self.vc = vc
     }
 }
@@ -65,72 +49,28 @@ class ConnectionSettingsPresenter {
 // MARK: - Protocol Function
 extension ConnectionSettingsPresenter: ConnectionSettingsPresenterProtocol {
 
-    /// Space登録状態
-    var isRegisteredSpace: Bool {
-        useCase.spaceName != nil
-    }
+    /// Resetボタンタップ
+    func tapResetButton() {
+        settingsUseCase.spaceName = nil
 
-    /// Space名取得
-    var registeredSpaceName: String? {
-        spaceName = useCase.spaceName
-        return spaceName
-    }
-
-    /// サーバーURL取得
-    var registeredServerUrl: String? {
-        serverUrl = useCase.serverUrl
-        return serverUrl
-    }
-
-    /// クラウドサーバー使用可否取得
-    var registeredUseCloudServer: Bool {
-        doesUseCloudServer = useCase.useCloudServer
-        return doesUseCloudServer
-    }
-
-    /// Saveボタンの有効無効
-    var isEnabledSaveButton: Bool {
-        return isEnabled(spaceName) && doesUseCloudServer
-            || isEnabled(spaceName) && isEnabled(serverUrl) && !doesUseCloudServer
-    }
-
-    /// Saveボタンタップ
-    func tapSaveButton() {
-        useCase.spaceName = spaceName
-        useCase.serverUrl = serverUrl
-        useCase.useCloudServer = doesUseCloudServer
-        vc.back()
-    }
-
-    /// Space名変更
-    /// - Parameter spaceName: Space名
-    func changedSpaceNameTextField(_ spaceName: String?) {
-        self.spaceName = spaceName
-    }
-
-    /// サーバーURL変更
-    /// - Parameter serverUrl: サーバーURL
-    func changedServerUrlTextField(_ serverUrl: String?) {
-        guard let url = serverUrl,
-              let encodedUrlString = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-              let _ = URL(string: encodedUrlString) else {
-            self.serverUrl = nil
+        guard authUseCase.isSignedIn else {
+            self.vc.back()
             return
         }
-        self.serverUrl = encodedUrlString
-    }
 
-    /// クラウドサーバー使用可否変更
-    /// - Parameter isOn: 使用可否
-    func changedUseCloudServerSwitch(_ isOn: Bool) {
-        self.doesUseCloudServer = isOn
-    }
-}
-
-// MARK: - Private Function
-extension ConnectionSettingsPresenter {
-
-    func isEnabled(_ st1: String?) -> Bool {
-        return st1 != nil && st1 != ""
+        authUseCase.signOut()
+            .receive(on: DispatchQueue.main)
+            .map { value -> Bool in
+                return value.state == .success
+            }.sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished: break
+                case .failure(let error):
+                    self.vc.showErrorAlert(error)
+                }
+            }, receiveValue: { response in
+                Logger.debug(target: self, "\(response)")
+                self.vc.back()
+            }).store(in: &cancellables)
     }
 }

@@ -20,16 +20,15 @@ class AWSAnalyticsDataStoreTests: XCTestCase {
     private let dataStore = AWSAnalyticsDataStore()
 
     override func setUpWithError() throws {
-        dataStore.awsPinpointNotificationManager = notification
-        dataStore.awsPinpointTargetClient = targetClient
-        dataStore.awsAnalyticsClient = analyticsClient
+        dataStore.factory.pinpointNotificationManager = notification
+        dataStore.factory.pinpointTargetClient = targetClient
+        dataStore.factory.analyticsClient = analyticsClient
 
         targetClient.currentEndpointProfileHandler = { return AWSPinpointEndpointProfile() }
         targetClient.updateEndpointProfileHandler = { return AWSTask() }
         analyticsClient.createEventHandler = { eventType in return AWSPinpointEvent() }
         analyticsClient.recordHandler = { event in return AWSTask() }
         analyticsClient.submitEventsHandler = { return AWSTask() }
-
     }
 
     override func tearDownWithError() throws {}

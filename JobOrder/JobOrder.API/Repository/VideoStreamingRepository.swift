@@ -12,6 +12,8 @@ import Combine
 /// クラウドに対してビデオストリーミングを行うためのプロトコル
 /// @mockable
 public protocol VideoStreamingRepository {
+    /// 初期化
+    func initialize()
     /// Signaling接続状態通知イベントの登録
     func registerSignalingConnectionStatusChange() -> AnyPublisher<VideoStreamingEntity.Output.SignalingConnectionStatus, Never>
     /// Signaling接続状態通知イベントの解除

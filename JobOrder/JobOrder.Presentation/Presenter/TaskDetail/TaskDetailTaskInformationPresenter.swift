@@ -61,13 +61,6 @@ public protocol TaskDetailTaskInformationPresenterProtocol {
     func na() -> Int?
     /// N/A数取得
     func remarks() -> String?
-
-    func tapOrderEntryButton()
-
-    //    /// セルを選択
-    //    /// - Parameter index: 配列のIndex
-    //    func selectCell(indexPath: IndexPath)
-
 }
 
 // MARK: - Implementation
@@ -186,23 +179,10 @@ extension TaskDetailTaskInformationPresenter: TaskDetailTaskInformationPresenter
     }
 
     /// 備考取得
-    /// - Parameter id: RobotID
     /// - Returns: 備考
     func remarks() -> String? {
         return robot?.remarks
     }
-
-    func tapOrderEntryButton() {
-        // vc.launchOrderEntry()
-    }
-
-    //    /// セルを選択
-    //    /// - Parameter index: 配列のIndex
-    //    func selectCell(indexPath: IndexPath) {
-    //        let taskId = commands?[indexPath.section].taskId
-    //        let robotId = commands?[indexPath.section].robotId
-    //        vc.launchTaskDetail(jobId: taskId, robotId: robotId)
-    //    }
 }
 
 // MARK: - Private Function

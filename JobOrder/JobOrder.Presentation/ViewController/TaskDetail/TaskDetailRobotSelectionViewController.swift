@@ -50,7 +50,7 @@ class TaskDetailRobotSelectionViewController: UIViewController {
             let taskdetail = segue.destination as! TaskDetailTaskInformationViewController
             guard let taskId = presenter.data.taskId else { return }
             guard let robotId = presenter.data.robotId else { return }
-            taskdetail.inject(jobId: taskId, robotId: robotId)
+            taskdetail.inject(taskId: taskId, robotId: robotId)
         default: break
         }
     }

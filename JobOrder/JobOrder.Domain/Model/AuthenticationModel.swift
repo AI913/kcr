@@ -48,6 +48,11 @@ public struct AuthenticationModel {
             public let errorDescription: String?
         }
 
+        public struct InitializeServer {
+            /// 初期化した結果
+            public let result: Bool
+        }
+
         /// サインイン
         public struct SignInResult {
             /// サインイン状態

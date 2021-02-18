@@ -42,7 +42,7 @@ class PasswordAuthenticationPageObject: PageObject {
         return ConnectionSettingsPageObject(application: app)
     }
 
-    func enterIdentifier(_ email: String) -> PasswordAuthenticationPageObject {
+    func enterIdentifier(_ email: String) -> Self {
         identifierTextField.doubleTap()
         let deleteString = String(repeating: XCUIKeyboardKey.delete.rawValue, count: 1)
         identifierTextField.typeText(deleteString)
@@ -50,7 +50,7 @@ class PasswordAuthenticationPageObject: PageObject {
         return self
     }
 
-    func enterPassword(_ password: String) -> PasswordAuthenticationPageObject {
+    func enterPassword(_ password: String) -> Self {
         passwordTextField.tap()
         passwordTextField.typeText(password)
         return self

@@ -165,22 +165,22 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
 
     /// 保存してあるJobデータ
     public var jobs: [DataManageModel.Output.Job]? {
-        return jobData.read()?.compactMap { DataManageModel.Output.Job($0) }
+        return jobData.read()?.compactMap { self.translator.toModel($0) }
     }
 
     /// 保存してあるRobotデータ
     public var robots: [DataManageModel.Output.Robot]? {
-        return robotData.read()?.compactMap { DataManageModel.Output.Robot($0) }
+        return robotData.read()?.compactMap { self.translator.toModel($0) }
     }
 
     /// 保存してあるActionLibraryデータ
     public var actionLibraries: [DataManageModel.Output.ActionLibrary]? {
-        return actionLibraryData.read()?.compactMap { DataManageModel.Output.ActionLibrary($0) }
+        return actionLibraryData.read()?.compactMap { self.translator.toModel($0) }
     }
 
     /// 保存してあるAILibraryデータ
     public var aiLibraries: [DataManageModel.Output.AILibrary]? {
-        return aiLibraryData.read()?.compactMap { DataManageModel.Output.AILibrary($0) }
+        return aiLibraryData.read()?.compactMap { self.translator.toModel($0) }
     }
 
     /// 保存してあるJobデータの変化を監視
@@ -191,7 +191,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
         let publisher = PassthroughSubject<[DataManageModel.Output.Job]?, Never>()
         self.jobData.observe()
             .map { value -> [DataManageModel.Output.Job]? in
-                return value?.compactMap { DataManageModel.Output.Job($0) }
+                return value?.compactMap { self.translator.toModel($0) }
             }.sink { response in
                 // Logger.debug(target: self, "\(String(describing: response))")
                 publisher.send(response)
@@ -207,7 +207,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
         let publisher = PassthroughSubject<[DataManageModel.Output.Robot]?, Never>()
         self.robotData.observe()
             .map { value -> [DataManageModel.Output.Robot]? in
-                return value?.compactMap { DataManageModel.Output.Robot($0) }
+                return value?.compactMap { self.translator.toModel($0) }
             }.sink { response in
                 // Logger.debug(target: self, "\(String(describing: response))")
                 publisher.send(response)
@@ -223,7 +223,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
         let publisher = PassthroughSubject<[DataManageModel.Output.ActionLibrary]?, Never>()
         self.actionLibraryData.observe()
             .map { value -> [DataManageModel.Output.ActionLibrary]? in
-                return value?.compactMap { DataManageModel.Output.ActionLibrary($0) }
+                return value?.compactMap { self.translator.toModel($0) }
             }.sink { response in
                 // Logger.debug(target: self, "\(String(describing: response))")
                 publisher.send(response)
@@ -265,10 +265,10 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     self.saveData(results: response)
                     let time = max(response.0.time, response.1.time, response.2.time, response.3.time)
                     self.ud.set(time, forKey: .lastSynced)
-                    let output = DataManageModel.Output.SyncData(jobEntities: self.jobData.read(),
-                                                                 robotEntities: self.robotData.read(),
-                                                                 actionLibraryEntities: self.actionLibraryData.read(),
-                                                                 aiLibraryEntities: self.aiLibraryData.read())
+                    let output = self.translator.toModel(jobEntities: self.jobData.read(),
+                                                         robotEntities: self.robotData.read(),
+                                                         actionLibraryEntities: self.actionLibraryData.read(),
+                                                         aiLibraryEntities: self.aiLibraryData.read())
                     promise(.success(output))
                 }).store(in: &self.cancellables)
         }.eraseToAnyPublisher()
@@ -311,7 +311,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                 }, receiveValue: { response in
                     self.saveRobot(result: response)
                     if let output = self.robotData.read()?.first(where: { $0.id == response.data?.id }) {
-                        promise(.success(.init(output)))
+                        promise(.success(self.translator.toModel(output)))
                     } else {
                         // TODO: エラーケース
                     }
@@ -373,7 +373,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                         promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
-                    if let output = response.data?.compactMap({ DataManageModel.Output.Command($0) }) {
+                    if let output = response.data?.compactMap({ self.translator.toModel($0) }) {
                         promise(.success(.init(data: output, paging: response.paging)))
                     } else {
                         promise(.failure(JobOrderError.connectionFailed(reason: .invalidResponseFormat)))
@@ -408,7 +408,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     }
                 }, receiveValue: { response in
                     if let output = response.data {
-                        promise(.success(.init(output)))
+                        promise(.success(self.translator.toModel(output)))
                     } else {
                         promise(.failure(JobOrderError.connectionFailed(reason: .invalidResponseFormat)))
                     }
@@ -441,7 +441,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                         promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
-                    if let output = response.data?.compactMap({ DataManageModel.Output.Command($0) }) {
+                    if let output = response.data?.compactMap({ self.translator.toModel($0) }) {
                         promise(.success(.init(output)))
                     } else {
                         promise(.failure(JobOrderError.connectionFailed(reason: .invalidResponseFormat)))
@@ -473,7 +473,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     }
                 }, receiveValue: { response in
                     if let output = response.data {
-                        promise(.success(.init(output)))
+                        promise(.success(self.translator.toModel(output)))
                     } else {
                         promise(.failure(JobOrderError.connectionFailed(reason: .invalidResponseFormat)))
                     }
@@ -488,7 +488,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
         Logger.info(target: self)
         self.processing = true
         return Future<DataManageModel.Output.Task, Error> { promise in
-            guard let data = self.translator.toData(model: postData) else {
+            guard let data = self.translator.toEntity(taskModel: postData) else {
                 promise(.failure(JobOrderError.inputValidationFailed(reason: .postDataIsNil)))
                 return
             }
@@ -510,7 +510,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     }
                 }, receiveValue: { response in
                     if let output = response.data {
-                        promise(.success(.init(output)))
+                        promise(.success(self.translator.toModel(output)))
                     } else {
                         promise(.failure(JobOrderError.connectionFailed(reason: .invalidResponseFormat)))
                     }
@@ -523,7 +523,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
         Logger.info(target: self)
         self.processing = true
         return Future<DataManageModel.Output.Job, Error> { promise in
-            guard let data = self.translator.toData(model: postData) else {
+            guard let data = self.translator.toEntity(jobModel: postData) else {
                 promise(.failure(JobOrderError.inputValidationFailed(reason: .postDataIsNil)))
                 return
             }
@@ -545,7 +545,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     }
                 }, receiveValue: { response in
                     if let output = response.data {
-                        promise(.success(.init(output)))
+                        promise(.success(self.translator.toModel(output)))
                     } else {
                         promise(.failure(JobOrderError.connectionFailed(reason: .invalidResponseFormat)))
                     }
@@ -585,7 +585,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                     }
                 }, receiveValue: { response in
                     if let robotSwconf = response.0.data, let robotAssets = response.1.data {
-                        promise(.success(.init(robotSwconf: robotSwconf, robotAssets: robotAssets)))
+                        promise(.success(self.translator.toModel(robotSwconf: robotSwconf, robotAssets: robotAssets)))
                     } else {
                         promise(.failure(JobOrderError.connectionFailed(reason: .invalidResponseFormat)))
                     }
@@ -617,7 +617,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                         promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
-                    if let output = response.data?.compactMap({ DataManageModel.Output.Task($0) }) {
+                    if let output = response.data?.compactMap({ self.translator.toModel($0) }) {
                         promise(.success(.init(data: output, paging: response.paging)))
                     } else {
                         promise(.failure(JobOrderError.connectionFailed(reason: .invalidResponseFormat)))
@@ -653,7 +653,7 @@ public class DataManageUseCase: DataManageUseCaseProtocol {
                         promise(.failure(JobOrderError(from: error)))
                     }
                 }, receiveValue: { response in
-                    if let output = response.data?.compactMap({ DataManageModel.Output.ExecutionLog($0) }) {
+                    if let output = response.data?.compactMap({ self.translator.toModel($0) }) {
                         promise(.success(.init(data: output, paging: response.paging)))
                     } else {
                         promise(.failure(JobOrderError.connectionFailed(reason: .invalidResponseFormat)))

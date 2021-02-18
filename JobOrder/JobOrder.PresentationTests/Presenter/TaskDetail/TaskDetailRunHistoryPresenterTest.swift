@@ -408,8 +408,8 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
                 let indexPath = IndexPath(row: 0, section: index)
                 let completionExpectation = expectation(description: "completion")
 
-                vc.launchTaskDetailTaskInformationHandler = { jobId, robotId in
-                    XCTAssertEqual(jobId, task1.jobId, "引数に正しい値が設定されていない")
+                vc.launchTaskDetailTaskInformationHandler = { taskId, robotId in
+                    XCTAssertEqual(taskId, task1.id, "引数に正しい値が設定されていない")
                     XCTAssertEqual(robotId, "test3", "引数に正しい値が設定されていない")
                     completionExpectation.fulfill()
                 }
@@ -443,8 +443,8 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
             presenter.commands = commands
             presenter.browsing = .commands
 
-            vc.launchTaskDetailTaskInformationHandler = { jobId, robotId in
-                XCTAssertEqual(jobId, task0.jobId, "引数に正しい値が設定されていない")
+            vc.launchTaskDetailTaskInformationHandler = { taskId, robotId in
+                XCTAssertEqual(taskId, task0.id, "引数に正しい値が設定されていない")
                 XCTAssertEqual(robotId, command.robotId, "引数に正しい値が設定されていない")
                 completionExpectation.fulfill()
             }
@@ -467,7 +467,7 @@ class TaskDetailRunHistoryPresenterTest: XCTestCase {
 
     func test_assignName() {
         let index = 0
-        let robots = DataManageModel.Output.Robot.arbitrary.sample
+        let robots = DataManageModel.Output.Robot.arbitrary.suchThat({ !($0.name ?? "").isEmpty }).sample
         let robotIds = robots.map { $0.id }
         let name = robots[index].name!
         data.robots = robots

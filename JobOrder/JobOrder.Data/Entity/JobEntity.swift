@@ -16,7 +16,7 @@ final public class JobEntity: Object, Codable {
     /// 名前
     @objc public dynamic var name: String = ""
     /// アクション
-    public var actions = List<JobAction>()
+    var actions = List<JobAction>()
     /// エントリーポイント
     @objc public dynamic var entryPoint: Int = 0
     /// 概要
@@ -24,7 +24,7 @@ final public class JobEntity: Object, Codable {
     /// 備考
     @objc public dynamic var remarks: String?
     /// 要求事項
-    public var requirements = List<JobRequirement>()
+    var requirements = List<JobRequirement>()
     /// バージョン
     @objc public dynamic var version: Int = 0
     /// 作成日時
@@ -68,6 +68,14 @@ final public class JobEntity: Object, Codable {
             lhs.creator == rhs.creator &&
             lhs.updateTime == rhs.updateTime &&
             lhs.updator == rhs.updator
+    }
+
+    public var actionsArray: [JobAction] {
+        Array(self.actions)
+    }
+
+    public var requirementsArray: [JobRequirement] {
+        Array(self.requirements)
     }
 }
 

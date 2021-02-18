@@ -8,22 +8,14 @@
 
 import XCTest
 
-class MainUITests: XCTestCase {
-
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-        XCUIApplication().launch()
-    }
-
-    override func tearDownWithError() throws {
-    }
+class MainUITests: JobOrderUITests {
 
     // ---------------------------------------------------------------------------------------------------------------------
     // MARK: Settings
     // ---------------------------------------------------------------------------------------------------------------------
     func testSettings() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "設定画面へ遷移する") { _ in
             let page = MainPageObject(application: app).tapSettingButton().waitExists(SettingsPageObject.self)
@@ -33,7 +25,7 @@ class MainUITests: XCTestCase {
 
     func testSettingsBack() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "設定画面へ遷移する") { _ in
             _ = MainPageObject(application: app).tapSettingButton().waitExists(SettingsPageObject.self)
@@ -46,7 +38,7 @@ class MainUITests: XCTestCase {
 
     func testSettingsAbout() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "設定画面へ遷移する") { _ in
             _ = MainPageObject(application: app).tapSettingButton().waitExists(SettingsPageObject.self)
@@ -59,7 +51,7 @@ class MainUITests: XCTestCase {
 
     func testSettingsAboutBack() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "設定画面へ遷移する") { _ in
             _ = MainPageObject(application: app).tapSettingButton().waitExists(SettingsPageObject.self)
@@ -75,7 +67,7 @@ class MainUITests: XCTestCase {
 
     func testSettingsWebRTC() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "設定画面へ遷移する") { _ in
             _ = MainPageObject(application: app).tapSettingButton().waitExists(SettingsPageObject.self)
@@ -88,7 +80,7 @@ class MainUITests: XCTestCase {
 
     func testSettingsWebRTCBack() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "設定画面へ遷移する") { _ in
             _ = MainPageObject(application: app).tapSettingButton().waitExists(SettingsPageObject.self)
@@ -104,7 +96,7 @@ class MainUITests: XCTestCase {
 
     func testSettingsSignOut() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "設定画面へ遷移する") { _ in
             _ = MainPageObject(application: app).tapSettingButton().waitExists(SettingsPageObject.self)
@@ -120,7 +112,7 @@ class MainUITests: XCTestCase {
     // ---------------------------------------------------------------------------------------------------------------------
     func testRobot() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Robot）") { _ in
             let page = MainPageObject(application: app).tapTabRobotButton().waitExists(RobotListPageObject.self)
@@ -130,7 +122,7 @@ class MainUITests: XCTestCase {
 
     func testRobotDetail() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Robot）") { _ in
             _ = MainPageObject(application: app).tapTabRobotButton().waitExists(RobotListPageObject.self)
@@ -147,7 +139,7 @@ class MainUITests: XCTestCase {
         }
 
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Robot）") { _ in
             _ = MainPageObject(application: app).tapTabRobotButton().waitExists(RobotListPageObject.self)
         }
@@ -162,7 +154,7 @@ class MainUITests: XCTestCase {
 
     func testRobotDetailTabSystem() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Robot）") { _ in
             _ = MainPageObject(application: app).tapTabRobotButton().waitExists(RobotListPageObject.self)
         }
@@ -177,7 +169,7 @@ class MainUITests: XCTestCase {
 
     func testRobotDetailTabRemarks() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Robot）") { _ in
             _ = MainPageObject(application: app).tapTabRobotButton().waitExists(RobotListPageObject.self)
         }
@@ -192,7 +184,7 @@ class MainUITests: XCTestCase {
 
     func testRobotDetailTabWork() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Robot）") { _ in
             _ = MainPageObject(application: app).tapTabRobotButton().waitExists(RobotListPageObject.self)
         }
@@ -210,7 +202,7 @@ class MainUITests: XCTestCase {
 
     func testRobotDetailTabWorkTaskinfo() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Robot）") { _ in
             _ = MainPageObject(application: app).tapTabRobotButton().waitExists(RobotListPageObject.self)
         }
@@ -228,7 +220,7 @@ class MainUITests: XCTestCase {
 
     func testRobotDetailTabWorkTaskinfoBack() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Robot）") { _ in
             _ = MainPageObject(application: app).tapTabRobotButton().waitExists(RobotListPageObject.self)
         }
@@ -249,7 +241,7 @@ class MainUITests: XCTestCase {
 
     func testRobotDetailTabWorkTaskinfoDetail() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Robot）") { _ in
             _ = MainPageObject(application: app).tapTabRobotButton().waitExists(RobotListPageObject.self)
         }
@@ -270,7 +262,7 @@ class MainUITests: XCTestCase {
 
     func testRobotDetailTabWorkTaskinfoDetailBack() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Robot）") { _ in
             _ = MainPageObject(application: app).tapTabRobotButton().waitExists(RobotListPageObject.self)
         }
@@ -294,7 +286,7 @@ class MainUITests: XCTestCase {
 
     func testRobotOrderJob() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Robot）") { _ in
             _ = MainPageObject(application: app).tapTabRobotButton().waitExists(RobotListPageObject.self)
@@ -310,7 +302,7 @@ class MainUITests: XCTestCase {
 
     func testRobotOrderJobCancel() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Robot）") { _ in
             _ = MainPageObject(application: app).tapTabRobotButton().waitExists(RobotListPageObject.self)
@@ -329,7 +321,7 @@ class MainUITests: XCTestCase {
 
     func testRobotOrderJobSelect() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Robot）") { _ in
             _ = MainPageObject(application: app).tapTabRobotButton().waitExists(RobotListPageObject.self)
@@ -348,7 +340,7 @@ class MainUITests: XCTestCase {
 
     func testRobotOrderJobSelectBack() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Robot）") { _ in
             _ = MainPageObject(application: app).tapTabRobotButton().waitExists(RobotListPageObject.self)
@@ -370,7 +362,7 @@ class MainUITests: XCTestCase {
 
     func testRobotOrderJobSelectConfig() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Robot）") { _ in
             _ = MainPageObject(application: app).tapTabRobotButton().waitExists(RobotListPageObject.self)
@@ -392,7 +384,7 @@ class MainUITests: XCTestCase {
 
     func testRobotOrderJobSelectConfigConfirm() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Robot）") { _ in
             _ = MainPageObject(application: app).tapTabRobotButton().waitExists(RobotListPageObject.self)
@@ -417,7 +409,7 @@ class MainUITests: XCTestCase {
 
     func testRobotOrderJobConfigConfirmSend() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Robot）") { _ in
             _ = MainPageObject(application: app).tapTabRobotButton().waitExists(RobotListPageObject.self)
@@ -445,7 +437,7 @@ class MainUITests: XCTestCase {
 
     func testRobotOrderJobConfigConfirmSendClose() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Robot）") { _ in
             _ = MainPageObject(application: app).tapTabRobotButton().waitExists(RobotListPageObject.self)
@@ -479,7 +471,7 @@ class MainUITests: XCTestCase {
     // ---------------------------------------------------------------------------------------------------------------------
     func testJob() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             let page = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
@@ -489,7 +481,7 @@ class MainUITests: XCTestCase {
 
     func testJobAdd() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
@@ -502,7 +494,7 @@ class MainUITests: XCTestCase {
 
     func testJobAddCancel() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
@@ -518,7 +510,7 @@ class MainUITests: XCTestCase {
     /*
      func testJobAddNext() throws {
      let app = XCUIApplication()
-     AuthenticationUITests.Login()
+     _ = signIn()
 
      XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
      _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
@@ -538,7 +530,7 @@ class MainUITests: XCTestCase {
      //
      func testJobAddNextPickNext() throws {
      let app = XCUIApplication()
-     AuthenticationUITests.Login()
+     _ = signIn()
 
      XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
      _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
@@ -557,7 +549,7 @@ class MainUITests: XCTestCase {
 
      func testJobAddNextPickNextTrayA() throws {
      let app = XCUIApplication()
-     AuthenticationUITests.Login()
+     _ = signIn()
 
      XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
      _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
@@ -616,7 +608,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetail() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
@@ -633,7 +625,7 @@ class MainUITests: XCTestCase {
         }
 
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
@@ -649,7 +641,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailOrder() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
@@ -665,7 +657,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailOrderBack() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
@@ -684,7 +676,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailOrderConfig() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
@@ -703,7 +695,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailOrderConfigConfirm() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
@@ -725,7 +717,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailOrderConfigConfirmSend() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
@@ -750,7 +742,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailOrderConfigConfirmSendClose() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
@@ -778,7 +770,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailOrderBackCancel() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
 
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
@@ -799,7 +791,7 @@ class MainUITests: XCTestCase {
     }
     func testJobDetailTabFlow() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -814,7 +806,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabRemarks() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -829,7 +821,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWork() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -847,7 +839,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkTaskRobot() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -865,7 +857,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkTaskRobotBack() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -886,7 +878,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkTaskRobotTaskinfo() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -907,7 +899,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkTaskRobotTaskinfoBack() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -931,7 +923,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkTaskRobotTaskinfoDetail() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -955,7 +947,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkTaskRobotTaskinfoDetailBack() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -982,7 +974,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkTaskTaskinfo() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -1000,7 +992,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkTaskTaskinfoBack() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -1021,7 +1013,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkTaskTaskinfoDetail() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -1042,7 +1034,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkTaskTaskinfoDetailBack() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -1066,7 +1058,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkHistoryRobot() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -1084,7 +1076,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkHistoryRobotBack() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -1105,7 +1097,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkHistoryRobotTaskinfo() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -1126,7 +1118,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkHistoryRobotTaskinfoBack() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -1150,7 +1142,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkHistoryRobotTaskinfoDetail() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -1174,7 +1166,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkHistoryRobotTaskinfoDetailBack() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -1201,7 +1193,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkHistoryTaskinfo() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -1219,7 +1211,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkHistoryTaskinfoBack() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -1240,7 +1232,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkHistoryTaskinfoDetail() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -1261,7 +1253,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkHistoryTaskinfoDetailBack() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -1285,7 +1277,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkHistorySeeAll() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -1303,7 +1295,7 @@ class MainUITests: XCTestCase {
 
     func testJobDetailTabWorkHistorySeeAllCancel() throws {
         let app = XCUIApplication()
-        AuthenticationUITests.Login()
+        _ = signIn()
         XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
             _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
         }
@@ -1326,7 +1318,7 @@ class MainUITests: XCTestCase {
     /*
      func testJobDetailTabWorkHistorySeeAllAssigned() throws {
      let app = XCUIApplication()
-     AuthenticationUITests.Login()
+     _ = signIn()
      XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
      _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
      }
@@ -1347,7 +1339,7 @@ class MainUITests: XCTestCase {
 
      func testJobDetailTabWorkHistorySeeAllAssignedBack() throws {
      let app = XCUIApplication()
-     AuthenticationUITests.Login()
+     _ = signIn()
      XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
      _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
      }
@@ -1371,7 +1363,7 @@ class MainUITests: XCTestCase {
 
      func testJobDetailTabWorkHistorySeeAllAssignedRobot() throws {
      let app = XCUIApplication()
-     AuthenticationUITests.Login()
+     _ = signIn()
      XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
      _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
      }
@@ -1395,7 +1387,7 @@ class MainUITests: XCTestCase {
 
      func testJobDetailTabWorkHistorySeeAllAssignedRobotBack() throws {
      let app = XCUIApplication()
-     AuthenticationUITests.Login()
+     _ = signIn()
      XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
      _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
      }
@@ -1422,7 +1414,7 @@ class MainUITests: XCTestCase {
 
      func testJobDetailTabWorkHistorySeeAllAssignedRobotDetail() throws {
      let app = XCUIApplication()
-     AuthenticationUITests.Login()
+     _ = signIn()
      XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
      _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
      }
@@ -1449,7 +1441,7 @@ class MainUITests: XCTestCase {
 
      func testJobDetailTabWorkHistorySeeAllAssignedRobotDetailBack() throws {
      let app = XCUIApplication()
-     AuthenticationUITests.Login()
+     _ = signIn()
      XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
      _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
      }
@@ -1479,7 +1471,7 @@ class MainUITests: XCTestCase {
 
      func testJobDetailTabWorkHistorySeeAllCommand() throws {
      let app = XCUIApplication()
-     AuthenticationUITests.Login()
+     _ = signIn()
      XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
      _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
      }
@@ -1500,7 +1492,7 @@ class MainUITests: XCTestCase {
 
      func testJobDetailTabWorkHistorySeeAllCommandBack() throws {
      let app = XCUIApplication()
-     AuthenticationUITests.Login()
+     _ = signIn()
      XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
      _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
      }
@@ -1524,7 +1516,7 @@ class MainUITests: XCTestCase {
 
      func testJobDetailTabWorkHistorySeeAllCommandDetail() throws {
      let app = XCUIApplication()
-     AuthenticationUITests.Login()
+     _ = signIn()
      XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
      _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
      }
@@ -1548,7 +1540,7 @@ class MainUITests: XCTestCase {
 
      func testJobDetailTabWorkHistorySeeAllCommandDetailBack() throws {
      let app = XCUIApplication()
-     AuthenticationUITests.Login()
+     _ = signIn()
      XCTContext.runActivity(named: "タブ切り替え（Job）") { _ in
      _ = MainPageObject(application: app).tapTabJobButton().waitExists(JobListPageObject.self)
      }

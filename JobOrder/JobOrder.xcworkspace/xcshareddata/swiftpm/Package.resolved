@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/Juanpe/SkeletonView",
         "state": {
           "branch": null,
-          "revision": "11b623fb1395ae0a5d57630c7a8c2e956cba5630",
-          "version": "1.12.0"
+          "revision": "32ab6d3852e91312dcbfc3f3a749cfc691da75fe",
+          "version": "1.13.0"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {
           "branch": null,
-          "revision": "92646c0cdbaca076c8d3d0207891785b3379cbff",
-          "version": "0.3.1"
+          "revision": "9564d61b08a5335ae0a36f789a7d71493eacadfc",
+          "version": "0.3.2"
         }
       },
       {

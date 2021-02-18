@@ -11,14 +11,14 @@ import XCTest
 
 class JobEntryActionViewControllerTests: XCTestCase {
 
-//    private let mock = JobEntryActionViewPresenterProtocolMock()
+    //    private let mock = JobEntryActionViewPresenterProtocolMock()
     private let vc = StoryboardScene.OrderEntry.jobSelection.instantiate()
 
     override func setUpWithError() throws {
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = vc
         window.makeKeyAndVisible()
-//        vc.presenter = mock
+        //        vc.presenter = mock
     }
 
     override func tearDownWithError() throws {
@@ -44,10 +44,10 @@ class JobEntryActionViewControllerTests: XCTestCase {
 //  Copyright © 2020 Kento Tatsumi. All rights reserved.
 //
 
-//import XCTest
-//@testable import JobOrder_Presentation
+// import XCTest
+// @testable import JobOrder_Presentation
 //
-//class OrderEntryJobSelectionViewControllerTests: XCTestCase {
+// class OrderEntryJobSelectionViewControllerTests: XCTestCase {
 //
 //    private let mock = OrderEntryJobSelectionPresenterProtocolMock()
 //    private let vc = StoryboardScene.OrderEntry.jobSelection.instantiate()
@@ -124,4 +124,4 @@ class JobEntryActionViewControllerTests: XCTestCase {
 //        XCTAssertEqual(mock.selectItemCallCount, 1, "Presenterのメソッドが呼ばれない")
 //        XCTAssertFalse(continueButton.isEnabled, "ボタンが有効になってはいけない: \(continueButton)")
 //    }
-//}
+// }

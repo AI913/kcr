@@ -12,7 +12,7 @@ import XCTest
 class NewPasswordRequiredViewControllerTests: XCTestCase {
 
     private let mock = NewPasswordRequiredPresenterProtocolMock()
-    private let vc = StoryboardScene.PasswordAuthentication.newPasswordRequired.instantiate()
+    private let vc = StoryboardScene.Authentication.newPasswordRequired.instantiate()
 
     override func setUpWithError() throws {
         let window = UIWindow(frame: UIScreen.main.bounds)

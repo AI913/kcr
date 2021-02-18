@@ -15,13 +15,15 @@ import JobOrder_Utility
 /// MainPresenterProtocol
 /// @mockable
 protocol MainPresenterProtocol {
+    /// 右上のラベル
+    var rightBarLabel: String? { get }
+    /// View表示開始
+    func viewDidLoad()
+    /// サインイン
+    func signIn()
     /// 行動解析エンドポイントプロファイルの設定
     /// - Parameter displayAppearance: 表示モード
     func setAnalyticsEndpointProfiles(displayAppearance: String)
-    /// View表示開始
-    func viewDidAppear()
-    /// 生体認証によるサインイン
-    func signInByBiometricsAuthentication()
     /// ConnectionStatusボタンをタップ
     func tapConnectionStatusButton()
     /// addButtonボタンをタップ
@@ -48,8 +50,6 @@ class MainPresenter {
     var data = MainViewData.ConnectionInfo(JobOrder_Domain.MQTTModel.Output.ConnectionStatus.unknown)
     /// A type-erasing cancellable objects that executes a provided closure when canceled.
     private var cancellables: Set<AnyCancellable> = []
-    /// One Off Func
-    private let oneOffFunc = OneOffFunc()
 
     /// イニシャライザ
     /// - Parameters:
@@ -71,7 +71,6 @@ class MainPresenter {
         self.dataUseCase = dataUseCase
         self.analyticsUseCase = analyticsUseCase
         self.vc = vc
-        registerStateChanges()
     }
 
     /// デイニシャライザ
@@ -83,6 +82,22 @@ class MainPresenter {
 // MARK: - Protocol Function
 extension MainPresenter: MainPresenterProtocol {
 
+    /// 右上のラベル
+    var rightBarLabel: String? {
+        settingsUseCase.spaceName
+    }
+
+    /// View表示開始
+    func viewDidLoad() {
+        vc.launchAuthentication()
+    }
+
+    /// サインイン
+    func signIn() {
+        registerStateChanges()
+        afterSignInSequence()
+    }
+
     /// 行動解析エンドポイントプロファイルの設定
     /// - Parameter displayAppearance: 表示モード
     func setAnalyticsEndpointProfiles(displayAppearance: String) {
@@ -91,19 +106,6 @@ extension MainPresenter: MainPresenterProtocol {
         if let name = authUseCase.currentUsername {
             analyticsUseCase.setUserName(name)
         }
-    }
-
-    /// View表示開始
-    func viewDidAppear() {
-        // 起動時は必ずPasswordAuthentication画面を開く
-        oneOffFunc.execute {
-            vc.launchPasswordAuthentication()
-        }
-    }
-
-    /// 生体認証によるサインイン
-    func signInByBiometricsAuthentication() {
-        afterSignInSequence()
     }
 
     /// ConnectionStatusボタンをタップ
@@ -120,7 +122,7 @@ extension MainPresenter: MainPresenterProtocol {
 // MARK: - Private Function
 extension MainPresenter {
 
-    private func registerStateChanges() {
+    func registerStateChanges() {
 
         authUseCase.registerAuthenticationStateChange()
             .receive(on: DispatchQueue.main)
@@ -130,7 +132,7 @@ extension MainPresenter {
                 case .signedIn:
                     self.afterSignInSequence()
                 case .signedOut, .signedOutUserPoolsTokenInvalid, .signedOutFederatedTokensInvalid:
-                    self.vc.launchPasswordAuthentication()
+                    self.vc.launchAuthentication()
                 default: break
                 }
             }.store(in: &cancellables)
@@ -144,7 +146,7 @@ extension MainPresenter {
             }.store(in: &cancellables)
     }
 
-    private func unregisterStateChanges() {
+    func unregisterStateChanges() {
         authUseCase.unregisterAuthenticationStateChange()
     }
 

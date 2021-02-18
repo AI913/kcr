@@ -294,10 +294,7 @@ class SettingsPresenterTests: XCTestCase {
 
         data.syncDataHandler = {
             return Future<JobOrder_Domain.DataManageModel.Output.SyncData, Error> { promise in
-                let model = JobOrder_Domain.DataManageModel.Output.SyncData(jobEntities: [],
-                                                                            robotEntities: [],
-                                                                            actionLibraryEntities: [],
-                                                                            aiLibraryEntities: [])
+                let model = JobOrder_Domain.DataManageModel.Output.SyncData.arbitrary.generate
                 promise(.success(model))
                 handlerExpectation.fulfill()
             }.eraseToAnyPublisher()

@@ -12,7 +12,7 @@ import XCTest
 class MailVerificationEntryViewControllerTests: XCTestCase {
 
     private let mock = MailVerificationEntryPresenterProtocolMock()
-    private let vc = StoryboardScene.PasswordAuthentication.mailVerificationEntry.instantiate()
+    private let vc = StoryboardScene.Authentication.mailVerificationEntry.instantiate()
 
     override func setUpWithError() throws {
         let window = UIWindow(frame: UIScreen.main.bounds)

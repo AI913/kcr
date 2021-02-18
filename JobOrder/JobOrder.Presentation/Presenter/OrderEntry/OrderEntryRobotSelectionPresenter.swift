@@ -40,6 +40,7 @@ protocol OrderEntryRobotSelectionPresenterProtocol {
 // MARK: - Implementation
 /// OrderEntryRobotSelectionPresenter
 class OrderEntryRobotSelectionPresenter {
+
     /// DataManageUseCaseProtocol
     private let useCase: JobOrder_Domain.DataManageUseCaseProtocol
     /// OrderEntryRobotSelectionViewControllerProtocol

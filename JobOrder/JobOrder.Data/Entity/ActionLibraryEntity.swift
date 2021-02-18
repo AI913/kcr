@@ -17,7 +17,7 @@ final public class ActionLibraryEntity: Object, Codable {
     /// 名前
     @objc public dynamic var name: String = ""
     /// 要求事項
-    public var requirements = List<ActionLibraryRequirement>()
+    var requirements = List<ActionLibraryRequirement>()
     /// 画像パス
     @objc public dynamic var imagePath: String?
     /// 概要
@@ -63,6 +63,10 @@ final public class ActionLibraryEntity: Object, Codable {
             lhs.creator == rhs.creator &&
             lhs.updateTime == rhs.updateTime &&
             lhs.updator == rhs.updator
+    }
+
+    public var requirementsArray: [ActionLibraryRequirement] {
+        Array(self.requirements)
     }
 }
 

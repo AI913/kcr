@@ -23,8 +23,8 @@ protocol RobotDetailWorkViewControllerProtocol: class {
     func reloadRows(dataset: RobotDetailWorkPresenter.Dataset)
     //    func reloadRows(dataset: RobotDetailWorkPresenter.Dataset, at: [IndexPath])
     /// TaskDetail画面へ遷移
-    /// - Parameter jobId: Job ID
-    func launchTaskDetail(jobId: String?, robotId: String?)
+    /// - Parameter taskId: task ID
+    func launchTaskDetail(taskId: String?, robotId: String?)
 }
 
 class RobotDetailWorkViewController: RobotDetailContainerViewController {
@@ -162,12 +162,12 @@ extension RobotDetailWorkViewController: RobotDetailWorkViewControllerProtocol {
         }
     }
 
-    func launchTaskDetail(jobId: String?, robotId: String?) {
-        guard let jobId = jobId else { return }
+    func launchTaskDetail(taskId: String?, robotId: String?) {
+        guard let taskId = taskId else { return }
         guard let robotId = robotId else { return }
         let navigationController = StoryboardScene.TaskDetail.initialScene.instantiate()
         if let vc = navigationController.topViewController as? TaskDetailTaskInformationViewController {
-            vc.inject(jobId: jobId, robotId: robotId)
+            vc.inject(taskId: taskId, robotId: robotId)
             self.present(navigationController, animated: true, completion: nil)
         }
     }
