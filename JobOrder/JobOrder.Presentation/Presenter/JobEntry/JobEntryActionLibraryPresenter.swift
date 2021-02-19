@@ -1,5 +1,5 @@
 //
-//  JobEntrySearchPresenter.swift
+//  JobEntryActionLibraryPresenter.swift
 //  JobOrder.Presentation
 //
 //  Created by Frontarc on 2021/02/04.
@@ -12,9 +12,9 @@ import Combine
 import JobOrder_Domain
 
 // MARK: - Interface
-/// JobEntrySearchPresenterProtocol
+/// JobEntryActionLibraryPresenterProtocol
 /// @mockable
-protocol JobEntrySearchPresenterProtocol {
+protocol JobEntryActionLibraryPresenterProtocol {
     /// アイテム数
     var numberOfItemsInSection: Int { get }
     /// ActionLibrary ID取得
@@ -36,12 +36,12 @@ protocol JobEntrySearchPresenterProtocol {
 
 // MARK: - Implementation
 /// JobEntrySearchPresenter
-class JobEntrySearchPresenter {
+class JobEntryActionLibraryPresenter {
     private var searchKeyString: String = ""
     /// DataManageUseCaseProtocol
     private let dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol
-    /// JobEntrySearchViewControllerProtocol
-    private let vc: JobEntrySearchViewControllerProtocol
+    /// JobEntryActionLibraryViewControllerProtocol
+    private let vc: JobEntryActionLibraryViewControllerProtocol
     /// A type-erasing cancellable objects that executes a provided closure when canceled.
     private var cancellables: Set<AnyCancellable> = []
     /// リストに表示するActionLibraryのデータ配列（フィルタ処理後）
@@ -54,9 +54,9 @@ class JobEntrySearchPresenter {
     /// イニシャライザ
     /// - Parameters:
     ///   - dataUseCase: DataManageUseCaseProtocol
-    ///   - vc: JobEntrySearchViewControllerProtocol
+    ///   - vc: JobEntryActionLibraryViewControllerProtocol
     required init(dataUseCase: JobOrder_Domain.DataManageUseCaseProtocol,
-                  vc: JobEntrySearchViewControllerProtocol) {
+                  vc: JobEntryActionLibraryViewControllerProtocol) {
         self.dataUseCase = dataUseCase
         self.vc = vc
         observeActionLibraries()
@@ -65,7 +65,7 @@ class JobEntrySearchPresenter {
 }
 
 // MARK: - Protocol Function
-extension JobEntrySearchPresenter: JobEntrySearchPresenterProtocol {
+extension JobEntryActionLibraryPresenter: JobEntryActionLibraryPresenterProtocol {
     /// リストの行数
     var numberOfItemsInSection: Int {
         displayActionLibraries?.count ?? 0
@@ -108,7 +108,7 @@ extension JobEntrySearchPresenter: JobEntrySearchPresenterProtocol {
 }
 
 // MARK: - Private Function
-extension JobEntrySearchPresenter {
+extension JobEntryActionLibraryPresenter {
 
     func observeActionLibraries() {
         dataUseCase.observeActionLibraryData()

@@ -28,7 +28,7 @@ class JobEntryGeneralInfoViewController: UIViewController {
     @IBOutlet weak var overviewTextView: UITextView!
     @IBOutlet weak var cancelBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var continueButton: UIButton!
-
+    
     // MARK: - Variable
     var presenter: JobEntryGeneralInfoPresenterProtocol!
     private var computedCellSize: CGSize?
