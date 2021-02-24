@@ -8,7 +8,7 @@
 
 import UIKit
 
-class JobEntryActionViewController: UIViewController, UIGestureRecognizerDelegate {
+class JobEntryActionViewController: UIViewController {
 
     @IBOutlet weak var slideMenuView: UIView!
 
@@ -21,6 +21,10 @@ class JobEntryActionViewController: UIViewController, UIGestureRecognizerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("View Width : ", view.frame.width)
+        print("View height : ", view.frame.height)
+        print("slideMenuView Width : ", slideMenuView.frame.width)
+        print("slideMenuView height : ", slideMenuView.frame.height)
         showMenu(shouldExpand: isExpanded)
     }
 

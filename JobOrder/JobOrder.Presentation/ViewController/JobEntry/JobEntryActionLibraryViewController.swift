@@ -16,13 +16,14 @@ protocol JobEntryActionLibraryViewControllerProtocol: class {
     func reloadCollection()
 }
 
-class JobEntryActionLibraryViewController: UIViewController, UIGestureRecognizerDelegate {
+class JobEntryActionLibraryViewController: UIViewController {
 
     private var searchText: String = ""
 
     // MARK: - IBOutlet
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchController: UISearchBar!
+    
     @IBAction func infoButtonTapped(_ sender: Any) {
         let tagNo:UIButton = sender as! UIButton
         print(tagNo.tag)
