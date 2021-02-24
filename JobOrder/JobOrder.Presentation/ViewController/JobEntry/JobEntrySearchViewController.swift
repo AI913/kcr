@@ -1,36 +1,32 @@
 //
-//  JobEntryMenuViewController.swift
+//  JobEntrySearchViewController.swift
 //  JobOrder.Presentation
 //
-//  Created by Frontarc on 2021/02/02.
+//  Created by Frontarc on 2021/02/03.
 //  Copyright © 2021 Kento Tatsumi. All rights reserved.
 //
 
 import UIKit
-/// JobEntryActionLibraryViewControllerProtocol
+/// JobEntrySearchViewControllerProtocol
 /// @mockable
-protocol JobEntryActionLibraryViewControllerProtocol: class {
+protocol JobEntrySearchViewControllerProtocol: class {
     /// RobotSelection画面へ遷移
     func transitionToAILibrarySelectionScreen()
     /// コレクションを更新
     func reloadCollection()
 }
 
-class JobEntryActionLibraryViewController: UIViewController {
+class JobEntrySearchViewController: UIViewController {
 
     private var searchText: String = ""
+    private let searchBarHeight: CGFloat = 44
 
     // MARK: - IBOutlet
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var searchController: UISearchBar!
-    
-    @IBAction func infoButtonTapped(_ sender: Any) {
-        let tagNo:UIButton = sender as! UIButton
-        print(tagNo.tag)
-    }
-    
+
     // MARK: - Variable
-    var presenter: JobEntryActionLibraryPresenterProtocol!
+    var presenter: JobEntrySearchPresenterProtocol!
+    private let searchController = UISearchController()
     private var computedCellSize: CGSize?
 
     required init?(coder aDecoder: NSCoder) {
@@ -41,10 +37,14 @@ class JobEntryActionLibraryViewController: UIViewController {
     // MARK: - Override function (view controller lifecycle)
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchController.layer.borderWidth = 1
-        searchController.layer.borderColor = UIColor.gray.cgColor
-        collectionView.layer.borderWidth = 1
-        collectionView.layer.borderColor = UIColor.gray.cgColor
+
+        self.searchController.searchResultsUpdater = self
+        self.searchController.searchBar.placeholder = L10n.keyword
+        self.searchController.obscuresBackgroundDuringPresentation = false
+        self.searchController.automaticallyShowsCancelButton = false
+        self.searchController.searchBar.frame = CGRect(x: 0, y: 0, width: self.collectionView.frame.width, height: searchBarHeight)
+        self.searchController.hidesNavigationBarDuringPresentation = false
+        collectionView.addSubview(self.searchController.searchBar)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -53,7 +53,7 @@ class JobEntryActionLibraryViewController: UIViewController {
 }
 
 // MARK: - Implement UICollectionViewDataSource
-extension JobEntryActionLibraryViewController: UICollectionViewDataSource {
+extension JobEntrySearchViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return presenter?.numberOfItemsInSection ?? 0
@@ -67,16 +67,13 @@ extension JobEntryActionLibraryViewController: UICollectionViewDataSource {
 
         cell.inject(presenter: presenter)
         cell.setItem(indexPath)
-        
-        let selectBGView = UIView(frame: cell.frame)
-        selectBGView.backgroundColor = .blue
-        cell.selectedBackgroundView = selectBGView
+        self.searchController.searchBar.frame = CGRect(x: 0, y: 0, width: self.collectionView.frame.width, height: searchBarHeight)
         return cell
     }
 }
 
 // MARK: - Implement UICollectionViewDelegateFlowLayout
-extension JobEntryActionLibraryViewController: UICollectionViewDelegateFlowLayout {
+extension JobEntrySearchViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
@@ -97,7 +94,7 @@ extension JobEntryActionLibraryViewController: UICollectionViewDelegateFlowLayou
 }
 
 // MARK: - Protocol Function
-extension JobEntryActionLibraryViewController: JobEntryActionLibraryViewControllerProtocol {
+extension JobEntrySearchViewController: JobEntrySearchViewControllerProtocol {
 
     func transitionToAILibrarySelectionScreen() {
         self.perform(segue: StoryboardSegue.JobEntry.showAction)
@@ -109,11 +106,17 @@ extension JobEntryActionLibraryViewController: JobEntryActionLibraryViewControll
 }
 
 // MARK: - UISearchBarDelegate
-extension JobEntryActionLibraryViewController: UISearchBarDelegate {
+extension JobEntrySearchViewController: UISearchBarDelegate {
 
     internal func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.searchText = searchText
-        presenter?.filterAndSort(keyword: self.searchText, keywordChanged: true)
     }
 }
 
+// MARK: - Implement UISearchResultsUpdating
+extension JobEntrySearchViewController: UISearchResultsUpdating {
+
+    func updateSearchResults(for searchController: UISearchController) {
+        presenter?.filterAndSort(keyword: searchController.searchBar.text, keywordChanged: true)
+    }
+}

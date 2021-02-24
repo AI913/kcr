@@ -13,14 +13,13 @@ class JobEntryActionLibraryViewCell: UICollectionViewCell, UICollectionViewCellW
     @IBOutlet weak var actionLibraryImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var versionLabel: UILabel!
-    @IBOutlet weak var infoButton: UIButton!
     // MARK: - Constant
     static let identifier: String = "ActionLibraryViewCell"
 
     // MARK: - Variable
-    private var presenter: JobEntryActionLibraryPresenterProtocol!
+    private var presenter: JobEntrySearchPresenterProtocol!
 
-    func inject(presenter: JobEntryActionLibraryPresenterProtocol) {
+    func inject(presenter: JobEntrySearchPresenterProtocol) {
         self.presenter = presenter
     }
 
@@ -42,8 +41,6 @@ class JobEntryActionLibraryViewCell: UICollectionViewCell, UICollectionViewCellW
     }
 
     func setItem(_ indexPath: IndexPath) {
-//        infoButton.setNilValueForKey(toLabelText(presenter?.displayName(indexPath.row)))
-        infoButton.tag = indexPath.row
         actionLibraryImage.image = UIImage(systemName: "checkmark")
         // actionLibraryImage.image = UIImage(named: presenter?.actionLibraryImagePath(indexPath.row) ?? "")
         nameLabel?.text = toLabelText(presenter?.displayName(indexPath.row))

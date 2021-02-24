@@ -20,7 +20,7 @@ protocol JobEntryGeneralInfoViewControllerProtocol: class {
 class JobEntryGeneralInfoViewController: UIViewController {
 
     // MARK: - IBOutlet
-    @IBOutlet var robotCollection: UICollectionView!
+    @IBOutlet weak var robotCollection: UICollectionView!
     @IBOutlet weak var subtitle: UILabel!
     @IBOutlet weak var jobNameTitleLabel: UILabel!
     @IBOutlet weak var jobNameTextField: UITextField!
@@ -28,7 +28,7 @@ class JobEntryGeneralInfoViewController: UIViewController {
     @IBOutlet weak var overviewTextView: UITextView!
     @IBOutlet weak var cancelBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var continueButton: UIButton!
-    
+
     // MARK: - Variable
     var presenter: JobEntryGeneralInfoPresenterProtocol!
     private var computedCellSize: CGSize?
@@ -43,11 +43,8 @@ class JobEntryGeneralInfoViewController: UIViewController {
         super.viewDidLoad()
         setup()
         robotCollection?.allowsSelection = true
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
+        robotCollection?.allowsMultipleSelection = false
+        continueButton.isEnabled = false
     }
 
     // MARK: - Override function (view controller event)
@@ -62,7 +59,8 @@ extension JobEntryGeneralInfoViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
         let updatedText = self.updatedText(textField.text, range: range, replacementString: string)
-            self.continueButton.isEnabled = presenter?.isEnabledContinueButton ?? true && updatedText != ""
+        setContinueButtonEnale(updatedText != "")
+        // self.continueButton.isEnabled = updatedText != ""
         return true
     }
 
@@ -92,8 +90,8 @@ extension JobEntryGeneralInfoViewController {
     }
 
     @IBAction private func touchUpInsideContinueButton(_ sender: UIButton) {
-        //                let vc = StoryboardScene.ActionEntry.initialScene.instantiate()
-        //                self.present(vc, animated: true, completion: nil)
+        // let vc = StoryboardScene.ActionEntry.initialScene.instantiate()
+        // self.present(vc, animated: true, completion: nil)
     }
 }
 
@@ -106,6 +104,16 @@ extension JobEntryGeneralInfoViewController {
         subtitle?.text = L10n.JobEntryGeneralInformationForm.subtitle
         jobNameTitleLabel?.attributedText = self.toRequiredMutableAttributedString(jobNameTitleLabel.text)
         continueButton?.setTitle(L10n.JobEntryGeneralInformationForm.bottomButton, for: .normal)
+    }
+
+    private func setContinueButtonEnale(_ enableFlg: Bool) {
+        if enableFlg {
+            if presenter?.isEnabledContinueButton ?? true {
+                continueButton.isEnabled = enableFlg
+            }
+        } else {
+            continueButton.isEnabled = enableFlg
+        }
     }
 }
 
@@ -137,8 +145,17 @@ extension JobEntryGeneralInfoViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         presenter?.selectItem(indexPath: indexPath)
-        continueButton?.isEnabled = jobNameTextField.text != ""
+        print(presenter?.isEnabledContinueButton)
+        setContinueButtonEnale(presenter?.isEnabledContinueButton ?? false)
+        print(presenter?.isEnabledContinueButton)
+        //        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
     }
+
+    // func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+    //     presenter?.selectItem(indexPath: indexPath)
+    //     setContinueButtonEnale(presenter?.isEnabledContinueButton ?? false)
+    //     continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
+    // }
 }
 
 // MARK: - Implement UICollectionViewDelegateFlowLayout
@@ -149,7 +166,7 @@ extension JobEntryGeneralInfoViewController: UICollectionViewDelegateFlowLayout 
         guard self.computedCellSize == nil else {
             return self.computedCellSize!
         }
-        
+
         print(indexPath)
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: JobEntryRobotSelectionRobotCollectionViewCell.identifier, for: indexPath)
