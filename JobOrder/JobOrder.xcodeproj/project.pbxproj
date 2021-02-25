@@ -490,6 +490,9 @@
 		FC5FEC6A25CCDDC50069F600 /* JobEntrySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5FEC6925CCDDC50069F600 /* JobEntrySearchViewController.swift */; };
 		FC5FEC7C25CCDFD10069F600 /* JobEntrySearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5FEC7B25CCDFD10069F600 /* JobEntrySearchPresenter.swift */; };
 		FC760838257491580039E8B8 /* TaskDetailViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC760837257491580039E8B8 /* TaskDetailViewData.swift */; };
+		FC77FF9125E72929005E609F /* JobEntryConfigurationContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC77FF9025E72929005E609F /* JobEntryConfigurationContainerViewController.swift */; };
+		FC87E0D825E619C600D5B821 /* JobEntryConfigurationParametersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC87E0D725E619C600D5B821 /* JobEntryConfigurationParametersViewController.swift */; };
+		FC87E0EA25E619E800D5B821 /* JobEntryConfigurationRemarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC87E0E925E619E800D5B821 /* JobEntryConfigurationRemarksViewController.swift */; };
 		FC8F7FBC25BEAA4E00C5780A /* JobEntryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8F7FBB25BEAA4E00C5780A /* JobEntryBuilder.swift */; };
 		FC8F7FC725BEAAE200C5780A /* JobEntryGeneralInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8F7FC625BEAAE200C5780A /* JobEntryGeneralInfoPresenter.swift */; };
 		FC8F7FD125BEAB7700C5780A /* JobEntryRobotSelectionRobotCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8F7FD025BEAB7700C5780A /* JobEntryRobotSelectionRobotCollectionViewCell.swift */; };
@@ -499,6 +502,8 @@
 		FCC2457625CA8CB8007D49A7 /* JobEntryActionLibraryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC2457525CA8CB8007D49A7 /* JobEntryActionLibraryViewCell.swift */; };
 		FCE8862525DB49230053802D /* JobEntryGeneralInfoViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE8862425DB49230053802D /* JobEntryGeneralInfoViewControllerTests.swift */; };
 		FCE8862F25DB494D0053802D /* JobEntryGeneralInfoPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE8862E25DB494D0053802D /* JobEntryGeneralInfoPresenterTests.swift */; };
+		FCEFF3D225E5FD90006858A6 /* JobEntryConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEFF3D125E5FD90006858A6 /* JobEntryConfigurationViewController.swift */; };
+		FCEFF3E425E609FE006858A6 /* JobEntryConfigurationPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEFF3E325E609FE006858A6 /* JobEntryConfigurationPageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1111,6 +1116,9 @@
 		FC5FEC6925CCDDC50069F600 /* JobEntrySearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntrySearchViewController.swift; sourceTree = "<group>"; };
 		FC5FEC7B25CCDFD10069F600 /* JobEntrySearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntrySearchPresenter.swift; sourceTree = "<group>"; };
 		FC760837257491580039E8B8 /* TaskDetailViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewData.swift; sourceTree = "<group>"; };
+		FC77FF9025E72929005E609F /* JobEntryConfigurationContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryConfigurationContainerViewController.swift; sourceTree = "<group>"; };
+		FC87E0D725E619C600D5B821 /* JobEntryConfigurationParametersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryConfigurationParametersViewController.swift; sourceTree = "<group>"; };
+		FC87E0E925E619E800D5B821 /* JobEntryConfigurationRemarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryConfigurationRemarksViewController.swift; sourceTree = "<group>"; };
 		FC8F7FBB25BEAA4E00C5780A /* JobEntryBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryBuilder.swift; sourceTree = "<group>"; };
 		FC8F7FC625BEAAE200C5780A /* JobEntryGeneralInfoPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryGeneralInfoPresenter.swift; sourceTree = "<group>"; };
 		FC8F7FD025BEAB7700C5780A /* JobEntryRobotSelectionRobotCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryRobotSelectionRobotCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1120,6 +1128,8 @@
 		FCC2457525CA8CB8007D49A7 /* JobEntryActionLibraryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryActionLibraryViewCell.swift; sourceTree = "<group>"; };
 		FCE8862425DB49230053802D /* JobEntryGeneralInfoViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryGeneralInfoViewControllerTests.swift; sourceTree = "<group>"; };
 		FCE8862E25DB494D0053802D /* JobEntryGeneralInfoPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryGeneralInfoPresenterTests.swift; sourceTree = "<group>"; };
+		FCEFF3D125E5FD90006858A6 /* JobEntryConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryConfigurationViewController.swift; sourceTree = "<group>"; };
+		FCEFF3E325E609FE006858A6 /* JobEntryConfigurationPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryConfigurationPageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1958,6 +1968,11 @@
 				FCB06C4A25C7808A007AC492 /* JobEntryCompleteViewController.swift */,
 				A3DCD5CE251AF15B004BC808 /* JobEntryStepView.xib */,
 				A3DCD5CD251AF15B004BC808 /* JobEntryStepView.swift */,
+				FCEFF3D125E5FD90006858A6 /* JobEntryConfigurationViewController.swift */,
+				FC77FF9025E72929005E609F /* JobEntryConfigurationContainerViewController.swift */,
+				FCEFF3E325E609FE006858A6 /* JobEntryConfigurationPageViewController.swift */,
+				FC87E0D725E619C600D5B821 /* JobEntryConfigurationParametersViewController.swift */,
+				FC87E0E925E619E800D5B821 /* JobEntryConfigurationRemarksViewController.swift */,
 				FC369E4C25C7DD4400B70B03 /* CollectionViewCell */,
 			);
 			path = JobEntry;
@@ -3749,6 +3764,7 @@
 				A3AB8DD724BD50DE0017411A /* WebRTCClient.swift in Sources */,
 				B7FD40F4256261D000643AAE /* JobDetailRemarksViewController.swift in Sources */,
 				E55A438D255E7DAF0079739D /* TaskDetailRobotSelectionViewController.swift in Sources */,
+				FC87E0D825E619C600D5B821 /* JobEntryConfigurationParametersViewController.swift in Sources */,
 				A3141F70252191C200992F45 /* ActionEntryActionLibraryCollectionViewCell.swift in Sources */,
 				A32BCAFE24693492000287D2 /* OrderEntryRobotSelectionViewController.swift in Sources */,
 				B738A50E2580A78500A5E937 /* TaskDetailRunHistoryTaskTableViewCell.swift in Sources */,
@@ -3758,6 +3774,7 @@
 				FC5FEC6A25CCDDC50069F600 /* JobEntrySearchViewController.swift in Sources */,
 				A38C2AF4244FE4FA0089A70E /* JobDetailViewController.swift in Sources */,
 				E5CF313925566CF80054F782 /* CircularProgressViewController.swift in Sources */,
+				FC87E0EA25E619E800D5B821 /* JobEntryConfigurationRemarksViewController.swift in Sources */,
 				A32BCAF324693492000287D2 /* OrderEntryCompleteViewController.swift in Sources */,
 				D78EC2002411CB59003E5ECD /* MainTabBarController.swift in Sources */,
 				A33622C724289487003C75F0 /* ConnectionSettingsPresenter.swift in Sources */,
@@ -3811,6 +3828,7 @@
 				A3B26D51251D8C1D008DFEC5 /* ActionEntryViewData.swift in Sources */,
 				A3141F6B252191C200992F45 /* WorkObjectSelectionTableViewCell.swift in Sources */,
 				A32BCA882468F65A000287D2 /* TaskDetailBuilder.swift in Sources */,
+				FC77FF9125E72929005E609F /* JobEntryConfigurationContainerViewController.swift in Sources */,
 				A3B26D3B251C70B6008DFEC5 /* WorkObjectLibraryTestViewController.swift in Sources */,
 				A3B26D38251C59B7008DFEC5 /* WorkObjectLibrarySelectionViewController.swift in Sources */,
 				A3B91C5C2510AE47005400D1 /* RobotDetailPageViewController.swift in Sources */,
@@ -3829,6 +3847,7 @@
 				A38C2AF9244FE4FA0089A70E /* RobotDetailSystemViewController.swift in Sources */,
 				A38C2B03244FE4FA0089A70E /* SettingsViewController.swift in Sources */,
 				A37EFD9724457EA800130EB6 /* JobListPresenter.swift in Sources */,
+				FCEFF3D225E5FD90006858A6 /* JobEntryConfigurationViewController.swift in Sources */,
 				A3141F73252192A100992F45 /* WorkBenchSelectionTableViewCell.swift in Sources */,
 				D78EC1FE2411CB59003E5ECD /* PasswordAuthenticationViewController.swift in Sources */,
 				A305FA1024ADC8C400E99D3C /* DashboardViewController.swift in Sources */,
@@ -3840,6 +3859,7 @@
 				A390549E248953260021DEBA /* Asset.swift in Sources */,
 				A3AB8DFD24C5738C0017411A /* Builder.swift in Sources */,
 				A39054A62489D1D10021DEBA /* Segues.swift in Sources */,
+				FCEFF3E425E609FE006858A6 /* JobEntryConfigurationPageViewController.swift in Sources */,
 				A38C2AFA244FE4FA0089A70E /* RobotDetailContainerViewController.swift in Sources */,
 				A3DCD5CB251AEE55004BC808 /* JobEntryGeneralInfoViewController.swift in Sources */,
 				A314832F242B487600AFADC1 /* MainPresenter.swift in Sources */,

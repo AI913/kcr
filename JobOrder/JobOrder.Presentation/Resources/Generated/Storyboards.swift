@@ -44,6 +44,12 @@ internal enum StoryboardScene {
     internal static let complete = SceneType<JobOrder_Presentation.JobEntryCompleteViewController>(storyboard: JobEntry.self, identifier: "Complete")
 
     internal static let form = SceneType<JobOrder_Presentation.JobEntryGeneralInfoViewController>(storyboard: JobEntry.self, identifier: "Form")
+
+    internal static let jobEntryConfiguration = SceneType<JobOrder_Presentation.JobEntryConfigurationViewController>(storyboard: JobEntry.self, identifier: "JobEntryConfiguration")
+
+    internal static let jobEntryParameters = SceneType<JobOrder_Presentation.JobEntryConfigurationParametersViewController>(storyboard: JobEntry.self, identifier: "JobEntryParameters")
+
+    internal static let jobEntryRemarks = SceneType<JobOrder_Presentation.JobEntryConfigurationRemarksViewController>(storyboard: JobEntry.self, identifier: "JobEntryRemarks")
   }
   internal enum Main: StoryboardType {
     internal static let storyboardName = "Main"
