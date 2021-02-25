@@ -8,7 +8,19 @@
 
 import UIKit
 
+/// JobListViewControllerProtocol
+/// @mockable
+protocol JobEntryActionFlowViewControllerProtocol: class {
+    /// JobDetail画面へ遷移
+    func transitionToActionEntryConfiguration()
+}
+
 class JobEntryActionFlowViewController: UIViewController {
+    
+    @IBAction func infoButtonTapped(_ sender: UIBarButtonItem) {
+        let navigationController = StoryboardScene.ActionEntry.actionEntryFormNavi.instantiate()
+        self.present(navigationController, animated: true, completion: nil)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

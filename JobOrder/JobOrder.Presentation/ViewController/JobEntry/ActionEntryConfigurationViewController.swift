@@ -1,5 +1,5 @@
 //
-//  JobEntryConfigurationViewController.swift
+//  ActionEntryConfigurationViewController.swift
 //  JobOrder.Presentation
 //
 //  Created by Frontarc on 2021/02/24.
@@ -8,15 +8,15 @@
 
 import UIKit
 
-/// JobEntryConfigurationViewControllerProtocol
+/// ActionEntryConfigurationViewControllerProtocol
 /// @mockable
-protocol JobEntryConfigurationViewControllerProtocol: class {
+protocol ActionEntryConfigurationViewControllerProtocol: class {
     /// ページ変更
     /// - Parameter index: インデックス
     func pageChanged(index: Int)
 }
 
-class JobEntryConfigurationViewController: UIViewController {
+class ActionEntryConfigurationViewController: UIViewController {
 
     // MARK: - IBOutlet
     @IBOutlet weak var image: UIImageView!
@@ -24,17 +24,28 @@ class JobEntryConfigurationViewController: UIViewController {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var containerViewHeight: NSLayoutConstraint!
-    @IBAction func infoButtonTapped(_ sender: Any) {
+    
+    var pageVc: ActionEntryConfigurationPageViewController?
+    var presenter: ActionEntryConfigurationPresenterProtocol!
+
+    // MARK: - IBAction
+    @IBAction func selectorCancelBarButtonItem(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true)
     }
+    
+    @IBAction func infoButtonTapped(_ sender: Any) {
+        print("info button tapped!")
+    }
+    
     @IBAction func segmentChanged(_ sender: UISegmentedControl) {
         pageVc?.changePage(index: sender.selectedSegmentIndex)
     }
-    
-    var pageVc: JobEntryConfigurationPageViewController?
 
     // MARK: - Override function (view controller lifecycle)
     override func viewDidLoad() {
         super.viewDidLoad()
+        nameLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        nameLabel.text = "Pick & Place"
 //        setSwipeBack()
     }
 
@@ -48,8 +59,23 @@ class JobEntryConfigurationViewController: UIViewController {
     }
 }
 
+// MARK: - View Controller Event
+extension ActionEntryConfigurationViewController {
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch StoryboardSegue.Main(segue) {
+        case .containerPage:
+//            guard let data = presenter?.data else { return }
+            pageVc = segue.destination as? ActionEntryConfigurationPageViewController
+            pageVc?._delegate = self
+//            pageVc?.inject(viewData: data)
+        default: break
+        }
+    }
+}
+
 // MARK: - Interface Function
-extension JobEntryConfigurationViewController: JobEntryConfigurationViewControllerProtocol {
+extension ActionEntryConfigurationViewController: ActionEntryConfigurationViewControllerProtocol {
 
     /// ページ変更
     /// - Parameter index: インデックス
@@ -59,7 +85,7 @@ extension JobEntryConfigurationViewController: JobEntryConfigurationViewControll
 }
 
 //// MARK: - Private Function
-//extension JobEntryConfigurationViewController {
+//extension ActionEntryConfigurationViewController {
 //
 //    private func addBlurView() {
 //

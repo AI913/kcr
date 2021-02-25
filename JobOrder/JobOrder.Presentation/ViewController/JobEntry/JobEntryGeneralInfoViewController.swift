@@ -145,9 +145,7 @@ extension JobEntryGeneralInfoViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         presenter?.selectItem(indexPath: indexPath)
-        print(presenter?.isEnabledContinueButton)
         setContinueButtonEnale(presenter?.isEnabledContinueButton ?? false)
-        print(presenter?.isEnabledContinueButton)
         //        continueButton?.isEnabled = presenter?.isEnabledContinueButton ?? false
     }
 
@@ -166,8 +164,6 @@ extension JobEntryGeneralInfoViewController: UICollectionViewDelegateFlowLayout 
         guard self.computedCellSize == nil else {
             return self.computedCellSize!
         }
-
-        print(indexPath)
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: JobEntryRobotSelectionRobotCollectionViewCell.identifier, for: indexPath)
 

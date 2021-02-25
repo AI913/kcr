@@ -1,5 +1,5 @@
 //
-//  JobEntryConfigurationContainerViewController.swift
+//  ActionEntryConfigurationContainerViewController.swift
 //  JobOrder.Presentation
 //
 //  Created by Frontarc on 2021/02/25.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class JobEntryConfigurationContainerViewController: UIViewController {
+class ActionEntryConfigurationContainerViewController: UIViewController {
 
     // MARK: - Variable
     var viewData: MainViewData.Robot!

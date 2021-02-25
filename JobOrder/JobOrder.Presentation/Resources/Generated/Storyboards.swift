@@ -16,6 +16,14 @@ internal enum StoryboardScene {
     internal static let storyboardName = "ActionEntry"
 
     internal static let initialScene = InitialSceneType<UIKit.UINavigationController>(storyboard: ActionEntry.self)
+
+    internal static let actionEntryForm = SceneType<JobOrder_Presentation.ActionEntryConfigurationViewController>(storyboard: ActionEntry.self, identifier: "ActionEntryForm")
+
+    internal static let actionEntryFormNavi = SceneType<UIKit.UINavigationController>(storyboard: ActionEntry.self, identifier: "ActionEntryFormNavi")
+
+    internal static let actionEntryParameters = SceneType<JobOrder_Presentation.ActionEntryConfigurationParametersResultViewController>(storyboard: ActionEntry.self, identifier: "ActionEntryParameters")
+
+    internal static let actionEntryRemarks = SceneType<JobOrder_Presentation.ActionEntryConfigurationRemarksViewController>(storyboard: ActionEntry.self, identifier: "ActionEntryRemarks")
   }
   internal enum Authentication: StoryboardType {
     internal static let storyboardName = "Authentication"
@@ -44,12 +52,6 @@ internal enum StoryboardScene {
     internal static let complete = SceneType<JobOrder_Presentation.JobEntryCompleteViewController>(storyboard: JobEntry.self, identifier: "Complete")
 
     internal static let form = SceneType<JobOrder_Presentation.JobEntryGeneralInfoViewController>(storyboard: JobEntry.self, identifier: "Form")
-
-    internal static let jobEntryConfiguration = SceneType<JobOrder_Presentation.JobEntryConfigurationViewController>(storyboard: JobEntry.self, identifier: "JobEntryConfiguration")
-
-    internal static let jobEntryParameters = SceneType<JobOrder_Presentation.JobEntryConfigurationParametersViewController>(storyboard: JobEntry.self, identifier: "JobEntryParameters")
-
-    internal static let jobEntryRemarks = SceneType<JobOrder_Presentation.JobEntryConfigurationRemarksViewController>(storyboard: JobEntry.self, identifier: "JobEntryRemarks")
   }
   internal enum Main: StoryboardType {
     internal static let storyboardName = "Main"
