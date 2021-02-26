@@ -1287,6 +1287,7 @@
 				E5CF317F2556820B0054F782 /* TaskDetail */,
 				A32BCB0024693633000287D2 /* OrderEntry */,
 				FC8F7FC525BEAAB600C5780A /* JobEntry */,
+				FC9CFEFC25E8D75E007A18B7 /* ActionEntry */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -1959,9 +1960,6 @@
 			isa = PBXGroup;
 			children = (
 				A3B26D50251D8C1D008DFEC5 /* ActionEntryViewData.swift */,
-				FC1C7AAC25E75B3900B9597B /* ActionEntryConfigurationPresenter.swift */,
-				FC1C7ABE25E75EDC00B9597B /* ActionEntryConfigurationParametersResultPresenter.swift */,
-				FC1C7AC825E7622800B9597B /* ActionEntryConfigurationRemarksPresenter.swift */,
 			);
 			path = ActionEntry;
 			sourceTree = "<group>";
@@ -2625,6 +2623,16 @@
 				FC1C7A5625E7349D00B9597B /* JobEntryActionFlowPresenter.swift */,
 			);
 			path = JobEntry;
+			sourceTree = "<group>";
+		};
+		FC9CFEFC25E8D75E007A18B7 /* ActionEntry */ = {
+			isa = PBXGroup;
+			children = (
+				FC1C7AAC25E75B3900B9597B /* ActionEntryConfigurationPresenter.swift */,
+				FC1C7ABE25E75EDC00B9597B /* ActionEntryConfigurationParametersResultPresenter.swift */,
+				FC1C7AC825E7622800B9597B /* ActionEntryConfigurationRemarksPresenter.swift */,
+			);
+			path = ActionEntry;
 			sourceTree = "<group>";
 		};
 		FCB06BEE25C285F7007AC492 /* JobEntry */ = {
