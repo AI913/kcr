@@ -13,15 +13,14 @@ import UIKit
 protocol ActionEntryConfigurationParametersResultViewControllerProtocol: class {}
 
 class ActionEntryConfigurationParametersResultViewController: ActionEntryConfigurationContainerViewController {
-
+    
     // MARK: - IBOutlet
     @IBOutlet weak var resultLabel: UILabel!
     
-    @IBAction func completeButtonTapped(_ sender: UIButton) {
+    @IBAction func completeButtonTapped(_ sender: Any) {
         self.dismiss(animated: true)
     }
-    
-//    @IBOutlet weak var remarksValueLabel: UILabel!
+    //    @IBOutlet weak var remarksValueLabel: UILabel!
 
 //    // MARK: - Variable
 //    var presenter: ActionEntryConfigurationParametersPresenterProtocol!

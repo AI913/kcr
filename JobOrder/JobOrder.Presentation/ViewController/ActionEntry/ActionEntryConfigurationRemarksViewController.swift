@@ -1,5 +1,5 @@
 //
-//  ActionEntryConfigurationParametersResultViewController.swift
+//  ActionEntryConfigurationRemarksViewController.swift
 //  JobOrder.Presentation
 //
 //  Created by Frontarc on 2021/02/24.
@@ -8,23 +8,20 @@
 
 import UIKit
 
-/// ActionEntryConfigurationParametersResultViewController
+/// ActionEntryConfigurationRemarksViewController
 /// @mockable
-protocol ActionEntryConfigurationParametersResultViewControllerProtocol: class {}
+protocol ActionEntryConfigurationRemarksViewControllerProtocol: class {}
 
-class ActionEntryConfigurationParametersResultViewController: ActionEntryConfigurationContainerViewController {
-
-    // MARK: - IBOutlet
-    @IBOutlet weak var resultLabel: UILabel!
-    
-    @IBAction func completeButtonTapped(_ sender: UIButton) {
+class ActionEntryConfigurationRemarksViewController: ActionEntryConfigurationContainerViewController {
+    @IBAction func buttonTapped(_ sender: Any) {
         self.dismiss(animated: true)
     }
     
+//    // MARK: - IBOutlet
 //    @IBOutlet weak var remarksValueLabel: UILabel!
 
 //    // MARK: - Variable
-//    var presenter: ActionEntryConfigurationParametersPresenterProtocol!
+//    var presenter: ActionEntryConfigurationRemarksPresenterProtocol!
 //
 //    override func inject(viewData: MainViewData.Robot) {
 //        super.inject(viewData: viewData)
@@ -37,10 +34,19 @@ class ActionEntryConfigurationParametersResultViewController: ActionEntryConfigu
 //        remarksValueLabel?.showSkeleton()
 //        remarksValueLabel?.text = presenter?.remarks
 //    }
+//
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//
+//        let height = self.view.subviews.reduce(0) {
+//            $0 + $1.frame.height
+//        }
+//        preferredContentSize.height = max(height, initialHeight)
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        resultLabel.font = UIFont.boldSystemFont(ofSize: 22)
+//        resultLabel.font = UIFont.boldSystemFont(ofSize: 22)
     }
 
     override func viewDidLayoutSubviews() {
@@ -53,4 +59,4 @@ class ActionEntryConfigurationParametersResultViewController: ActionEntryConfigu
     }
 }
 
-extension ActionEntryConfigurationParametersResultViewController: ActionEntryConfigurationParametersResultViewControllerProtocol {}
+extension ActionEntryConfigurationRemarksViewController: ActionEntryConfigurationRemarksViewControllerProtocol {}
