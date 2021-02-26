@@ -368,9 +368,9 @@
                                 <segue destination="q7O-Px-7a8" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="0g5-HL-6QU"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="info.circle" catalog="system" id="85M-cY-7Mg">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="info.circle" catalog="system" id="Vhm-9Q-acm">
                             <connections>
-                                <action selector="infoButtonTapped:" destination="pnu-Vu-XtZ" id="6Wy-k8-Xix"/>
+                                <action selector="infoButtonTapped:" destination="pnu-Vu-XtZ" id="CpA-vn-T8b"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
