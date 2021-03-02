@@ -18,8 +18,8 @@ class ActionEntryConfigurationRemarksViewController: ActionEntryConfigurationCon
     }
     
 //    // MARK: - IBOutlet
-//    @IBOutlet weak var remarksValueLabel: UILabel!
-
+    @IBOutlet weak var remarksTextView: UITextView!
+    
 //    // MARK: - Variable
 //    var presenter: ActionEntryConfigurationRemarksPresenterProtocol!
 //
@@ -29,11 +29,11 @@ class ActionEntryConfigurationRemarksViewController: ActionEntryConfigurationCon
 //    }
 //
 //    // MARK: - Override function (view controller lifecycle)
-//    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
 //        super.viewWillAppear(animated)
-//        remarksValueLabel?.showSkeleton()
-//        remarksValueLabel?.text = presenter?.remarks
-//    }
+//        remarksTextView?.showSkeleton()
+//        remarksTextView?.text = presenter?.remarks
+    }
 //
 //    override func viewDidLayoutSubviews() {
 //        super.viewDidLayoutSubviews()

@@ -16,14 +16,14 @@ class ActionEntryConfigurationParametersResultViewController: ActionEntryConfigu
     
     // MARK: - IBOutlet
     @IBOutlet weak var resultLabel: UILabel!
-    
+    @IBOutlet weak var resultTable: UITableView!
     @IBAction func completeButtonTapped(_ sender: Any) {
         self.dismiss(animated: true)
     }
-    //    @IBOutlet weak var remarksValueLabel: UILabel!
+//        @IBOutlet weak var remarksValueLabel: UILabel!
 
-//    // MARK: - Variable
-//    var presenter: ActionEntryConfigurationParametersPresenterProtocol!
+    // MARK: - Variable
+    var presenter: ActionEntryConfigurationParametersResultPresenterProtocol!
 //
 //    override func inject(viewData: MainViewData.Robot) {
 //        super.inject(viewData: viewData)
@@ -33,8 +33,8 @@ class ActionEntryConfigurationParametersResultViewController: ActionEntryConfigu
 //    // MARK: - Override function (view controller lifecycle)
 //    override func viewWillAppear(_ animated: Bool) {
 //        super.viewWillAppear(animated)
-//        remarksValueLabel?.showSkeleton()
-//        remarksValueLabel?.text = presenter?.remarks
+//        parameterValueLabel?.showSkeleton()
+//        parameterValueLabel?.text = "Placeholder"
 //    }
     
     override func viewDidLoad() {
@@ -50,6 +50,30 @@ class ActionEntryConfigurationParametersResultViewController: ActionEntryConfigu
         }
         preferredContentSize.height = max(height, initialHeight)
     }
+}
+
+// MARK: - Implement UITableViewDataSource, UITableViewDelegate
+extension ActionEntryConfigurationParametersResultViewController: UITableViewDelegate, UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let _cell = tableView.dequeueReusableCell(withIdentifier: ActionEntryConfigurationParametersResultTableViewCell.identifier, for: indexPath)
+        guard let cell = _cell as? ActionEntryConfigurationParametersResultTableViewCell else {
+            return _cell
+        }
+        cell.inject(presenter: presenter)
+        cell.setRow(indexPath)
+        return cell
+    }
+
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        navigationController?.setNavigationBarHidden(false, animated: false)
+//        presenter?.selectRow(index: indexPath.row)
+//        tableView.deselectRow(at: indexPath, animated: true)
+//    }
 }
 
 extension ActionEntryConfigurationParametersResultViewController: ActionEntryConfigurationParametersResultViewControllerProtocol {}

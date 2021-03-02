@@ -506,6 +506,17 @@
 		FCB06C4B25C7808B007AC492 /* JobEntryCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB06C4A25C7808A007AC492 /* JobEntryCompleteViewController.swift */; };
 		FCB357FE25C91BBF004C8DE1 /* JobEntryActionLibraryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB357FD25C91BBF004C8DE1 /* JobEntryActionLibraryListViewController.swift */; };
 		FCC2457625CA8CB8007D49A7 /* JobEntryActionLibraryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC2457525CA8CB8007D49A7 /* JobEntryActionLibraryViewCell.swift */; };
+		FCC8A43625EDC0890005FFA5 /* ActionEntryConfigurationParametersResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC8A43525EDC0890005FFA5 /* ActionEntryConfigurationParametersResultTableViewCell.swift */; };
+		FCC8A47125EDF5C60005FFA5 /* ActionEntryConfigurationPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC8A47025EDF5C60005FFA5 /* ActionEntryConfigurationPresenterTests.swift */; };
+		FCC8A48325EDF9D50005FFA5 /* ActionEntryConfigurationParametersResultPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC8A48225EDF9D50005FFA5 /* ActionEntryConfigurationParametersResultPresenterTests.swift */; };
+		FCC8A48D25EDFA200005FFA5 /* ActionEntryConfigurationRemarksPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC8A48C25EDFA200005FFA5 /* ActionEntryConfigurationRemarksPresenterTests.swift */; };
+		FCC8A49725EE12360005FFA5 /* ActionEntryConfigurationViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC8A49625EE12360005FFA5 /* ActionEntryConfigurationViewControllerTests.swift */; };
+		FCC8A4A125EE12670005FFA5 /* ActionEntryConfigurationParametersResultViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC8A4A025EE12670005FFA5 /* ActionEntryConfigurationParametersResultViewControllerTests.swift */; };
+		FCC8A4AB25EE127C0005FFA5 /* ActionEntryConfigurationRemarksViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC8A4AA25EE127C0005FFA5 /* ActionEntryConfigurationRemarksViewControllerTests.swift */; };
+		FCC8A4BD25EE28140005FFA5 /* ActionEntryConfigurationPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC8A4BC25EE28140005FFA5 /* ActionEntryConfigurationPageObject.swift */; };
+		FCC8A4C725EE28420005FFA5 /* ActionEntryConfigurationRemarksPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC8A4C625EE28420005FFA5 /* ActionEntryConfigurationRemarksPageObject.swift */; };
+		FCC8A4D125EE28560005FFA5 /* ActionEntryConfigurationParametersResultPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC8A4D025EE28560005FFA5 /* ActionEntryConfigurationParametersResultPageObject.swift */; };
+		FCC8A4DB25EE2DEE0005FFA5 /* JobEntryActionPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC8A4DA25EE2DEE0005FFA5 /* JobEntryActionPageObject.swift */; };
 		FCE8862525DB49230053802D /* JobEntryGeneralInfoViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE8862425DB49230053802D /* JobEntryGeneralInfoViewControllerTests.swift */; };
 		FCE8862F25DB494D0053802D /* JobEntryGeneralInfoPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE8862E25DB494D0053802D /* JobEntryGeneralInfoPresenterTests.swift */; };
 /* End PBXBuildFile section */
@@ -1136,6 +1147,17 @@
 		FCB06C4A25C7808A007AC492 /* JobEntryCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryCompleteViewController.swift; sourceTree = "<group>"; };
 		FCB357FD25C91BBF004C8DE1 /* JobEntryActionLibraryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryActionLibraryListViewController.swift; sourceTree = "<group>"; };
 		FCC2457525CA8CB8007D49A7 /* JobEntryActionLibraryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryActionLibraryViewCell.swift; sourceTree = "<group>"; };
+		FCC8A43525EDC0890005FFA5 /* ActionEntryConfigurationParametersResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEntryConfigurationParametersResultTableViewCell.swift; sourceTree = "<group>"; };
+		FCC8A47025EDF5C60005FFA5 /* ActionEntryConfigurationPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEntryConfigurationPresenterTests.swift; sourceTree = "<group>"; };
+		FCC8A48225EDF9D50005FFA5 /* ActionEntryConfigurationParametersResultPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEntryConfigurationParametersResultPresenterTests.swift; sourceTree = "<group>"; };
+		FCC8A48C25EDFA200005FFA5 /* ActionEntryConfigurationRemarksPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEntryConfigurationRemarksPresenterTests.swift; sourceTree = "<group>"; };
+		FCC8A49625EE12360005FFA5 /* ActionEntryConfigurationViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEntryConfigurationViewControllerTests.swift; sourceTree = "<group>"; };
+		FCC8A4A025EE12670005FFA5 /* ActionEntryConfigurationParametersResultViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEntryConfigurationParametersResultViewControllerTests.swift; sourceTree = "<group>"; };
+		FCC8A4AA25EE127C0005FFA5 /* ActionEntryConfigurationRemarksViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEntryConfigurationRemarksViewControllerTests.swift; sourceTree = "<group>"; };
+		FCC8A4BC25EE28140005FFA5 /* ActionEntryConfigurationPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEntryConfigurationPageObject.swift; sourceTree = "<group>"; };
+		FCC8A4C625EE28420005FFA5 /* ActionEntryConfigurationRemarksPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEntryConfigurationRemarksPageObject.swift; sourceTree = "<group>"; };
+		FCC8A4D025EE28560005FFA5 /* ActionEntryConfigurationParametersResultPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEntryConfigurationParametersResultPageObject.swift; sourceTree = "<group>"; };
+		FCC8A4DA25EE2DEE0005FFA5 /* JobEntryActionPageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryActionPageObject.swift; sourceTree = "<group>"; };
 		FCE8862425DB49230053802D /* JobEntryGeneralInfoViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryGeneralInfoViewControllerTests.swift; sourceTree = "<group>"; };
 		FCE8862E25DB494D0053802D /* JobEntryGeneralInfoPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobEntryGeneralInfoPresenterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1229,6 +1251,9 @@
 				0DB3FB0325A5C94C0003A126 /* WorkPieceRecognitionResultPageObject.swift */,
 				0DB3FAE525A5BF3D0003A126 /* WorkObjectSelectionPageObject.swift */,
 				0DB3FAF425A5BF600003A126 /* WorkBenchSelectionPageObject.swift */,
+				FCC8A4BC25EE28140005FFA5 /* ActionEntryConfigurationPageObject.swift */,
+				FCC8A4C625EE28420005FFA5 /* ActionEntryConfigurationRemarksPageObject.swift */,
+				FCC8A4D025EE28560005FFA5 /* ActionEntryConfigurationParametersResultPageObject.swift */,
 			);
 			path = ActionEntry;
 			sourceTree = "<group>";
@@ -1274,6 +1299,7 @@
 				A3141F65252191C200992F45 /* WorkObjectLibraryTestTableViewCell.swift */,
 				A3141F64252191C200992F45 /* WorkObjectSelectionTableViewCell.swift */,
 				A3141F72252192A100992F45 /* WorkBenchSelectionTableViewCell.swift */,
+				FCC8A43525EDC0890005FFA5 /* ActionEntryConfigurationParametersResultTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1722,6 +1748,7 @@
 		A38B6EE224D2812200A9914F /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				FCC8A46F25EDE05E0005FFA5 /* ActionEntry */,
 				A367392925CBC1B3008226DC /* Startup */,
 				A3F98D4C24EB51FD0016A181 /* Main */,
 				A3F98D3624EA244B0016A181 /* Authentication */,
@@ -1734,6 +1761,7 @@
 		A38B6EE424D2812200A9914F /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				FCC8A42C25EC766D0005FFA5 /* ActionEntry */,
 				A367391E25CBC1AB008226DC /* Startup */,
 				A3F98D4B24EB51EF0016A181 /* Main */,
 				A3F98D3724EA245C0016A181 /* Authentication */,
@@ -2561,6 +2589,7 @@
 			children = (
 				E51C1C0C252EA487008DF3B0 /* JobInfoEntryPageObject.swift */,
 				0DB3FB1F25A5CC9C0003A126 /* JobInfoEntryConfirmPageObject.swift */,
+				FCC8A4DA25EE2DEE0005FFA5 /* JobEntryActionPageObject.swift */,
 			);
 			path = JobEntry;
 			sourceTree = "<group>";
@@ -2641,6 +2670,26 @@
 				FCB06BEF25C28610007AC492 /* JobEntryViewData.swift */,
 			);
 			path = JobEntry;
+			sourceTree = "<group>";
+		};
+		FCC8A42C25EC766D0005FFA5 /* ActionEntry */ = {
+			isa = PBXGroup;
+			children = (
+				FCC8A49625EE12360005FFA5 /* ActionEntryConfigurationViewControllerTests.swift */,
+				FCC8A4A025EE12670005FFA5 /* ActionEntryConfigurationParametersResultViewControllerTests.swift */,
+				FCC8A4AA25EE127C0005FFA5 /* ActionEntryConfigurationRemarksViewControllerTests.swift */,
+			);
+			path = ActionEntry;
+			sourceTree = "<group>";
+		};
+		FCC8A46F25EDE05E0005FFA5 /* ActionEntry */ = {
+			isa = PBXGroup;
+			children = (
+				FCC8A47025EDF5C60005FFA5 /* ActionEntryConfigurationPresenterTests.swift */,
+				FCC8A48225EDF9D50005FFA5 /* ActionEntryConfigurationParametersResultPresenterTests.swift */,
+				FCC8A48C25EDFA200005FFA5 /* ActionEntryConfigurationRemarksPresenterTests.swift */,
+			);
+			path = ActionEntry;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3576,6 +3625,7 @@
 				B7E319822542B832004E4875 /* OrderCompletePageObject.swift in Sources */,
 				A39054CE248DDC820021DEBA /* ConnectionSettingsPageObject.swift in Sources */,
 				E5CADCAB252C66AD000268C4 /* DashboardPageObject.swift in Sources */,
+				FCC8A4BD25EE28140005FFA5 /* ActionEntryConfigurationPageObject.swift in Sources */,
 				0DEAB5E4259601E000AC7D66 /* JobRemarksTabPageObject.swift in Sources */,
 				0DB3FB0425A5C94C0003A126 /* WorkPieceRecognitionResultPageObject.swift in Sources */,
 				B7E319642542A20D004E4875 /* OrderConfigurationPageObject.swift in Sources */,
@@ -3587,14 +3637,17 @@
 				E51C1C0A252D9791008DF3B0 /* TaskDetailPageObject.swift in Sources */,
 				E5CADCAF252C690A000268C4 /* JobListPageObject.swift in Sources */,
 				E5EA88EE25271BB30060E4FC /* JobSelectionPageObject.swift in Sources */,
+				FCC8A4D125EE28560005FFA5 /* ActionEntryConfigurationParametersResultPageObject.swift in Sources */,
 				0DB3FAC825A5BD940003A126 /* WorkBenchLibrarySelectionPageObject.swift in Sources */,
 				E5CADCAD252C6839000268C4 /* JobDetailPageObject.swift in Sources */,
 				0DEAB5D5259601D600AC7D66 /* JobWorkTabPageObject.swift in Sources */,
 				A3BBF6EF25D3706D00430712 /* StartupUITests.swift in Sources */,
+				FCC8A4DB25EE2DEE0005FFA5 /* JobEntryActionPageObject.swift in Sources */,
 				0DB3FAD725A5BE460003A126 /* WorkObjectLibrarySelectionPageObject.swift in Sources */,
 				A39054CC248DDC480021DEBA /* PasswordAuthenticationPageObject.swift in Sources */,
 				E5CADCA9252C66AD000268C4 /* RobotSystemTabPageObject.swift in Sources */,
 				0DB3FAB925A5BCBF0003A126 /* WorkBenchEntryPageObject.swift in Sources */,
+				FCC8A47125EDF5C60005FFA5 /* ActionEntryConfigurationPresenterTests.swift in Sources */,
 				E5EA88EC25271B7E0060E4FC /* RobotDetailPageObject.swift in Sources */,
 				E51C1C0D252EA487008DF3B0 /* JobInfoEntryPageObject.swift in Sources */,
 				0D2330F12599927100697FE7 /* TaskDetailTaskInformationPageObject.swift in Sources */,
@@ -3604,13 +3657,19 @@
 				E5CADCA7252C66AD000268C4 /* RobotSelectionPageObject.swift in Sources */,
 				0DB3FAE625A5BF3D0003A126 /* WorkObjectSelectionPageObject.swift in Sources */,
 				A3BBF6DD25D3706300430712 /* PageObject.swift in Sources */,
+				FCC8A4C725EE28420005FFA5 /* ActionEntryConfigurationRemarksPageObject.swift in Sources */,
+				FCC8A49725EE12360005FFA5 /* ActionEntryConfigurationViewControllerTests.swift in Sources */,
 				E586CB1A2525D604007AD3EC /* WebPageObject.swift in Sources */,
 				0D2330E2259991DB00697FE7 /* TaskDetailRobotSelectionPageObject.swift in Sources */,
 				A3BBF70225D3707600430712 /* StartupPageObject.swift in Sources */,
 				0D2331002599928200697FE7 /* TaskDetailExecutionLogPageObject.swift in Sources */,
+				FCC8A48D25EDFA200005FFA5 /* ActionEntryConfigurationRemarksPresenterTests.swift in Sources */,
 				E5CADCAA252C66AD000268C4 /* RobotRemarksTabPageObject.swift in Sources */,
+				FCC8A4AB25EE127C0005FFA5 /* ActionEntryConfigurationRemarksViewControllerTests.swift in Sources */,
 				A39054D7248DDE470021DEBA /* MailVerificationEntryPage.swift in Sources */,
 				0DB3FAF525A5BF600003A126 /* WorkBenchSelectionPageObject.swift in Sources */,
+				FCC8A4A125EE12670005FFA5 /* ActionEntryConfigurationParametersResultViewControllerTests.swift in Sources */,
+				FCC8A48325EDF9D50005FFA5 /* ActionEntryConfigurationParametersResultPresenterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3863,6 +3922,7 @@
 				A32BCA822468E99F000287D2 /* TaskDetailTaskInformationViewController.swift in Sources */,
 				FCB06C4B25C7808B007AC492 /* JobEntryCompleteViewController.swift in Sources */,
 				B798D48A257F018500030FE0 /* TaskDetailRunHistoryPresenter.swift in Sources */,
+				FCC8A43625EDC0890005FFA5 /* ActionEntryConfigurationParametersResultTableViewCell.swift in Sources */,
 				A38C2AFB244FE4FA0089A70E /* RobotDetailWorkViewController.swift in Sources */,
 				A3148331242B49BF00AFADC1 /* MainBuilder.swift in Sources */,
 				FC612D3A25E878D0005DB177 /* ActionEntryConfigurationRemarksViewController.swift in Sources */,

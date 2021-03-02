@@ -24,7 +24,7 @@ protocol ActionEntryConfigurationParametersResultPresenterProtocol {
     func numberOfSections(in: ActionEntryConfigurationParametersResultPresenter.Dataset) -> Int
 //    /// セルを選択
 //    /// - Parameter index: 配列のIndex
-//    func selectRow(in: ActionEntryConfigurationParametersResultPresenter.Dataset, indexPath: IndexPath)
+    func selectRow(in: ActionEntryConfigurationParametersResultPresenter.Dataset, indexPath: IndexPath)
     /// 概要
     /// - Parameters:
     ///   - in: 設定情報識別子
@@ -88,12 +88,12 @@ extension ActionEntryConfigurationParametersResultPresenter: ActionEntryConfigur
     }
 
 //    /// セルを選択
-//    /// - Parameter index: 配列のIndex
-//    func selectRow(in: ActionEntryConfigurationParametersResultPresenter.Dataset, indexPath: IndexPath) {
+    /// - Parameter index: 配列のIndex
+    func selectRow(in: ActionEntryConfigurationParametersResultPresenter.Dataset, indexPath: IndexPath) {
 //        let taskId = tasks?[indexPath.section].id
 //        let robotIds = tasks?[indexPath.section].robotIds
 //        vc.launchTaskDetail(taskId: taskId, robotIds: robotIds)
-//    }
+    }
 
     /// 概要
     /// - Parameters:
