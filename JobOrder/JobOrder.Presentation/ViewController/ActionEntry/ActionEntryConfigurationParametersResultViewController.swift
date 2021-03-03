@@ -13,30 +13,23 @@ import UIKit
 protocol ActionEntryConfigurationParametersResultViewControllerProtocol: class {}
 
 class ActionEntryConfigurationParametersResultViewController: ActionEntryConfigurationContainerViewController {
-    
+
     // MARK: - IBOutlet
     @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var resultTable: UITableView!
-    @IBAction func completeButtonTapped(_ sender: Any) {
+    @IBOutlet weak var completeButton: UIButton!
+    @IBAction func completeButtonTapped(_ sender: UIButton) {
         self.dismiss(animated: true)
     }
-//        @IBOutlet weak var remarksValueLabel: UILabel!
 
     // MARK: - Variable
     var presenter: ActionEntryConfigurationParametersResultPresenterProtocol!
-//
-//    override func inject(viewData: MainViewData.Robot) {
-//        super.inject(viewData: viewData)
-//        presenter = MainBuilder.RobotDetailRemarks().build(vc: self, viewData: viewData)
-//    }
-//
-//    // MARK: - Override function (view controller lifecycle)
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        parameterValueLabel?.showSkeleton()
-//        parameterValueLabel?.text = "Placeholder"
-//    }
-    
+
+    //    // MARK: - Override function (view controller lifecycle)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         resultLabel.font = UIFont.boldSystemFont(ofSize: 22)
@@ -69,11 +62,11 @@ extension ActionEntryConfigurationParametersResultViewController: UITableViewDel
         return cell
     }
 
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        navigationController?.setNavigationBarHidden(false, animated: false)
-//        presenter?.selectRow(index: indexPath.row)
-//        tableView.deselectRow(at: indexPath, animated: true)
-//    }
+    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //        navigationController?.setNavigationBarHidden(false, animated: false)
+    //        presenter?.selectRow(index: indexPath.row)
+    //        tableView.deselectRow(at: indexPath, animated: true)
+    //    }
 }
 
 extension ActionEntryConfigurationParametersResultViewController: ActionEntryConfigurationParametersResultViewControllerProtocol {}

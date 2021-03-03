@@ -16,7 +16,7 @@ protocol JobEntryActionFlowViewControllerProtocol: class {
 }
 
 class JobEntryActionFlowViewController: UIViewController {
-    
+
     @IBAction func infoButtonTapped(_ sender: UIBarButtonItem) {
         let navigationController = StoryboardScene.ActionEntry.actionEntryFormNavi.instantiate()
         self.present(navigationController, animated: true, completion: nil)

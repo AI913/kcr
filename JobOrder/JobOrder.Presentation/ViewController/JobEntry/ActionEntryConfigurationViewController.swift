@@ -24,7 +24,7 @@ class ActionEntryConfigurationViewController: UIViewController {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var containerViewHeight: NSLayoutConstraint!
-    
+
     var pageVc: ActionEntryConfigurationPageViewController?
     var presenter: ActionEntryConfigurationPresenterProtocol!
 
@@ -32,11 +32,11 @@ class ActionEntryConfigurationViewController: UIViewController {
     @IBAction func selectorCancelBarButtonItem(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
     }
-    
+
     @IBAction func infoButtonTapped(_ sender: Any) {
         print("info button tapped!")
     }
-    
+
     @IBAction func segmentChanged(_ sender: UISegmentedControl) {
         pageVc?.changePage(index: sender.selectedSegmentIndex)
     }
@@ -46,7 +46,7 @@ class ActionEntryConfigurationViewController: UIViewController {
         super.viewDidLoad()
         nameLabel.font = UIFont.boldSystemFont(ofSize: 30)
         nameLabel.text = "Pick & Place"
-//        setSwipeBack()
+        //        setSwipeBack()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -65,10 +65,10 @@ extension ActionEntryConfigurationViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch StoryboardSegue.Main(segue) {
         case .containerPage:
-//            guard let data = presenter?.data else { return }
+            //            guard let data = presenter?.data else { return }
             pageVc = segue.destination as? ActionEntryConfigurationPageViewController
             pageVc?._delegate = self
-//            pageVc?.inject(viewData: data)
+        //            pageVc?.inject(viewData: data)
         default: break
         }
     }
@@ -84,8 +84,8 @@ extension ActionEntryConfigurationViewController: ActionEntryConfigurationViewCo
     }
 }
 
-//// MARK: - Private Function
-//extension ActionEntryConfigurationViewController {
+// MARK: - Private Function
+// extension ActionEntryConfigurationViewController {
 //
 //    private func addBlurView() {
 //
@@ -109,5 +109,4 @@ extension ActionEntryConfigurationViewController: ActionEntryConfigurationViewCo
 //        label.centerXAnchor.constraint(equalTo: visualEffectView.contentView.centerXAnchor).isActive = true
 //        label.centerYAnchor.constraint(equalTo: visualEffectView.contentView.centerYAnchor).isActive = true
 //    }
-//}
-
+// }

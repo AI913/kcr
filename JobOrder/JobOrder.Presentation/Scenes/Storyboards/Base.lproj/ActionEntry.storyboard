@@ -1304,9 +1304,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="cancelButton" destination="9pR-Z5-Ffi" id="Ama-mm-fYZ"/>
                         <outlet property="containerView" destination="ExN-Bs-lbZ" id="KyI-vQ-rX1"/>
                         <outlet property="containerViewHeight" destination="8OQ-ZW-QY6" id="Ymv-VM-VzA"/>
                         <outlet property="image" destination="kyZ-3c-LlE" id="Cs4-eJ-Y6I"/>
+                        <outlet property="infoButton" destination="Xoj-bj-reu" id="eET-YD-5e8"/>
                         <outlet property="nameLabel" destination="ymi-Jv-zXP" id="Buc-ot-IjZ"/>
                         <outlet property="segmentedControl" destination="Eax-p1-mVv" id="kKw-xU-Wfn"/>
                     </connections>
@@ -1342,7 +1344,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pNu-Tr-hbZ" userLabel="Close Button">
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pNu-Tr-hbZ" userLabel="Complete Button">
                                         <rect key="frame" x="0.0" y="578" width="414" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemGray5Color"/>
@@ -1391,9 +1393,9 @@
                                                     </subviews>
                                                 </tableViewCellContentView>
                                                 <connections>
-                                                    <outlet property="parameterDetailButton" destination="yEx-lW-AKA" id="5of-l3-dXX"/>
-                                                    <outlet property="parameterNameLabel" destination="DSF-by-kkd" id="zoK-Vy-oG0"/>
-                                                    <outlet property="parameterValueLabel" destination="8Qo-dY-1xn" id="cpS-iK-rZv"/>
+                                                    <outlet property="parameterDetailButton" destination="yEx-lW-AKA" id="GXo-F0-1kQ"/>
+                                                    <outlet property="parameterNameLabel" destination="DSF-by-kkd" id="fjQ-aU-sdE"/>
+                                                    <outlet property="parameterValueLabel" destination="8Qo-dY-1xn" id="i94-mG-j3F"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -1408,6 +1410,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="eRz-Xp-FDw"/>
                     <connections>
+                        <outlet property="completeButton" destination="pNu-Tr-hbZ" id="1xm-0s-gmG"/>
                         <outlet property="resultLabel" destination="bvb-dc-Zms" id="GG8-5q-lIA"/>
                         <outlet property="resultTable" destination="0hU-uJ-UUw" id="j9m-V2-z2t"/>
                     </connections>

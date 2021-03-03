@@ -27,7 +27,7 @@ class ActionEntryConfigurationPageViewController: UIPageViewController {
         dataSource = self
         setViewControllers([controllers[0]], direction: .forward, animated: false, completion: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -48,13 +48,13 @@ class ActionEntryConfigurationPageViewController: UIPageViewController {
             preferredContentSize.height = container.preferredContentSize.height
         }
     }
-//
-//    func inject(viewData: MainViewData.Robot) {
-//
-//        controllers.forEach {
-//            $0.inject(viewData: viewData)
-//        }
-//    }
+    //
+    //    func inject(viewData: MainViewData.Robot) {
+    //
+    //        controllers.forEach {
+    //            $0.inject(viewData: viewData)
+    //        }
+    //    }
 
     func changePage(index: Int) {
 

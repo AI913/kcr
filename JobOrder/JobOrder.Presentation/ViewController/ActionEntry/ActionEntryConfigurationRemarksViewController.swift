@@ -16,37 +16,22 @@ class ActionEntryConfigurationRemarksViewController: ActionEntryConfigurationCon
     @IBAction func buttonTapped(_ sender: Any) {
         self.dismiss(animated: true)
     }
-    
-//    // MARK: - IBOutlet
+
+    // MARK: - IBOutlet
     @IBOutlet weak var remarksTextView: UITextView!
-    
-//    // MARK: - Variable
-//    var presenter: ActionEntryConfigurationRemarksPresenterProtocol!
-//
-//    override func inject(viewData: MainViewData.Robot) {
-//        super.inject(viewData: viewData)
-//        presenter = MainBuilder.RobotDetailRemarks().build(vc: self, viewData: viewData)
-//    }
-//
-//    // MARK: - Override function (view controller lifecycle)
+
+    // MARK: - Variable
+    var presenter: ActionEntryConfigurationRemarksPresenterProtocol!
+
+    // MARK: - Override function (view controller lifecycle)
     override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        remarksTextView?.showSkeleton()
-//        remarksTextView?.text = presenter?.remarks
+        super.viewWillAppear(animated)
+        remarksTextView?.showSkeleton()
     }
-//
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//
-//        let height = self.view.subviews.reduce(0) {
-//            $0 + $1.frame.height
-//        }
-//        preferredContentSize.height = max(height, initialHeight)
-//    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-//        resultLabel.font = UIFont.boldSystemFont(ofSize: 22)
+        //        resultLabel.font = UIFont.boldSystemFont(ofSize: 22)
     }
 
     override func viewDidLayoutSubviews() {

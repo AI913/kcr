@@ -16,28 +16,28 @@ class ActionEntryConfigurationParametersResultViewController: ActionEntryConfigu
 
     // MARK: - IBOutlet
     @IBOutlet weak var resultLabel: UILabel!
-    
+
     @IBAction func completeButtonTapped(_ sender: UIButton) {
         self.dismiss(animated: true)
     }
-    
-//    @IBOutlet weak var remarksValueLabel: UILabel!
 
-//    // MARK: - Variable
-//    var presenter: ActionEntryConfigurationParametersPresenterProtocol!
-//
-//    override func inject(viewData: MainViewData.Robot) {
-//        super.inject(viewData: viewData)
-//        presenter = MainBuilder.RobotDetailRemarks().build(vc: self, viewData: viewData)
-//    }
-//
-//    // MARK: - Override function (view controller lifecycle)
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        remarksValueLabel?.showSkeleton()
-//        remarksValueLabel?.text = presenter?.remarks
-//    }
-    
+    //    @IBOutlet weak var remarksValueLabel: UILabel!
+
+    //    // MARK: - Variable
+    //    var presenter: ActionEntryConfigurationParametersPresenterProtocol!
+    //
+    //    override func inject(viewData: MainViewData.Robot) {
+    //        super.inject(viewData: viewData)
+    //        presenter = MainBuilder.RobotDetailRemarks().build(vc: self, viewData: viewData)
+    //    }
+    //
+    //    // MARK: - Override function (view controller lifecycle)
+    //    override func viewWillAppear(_ animated: Bool) {
+    //        super.viewWillAppear(animated)
+    //        remarksValueLabel?.showSkeleton()
+    //        remarksValueLabel?.text = presenter?.remarks
+    //    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         resultLabel.font = UIFont.boldSystemFont(ofSize: 22)

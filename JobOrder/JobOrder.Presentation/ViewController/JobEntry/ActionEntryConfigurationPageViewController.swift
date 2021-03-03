@@ -22,8 +22,8 @@ class ActionEntryConfigurationPageViewController: UIPageViewController {
     // MARK: - Initializer
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-//        self.dataSource = self
-//        self.delegate = self
+        //        self.dataSource = self
+        //        self.delegate = self
 
         setViewControllers([controllers[0]], direction: .forward, animated: false, completion: nil)
     }
@@ -44,13 +44,13 @@ class ActionEntryConfigurationPageViewController: UIPageViewController {
             preferredContentSize.height = container.preferredContentSize.height
         }
     }
-//
-//    func inject(viewData: MainViewData.Robot) {
-//
-//        controllers.forEach {
-//            $0.inject(viewData: viewData)
-//        }
-//    }
+    //
+    //    func inject(viewData: MainViewData.Robot) {
+    //
+    //        controllers.forEach {
+    //            $0.inject(viewData: viewData)
+    //        }
+    //    }
 
     func changePage(index: Int) {
 
@@ -61,7 +61,7 @@ class ActionEntryConfigurationPageViewController: UIPageViewController {
     }
 }
 
-//extension ActionEntryConfigurationPageViewController: UIPageViewControllerDelegate {
+// extension ActionEntryConfigurationPageViewController: UIPageViewControllerDelegate {
 //
 //    // ジェスチャーによる遷移が始まる場合に呼ばれる
 //    // willTransitionTo.firstを見れば、次の遷移先のページのインスタンスを見ることができる
@@ -90,9 +90,9 @@ class ActionEntryConfigurationPageViewController: UIPageViewController {
 //            _delegate?.pageChanged(index: index)
 //        }
 //    }
-//}
+// }
 
-//extension ActionEntryConfigurationPageViewController: UIPageViewControllerDataSource {
+// extension ActionEntryConfigurationPageViewController: UIPageViewControllerDataSource {
 //
 //    /// 右にスワイプ（戻る）した場合のメソッド
 //    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
@@ -117,4 +117,4 @@ class ActionEntryConfigurationPageViewController: UIPageViewController {
 //    func presentationCount(for pageViewController: UIPageViewController) -> Int {
 //        return controllers.count
 //    }
-//}
+// }

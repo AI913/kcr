@@ -15,7 +15,7 @@ class ActionEntryConfigurationParametersResultTableViewCell: UITableViewCell {
     @IBOutlet weak var parameterDetailButton: UIButton!
     @IBOutlet weak var parameterNameLabel: UILabel!
     @IBOutlet weak var parameterValueLabel: UILabel!
-    
+
     // MARK: - Constant
     static let identifier: String = "ActionParaViewCell"
 

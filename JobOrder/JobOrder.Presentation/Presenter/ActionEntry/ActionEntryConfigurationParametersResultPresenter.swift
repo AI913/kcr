@@ -22,8 +22,8 @@ protocol ActionEntryConfigurationParametersResultPresenterProtocol {
     /// アイテム数取得
     /// - Parameter in: 設定情報識別子
     func numberOfSections(in: ActionEntryConfigurationParametersResultPresenter.Dataset) -> Int
-//    /// セルを選択
-//    /// - Parameter index: 配列のIndex
+    //    /// セルを選択
+    //    /// - Parameter index: 配列のIndex
     func selectRow(in: ActionEntryConfigurationParametersResultPresenter.Dataset, indexPath: IndexPath)
     /// 概要
     /// - Parameters:
@@ -35,11 +35,11 @@ protocol ActionEntryConfigurationParametersResultPresenterProtocol {
     ///   - in: 設定情報識別子
     ///   - index: 配列のIndex
     func name(in: ActionEntryConfigurationParametersResultPresenter.Dataset, index: Int) -> String?
-//    /// タスクの状態
-//    /// - Parameters:
-//    ///   - in: 設定情報識別子
-//    ///   - index: 配列のIndex
-//    func status(in: ActionEntryConfigurationParametersResultPresenter.Dataset, index: Int) -> String?
+    //    /// タスクの状態
+    //    /// - Parameters:
+    //    ///   - in: 設定情報識別子
+    //    ///   - index: 配列のIndex
+    //    func status(in: ActionEntryConfigurationParametersResultPresenter.Dataset, index: Int) -> String?
 }
 
 // MARK: - Implementation
@@ -78,7 +78,7 @@ extension ActionEntryConfigurationParametersResultPresenter: ActionEntryConfigur
 
     /// View表示開始
     func viewWillAppear() {
-//        getTasksAndCommands()
+        //        getTasksAndCommands()
     }
 
     /// アイテム数取得
@@ -87,12 +87,12 @@ extension ActionEntryConfigurationParametersResultPresenter: ActionEntryConfigur
         tasks?.count ?? 0
     }
 
-//    /// セルを選択
+    //    /// セルを選択
     /// - Parameter index: 配列のIndex
     func selectRow(in: ActionEntryConfigurationParametersResultPresenter.Dataset, indexPath: IndexPath) {
-//        let taskId = tasks?[indexPath.section].id
-//        let robotIds = tasks?[indexPath.section].robotIds
-//        vc.launchTaskDetail(taskId: taskId, robotIds: robotIds)
+        //        let taskId = tasks?[indexPath.section].id
+        //        let robotIds = tasks?[indexPath.section].robotIds
+        //        vc.launchTaskDetail(taskId: taskId, robotIds: robotIds)
     }
 
     /// 概要
@@ -118,15 +118,15 @@ extension ActionEntryConfigurationParametersResultPresenter: ActionEntryConfigur
         let suffix = "のオーダー"
         return createTime.toEpocTime.toMediumDateString + suffix
     }
-//    /// タスクの状態
-//    /// - Parameters:
-//    ///   - in: 設定情報識別子
-//    ///   - indexPath: 配列のIndex
-//    func status(in: JobDetailWorkPresenter.Dataset, index: Int) -> String? {
-//        guard let task = self.tasks?[index] else { return nil }
-//        guard let command = self.commands.first(where: { $0.taskId == task.id }) else { return nil }
-//        return command.status
-//    }
+    //    /// タスクの状態
+    //    /// - Parameters:
+    //    ///   - in: 設定情報識別子
+    //    ///   - indexPath: 配列のIndex
+    //    func status(in: JobDetailWorkPresenter.Dataset, index: Int) -> String? {
+    //        guard let task = self.tasks?[index] else { return nil }
+    //        guard let command = self.commands.first(where: { $0.taskId == task.id }) else { return nil }
+    //        return command.status
+    //    }
 }
 
 // MARK: - Private Function
@@ -138,48 +138,48 @@ extension ActionEntryConfigurationParametersResultPresenter {
         cancellables.forEach { $0.cancel() }
     }
 
-//    private func getTasksAndCommands() {
-//        guard let id = data.id else { return }
-//        reset()
-//
-//        dataUseCase.tasksFromJob(id: id, cursor: PagingModel.Cursor(offset: 0, limit: 10))
-//            .receive(on: DispatchQueue.main)
-//            .sink(receiveCompletion: { completion in
-//                switch completion {
-//                case .finished: break
-//                case .failure(let error):
-//                    self.vc.showErrorAlert(error)
-//                }
-//            }, receiveValue: { response in
-//                Logger.debug(target: self, "\(String(describing: response))")
-//                self.tasks = response.data
-//                self.tasks?.filter { !$0.robotIds.isEmpty }
-//                    .compactMap { self.dataUseCase.commandFromTask(taskId: $0.id, robotId: $0.robotIds.first!) }
-//                    .serialize()?
-//                    .receive(on: DispatchQueue.main)
-//                    .sink(receiveCompletion: { completion in
-//                        switch completion {
-//                        case .finished: break
-//                        case .failure(let error):
-//                            self.vc.showErrorAlert(error)
-//                        }
-//                    }, receiveValue: { response in
-//                        Logger.debug(target: self, "\(String(describing: response))")
-//                        self.commands.append(response)
-//                        if let index = self.updateTaskItem(by: response) {
-//                            self.vc.reloadRows(dataset: .task, at: [index])
-//                            self.vc.reloadRows(dataset: .history, at: [index])
-//                        }
-//                    }).store(in: &self.cancellables)
-//                self.vc.reloadTable()
-//            }).store(in: &cancellables)
-//    }
+    //    private func getTasksAndCommands() {
+    //        guard let id = data.id else { return }
+    //        reset()
+    //
+    //        dataUseCase.tasksFromJob(id: id, cursor: PagingModel.Cursor(offset: 0, limit: 10))
+    //            .receive(on: DispatchQueue.main)
+    //            .sink(receiveCompletion: { completion in
+    //                switch completion {
+    //                case .finished: break
+    //                case .failure(let error):
+    //                    self.vc.showErrorAlert(error)
+    //                }
+    //            }, receiveValue: { response in
+    //                Logger.debug(target: self, "\(String(describing: response))")
+    //                self.tasks = response.data
+    //                self.tasks?.filter { !$0.robotIds.isEmpty }
+    //                    .compactMap { self.dataUseCase.commandFromTask(taskId: $0.id, robotId: $0.robotIds.first!) }
+    //                    .serialize()?
+    //                    .receive(on: DispatchQueue.main)
+    //                    .sink(receiveCompletion: { completion in
+    //                        switch completion {
+    //                        case .finished: break
+    //                        case .failure(let error):
+    //                            self.vc.showErrorAlert(error)
+    //                        }
+    //                    }, receiveValue: { response in
+    //                        Logger.debug(target: self, "\(String(describing: response))")
+    //                        self.commands.append(response)
+    //                        if let index = self.updateTaskItem(by: response) {
+    //                            self.vc.reloadRows(dataset: .task, at: [index])
+    //                            self.vc.reloadRows(dataset: .history, at: [index])
+    //                        }
+    //                    }).store(in: &self.cancellables)
+    //                self.vc.reloadTable()
+    //            }).store(in: &cancellables)
+    //    }
 
-//    private func updateTaskItem(by command: DataManageModel.Output.Command) -> IndexPath? {
-//        guard let tasks = self.tasks else { return nil }
-//        if let index = tasks.firstIndex(where: { $0.id == command.taskId }) {
-//            return IndexPath(row: 0, section: index)
-//        }
-//        return nil
-//    }
+    //    private func updateTaskItem(by command: DataManageModel.Output.Command) -> IndexPath? {
+    //        guard let tasks = self.tasks else { return nil }
+    //        if let index = tasks.firstIndex(where: { $0.id == command.taskId }) {
+    //            return IndexPath(row: 0, section: index)
+    //        }
+    //        return nil
+    //    }
 }
